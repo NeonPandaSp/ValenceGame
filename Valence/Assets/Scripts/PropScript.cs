@@ -14,9 +14,9 @@ public class PropScript : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		if (collision) {
-			Vector3 propPosition = new Vector3 (Random.Range (zoneX - (zoneWidth / 2),zoneX + (zoneWidth / 2)),0.5f,  Random.Range (zoneZ - (zoneHeight / 2),zoneZ + (zoneHeight / 2)));
+			Vector3 propPosition = new Vector3 ( Random.Range ( zoneX,zoneX + (zoneWidth) ) , 0.5f,  Random.Range (zoneZ ,zoneZ + (zoneHeight) ) );
 
-			int randVal = (int) Random.Range (0,5);
+			int randVal = (int) Random.Range (0,8);
 			GameObject tempObject = (GameObject ) Instantiate(Resources.Load("prop_"+randVal), propPosition, Quaternion.identity);
 			tempObject.transform.eulerAngles = new Vector3 (Random.Range(0, 25), Random.Range(0, 360), 0);
 			tempObject.GetComponent<PropScript>().setZoneCoords( zoneWidth, zoneHeight, zoneX, zoneZ );

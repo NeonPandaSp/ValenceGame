@@ -2,56 +2,65 @@
 using System.Collections;
 
 public class cameraController : MonoBehaviour {
-
+	
 	/**
 	 * 
 	 * Modified code based on reference: http://forum.unity3d.com/threads/rts-camera-controller.93526/#post-607340
 	 * 
 	 *
 	 **/ 
-
-
+	
+	
 	Vector3 translation, targetPosition;
 	int scrollArea = 25;
 	float scrollSpeed = 15;
 	int zoomSpeed = 50;
-	int playBound = 50;
+	int playBound = 100;
 	int zoomMin = 15;
 	int zoomMax = 50;
-
+	
 	int panSpeed = 50;
 	int panAngleMin = 50;
 	int panAngleMax = 60;
-
+	
 	float currentTime = -1;
 	float initialTime;
-
+	
 	Vector2 lastMousePosition;
+	
+	public bool mouseEdgeControl;
+	public bool perspCam;
+	
 	// Use this for initialization
 	void Start () {
 		translation = new Vector3 (0,20,-10);
 		GetComponent<Camera>().transform.position = translation;
 		GetComponent<Camera> ().transform.eulerAngles = new Vector3 (30, 45, 0);
-
+		
+		//mouseEdgeControl = true;
+		perspCam = true;
 	}
-
-
+	
+	
 	// Update is called once per frame
 	void LateUpdate () {
 		//Reset translation vector
 		translation = Vector3.zero;
 		targetPosition = Vector3.zero;
-
+		
 		float zoomDelta = Input.GetAxis("Mouse ScrollWheel")*zoomSpeed*Time.deltaTime;
 		if (zoomDelta!=0)
 		{
-			translation -= Vector3.up * zoomSpeed * zoomDelta;
-			targetPosition = transform.position + translation;
-			if( targetPosition.y > zoomMin && targetPosition.y < zoomMax ){
-				translation += Vector3.forward * ( Mathf.Tan(GetComponent<Camera>().transform.rotation.x)) * ( zoomSpeed * zoomDelta );
+			if( perspCam ){
+				translation -= Vector3.up * zoomSpeed * zoomDelta;
+				targetPosition = transform.position + translation;
+				if( targetPosition.y > zoomMin && targetPosition.y < zoomMax ){
+					translation += Vector3.forward * ( Mathf.Tan(GetComponent<Camera>().transform.rotation.x)) * ( zoomSpeed * zoomDelta );
+				}
+			} else {
+				GetComponent<Camera>().orthographicSize += zoomDelta;
 			}
-
-
+			
 		}
 		/**
 		float pan = GetComponent<Camera>().transform.eulerAngles.x - zoomDelta * panSpeed;
@@ -62,17 +71,17 @@ public class cameraController : MonoBehaviour {
 		}
 		**/
 		//Check for keyboard input
-
+		
 		if (Input.GetAxis ("Horizontal") != 0 || Input.GetAxis ("Vertical") != 0 ||
 		    Input.mousePosition.x < scrollArea || Input.mousePosition.x >= Screen.width - scrollArea || 
 		    Input.mousePosition.y < scrollArea || Input.mousePosition.y > Screen.height - scrollArea
 		    ) {
 			if( scrollSpeed < 15 ){
-
+				
 				if( currentTime == -1 ){
 					initialTime = Time.time;
 				}
-
+				
 				float duration = 0.5f;
 				currentTime = Time.time - initialTime;
 				currentTime /= duration;
@@ -103,37 +112,35 @@ public class cameraController : MonoBehaviour {
 				scrollSpeed = 5;
 			} 
 		}
-
+		
 		float horTranslation = Input.GetAxis ("Horizontal") * scrollSpeed * Time.deltaTime;
 		float vertTranslation = Input.GetAxis ("Vertical") * scrollSpeed * Time.deltaTime;
 		translation += new Vector3 (horTranslation, 0, vertTranslation);
 		//Check for Mouse Input
-
+		
+		if (mouseEdgeControl) {
 			//Mouse Edge Screen Detection
-		if (Input.mousePosition.x < scrollArea)
-		{
-			translation += Vector3.right * -scrollSpeed * Time.deltaTime;
+			if (Input.mousePosition.x < scrollArea) {
+				translation += Vector3.right * -scrollSpeed * Time.deltaTime;
+			}
+			
+			if (Input.mousePosition.x >= Screen.width - scrollArea) {
+				translation += Vector3.right * scrollSpeed * Time.deltaTime;
+			}
+			
+			if (Input.mousePosition.y < scrollArea) {
+				translation += Vector3.forward * -scrollSpeed * Time.deltaTime;
+			}
+			
+			if (Input.mousePosition.y > Screen.height - scrollArea) {
+				translation += Vector3.forward * scrollSpeed * Time.deltaTime;
+			}
 		}
 		
-		if (Input.mousePosition.x >= Screen.width - scrollArea)
-		{
-			translation += Vector3.right * scrollSpeed * Time.deltaTime;
-		}
 		
-		if (Input.mousePosition.y < scrollArea)
-		{
-			translation += Vector3.forward * -scrollSpeed * Time.deltaTime;
-		}
-		
-		if (Input.mousePosition.y > Screen.height - scrollArea)
-		{
-			translation += Vector3.forward * scrollSpeed * Time.deltaTime;
-		}
-
-
 		// Check Play Area Bounds
 		targetPosition = transform.position + translation;
-
+		
 		if (targetPosition.x < -playBound || playBound < targetPosition.x)
 		{
 			translation.x = 0;
@@ -160,13 +167,13 @@ public class cameraController : MonoBehaviour {
 		}
 		// Translate Camera
 		translation = Quaternion.AngleAxis(GetComponent<Camera>().transform.eulerAngles.y, Vector3.up) * translation;
-
-
+		
+		
 		GetComponent<Camera>().transform.position += translation;
-
+		
 		lastMousePosition = Input.mousePosition;
 	}
-
+	
 	float mapValue( float value, float minA, float maxA, float minB, float maxB ){
 		return (value - minA) / (minB - minA) * (maxB - maxA) + maxA;
 	}
