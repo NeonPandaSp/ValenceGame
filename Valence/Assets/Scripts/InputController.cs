@@ -26,7 +26,6 @@ public class InputController : MonoBehaviour {
 		if ( GetComponent<Collider>().Raycast (ray, out hitInfo, Mathf.Infinity)) {
 			int x = Mathf.FloorToInt( hitInfo.point.x  / _tileMap.tileSize );
 			int z = Mathf.FloorToInt( hitInfo.point.z / _tileMap.tileSize );
-			Debug.Log( x + " " + z );
 			currentTile.x = x;
 			currentTile.y = z;
 
@@ -46,7 +45,17 @@ public class InputController : MonoBehaviour {
 		}
 		if (Input.GetMouseButton (0)) {
 			if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
-				myHoverObject.transform.localScale = new Vector3( rootMousePos.x - currentTile.x, 0 , rootMousePos.y - currentTile.y );
+				if( rootMousePos.x - currentTile.x == 0 || rootMousePos.y - currentTile.y == 0 ){
+					if( rootMousePos.x - currentTile.x == 0 ){
+						myHoverObject.transform.localScale = new Vector3( 1, 1 , myHoverObject.transform.localScale.z );
+					}
+
+					if( rootMousePos.y - currentTile.y == 0 ){
+						myHoverObject.transform.localScale = new Vector3( myHoverObject.transform.localScale.x, 1, 1);
+					}
+				} else {
+					myHoverObject.transform.localScale = new Vector3( rootMousePos.x - currentTile.x, 1 , rootMousePos.y - currentTile.y );
+				}
 			}
 		}
 		if (Input.GetMouseButtonUp (0)) {
@@ -76,7 +85,7 @@ public class InputController : MonoBehaviour {
 			if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
 				myHoverObject.transform.position = new Vector3( currentTile.x, 0, currentTile.y );
 			}
-			myHoverObject.transform.localScale = new Vector3( 1, 0 , 1); 
+			myHoverObject.transform.localScale = new Vector3( 1, 1 , 1); 
 
 		}
 	}

@@ -11,11 +11,11 @@ public class cameraController : MonoBehaviour {
 	 **/ 
 	
 	
-	Vector3 translation, targetPosition;
+	Vector3 translation, targetPosition, zoomTranslation;
 	int scrollArea = 25;
 	float scrollSpeed = 15;
-	int zoomSpeed = 50;
-	int playBound = 100;
+	int zoomSpeed = 1000;
+	int playBound = 1000;
 	int zoomMin = 15;
 	int zoomMax = 50;
 	
@@ -46,17 +46,24 @@ public class cameraController : MonoBehaviour {
 	void LateUpdate () {
 		//Reset translation vector
 		translation = Vector3.zero;
+		zoomTranslation = Vector3.zero;
 		targetPosition = Vector3.zero;
-		
+
+
+		zoomSpeed = (int) ( 100 * Camera.main.transform.position.y );
 		float zoomDelta = Input.GetAxis("Mouse ScrollWheel")*zoomSpeed*Time.deltaTime;
 		if (zoomDelta!=0)
 		{
 			if( perspCam ){
+				zoomTranslation += Camera.main.transform.forward * (zoomDelta);
+				/**
+
 				translation -= Vector3.up * zoomSpeed * zoomDelta;
 				targetPosition = transform.position + translation;
 				if( targetPosition.y > zoomMin && targetPosition.y < zoomMax ){
 					translation += Vector3.forward * ( Mathf.Tan(GetComponent<Camera>().transform.rotation.x)) * ( zoomSpeed * zoomDelta );
 				}
+				**/
 			} else {
 				GetComponent<Camera>().orthographicSize += zoomDelta;
 			}
@@ -143,15 +150,15 @@ public class cameraController : MonoBehaviour {
 		
 		if (targetPosition.x < -playBound || playBound < targetPosition.x)
 		{
-			translation.x = 0;
+			//translation.x = 0;
 		}
 		if (targetPosition.y < zoomMin || zoomMax < targetPosition.y)
 		{
-			translation.y = 0;
+			//translation.y = 0;
 		}
 		if (targetPosition.z < -playBound || playBound < targetPosition.z)
 		{
-			translation.z = 0;
+			//translation.z = 0;
 		}
 		if (Input.GetMouseButton (0) && Input.GetKey ( KeyCode.LeftAlt ) ) {
 			float rotateDelta = ((Input.mousePosition.x - lastMousePosition.x))*1.5f*Time.deltaTime;
@@ -170,6 +177,7 @@ public class cameraController : MonoBehaviour {
 		
 		
 		GetComponent<Camera>().transform.position += translation;
+		GetComponent<Camera> ().transform.position += zoomTranslation;
 		
 		lastMousePosition = Input.mousePosition;
 	}
