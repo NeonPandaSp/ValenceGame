@@ -26,6 +26,10 @@ public class generateZone : MonoBehaviour {
 		zoneZ = minPos.y;
 	}
 
+	public int getZoneArea(){
+		return (int) ( zoneWidth * zoneHeight );
+	}
+
 	public int getPropNum(){
 		float zoneArea = zoneWidth * zoneHeight;
 		if (zoneArea < 4) {
@@ -39,10 +43,17 @@ public class generateZone : MonoBehaviour {
 	public void Generate(int numProps){
 		GameObject zoneBounds 									= (GameObject)Instantiate (boundObject, new Vector3 (zoneX+zoneWidth/2, 3, zoneZ+zoneHeight/2), Quaternion.identity);
 		zoneBounds.gameObject.GetComponent<BoxCollider> ().size = new Vector3 (zoneWidth, 6, zoneHeight);
+
+		if ( getZoneArea() >= 25 && zoneWidth >= 5 && zoneWidth >= 5) {
+			Vector3 landmarkPosition = new Vector3 (Random.Range (zoneX, zoneX + zoneWidth), 0.0f, Random.Range (zoneZ, zoneZ + (zoneHeight)));
+			GameObject tempLandmark = (GameObject)Instantiate (Resources.Load ("landmark_0"), landmarkPosition, Quaternion.identity);
+			tempLandmark.transform.eulerAngles = new Vector3 (0, Random.Range (0, 360), 0);
+		}
+
 		if (numProps > 0) {
 			for (int i = 0; i <= numProps; i++) {
 				Vector3 propPosition 				= new Vector3 (Random.Range (zoneX ,zoneX + zoneWidth ), 0.5f ,  Random.Range (zoneZ,zoneZ + (zoneHeight)));
-				int randVal 						= (int) Random.Range (0,8);
+				int randVal 						= (int) Random.Range (0,7);
 				GameObject tempObject 				= (GameObject ) Instantiate(Resources.Load("prop_"+randVal), propPosition, Quaternion.identity);
 				tempObject.transform.eulerAngles 	= new Vector3 (Random.Range (0,45), Random.Range(0, 360), Random.Range (0,45));
 				tempObject.GetComponent<PropScript>().setZoneCoords( zoneWidth, zoneHeight, zoneX, zoneZ );

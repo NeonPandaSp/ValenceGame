@@ -12,12 +12,51 @@ public class InputController : MonoBehaviour {
 
 	GameObject myHoverObject;
 
+	public Material redMat, blueMat;
+
+	bool generate;
+
 	void Start(){
 		_tileMap = GetComponent<TileMap> ();
 		_generateZone = GetComponent < generateZone >();
 		myHoverObject = (GameObject) Instantiate (Resources.Load("Tile"), new Vector3 (0, 0, 0), Quaternion.identity);
+		generate = false;
 	}
-	
+
+	int getCurrentSize(){
+		return getCurrentWidth() * getCurrentHeight ();
+	}
+
+	int getCurrentWidth(){
+		float maxX, minX;
+		if( rootMousePos.x < currentTile.x ){
+			minX = rootMousePos.x;
+			maxX = currentTile.x;
+			
+		} else {
+			maxX = rootMousePos.x;
+			minX = currentTile.x;
+			maxX += 1;
+			minX += 1;
+		}
+		return (int) ( maxX - minX );
+	}
+
+	int getCurrentHeight(){
+		float maxY, minY;
+		if( rootMousePos.y < currentTile.y ){
+			minY = rootMousePos.y;
+			maxY = currentTile.y;
+			
+		} else {
+			maxY = rootMousePos.y;
+			minY = currentTile.y;
+			maxY += 1;
+			minY += 1;
+		}
+		return (int) ( maxY - minY );
+	}
+
 	// Update is called once per frame
 	void Update () {
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
@@ -37,13 +76,15 @@ public class InputController : MonoBehaviour {
 
 		}
 
-		if (Input.GetMouseButtonDown (0)) {
+		if (Input.GetMouseButtonDown (0) && !Input.GetKey ( KeyCode.LeftAlt )) {
 			if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
 				myHoverObject.transform.position = new Vector3( currentTile.x, 0.1f, currentTile.y );
 				rootMousePos = currentTile;
 			}
 		}
-		if (Input.GetMouseButton (0)) {
+		if (Input.GetMouseButton (0) && !Input.GetKey ( KeyCode.LeftAlt ) ) {
+
+
 			if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
 				if( rootMousePos.x >= currentTile.x ){ myHoverObject.transform.position = new Vector3( rootMousePos.x + 1, 0.1f, myHoverObject.transform.position.y ); }
 				else { myHoverObject.transform.position = new Vector3( rootMousePos.x, 0.1f, myHoverObject.transform.position.y ); }
@@ -56,8 +97,15 @@ public class InputController : MonoBehaviour {
 				myHoverObject.transform.localScale = new Vector3( -1 * scaleX, 1 , -1 * scaleY );
 
 			}
+			if( getCurrentSize() >= 25 && getCurrentWidth() >= 5 && getCurrentHeight() >= 5 ){
+				myHoverObject.GetComponentInChildren<MeshRenderer>().material = blueMat;
+				generate = true;
+			} else {
+				myHoverObject.GetComponentInChildren<MeshRenderer>().material = redMat;
+				generate = false;
+			}
 		}
-		if (Input.GetMouseButtonUp (0)) {
+		if (Input.GetMouseButtonUp (0) && !Input.GetKey ( KeyCode.LeftAlt ) ) {
 
 			Vector2 min;
 			Vector2 max;
@@ -81,10 +129,10 @@ public class InputController : MonoBehaviour {
 				max.y += 1;
 				min.y += 1;
 			}
-
-			_generateZone.setZoneSize( min , max );
-			_generateZone.Generate( _generateZone.getPropNum() );
-			
+			if( generate ){
+				_generateZone.setZoneSize( min , max );
+				_generateZone.Generate( _generateZone.getPropNum() );
+			}
 			if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
 				myHoverObject.transform.position = new Vector3( currentTile.x, 1, currentTile.y );
 			}

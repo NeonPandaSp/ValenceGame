@@ -22,10 +22,12 @@ public class cameraController : MonoBehaviour {
 	int panSpeed = 50;
 	int panAngleMin = 50;
 	int panAngleMax = 60;
-	
+
 	float currentTime = -1;
 	float initialTime;
-	
+
+
+
 	Vector2 lastMousePosition;
 	
 	public bool mouseEdgeControl;
@@ -33,7 +35,7 @@ public class cameraController : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		translation = new Vector3 (0,20,-10);
+		translation = new Vector3 (0,20,0);
 		GetComponent<Camera>().transform.position = translation;
 		GetComponent<Camera> ().transform.eulerAngles = new Vector3 (30, 45, 0);
 		
@@ -44,6 +46,7 @@ public class cameraController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate () {
+
 		//Reset translation vector
 		translation = Vector3.zero;
 		zoomTranslation = Vector3.zero;
@@ -161,9 +164,28 @@ public class cameraController : MonoBehaviour {
 			//translation.z = 0;
 		}
 		if (Input.GetMouseButton (0) && Input.GetKey ( KeyCode.LeftAlt ) ) {
-			float rotateDelta = ((Input.mousePosition.x - lastMousePosition.x))*1.5f*Time.deltaTime;
-			float rotatePan = GetComponent<Camera>().transform.eulerAngles.y - rotateDelta * 2;
-			GetComponent<Camera>().transform.eulerAngles = new Vector3(GetComponent<Camera>().transform.eulerAngles.x, rotatePan, 0);
+			//float rotateDelta = ((Input.mousePosition.x - lastMousePosition.x))*1.5f*Time.deltaTime;
+			//float rotatePan = GetComponent<Camera>().transform.eulerAngles.y - rotateDelta * 2;
+			//GetComponent<Camera>().transform.eulerAngles = new Vector3(GetComponent<Camera>().transform.eulerAngles.x, rotatePan, 0);
+			/**
+			float rotateDelta = 25;
+			Vector3 centerScreen = new Vector3( Screen.width/2, 0, Screen.height/2 );
+
+			Ray ray = Camera.main.ScreenPointToRay ( centerScreen );
+			RaycastHit hitInfo;
+			
+			if ( ground.GetComponent<Collider>().Raycast (ray, out hitInfo, Mathf.Infinity)) {
+				int x = Mathf.FloorToInt( hitInfo.point.x );
+				int z = Mathf.FloorToInt( hitInfo.point.z );
+				Vector3 lookAtTarget;
+				lookAtTarget = new Vector3( x, 0, z );
+
+				//Camera.main.transform.position = new Vector3 (lookAtTarget.x, Camera.main.transform.position.y, Camera.main.transform.position.z );
+				//Camera.main.transform.LookAt (lookAtTarget);
+				GetComponent<Camera>().transform.RotateAround( lookAtTarget, Vector2.up, rotateDelta*Time.deltaTime);
+
+			}
+			**/
 			//rotatePan = Mathf.Clamp(rotatePan, -180, 180);
 			/**
 			if( Input.mousePosition.x < Screen.width/2 ){
@@ -175,10 +197,10 @@ public class cameraController : MonoBehaviour {
 		// Translate Camera
 		translation = Quaternion.AngleAxis(GetComponent<Camera>().transform.eulerAngles.y, Vector3.up) * translation;
 		
-		
+
 		GetComponent<Camera>().transform.position += translation;
-		GetComponent<Camera> ().transform.position += zoomTranslation;
-		
+		GetComponent<Camera>().transform.position += zoomTranslation;
+
 		lastMousePosition = Input.mousePosition;
 	}
 	
