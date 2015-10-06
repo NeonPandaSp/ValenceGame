@@ -12,7 +12,9 @@ public class InputController : MonoBehaviour {
 
 	GameObject myHoverObject;
 
-	public Material redMat, blueMat;
+	public Material redMat, blueMat, yellowMat, greenMat;
+
+	string currentColor;
 
 	bool generate;
 
@@ -21,6 +23,21 @@ public class InputController : MonoBehaviour {
 		_generateZone = GetComponent < generateZone >();
 		myHoverObject = (GameObject) Instantiate (Resources.Load("Tile"), new Vector3 (0, 0, 0), Quaternion.identity);
 		generate = false;
+		currentColor = "blue";
+	}
+
+
+	public void selectedMaterial( string color ){
+		if (color == "blue") {
+			myHoverObject.GetComponentInChildren<MeshRenderer> ().material = blueMat;
+			currentColor = "blue";
+		} else if (color == "yellow") {
+			myHoverObject.GetComponentInChildren<MeshRenderer> ().material = yellowMat;
+			currentColor = "yellow";
+		} else if (color == "green") {
+			myHoverObject.GetComponentInChildren<MeshRenderer> ().material = greenMat;
+			currentColor = "green";
+		}
 	}
 
 	int getCurrentSize(){
@@ -98,7 +115,7 @@ public class InputController : MonoBehaviour {
 
 			}
 			if( getCurrentSize() >= 25 && getCurrentWidth() >= 5 && getCurrentHeight() >= 5 ){
-				myHoverObject.GetComponentInChildren<MeshRenderer>().material = blueMat;
+				selectedMaterial( currentColor );
 				generate = true;
 			} else {
 				myHoverObject.GetComponentInChildren<MeshRenderer>().material = redMat;
