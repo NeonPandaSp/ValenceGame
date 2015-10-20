@@ -149,10 +149,10 @@ public class InputController : MonoBehaviour {
 			if( generate ){
 				_generateZone.setZoneSize( min , max );
 				_generateZone.Generate( _generateZone.getPropNum() );
-
+				/**
 				foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
 					AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
-				}
+				} **/
 			}
 			if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
 				myHoverObject.transform.position = new Vector3( currentTile.x, 1, currentTile.y );
