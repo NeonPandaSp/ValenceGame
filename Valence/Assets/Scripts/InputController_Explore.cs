@@ -6,6 +6,8 @@ public class InputController_Explore : MonoBehaviour {
 	generateZone _generateZone;
 	public ExploreMode_GameController _GameController;
 	public FolkUnit _myFolkUnit;
+
+	public LineRenderer myLine;
 	
 	Vector2 currentTile;
 	
@@ -46,10 +48,15 @@ public class InputController_Explore : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		Vector3 lineStart = _GameController.selectedUnit.transform.position;
+		lineStart.x += 0.5f;
+		lineStart.z += 0.5f;
+		myLine.SetPosition (0, lineStart);
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit hitInfo;
 		
 		if ( GetComponent<Collider>().Raycast (ray, out hitInfo, Mathf.Infinity)) {
+			myLine.SetPosition( 1, hitInfo.point );
 			int x = Mathf.FloorToInt( hitInfo.point.x  / _tileMap.tileSize );
 			int z = Mathf.FloorToInt( hitInfo.point.z / _tileMap.tileSize );
 			currentTile.x = x;

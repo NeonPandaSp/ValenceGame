@@ -13,6 +13,10 @@ public class FolkUnit : MonoBehaviour {
 	public int movement;
 	public int range;
 
+	public bool moving;
+	public Vector2 target;
+
+
 	// Use this for initialization
 	void Start () {
 		currentPosition = new Vector2( transform.position.x, transform.position.z );
@@ -21,22 +25,27 @@ public class FolkUnit : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		currentPosition = new Vector2 (transform.position.x, transform.position.z);
+		if (moving) {
+			MoveObject( transform.position, target );
+		}
 	}
 
 	public void Move( Vector2 targetPosition ){
 		lastPosition = transform.position;
 		//moveStart (targetPosition);
+		moving = true;
+		target = targetPosition;
 		//transform.position = Vector3.Lerp (lastPosition, new Vector3 (targetPosition.x, 0, targetPosition.y), 3.0f);
-		transform.position = new Vector3 (targetPosition.x, 0, targetPosition.y);
+		//transform.position = new Vector3 (targetPosition.x, 0, targetPosition.y);
 		currentPosition = targetPosition;
 		canMove = false;
 	}
-
+	/**
 	IEnumerator moveStart(Vector2 targetPosition){
 		while( true ){
 			yield return StartCoroutine( MoveObject(transform, new Vector3( lastPosition.x, 0, lastPosition.y), new Vector3( targetPosition.x, 0, targetPosition.y) , 3.0f));
 		}
-	}
+	}**/
 
 	public bool withinMoveRange( Vector2 targetPosition ){
 		if (movement >= getDistance (currentPosition, targetPosition)) {
@@ -56,14 +65,13 @@ public class FolkUnit : MonoBehaviour {
 		return d;
 	}
 
-	IEnumerator MoveObject(Transform thisTransform, Vector3 startPos, Vector3 endPos, float time)
+	void MoveObject(Vector3 currentPos,  Vector3 endPos)
 	{
-		float i= 0.0f;
-		float rate= 1.0f/time;
-		while (i < 1.0f) {
-			i += Time.deltaTime * rate;
-			thisTransform.position = Vector3.Lerp(startPos, endPos, i);
-			yield return null; 
+		endPos = new Vector3 (endPos.x, 0, endPos.y);
+		transform.position = Vector3.Lerp(currentPos, endPos, Time.deltaTime);
+		if (transform.position == endPos) {
+			moving = false;
 		}
+
 	}
 }
