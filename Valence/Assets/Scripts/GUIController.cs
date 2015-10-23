@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine.UI;
 public class GUIController : MonoBehaviour {
 	public InputController _inputController;
-
 	public GameObject GUIObject;
 
 	public Text scrapText, foodText, powerText;

@@ -6,6 +6,8 @@ public class GameController : MonoBehaviour {
 	public int[,] tiles = new int[mapSize,mapSize];
 	public Vector3 rootMousePos;
 	public bool rootSet = false;
+
+	public int food;
 	
 	// Use this for initialization
 	void Start () {

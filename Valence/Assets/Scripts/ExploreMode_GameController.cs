@@ -18,7 +18,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 	public GameObject[,] tileVisuals;
 	public GameObject moveTile;
-
+	public GameObject pointObject;
+	int[,] borderVectors = new int[mapSize,mapSize];
 
 	// Use this for initialization
 	void Start () {
@@ -29,17 +30,12 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 		for( int x = 0; x < mapSize; x++){
 			for( int y = 0; y < mapSize; y++){
-				int rand = Random.Range(0,10);
-				if( rand == 1 ){
-					tiles[x,y] = 2;
-				} else {
-					tiles[x,y] = 0;
-				}
+				tiles[x,y] = 1;
 			}
 		}
 		for (int i = 0; i < 4; i++) {
-			folk[i].transform.position =  new Vector3 (i + 1, 0, i+1);
-			folk[i].currentPosition = new Vector2( i + 1, i + 1);
+			folk[i].transform.position =  new Vector3 (i * 2, 0, i*2);
+			folk[i].currentPosition = new Vector2( i * 2, i*2);
 		}
 		
 		selectedUnit = folk [0];
@@ -54,26 +50,108 @@ public class ExploreMode_GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+
+		List<Vector3> lineVertex = new List<Vector3> ();
+		Vector3 lastVector = new Vector3( -1, -1, -1 );
+		
+		for( int i = 0; i < mapSize; i++ ){
+			for( int j = 0; j < mapSize; j++ ){
+				if( borderVectors[i,j] <= 3 && borderVectors[i,j] >= 1 ){
+					// border vertex!
+					lineVertex.Add ( new Vector3( i, 0.1f, j ) );
+					//Instantiate ( pointObject, new Vector3( i, 0.5f, j ), Quaternion.identity );
+				}
+			}
+		}
+		//Instantiate ( pointObject, lineVertex[0], Quaternion.identity );
+		List<Vector3> orderedVertex = new List<Vector3>();
+		orderedVertex.Add ( lineVertex[0] );
+		int index = 0;
+		while (index < lineVertex.Count) {
+			if( lineVertex.Contains( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z-1 ) ) && 
+			   !orderedVertex.Contains( new Vector3( orderedVertex[index].x,0.1f, orderedVertex[index].z-1 ) ) ){
+				//Down
+				orderedVertex.Add ( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z-1 ) );
+				
+			} else if( lineVertex.Contains( new Vector3( orderedVertex[index].x + 1, 0.1f, orderedVertex[index].z ) ) && 
+			        !orderedVertex.Contains( new Vector3( orderedVertex[index].x + 1, 0.1f, orderedVertex[index].z ) ) ){
+				//Right
+				orderedVertex.Add ( new Vector3( orderedVertex[index].x + 1, 0.1f, orderedVertex[index].z ) );
+				
+			}else if( lineVertex.Contains( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z+1) ) && 
+			          !orderedVertex.Contains( new Vector3( orderedVertex[index].x , 0.1f, orderedVertex[index].z+1 ) ) ){
+				//Up
+				orderedVertex.Add ( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z+1) );
+
+			} else if( lineVertex.Contains( new Vector3( orderedVertex[index].x -1, 0.1f, orderedVertex[index].z ) ) && 
+			         !orderedVertex.Contains( new Vector3( orderedVertex[index].x -1 ,0.1f, orderedVertex[index].z ) ) ){
+				//Left
+				orderedVertex.Add ( new Vector3( orderedVertex[index].x -1, 0.1f, orderedVertex[index].z ) );
+				
+			}  else {
+				orderedVertex.Add( orderedVertex[0] );
+			}
+			index++;
+
+		}
+		foreach( Vector3 v in orderedVertex ){
+			if( lastVector.x != -1 || lastVector.y != -1 || lastVector.z != -1 ){
+				Debug.DrawLine(lastVector, v, Color.red);
+			}
+			lastVector = v;
+		}
+
 	}
 
 	public class Node{
 		public List<Node> neighbours;
 		public Vector2 nodePos;
-		
+		public int x, y;
+
 		public Node(){
 			neighbours = new List<Node>();
+		}
+		
+		public float DistanceTo(Node n) {
+			if(n == null) {
+				Debug.LogError("WTF?");
+			}
+			
+			return Vector2.Distance(
+				new Vector2(x, y),
+				new Vector2(n.x, n.y)
+				);
 		}
 	}
 
 	public void GenerateMovementRange(int x, int y){
-		for (int i = -5; i <= 5; i++) {
-			for (int j=-5; j <= 5; j++) {
-				if( selectedUnit.getDistance(new Vector2(x,y), new Vector2(x+i,y+j)) <= 5 ){
-					GameObject ob = (GameObject) Instantiate (moveTile, new Vector3 (x+i, 0, y+j), Quaternion.identity);
-					ob.transform.SetParent( selectedUnit.transform );
+
+		int[,] vectors = new int[mapSize,mapSize];
+
+		for (int i = -selectedUnit.movement; i <= selectedUnit.movement; i++) {
+			for (int j=-selectedUnit.movement; j <= selectedUnit.movement; j++) {
+
+				if ((int)selectedUnit.currentPosition.x + i >= 0 && (int)selectedUnit.currentPosition.x + i < mapSize && 
+					(int)selectedUnit.currentPosition.y + j >= 0 && (int)selectedUnit.currentPosition.y + j < mapSize) {
+
+					if (selectedUnit.withinMoveRange ( new Vector2( (int)selectedUnit.currentPosition.x + i, (int)selectedUnit.currentPosition.y + j) ) ) {
+
+						int tPx = (int)selectedUnit.currentPosition.x + i;
+						int tPy = (int)selectedUnit.currentPosition.y + j ;
+
+						vectors[tPx, tPy] += 1;
+						vectors[tPx+1, tPy] += 1;
+						vectors[tPx+1, tPy+1] += 1;
+						vectors[tPx, tPy+1] += 1;
+						//GameObject ob = (GameObject)Instantiate (moveTile, new Vector3 (x + i, 0, y + j), Quaternion.identity);
+						//ob.transform.SetParent (selectedUnit.transform);
+					}
 				}
 			}
 		}
+		borderVectors = vectors;
+
+
 
 	}
 
@@ -100,6 +178,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 		for (int x=0; x < mapSize; x++) {
 			for( int y=0; y < mapSize; y++){
 				graph[x,y].nodePos = new Vector2(x,y);
+				graph[x,y].x = x;
+				graph[x,y].y = y;
 				if( x > 0 )
 					graph[x,y].neighbours.Add ( graph[x-1, y ] );
 				if( x < mapSize - 1 )
@@ -110,9 +190,127 @@ public class ExploreMode_GameController : MonoBehaviour {
 					graph[x,y].neighbours.Add (graph[x, y+1 ] );
 			}
 		}
+
 	}
 	public void MoveIcon(){
 		icon.selectUnit = selectedUnit;
 		selectedUnit.canMove = true;
 	}
+
+	public void GeneratePathTo(int x, int y) {
+		// Clear out our unit's old path.
+		selectedUnit.GetComponent<FolkUnit>().currentPath = null;
+		
+		Dictionary<Node, float> dist = new Dictionary<Node, float>();
+		Dictionary<Node, Node> prev = new Dictionary<Node, Node>();
+		
+		// Setup the "Q" -- the list of nodes we haven't checked yet.
+		List<Node> unvisited = new List<Node>();
+		
+		Node source = graph[
+		                    (int) selectedUnit.GetComponent<FolkUnit>().currentPosition.x, 
+		                    (int) selectedUnit.GetComponent<FolkUnit>().currentPosition.y
+		                    ];
+		
+		Node target = graph[
+		                    x, 
+		                    y
+		                    ];
+		
+		dist[source] = 0;
+		prev[source] = null;
+		
+		// Initialize everything to have INFINITY distance, since
+		// we don't know any better right now. Also, it's possible
+		// that some nodes CAN'T be reached from the source,
+		// which would make INFINITY a reasonable value
+		foreach(Node v in graph) {
+			if(v != source) {
+				dist[v] = Mathf.Infinity;
+				prev[v] = null;
+			}
+			
+			unvisited.Add(v);
+		}
+		
+		while(unvisited.Count > 0) {
+			// "u" is going to be the unvisited node with the smallest distance.
+			Node u = null;
+			
+			foreach(Node possibleU in unvisited) {
+				if(u == null || dist[possibleU] < dist[u]) {
+					u = possibleU;
+				}
+			}
+			
+			if(u == target) {
+				break;	// Exit the while loop!
+			}
+			
+			unvisited.Remove(u);
+			
+			foreach(Node v in u.neighbours) {
+				float alt = dist[u] + u.DistanceTo(v);
+				if( alt < dist[v] ) {
+					dist[v] = alt;
+					prev[v] = u;
+				}
+			}
+		}
+		
+		// If we get there, the either we found the shortest route
+		// to our target, or there is no route at ALL to our target.
+		
+		if(prev[target] == null) {
+			// No route between our target and the source
+			return;
+		}
+		
+		List<Node> currentPath = new List<Node>();
+		
+		Node curr = target;
+		
+		// Step through the "prev" chain and add it to our path
+		while(curr != null) {
+			currentPath.Add(curr);
+			curr = prev[curr];
+		}
+		
+		// Right now, currentPath describes a route from out target to our source
+		// So we need to invert it!
+		
+		currentPath.Reverse();
+		
+		selectedUnit.GetComponent<FolkUnit>().currentPath = currentPath;
+	}
+
+	public float CostToEnterTile(int sourceX, int sourceY, int targetX, int targetY) {
+		
+		TileType tt = tileTypes[ tiles[targetX,targetY] ];
+		
+		if(UnitCanEnterTile(targetX, targetY) == false)
+			return Mathf.Infinity;
+		
+		float cost = tt.movementCost;
+		
+		if( sourceX!=targetX && sourceY!=targetY) {
+			// We are moving diagonally!  Fudge the cost for tie-breaking
+			// Purely a cosmetic thing!
+			cost += 0.001f;
+		}
+		
+		return cost;
+		
+	}
+
+	public bool UnitCanEnterTile(int x, int y) {
+		
+		// We could test the unit's walk/hover/fly type against various
+		// terrain flags here to see if they are allowed to enter the tile.
+		
+		return tileTypes[ tiles[x,y] ].isWalkable;
+	}
+	
+
+
 }
