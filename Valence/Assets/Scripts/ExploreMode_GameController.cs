@@ -30,14 +30,24 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 		for( int x = 0; x < mapSize; x++){
 			for( int y = 0; y < mapSize; y++){
-				tiles[x,y] = 1;
+				int rand = (int) Random.Range( 0, 100 );
+				if( rand < 100 ){
+					tiles[x,y] = 1;
+					Instantiate ( tileTypes[0].visualPrefab,new Vector3( x+0.5f, 0, y+0.5f ), Quaternion.identity );
+				} else{
+					tiles[x,y] = 2;
+					Instantiate ( tileTypes[2].visualPrefab,new Vector3( x+0.5f, 0, y+0.5f ), Quaternion.identity );
+				}
 			}
 		}
 		for (int i = 0; i < 4; i++) {
 			folk[i].transform.position =  new Vector3 (i * 2, 0, i*2);
 			folk[i].currentPosition = new Vector2( i * 2, i*2);
 		}
-		
+
+		//folk[0].transform.position =  new Vector3 (25, 0, 25);
+		//folk[0].currentPosition =  new Vector3 (25, 0, 25);
+
 		selectedUnit = folk [0];
 		selectedIndex = 0;
 
@@ -59,6 +69,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 				if( borderVectors[i,j] <= 3 && borderVectors[i,j] >= 1 ){
 					// border vertex!
 					lineVertex.Add ( new Vector3( i, 0.1f, j ) );
+					//Debug.Log ( "borderVectors added To Line Vertex" );
 					//Instantiate ( pointObject, new Vector3( i, 0.5f, j ), Quaternion.identity );
 				}
 			}
@@ -69,34 +80,42 @@ public class ExploreMode_GameController : MonoBehaviour {
 		int index = 0;
 		while (index < lineVertex.Count) {
 			if( lineVertex.Contains( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z-1 ) ) && 
-			   !orderedVertex.Contains( new Vector3( orderedVertex[index].x,0.1f, orderedVertex[index].z-1 ) ) ){
+			   !orderedVertex.Contains( new Vector3( orderedVertex[index].x,0.1f, orderedVertex[index].z-1 ) ) &&
+			   CostToEnterTile((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y, (int)orderedVertex[index].x, (int)orderedVertex[index].z-1) < selectedUnit.movement  ){
 				//Down
 				orderedVertex.Add ( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z-1 ) );
 				
+				
 			} else if( lineVertex.Contains( new Vector3( orderedVertex[index].x + 1, 0.1f, orderedVertex[index].z ) ) && 
-			        !orderedVertex.Contains( new Vector3( orderedVertex[index].x + 1, 0.1f, orderedVertex[index].z ) ) ){
+			        !orderedVertex.Contains( new Vector3( orderedVertex[index].x + 1, 0.1f, orderedVertex[index].z ) ) &&
+			          CostToEnterTile((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y, (int)orderedVertex[index].x, (int)orderedVertex[index].z) < selectedUnit.movement ){
 				//Right
 				orderedVertex.Add ( new Vector3( orderedVertex[index].x + 1, 0.1f, orderedVertex[index].z ) );
 				
-			}else if( lineVertex.Contains( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z+1) ) && 
-			          !orderedVertex.Contains( new Vector3( orderedVertex[index].x , 0.1f, orderedVertex[index].z+1 ) ) ){
+			} else if( lineVertex.Contains( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z+1) ) && 
+			          !orderedVertex.Contains( new Vector3( orderedVertex[index].x , 0.1f, orderedVertex[index].z+1 ) ) &&
+			         CostToEnterTile((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y, (int)orderedVertex[index].x-1, (int)orderedVertex[index].z) < selectedUnit.movement){
 				//Up
 				orderedVertex.Add ( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z+1) );
-
 			} else if( lineVertex.Contains( new Vector3( orderedVertex[index].x -1, 0.1f, orderedVertex[index].z ) ) && 
-			         !orderedVertex.Contains( new Vector3( orderedVertex[index].x -1 ,0.1f, orderedVertex[index].z ) ) ){
+			         !orderedVertex.Contains( new Vector3( orderedVertex[index].x -1 ,0.1f, orderedVertex[index].z ) ) &&
+			          CostToEnterTile((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y, (int)orderedVertex[index].x-1, (int)orderedVertex[index].z-1) < selectedUnit.movement ){
 				//Left
 				orderedVertex.Add ( new Vector3( orderedVertex[index].x -1, 0.1f, orderedVertex[index].z ) );
 				
 			}  else {
 				orderedVertex.Add( orderedVertex[0] );
+
 			}
 			index++;
 
 		}
+		for (int i = 0; i < 12; i++) {
+			//Instantiate ( pointObject, orderedVertex[i], Quaternion.identity );
+		}
 		foreach( Vector3 v in orderedVertex ){
 			if( lastVector.x != -1 || lastVector.y != -1 || lastVector.z != -1 ){
-				Debug.DrawLine(lastVector, v, Color.red);
+				Debug.DrawLine(lastVector, v, Color.blue);
 			}
 			lastVector = v;
 		}
@@ -134,23 +153,24 @@ public class ExploreMode_GameController : MonoBehaviour {
 				if ((int)selectedUnit.currentPosition.x + i >= 0 && (int)selectedUnit.currentPosition.x + i < mapSize && 
 					(int)selectedUnit.currentPosition.y + j >= 0 && (int)selectedUnit.currentPosition.y + j < mapSize) {
 
-					if (selectedUnit.withinMoveRange ( new Vector2( (int)selectedUnit.currentPosition.x + i, (int)selectedUnit.currentPosition.y + j) ) ) {
-
+					if (selectedUnit.withinMoveRange ( new Vector2( (int)selectedUnit.currentPosition.x + i, (int)selectedUnit.currentPosition.y + j) ) && 
+					    CostToEnterTile((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y, (int)selectedUnit.currentPosition.x + i, (int)selectedUnit.currentPosition.y + j) < selectedUnit.movement ) {
 						int tPx = (int)selectedUnit.currentPosition.x + i;
-						int tPy = (int)selectedUnit.currentPosition.y + j ;
+						int tPy = (int)selectedUnit.currentPosition.y + j;
 
 						vectors[tPx, tPy] += 1;
 						vectors[tPx+1, tPy] += 1;
 						vectors[tPx+1, tPy+1] += 1;
 						vectors[tPx, tPy+1] += 1;
-						//GameObject ob = (GameObject)Instantiate (moveTile, new Vector3 (x + i, 0, y + j), Quaternion.identity);
+						//Debug.Log ("Loaded"+i+" "+j);
+						//GameObject ob = (GameObject)Instantiate (moveTile, new Vector3 ((int)selectedUnit.currentPosition.x + i, 0,(int)selectedUnit.currentPosition.y + j), Quaternion.identity);
 						//ob.transform.SetParent (selectedUnit.transform);
 					}
 				}
 			}
 		}
 		borderVectors = vectors;
-
+		Debug.Log ("borderVectors set");
 
 
 	}
@@ -201,6 +221,11 @@ public class ExploreMode_GameController : MonoBehaviour {
 		// Clear out our unit's old path.
 		selectedUnit.GetComponent<FolkUnit>().currentPath = null;
 		
+		if( UnitCanEnterTile(x,y) == false ) {
+			// We probably clicked on a mountain or something, so just quit out.
+			return;
+		}
+		
 		Dictionary<Node, float> dist = new Dictionary<Node, float>();
 		Dictionary<Node, Node> prev = new Dictionary<Node, Node>();
 		
@@ -227,6 +252,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 		foreach(Node v in graph) {
 			if(v != source) {
 				dist[v] = Mathf.Infinity;
+				//dist[v] = selectedUnit.movement;
 				prev[v] = null;
 			}
 			
@@ -250,7 +276,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 			unvisited.Remove(u);
 			
 			foreach(Node v in u.neighbours) {
-				float alt = dist[u] + u.DistanceTo(v);
+				//float alt = dist[u] + u.DistanceTo(v);
+				float alt = dist[u] + CostToEnterTile(u.x, u.y, v.x, v.y);
 				if( alt < dist[v] ) {
 					dist[v] = alt;
 					prev[v] = u;
@@ -280,8 +307,9 @@ public class ExploreMode_GameController : MonoBehaviour {
 		// So we need to invert it!
 		
 		currentPath.Reverse();
-		
-		selectedUnit.GetComponent<FolkUnit>().currentPath = currentPath;
+		if (currentPath.Count - 1 <= selectedUnit.GetComponent<FolkUnit> ().movement) {
+			selectedUnit.GetComponent<FolkUnit> ().currentPath = currentPath;
+		}
 	}
 
 	public float CostToEnterTile(int sourceX, int sourceY, int targetX, int targetY) {
@@ -298,7 +326,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 			// Purely a cosmetic thing!
 			cost += 0.001f;
 		}
-		
+		//Debug.Log (cost);
 		return cost;
 		
 	}
@@ -307,7 +335,6 @@ public class ExploreMode_GameController : MonoBehaviour {
 		
 		// We could test the unit's walk/hover/fly type against various
 		// terrain flags here to see if they are allowed to enter the tile.
-		
 		return tileTypes[ tiles[x,y] ].isWalkable;
 	}
 	

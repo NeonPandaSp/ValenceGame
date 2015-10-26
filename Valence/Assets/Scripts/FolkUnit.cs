@@ -11,12 +11,12 @@ public class FolkUnit : MonoBehaviour {
 	public int health;
 
 	public int movement;
-	public int range;
+	public int attackRange;
 
 	public bool moving;
 	public Vector2 target;
 
-	public float moveSpeed = 1000f;
+	public float moveSpeed = 1;
 
 	public List<ExploreMode_GameController.Node> currentPath = null;
 
@@ -25,6 +25,7 @@ public class FolkUnit : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		currentPosition = new Vector2( transform.position.x, transform.position.z );
+		moving = false;
 	}
 	
 	// Update is called once per frame
@@ -58,6 +59,9 @@ public class FolkUnit : MonoBehaviour {
 
 	public void MoveNextTile() {
 		float remainingMovement = moveSpeed;
+
+		//MoveObject (transform.position, currentPath [currentPath.Count - 1].nodePos);
+		
 		while(remainingMovement > 0) {
 			if(currentPath==null)
 				return;
@@ -70,7 +74,7 @@ public class FolkUnit : MonoBehaviour {
 			currentPosition.y = currentPath[1].y;
 			
 			transform.position = new Vector3(currentPosition.x, 0, currentPosition.y);
-			
+
 			// Remove the old "current" tile
 			currentPath.RemoveAt(0);
 			
@@ -79,6 +83,7 @@ public class FolkUnit : MonoBehaviour {
 				// destination -- and we are standing on it!
 				// So let's just clear our pathfinding info.
 				currentPath = null;
+				canMove = false;
 				_GameController.GenerateMovementRange((int)transform.position.x,(int)transform.position.z);
 			}
 		}
@@ -120,13 +125,12 @@ public class FolkUnit : MonoBehaviour {
 
 	void MoveObject(Vector3 currentPos,  Vector3 endPos)
 	{
-		/**
-		endPos = new Vector3 (endPos.x, 0, endPos.y);
-		transform.position = Vector3.Lerp(currentPos, endPos, Time.deltaTime);
-		if (transform.position == endPos) {
-			moving = false;
+		if (moving) {
+			endPos = new Vector3 (endPos.x, 0, endPos.y);
+			transform.position = Vector3.Lerp (currentPos, endPos, Time.deltaTime);
+			if (transform.position == endPos) {
+				moving = false;
+			}
 		}
-		**/
-
 	}
 }
