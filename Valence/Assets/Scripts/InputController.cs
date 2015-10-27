@@ -35,6 +35,7 @@ public class InputController : MonoBehaviour {
 			myHoverObject.GetComponentInChildren<MeshRenderer> ().material = yellowMat;
 			currentColor = "yellow";
 		} else if (color == "green") {
+
 			myHoverObject.GetComponentInChildren<MeshRenderer> ().material = greenMat;
 			currentColor = "green";
 		}

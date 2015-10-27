@@ -7,7 +7,7 @@ public class GameController : MonoBehaviour {
 	public Vector3 rootMousePos;
 	public bool rootSet = false;
 
-	public int food;
+	public float food, power, water;
 	
 	// Use this for initialization
 	void Start () {

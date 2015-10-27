@@ -72,6 +72,7 @@ public class GUIController : MonoBehaviour {
 
 	public void shelterPressed(){
 		_inputController.selectedMaterial ("blue");
+		Debug.Log ("Green!");
 	}
 	public void foodPressed(){
 		_inputController.selectedMaterial ("green");
