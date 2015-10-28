@@ -35,11 +35,11 @@ public class BuildingType  {
 		if (typeName == "shelter") {
 			return 1;
 		} else if (typeName == "farm") {
-			return 15;
+			return 1;
 		} else if (typeName == "power") {
-			return 15;
+			return 1;
 		} else if (typeName == "water") {
-			return 15;
+			return 1;
 		} else {
 			Debug.Log ( "Production Type Error");
 			return 0.0f;

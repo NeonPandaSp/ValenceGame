@@ -9,16 +9,27 @@ public class BuildingScript : MonoBehaviour {
 	public string myType; 
 	public int myArea; 
 
+	public GameObject[] assignedAgents;
+		
+	public bool initProduction;
+
 	// Use this for initialization
 	void Start () {
+		GameObject gameControllerObject =  GameObject.FindGameObjectWithTag("GameController");
+		_myGameController = gameControllerObject.GetComponent<GameController> ();
 
 		bType = new BuildingType (myType, myArea);
+		assignedAgents = new GameObject[3];
+		initProduction = false;
 		beginProduction ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+		if (initProduction) {
+			//beginProduction ();
+			//initProduction = false;
+		}
 	}
 
 	void beginProduction(){
