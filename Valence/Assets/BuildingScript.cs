@@ -18,28 +18,31 @@ public class BuildingScript : MonoBehaviour {
 		GameObject gameControllerObject =  GameObject.FindGameObjectWithTag("GameController");
 		_myGameController = gameControllerObject.GetComponent<GameController> ();
 
-		bType = new BuildingType (myType, myArea);
+
 		assignedAgents = new GameObject[3];
 		initProduction = false;
-		beginProduction ();
+		//beginProduction ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (initProduction) {
-			//beginProduction ();
-			//initProduction = false;
-		}
+
 	}
 
-	void beginProduction(){
-		InvokeRepeating("GenerateResource", bType.pTime, bType.pTime);
+	public void initBuildingType(){
+		bType = new BuildingType (myType, myArea);
+	}
+
+	public void beginProduction(){
+		Debug.Log (bType.pTime);
+		InvokeRepeating("GenerateResource",bType.pTime,bType.pTime);
 	}
 
 	void GenerateResource(){
+		Debug.Log ("GENERATING!");
 		if (bType.typeName == "shelter") {
 			// nada 
-		} else if (bType.typeName == "farm") {
+		} else if (bType.typeName == "food") {
 			_myGameController.food += bType.pRate;
 		} else if (bType.typeName == "power") {
 			_myGameController.power += bType.pRate;

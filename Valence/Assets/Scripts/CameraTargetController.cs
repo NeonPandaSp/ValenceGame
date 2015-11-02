@@ -47,14 +47,14 @@ public class CameraTargetController : MonoBehaviour {
 			} else if( Input.mousePosition.x < lastMousePositionX - 2 ) {
 				transform.Rotate(-1*transform.up * rotateDelta * Time.deltaTime);
 			}
-
+			/**
 			if( Input.mousePosition.y > lastMousePositionY + 2 ){
 				transform.Rotate(transform.right * rotateDelta * Time.deltaTime);
 				transform.Rotate(transform.forward * rotateDelta * Time.deltaTime);
 			} else if( Input.mousePosition.y < lastMousePositionY - 2 ) {
 				transform.Rotate(-1*transform.right * rotateDelta * Time.deltaTime);
 				transform.Rotate(-1*transform.forward * rotateDelta * Time.deltaTime);
-			}
+			} **/
 			Vector3 myRotation = new Vector3 ( transform.rotation.x, transform.rotation.y, transform.rotation.z );
 			//Camera.main.transform.RotateAround(Vector3.zero, Vector3.up, 20 * Time.deltaTime);
 			//Camera.main.transform.RotateAround (this.transform.position, Vector3.right, 10 );
