@@ -16,7 +16,7 @@ public class GUIToggle_07 : MonoBehaviour {
     
     void Start() {
 
-        jobUI = GameObject.Find("JobUI").GetComponent<JobUI>();
+        //jobUI = GameObject.Find("JobUI").GetComponent<JobUI>();
 
     }
 
@@ -48,16 +48,16 @@ public class GUIToggle_07 : MonoBehaviour {
                     agentLogic.jobState = AgentLogic_07.jobSubState.Farmer;
 
                     //Ensure that there is no -Count
-                    if (jobUI.farmerCount >= 0) {
+                    /*if (jobUI.farmerCount >= 0) {
 
                         //Increment the number of farmers by 1
                         jobUI.farmerCount += 1;
-                    }
+                    }*/
                 }
             }
 
             //Check if there is a hospital
-            if (GameObject.FindWithTag("Hospital")) {
+            /*if (GameObject.FindWithTag("Hospital")) {
 
                 if (GUI.Button(new Rect(10, 30, 100, 20), "Assign Medic") && (agentLogic.jobState != AgentLogic_07.jobSubState.Medic)) {
                     
@@ -80,7 +80,7 @@ public class GUIToggle_07 : MonoBehaviour {
                     
                 }
 
-            }
+            }*/
         }
     }
 
