@@ -10,7 +10,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 	public TileType[] tileTypes;
 
 	public FolkUnit[] folk = new FolkUnit[4];
-	public GameObject[] elite = new GameObject[4];
+	public EliteUnit[] elite = new EliteUnit[4];
 
 	public FolkUnit selectedUnit;
 	public int selectedIndex;
@@ -18,8 +18,12 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 	public GameObject[,] tileVisuals;
 	public GameObject moveTile;
+	public List<GameObject> moveTiles = new List<GameObject>();
+
 	public GameObject pointObject;
 	int[,] borderVectors = new int[mapSize,mapSize];
+
+	public int GameState; 
 
 	// Use this for initialization
 	void Start () {
@@ -33,10 +37,10 @@ public class ExploreMode_GameController : MonoBehaviour {
 				int rand = (int) Random.Range( 0, 100 );
 				if( rand < 100 ){
 					tiles[x,y] = 1;
-					Instantiate ( tileTypes[0].visualPrefab,new Vector3( x+0.5f, 0, y+0.5f ), Quaternion.identity );
+					//Instantiate ( tileTypes[0].visualPrefab,new Vector3( x+0.5f, 0, y+0.5f ), Quaternion.identity );
 				} else{
 					tiles[x,y] = 2;
-					Instantiate ( tileTypes[2].visualPrefab,new Vector3( x+0.5f, 0, y+0.5f ), Quaternion.identity );
+					//Instantiate ( tileTypes[2].visualPrefab,new Vector3( x+0.5f, 0, y+0.5f ), Quaternion.identity );
 				}
 			}
 		}
@@ -45,14 +49,20 @@ public class ExploreMode_GameController : MonoBehaviour {
 			folk[i].currentPosition = new Vector2( i * 2, i*2);
 		}
 
+		GameState = 0;
+
 		//folk[0].transform.position =  new Vector3 (25, 0, 25);
 		//folk[0].currentPosition =  new Vector3 (25, 0, 25);
 
 		selectedUnit = folk [0];
 		selectedIndex = 0;
 
+		foreach (EliteUnit eU in elite) {
+			eU.transform.position = new Vector3( (int) Random.Range ( 25, 50 ), 0,(int) Random.Range ( 25, 50 ) );
+		}
+
 		icon.selectUnit = selectedUnit;
-		GenerateMovementRange ((int)selectedUnit.currentPosition.x,(int) selectedUnit.currentPosition.y);
+		GenerateMovementRange ((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y);
 
 		GenerateMap();
 	}
@@ -61,64 +71,118 @@ public class ExploreMode_GameController : MonoBehaviour {
 	void Update () {
 
 
-		List<Vector3> lineVertex = new List<Vector3> ();
-		Vector3 lastVector = new Vector3( -1, -1, -1 );
-		
-		for( int i = 0; i < mapSize; i++ ){
-			for( int j = 0; j < mapSize; j++ ){
-				if( borderVectors[i,j] <= 3 && borderVectors[i,j] >= 1 ){
-					// border vertex!
-					lineVertex.Add ( new Vector3( i, 0.1f, j ) );
-					//Debug.Log ( "borderVectors added To Line Vertex" );
-					//Instantiate ( pointObject, new Vector3( i, 0.5f, j ), Quaternion.identity );
+
+		switch (GameState)
+		{
+		case 1:
+			Debug.Log ("PlayerTurn");
+			int movementRemaing = 4;
+			foreach( FolkUnit fU in folk ){
+				if( fU.canMove == true ){
+					break;
+				} else {
+					movementRemaing--;
+				}
+				
+				if( movementRemaing == 0 ){
+					GameState = 2; 
+					foreach( EliteUnit eU in elite ){
+						eU.canMove = true;
+					}
 				}
 			}
-		}
-		//Instantiate ( pointObject, lineVertex[0], Quaternion.identity );
-		List<Vector3> orderedVertex = new List<Vector3>();
-		orderedVertex.Add ( lineVertex[0] );
-		int index = 0;
-		while (index < lineVertex.Count) {
-			if( lineVertex.Contains( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z-1 ) ) && 
-			   !orderedVertex.Contains( new Vector3( orderedVertex[index].x,0.1f, orderedVertex[index].z-1 ) ) &&
-			   CostToEnterTile((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y, (int)orderedVertex[index].x, (int)orderedVertex[index].z-1) < selectedUnit.movement  ){
-				//Down
-				orderedVertex.Add ( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z-1 ) );
+			break;
+		case 2:
+			Debug.Log ("EnemyTurn");
+			int eMovementRemaing = 4;
+			foreach( EliteUnit eU in elite ){
+				if( eU.canMove == true ){
+					break;
+				} else {
+					eMovementRemaing--;
+				}
 				
-				
-			} else if( lineVertex.Contains( new Vector3( orderedVertex[index].x + 1, 0.1f, orderedVertex[index].z ) ) && 
-			        !orderedVertex.Contains( new Vector3( orderedVertex[index].x + 1, 0.1f, orderedVertex[index].z ) ) &&
-			          CostToEnterTile((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y, (int)orderedVertex[index].x, (int)orderedVertex[index].z) < selectedUnit.movement ){
-				//Right
-				orderedVertex.Add ( new Vector3( orderedVertex[index].x + 1, 0.1f, orderedVertex[index].z ) );
-				
-			} else if( lineVertex.Contains( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z+1) ) && 
-			          !orderedVertex.Contains( new Vector3( orderedVertex[index].x , 0.1f, orderedVertex[index].z+1 ) ) &&
-			         CostToEnterTile((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y, (int)orderedVertex[index].x-1, (int)orderedVertex[index].z) < selectedUnit.movement){
-				//Up
-				orderedVertex.Add ( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z+1) );
-			} else if( lineVertex.Contains( new Vector3( orderedVertex[index].x -1, 0.1f, orderedVertex[index].z ) ) && 
-			         !orderedVertex.Contains( new Vector3( orderedVertex[index].x -1 ,0.1f, orderedVertex[index].z ) ) &&
-			          CostToEnterTile((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y, (int)orderedVertex[index].x-1, (int)orderedVertex[index].z-1) < selectedUnit.movement ){
-				//Left
-				orderedVertex.Add ( new Vector3( orderedVertex[index].x -1, 0.1f, orderedVertex[index].z ) );
-				
-			}  else {
-				orderedVertex.Add( orderedVertex[0] );
-
+				if( eMovementRemaing == 0 ){
+					GameState = 1; 
+					foreach( FolkUnit fU in folk ){
+						fU.canMove = true;
+					}
+				}
 			}
-			index++;
-
-		}
-		for (int i = 0; i < 12; i++) {
-			//Instantiate ( pointObject, orderedVertex[i], Quaternion.identity );
-		}
-		foreach( Vector3 v in orderedVertex ){
-			if( lastVector.x != -1 || lastVector.y != -1 || lastVector.z != -1 ){
-				Debug.DrawLine(lastVector, v, Color.blue);
+			EnemyTurn();
+			break;
+		default:
+			Debug.Log("DEFAULT STATE");
+			GameState = 1;
+			foreach( FolkUnit fU in folk ){
+				fU.canMove = true;
 			}
-			lastVector = v;
+			break;
 		}
+
+
+
+
+
+		// LINE MOVEMENT RADIUS CODE DO NOT DELETE
+//		List<Vector3> lineVertex = new List<Vector3> ();
+//		Vector3 lastVector = new Vector3( -1, -1, -1 );
+//		
+//		for( int i = 0; i < mapSize; i++ ){
+//			for( int j = 0; j < mapSize; j++ ){
+//				if( borderVectors[i,j] <= 3 && borderVectors[i,j] >= 1 ){
+//					// border vertex!
+//					lineVertex.Add ( new Vector3( i, 0.1f, j ) );
+//					//Debug.Log ( "borderVectors added To Line Vertex" );
+//					//Instantiate ( pointObject, new Vector3( i, 0.5f, j ), Quaternion.identity );
+//				}
+//			}
+//		}
+//		//Instantiate ( pointObject, lineVertex[0], Quaternion.identity );
+//		List<Vector3> orderedVertex = new List<Vector3>();
+//		orderedVertex.Add ( lineVertex[0] );
+//		int index = 0;
+//		while (index < lineVertex.Count) {
+//			if( lineVertex.Contains( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z-1 ) ) && 
+//			   !orderedVertex.Contains( new Vector3( orderedVertex[index].x,0.1f, orderedVertex[index].z-1 ) ) &&
+//			   CostToEnterTile((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y, (int)orderedVertex[index].x, (int)orderedVertex[index].z-1) < selectedUnit.movement  ){
+//				//Down
+//				orderedVertex.Add ( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z-1 ) );
+//				
+//				
+//			} else if( lineVertex.Contains( new Vector3( orderedVertex[index].x + 1, 0.1f, orderedVertex[index].z ) ) && 
+//			        !orderedVertex.Contains( new Vector3( orderedVertex[index].x + 1, 0.1f, orderedVertex[index].z ) ) &&
+//			          CostToEnterTile((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y, (int)orderedVertex[index].x, (int)orderedVertex[index].z) < selectedUnit.movement ){
+//				//Right
+//				orderedVertex.Add ( new Vector3( orderedVertex[index].x + 1, 0.1f, orderedVertex[index].z ) );
+//				
+//			} else if( lineVertex.Contains( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z+1) ) && 
+//			          !orderedVertex.Contains( new Vector3( orderedVertex[index].x , 0.1f, orderedVertex[index].z+1 ) ) &&
+//			         CostToEnterTile((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y, (int)orderedVertex[index].x-1, (int)orderedVertex[index].z) < selectedUnit.movement){
+//				//Up
+//				orderedVertex.Add ( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z+1) );
+//			} else if( lineVertex.Contains( new Vector3( orderedVertex[index].x -1, 0.1f, orderedVertex[index].z ) ) && 
+//			         !orderedVertex.Contains( new Vector3( orderedVertex[index].x -1 ,0.1f, orderedVertex[index].z ) ) &&
+//			          CostToEnterTile((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y, (int)orderedVertex[index].x-1, (int)orderedVertex[index].z-1) < selectedUnit.movement ){
+//				//Left
+//				orderedVertex.Add ( new Vector3( orderedVertex[index].x -1, 0.1f, orderedVertex[index].z ) );
+//				
+//			}  else {
+//				orderedVertex.Add( orderedVertex[0] );
+//
+//			}
+//			index++;
+//
+//		}
+//		for (int i = 0; i < 12; i++) {
+//			//Instantiate ( pointObject, orderedVertex[i], Quaternion.identity );
+//		}
+//		foreach( Vector3 v in orderedVertex ){
+//			if( lastVector.x != -1 || lastVector.y != -1 || lastVector.z != -1 ){
+//				//Debug.DrawLine(lastVector, v, Color.blue);
+//			}
+//			lastVector = v;
+//		}
 
 	}
 
@@ -147,6 +211,10 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 		int[,] vectors = new int[mapSize,mapSize];
 
+		foreach( GameObject n in moveTiles){
+			Destroy (n);
+		}
+		moveTiles.Clear ();
 		for (int i = -selectedUnit.movement; i <= selectedUnit.movement; i++) {
 			for (int j=-selectedUnit.movement; j <= selectedUnit.movement; j++) {
 
@@ -162,6 +230,10 @@ public class ExploreMode_GameController : MonoBehaviour {
 						vectors[tPx+1, tPy] += 1;
 						vectors[tPx+1, tPy+1] += 1;
 						vectors[tPx, tPy+1] += 1;
+
+						GameObject tempObject = (GameObject) Instantiate( moveTile , new Vector3((int)selectedUnit.currentPosition.x + i, 0, (int)selectedUnit.currentPosition.y + j), Quaternion.identity ); 
+						tempObject.transform.SetParent( this.transform );
+						moveTiles.Add( tempObject );
 						//Debug.Log ("Loaded"+i+" "+j);
 						//GameObject ob = (GameObject)Instantiate (moveTile, new Vector3 ((int)selectedUnit.currentPosition.x + i, 0,(int)selectedUnit.currentPosition.y + j), Quaternion.identity);
 						//ob.transform.SetParent (selectedUnit.transform);
@@ -214,7 +286,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 	}
 	public void MoveIcon(){
 		icon.selectUnit = selectedUnit;
-		selectedUnit.canMove = true;
+		//selectedUnit.canMove = true;
 	}
 
 	public void GeneratePathTo(int x, int y) {
@@ -338,6 +410,14 @@ public class ExploreMode_GameController : MonoBehaviour {
 		return tileTypes[ tiles[x,y] ].isWalkable;
 	}
 	
+
+	public void EnemyTurn(){
+		foreach (EliteUnit eU in elite) {
+			eU.checkState();
+			eU.move();
+			eU.action();
+		}
+	}
 
 
 }

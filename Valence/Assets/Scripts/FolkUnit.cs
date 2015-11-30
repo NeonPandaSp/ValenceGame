@@ -22,6 +22,7 @@ public class FolkUnit : MonoBehaviour {
 
 	public LineRenderer myLine;
 
+
 	// Use this for initialization
 	void Start () {
 		currentPosition = new Vector2( transform.position.x, transform.position.z );
@@ -43,7 +44,7 @@ public class FolkUnit : MonoBehaviour {
 				if( currNode == currentPath.Count - 1 ){
 					myLine.SetPosition ( currNode, end );
 				}
-				Debug.DrawLine(start, end, Color.red);
+				Debug.DrawLine(start, end, new Color(255,155,155));
 
 				currNode++;
 			}
@@ -84,7 +85,7 @@ public class FolkUnit : MonoBehaviour {
 				// So let's just clear our pathfinding info.
 				currentPath = null;
 				canMove = false;
-				_GameController.GenerateMovementRange((int)transform.position.x,(int)transform.position.z);
+				//_GameController.GenerateMovementRange((int)transform.position.x,(int)transform.position.z);
 			}
 		}
 		

@@ -66,9 +66,13 @@ public class InputController_Explore : MonoBehaviour {
 
 		if( Input.GetMouseButton(0) ){
 
-			if( _GameController.selectedUnit.canMove ){
+			if( _GameController.selectedUnit.canMove && _GameController.GameState == 1){
 				if( _GameController.selectedUnit.withinMoveRange( currentTile ) ){
 					_GameController.selectedUnit.Move(currentTile);
+					foreach( GameObject n in _GameController.moveTiles){
+						Destroy (n);
+					}
+					_GameController.moveTiles.Clear();
 				} else {
 					// not within range
 				}
@@ -77,22 +81,23 @@ public class InputController_Explore : MonoBehaviour {
 
 		if (Input.GetKeyDown (KeyCode.Return)) {
 			int i = _GameController.selectedIndex;
-
-			i += 1;
-			if( i <= 3 ){
-
-				Debug.Log ( i );
-				_GameController.selectedUnit = _GameController.folk[i];
-				_GameController.GenerateMovementRange((int)_GameController.selectedUnit.currentPosition.x, (int)_GameController.selectedUnit.currentPosition.y);
-				_GameController.MoveIcon();
-				_GameController.selectedIndex = i;
-			} else {
-				i = 0;
-				_GameController.selectedUnit = _GameController.folk[i];
-				_GameController.GenerateMovementRange((int)_GameController.selectedUnit.currentPosition.x,(int) _GameController.selectedUnit.currentPosition.y);
-				_GameController.MoveIcon();
-				_GameController.selectedIndex = i;
+			if( _GameController.GameState == 1 ){
+				i += 1;
+				if( i <= 3 ){
+					Debug.Log ( i );
+					_GameController.selectedUnit = _GameController.folk[i];
+					_GameController.GenerateMovementRange((int)_GameController.selectedUnit.currentPosition.x, (int)_GameController.selectedUnit.currentPosition.y);
+					_GameController.MoveIcon();
+					_GameController.selectedIndex = i;
+				} else {
+					i = 0;
+					_GameController.selectedUnit = _GameController.folk[i];
+					_GameController.GenerateMovementRange((int)_GameController.selectedUnit.currentPosition.x,(int) _GameController.selectedUnit.currentPosition.y);
+					_GameController.MoveIcon();
+					_GameController.selectedIndex = i;
+				}
 			}
+
 		}
 	}
 
