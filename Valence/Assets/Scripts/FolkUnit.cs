@@ -20,7 +20,7 @@ public class FolkUnit : MonoBehaviour {
 
 	public List<ExploreMode_GameController.Node> currentPath = null;
 
-	public LineRenderer myLine;
+	//public LineRenderer myLine;
 
 
 	// Use this for initialization
@@ -40,9 +40,9 @@ public class FolkUnit : MonoBehaviour {
 				Vector3 start = new Vector3( currentPath[currNode].x +0.5f, 1, currentPath[currNode].y+0.5f );
 				Vector3 end   = new Vector3( currentPath[currNode+1].x+0.5f,1, currentPath[currNode+1].y+0.5f );
 
-				myLine.SetPosition( currNode, start );
+				//myLine.SetPosition( currNode, start );
 				if( currNode == currentPath.Count - 1 ){
-					myLine.SetPosition ( currNode, end );
+					//myLine.SetPosition ( currNode, end );
 				}
 				Debug.DrawLine(start, end, new Color(255,155,155));
 

@@ -159,10 +159,10 @@ public class InputController : MonoBehaviour {
 			if( generate && zoning ){
 				_generateZone.setZoneSize( min , max );
 				_generateZone.Generate( _generateZone.getPropNum() );
-				/**
+
 				foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
 					AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
-				} **/
+				} 
 			} else if ( !zoning ){
 				if( hoverState == "food" ){
 					if( _gameController.scrap >= 25 ){
