@@ -23,7 +23,11 @@ public class ExploreMode_GameController : MonoBehaviour {
 	public GameObject pointObject;
 	int[,] borderVectors = new int[mapSize,mapSize];
 
-	public int GameState; 
+	public int GameState;
+	public Transform GUIFrame;
+	public Fade playerTurnObject;
+
+	public CameraTargetController cameraObject;
 
 	// Use this for initialization
 	void Start () {
@@ -75,7 +79,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 		switch (GameState)
 		{
 		case 1:
-			Debug.Log ("PlayerTurn");
+			//Debug.Log ("PlayerTurn");
 			int movementRemaing = 4;
 			foreach( FolkUnit fU in folk ){
 				if( fU.canMove == true ){
@@ -93,7 +97,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 			}
 			break;
 		case 2:
-			Debug.Log ("EnemyTurn");
+			//Debug.Log ("EnemyTurn");
 			int eMovementRemaing = 4;
 			foreach( EliteUnit eU in elite ){
 				if( eU.canMove == true ){
@@ -101,15 +105,25 @@ public class ExploreMode_GameController : MonoBehaviour {
 				} else {
 					eMovementRemaing--;
 				}
-				
-				if( eMovementRemaing == 0 ){
-					GameState = 1; 
-					foreach( FolkUnit fU in folk ){
-						fU.canMove = true;
-					}
-				}
 			}
-			EnemyTurn();
+			if( eMovementRemaing == 0 ){
+				GameState = 1;
+				playerTurnObject.ReStart();
+				
+				selectedUnit = folk[0];
+				selectedIndex = 0;
+				GenerateMovementRange( (int) selectedUnit.currentPosition.x, (int) selectedUnit.currentPosition.y );
+				MoveIcon();
+				cameraObject.MoveCameraTo( cameraObject.transform.position, selectedUnit.transform.position );
+				Debug.Log ( "STATE CHANGE");
+				foreach( FolkUnit fU in folk ){
+					fU.canMove = true;
+				}
+				break;
+			} else {
+				EnemyTurn();
+			}
+
 			break;
 		default:
 			Debug.Log("DEFAULT STATE");
@@ -223,13 +237,13 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 					if (selectedUnit.withinMoveRange ( new Vector2( (int)selectedUnit.currentPosition.x + i, (int)selectedUnit.currentPosition.y + j) ) && 
 					    CostToEnterTile((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y, (int)selectedUnit.currentPosition.x + i, (int)selectedUnit.currentPosition.y + j) < selectedUnit.movement ) {
-						int tPx = (int)selectedUnit.currentPosition.x + i;
-						int tPy = (int)selectedUnit.currentPosition.y + j;
+						//int tPx = (int)selectedUnit.currentPosition.x + i;
+						//int tPy = (int)selectedUnit.currentPosition.y + j;
 
-						vectors[tPx, tPy] += 1;
-						vectors[tPx+1, tPy] += 1;
-						vectors[tPx+1, tPy+1] += 1;
-						vectors[tPx, tPy+1] += 1;
+						//vectors[tPx, tPy] += 1;
+						//vectors[tPx+1, tPy] += 1;
+						//vectors[tPx+1, tPy+1] += 1;
+						//vectors[tPx, tPy+1] += 1;
 
 						GameObject tempObject = (GameObject) Instantiate( moveTile , new Vector3((int)selectedUnit.currentPosition.x + i, 0, (int)selectedUnit.currentPosition.y + j), Quaternion.identity ); 
 						tempObject.transform.SetParent( this.transform );
@@ -242,7 +256,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 			}
 		}
 		borderVectors = vectors;
-		Debug.Log ("borderVectors set");
+		//Debug.Log ("borderVectors set");
 
 
 	}
@@ -382,6 +396,102 @@ public class ExploreMode_GameController : MonoBehaviour {
 		if (currentPath.Count - 1 <= selectedUnit.GetComponent<FolkUnit> ().movement) {
 			selectedUnit.GetComponent<FolkUnit> ().currentPath = currentPath;
 		}
+	}
+
+	public bool GeneratePathTo(int x, int y, EliteUnit eU) {
+		// Clear out our unit's old path.
+		eU.currentPath = null;
+		
+		if( UnitCanEnterTile(x,y) == false ) {
+			// We probably clicked on a mountain or something, so just quit out.
+			return false;
+		}
+		
+		Dictionary<Node, float> dist = new Dictionary<Node, float>();
+		Dictionary<Node, Node> prev = new Dictionary<Node, Node>();
+		
+		// Setup the "Q" -- the list of nodes we haven't checked yet.
+		List<Node> unvisited = new List<Node>();
+		
+		Node source = graph[
+		                    (int) eU.currentPosition.x, 
+		                    (int) eU.currentPosition.y
+		                    ];
+		
+		Node target = graph[
+		                    x, 
+		                    y
+		                    ];
+		
+		dist[source] = 0;
+		prev[source] = null;
+		
+		// Initialize everything to have INFINITY distance, since
+		// we don't know any better right now. Also, it's possible
+		// that some nodes CAN'T be reached from the source,
+		// which would make INFINITY a reasonable value
+		foreach(Node v in graph) {
+			if(v != source) {
+				dist[v] = Mathf.Infinity;
+				//dist[v] = selectedUnit.movement;
+				prev[v] = null;
+			}
+			
+			unvisited.Add(v);
+		}
+		
+		while(unvisited.Count > 0) {
+			// "u" is going to be the unvisited node with the smallest distance.
+			Node u = null;
+			
+			foreach(Node possibleU in unvisited) {
+				if(u == null || dist[possibleU] < dist[u]) {
+					u = possibleU;
+				}
+			}
+			
+			if(u == target) {
+				break;	// Exit the while loop!
+			}
+			
+			unvisited.Remove(u);
+			
+			foreach(Node v in u.neighbours) {
+				//float alt = dist[u] + u.DistanceTo(v);
+				float alt = dist[u] + CostToEnterTile(u.x, u.y, v.x, v.y);
+				if( alt < dist[v] ) {
+					dist[v] = alt;
+					prev[v] = u;
+				}
+			}
+		}
+		
+		// If we get there, the either we found the shortest route
+		// to our target, or there is no route at ALL to our target.
+		
+		if(prev[target] == null) {
+			// No route between our target and the source
+			return false;
+		}
+		
+		List<Node> currentPath = new List<Node>();
+		
+		Node curr = target;
+		
+		// Step through the "prev" chain and add it to our path
+		while(curr != null) {
+			currentPath.Add(curr);
+			curr = prev[curr];
+		}
+		
+		// Right now, currentPath describes a route from out target to our source
+		// So we need to invert it!
+		
+		currentPath.Reverse();
+		if (currentPath.Count - 1 <= selectedUnit.GetComponent<FolkUnit> ().movement) {
+			eU.currentPath = currentPath;
+		}
+		return true;
 	}
 
 	public float CostToEnterTile(int sourceX, int sourceY, int targetX, int targetY) {

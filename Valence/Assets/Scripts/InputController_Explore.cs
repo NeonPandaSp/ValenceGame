@@ -89,12 +89,14 @@ public class InputController_Explore : MonoBehaviour {
 					_GameController.GenerateMovementRange((int)_GameController.selectedUnit.currentPosition.x, (int)_GameController.selectedUnit.currentPosition.y);
 					_GameController.MoveIcon();
 					_GameController.selectedIndex = i;
+					_GameController.cameraObject.MoveCameraTo( _GameController.cameraObject.transform.position, _GameController.selectedUnit.transform.position );
 				} else {
 					i = 0;
 					_GameController.selectedUnit = _GameController.folk[i];
 					_GameController.GenerateMovementRange((int)_GameController.selectedUnit.currentPosition.x,(int) _GameController.selectedUnit.currentPosition.y);
 					_GameController.MoveIcon();
 					_GameController.selectedIndex = i;
+					_GameController.cameraObject.MoveCameraTo( _GameController.cameraObject.transform.position, _GameController.selectedUnit.transform.position );
 				}
 			}
 
