@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class ExploreMode_GameController : MonoBehaviour {
 	
@@ -28,6 +29,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 	public Fade playerTurnObject;
 
 	public CameraTargetController cameraObject;
+
+	public Button moveButton, attackButton, pickUpButton, waitButton;
 
 	// Use this for initialization
 	void Start () {
@@ -66,7 +69,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 		}
 
 		icon.selectUnit = selectedUnit;
-		GenerateMovementRange ((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y);
+		//GenerateMovementRange ((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y);
 
 		GenerateMap();
 	}
@@ -80,7 +83,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 		{
 		case 1:
 			//Debug.Log ("PlayerTurn");
-			int movementRemaing = 4;
+			int movementRemaing = GetNumberOfPlayerUnits();
 			foreach( FolkUnit fU in folk ){
 				if( fU.canMove == true ){
 					break;
@@ -95,6 +98,19 @@ public class ExploreMode_GameController : MonoBehaviour {
 					}
 				}
 			}
+
+			if( selectedUnit.canMove ){
+				moveButton.interactable = true;
+			} else {
+				moveButton.interactable = false;
+			} 
+
+			if( canAttack(selectedUnit)) {
+				attackButton.interactable = true;
+			} else {
+				attackButton.interactable = false;
+			} 
+
 			break;
 		case 2:
 			//Debug.Log ("EnemyTurn");
@@ -112,12 +128,16 @@ public class ExploreMode_GameController : MonoBehaviour {
 				
 				selectedUnit = folk[0];
 				selectedIndex = 0;
-				GenerateMovementRange( (int) selectedUnit.currentPosition.x, (int) selectedUnit.currentPosition.y );
+				//GenerateMovementRange( (int) selectedUnit.currentPosition.x, (int) selectedUnit.currentPosition.y );
 				MoveIcon();
 				cameraObject.MoveCameraTo( cameraObject.transform.position, selectedUnit.transform.position );
 				Debug.Log ( "STATE CHANGE");
 				foreach( FolkUnit fU in folk ){
 					fU.canMove = true;
+					fU.movePressed = false;
+					fU.attackPressed = false;
+					fU.grabPressed = false;
+					fU.waitPressed = false;
 				}
 				break;
 			} else {
@@ -220,7 +240,12 @@ public class ExploreMode_GameController : MonoBehaviour {
 				);
 		}
 	}
-
+	public void DestroyMovementRange(){
+		foreach( GameObject n in moveTiles){
+			Destroy (n);
+		}
+		moveTiles.Clear ();
+	}
 	public void GenerateMovementRange(int x, int y){
 
 		int[,] vectors = new int[mapSize,mapSize];
@@ -529,5 +554,48 @@ public class ExploreMode_GameController : MonoBehaviour {
 		}
 	}
 
+	public int GetNumberOfPlayerUnits(){
+		int count = 0;
+		foreach (FolkUnit fU in folk) {
+			if( fU.isActiveAndEnabled ){
+				count++;
+			}
+		}
+		return count;
+	}
+
+	public bool canAttack(FolkUnit fU){
+		foreach (EliteUnit eU in elite) {
+			if( Vector3.Distance ( eU.transform.position, fU.transform.position ) <= 5 ){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void enableAttackBox(FolkUnit fU){
+		foreach (EliteUnit eU in elite) {
+			if( Vector3.Distance ( eU.transform.position, fU.transform.position ) <= 5 ){
+				Transform[] eUChildren = eU.GetComponentsInChildren<Transform>(true);
+				foreach( Transform ob in eUChildren ){
+					if ( ob.tag == "enemyTouchBox" ){
+						ob.gameObject.SetActive(true);
+					}
+				}
+			}
+		}
+	}
+	public void disableAttackBox(FolkUnit fU){
+		foreach (EliteUnit eU in elite) {
+			if( Vector3.Distance ( eU.transform.position, fU.transform.position ) <= 5 ){
+				Transform[] eUChildren = eU.GetComponentsInChildren<Transform>(true);
+				foreach( Transform ob in eUChildren ){
+					if ( ob.tag == "enemyTouchBox" ){
+						ob.gameObject.SetActive(false);
+					}
+				}
+			}
+		}
+	}
 
 }

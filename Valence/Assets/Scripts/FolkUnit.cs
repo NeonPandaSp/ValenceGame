@@ -8,6 +8,11 @@ public class FolkUnit : MonoBehaviour {
 
 	public bool canMove;
 
+	public bool movePressed;
+	public bool attackPressed;
+	public bool grabPressed;
+	public bool waitPressed;
+
 	public int health;
 
 	public int movement;
@@ -27,6 +32,10 @@ public class FolkUnit : MonoBehaviour {
 	void Start () {
 		currentPosition = new Vector2( transform.position.x, transform.position.z );
 		moving = false;
+		movePressed = false;
+		attackPressed = false;
+		grabPressed = false;
+		waitPressed = false;
 	}
 	
 	// Update is called once per frame

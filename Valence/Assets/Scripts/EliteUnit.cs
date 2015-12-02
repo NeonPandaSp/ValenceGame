@@ -57,7 +57,7 @@ public class EliteUnit : MonoBehaviour {
 						//if( _GameController.GeneratePathTo( i, j, this ) || true ){
 							foreach (FolkUnit fU in _GameController.folk) {
 								float dist = Vector3.Distance( new Vector3(i,0,j), fU.transform.position );
-								if( dist < minDist ){
+								if( dist < minDist && dist > 0 ){
 									minDist = dist;
 									minDistTarget = new Vector2(i,j);
 								}
@@ -82,5 +82,22 @@ public class EliteUnit : MonoBehaviour {
 	}
 	public void action(){
 		Debug.Log ("No Action");
+		FolkUnit targetFolk = null;
+		foreach (FolkUnit fU in _GameController.folk) {
+			float dist = Vector3.Distance( transform.position, fU.transform.position );
+			if( dist > 0 && dist < 2 ){
+				targetFolk = fU;
+			}
+		}
+		if (targetFolk != null) {
+			Attack(targetFolk);
+		}
+	}
+
+	public void Attack( FolkUnit target ){
+		target.health--;
+		if (target.health <= 0) {
+			target.gameObject.SetActive(false);
+		}
 	}
 }
