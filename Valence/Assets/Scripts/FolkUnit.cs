@@ -13,12 +13,16 @@ public class FolkUnit : MonoBehaviour {
 	public bool grabPressed;
 	public bool waitPressed;
 
+	public bool turnComplete;
+
+	public int actionPoints;
+
 	public int health;
 
 	public int movement;
 	public int attackRange;
 
-	public bool moving;
+	public bool moving, hasAttacked;
 	public Vector2 target;
 
 	public float moveSpeed = 1;
@@ -36,10 +40,16 @@ public class FolkUnit : MonoBehaviour {
 		attackPressed = false;
 		grabPressed = false;
 		waitPressed = false;
+		turnComplete = false;
+		hasAttacked = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+		if (actionPoints <= 0) {
+			turnComplete = true;
+		}
 		if(currentPath != null) {
 			
 			int currNode = 0;

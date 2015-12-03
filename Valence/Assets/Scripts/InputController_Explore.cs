@@ -73,6 +73,7 @@ public class InputController_Explore : MonoBehaviour {
 						Destroy (n);
 					}
 					_GameController.moveTiles.Clear();
+					_GameController.selectedUnit.actionPoints--;
 					_GameController.selectedUnit.movePressed = false;
 				} else {
 					// not within range
@@ -81,24 +82,26 @@ public class InputController_Explore : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown (KeyCode.Return)) {
-			selectedNextUnit ();
-
+			_GameController.selectedNextUnit ();
 		}
 	}
 
 	public void MoveSelectedUnit( ){
+		_GameController.disableAttackBox();
 		_GameController.selectedUnit.movePressed = true;
 		_GameController.GenerateMovementRange((int)_GameController.selectedUnit.currentPosition.x, (int)_GameController.selectedUnit.currentPosition.y);
 	}
 
 	public void AttackWithSelectedUnit(){
-		_GameController.selectedUnit.attackPressed = true;
 		_GameController.enableAttackBox (_GameController.selectedUnit);
+		_GameController.selectedUnit.attackPressed = true;
 	}
 
 	public void WaitSelectedUnit(){
+		_GameController.disableAttackBox();
 		_GameController.selectedUnit.waitPressed = true;
 		_GameController.selectedUnit.canMove = false;
+		_GameController.selectedUnit.actionPoints = 0;
 		selectedNextUnit ();
 	}
 
@@ -107,17 +110,17 @@ public class InputController_Explore : MonoBehaviour {
 		int i = _GameController.selectedIndex;
 		if( _GameController.GameState == 1 ){
 			i += 1;
-			if( i > 3 ){
+			if( i > _GameController.GetNumberOfPlayerUnits()-1 ){
 				i = 0;
 			} 
 			int dCount = 0;
-			while( !_GameController.folk[i].isActiveAndEnabled ){
+			while( !_GameController.folk[i].isActiveAndEnabled && _GameController.folk[i].actionPoints > 0 ){
 				i++;
-				if( i > 3 ){
+				if( i > _GameController.GetNumberOfPlayerUnits()-1 ){
 					i = 0;
 				} 
 				dCount++;
-				if( dCount == 4 ){
+				if( dCount == _GameController.GetNumberOfPlayerUnits() ){
 					//GameOver
 					break;
 				}
@@ -126,16 +129,10 @@ public class InputController_Explore : MonoBehaviour {
 			if( _GameController.selectedUnit.canMove ){
 				_GameController.selectedUnit.movePressed = false;
 			}
-			//_GameController.GenerateMovementRange((int)_GameController.selectedUnit.currentPosition.x, (int)_GameController.selectedUnit.currentPosition.y);
 			_GameController.selectedIndex = i;
 			_GameController.MoveIcon();
 			_GameController.cameraObject.MoveCameraTo( _GameController.cameraObject.transform.position, _GameController.selectedUnit.transform.position );
-			
-			//					_GameController.selectedUnit = _GameController.folk[i];
-			//					_GameController.GenerateMovementRange((int)_GameController.selectedUnit.currentPosition.x,(int) _GameController.selectedUnit.currentPosition.y);
-			//					_GameController.MoveIcon();
-			//					_GameController.selectedIndex = i;
-			//					_GameController.cameraObject.MoveCameraTo( _GameController.cameraObject.transform.position, _GameController.selectedUnit.transform.position );
+
 		}
 	}
 

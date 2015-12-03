@@ -10,6 +10,8 @@ public class EliteUnit : MonoBehaviour {
 	public int state; // states: 0 == default, 1 == wander, 2 == hostile
 	public bool canMove;
 
+	public int health = 1;
+
 	public List<ExploreMode_GameController.Node> currentPath = null;
 	// Use this for initialization
 	void Start () {
@@ -98,6 +100,7 @@ public class EliteUnit : MonoBehaviour {
 		target.health--;
 		if (target.health <= 0) {
 			target.gameObject.SetActive(false);
+			_GameController.folk.Remove( target );
 		}
 	}
 }

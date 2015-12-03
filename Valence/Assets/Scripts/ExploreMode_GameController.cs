@@ -10,12 +10,19 @@ public class ExploreMode_GameController : MonoBehaviour {
 	
 	public TileType[] tileTypes;
 
-	public FolkUnit[] folk = new FolkUnit[4];
-	public EliteUnit[] elite = new EliteUnit[4];
+	public List<FolkUnit> folk = new List<FolkUnit>();
+	public List<EliteUnit> elite = new List<EliteUnit>();
 
 	public FolkUnit selectedUnit;
 	public int selectedIndex;
 	public SelectedIcon icon;
+
+	public int currentElite = -1;
+	public float bufferValue;
+	public float currentTime;
+
+	public bool newElite;
+	public bool newAction;
 
 	public GameObject[,] tileVisuals;
 	public GameObject moveTile;
@@ -27,6 +34,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 	public int GameState;
 	public Transform GUIFrame;
 	public Fade playerTurnObject;
+	public Fade enemyTurnObject;
 
 	public CameraTargetController cameraObject;
 
@@ -38,6 +46,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 		tileVisuals = new GameObject[mapSize, mapSize];
 
 		GenerateNodeGraph ();
+
+
 
 		for( int x = 0; x < mapSize; x++){
 			for( int y = 0; y < mapSize; y++){
@@ -51,7 +61,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 				}
 			}
 		}
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < GetNumberOfPlayerUnits(); i++) {
 			folk[i].transform.position =  new Vector3 (i * 2, 0, i*2);
 			folk[i].currentPosition = new Vector2( i * 2, i*2);
 		}
@@ -65,13 +75,15 @@ public class ExploreMode_GameController : MonoBehaviour {
 		selectedIndex = 0;
 
 		foreach (EliteUnit eU in elite) {
-			eU.transform.position = new Vector3( (int) Random.Range ( 25, 50 ), 0,(int) Random.Range ( 25, 50 ) );
+			eU.transform.position = new Vector3( (int) Random.Range ( 15, 25 ), 0,(int) Random.Range ( 15, 25 ) );
 		}
 
 		icon.selectUnit = selectedUnit;
 		//GenerateMovementRange ((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y);
 
 		GenerateMap();
+
+		cameraObject.MoveCameraTo (cameraObject.transform.position, folk [0].transform.position);
 	}
 
 	// Update is called once per frame
@@ -85,15 +97,18 @@ public class ExploreMode_GameController : MonoBehaviour {
 			//Debug.Log ("PlayerTurn");
 			int movementRemaing = GetNumberOfPlayerUnits();
 			foreach( FolkUnit fU in folk ){
-				if( fU.canMove == true ){
+				if( fU.turnComplete == false ){
 					break;
 				} else {
 					movementRemaing--;
 				}
 				
 				if( movementRemaing == 0 ){
+					Debug.Log ( "changing state" );
+					enemyTurnObject.ReStart();
 					GameState = 2; 
 					foreach( EliteUnit eU in elite ){
+						currentElite = -1;
 						eU.canMove = true;
 					}
 				}
@@ -114,15 +129,18 @@ public class ExploreMode_GameController : MonoBehaviour {
 			break;
 		case 2:
 			//Debug.Log ("EnemyTurn");
-			int eMovementRemaing = 4;
+			int eMovementRemaing = GetNumberOfEnemyUnits();
 			foreach( EliteUnit eU in elite ){
-				if( eU.canMove == true ){
-					break;
-				} else {
-					eMovementRemaing--;
+				if( eU.isActiveAndEnabled ){
+					if( eU.canMove == true ){
+						break;
+					} else {
+						eMovementRemaing--;
+					}
 				}
 			}
 			if( eMovementRemaing == 0 ){
+
 				GameState = 1;
 				playerTurnObject.ReStart();
 				
@@ -133,11 +151,14 @@ public class ExploreMode_GameController : MonoBehaviour {
 				cameraObject.MoveCameraTo( cameraObject.transform.position, selectedUnit.transform.position );
 				Debug.Log ( "STATE CHANGE");
 				foreach( FolkUnit fU in folk ){
+					fU.turnComplete = false;
+					fU.actionPoints = 2;
 					fU.canMove = true;
 					fU.movePressed = false;
 					fU.attackPressed = false;
 					fU.grabPressed = false;
 					fU.waitPressed = false;
+					fU.hasAttacked = false;
 				}
 				break;
 			} else {
@@ -547,11 +568,83 @@ public class ExploreMode_GameController : MonoBehaviour {
 	
 
 	public void EnemyTurn(){
-		foreach (EliteUnit eU in elite) {
-			eU.checkState();
-			eU.move();
-			eU.action();
+		bool nextElite = false;
+		if (currentElite == -1) {
+			nextElite = true;
+			Debug.Log ( "Selecting next available Elite" );
 		}
+
+		updateBuffer ();
+
+		if (checkBuffer () && newElite ) {
+			Debug.Log ( "Moving Unit" );
+			elite [currentElite].move ();
+			newElite = false;
+			newAction = true;
+			Debug.Log ( "Starting New Action Buffer " );
+			startBuffer(1);
+		} 
+
+		if (checkBuffer () && newAction) {
+			Debug.Log ( "Unit Action" );
+			elite[currentElite].action ();
+			newAction = false;
+			newElite = false;
+			nextElite = true;
+			Debug.Log ( "Selecting next available Elite" );
+		}
+
+		
+		
+		if (nextElite) {
+			currentElite++;
+			int whileCount = 0;
+			
+			if( currentElite >= GetNumberOfEnemyUnits() ){
+				currentElite = 0;
+			}
+
+			while( !elite[currentElite].isActiveAndEnabled ){
+				currentElite++;
+				Debug.Log ( "NumElite: " + GetNumberOfEnemyUnits());
+				if( currentElite >= GetNumberOfEnemyUnits() ){
+					currentElite = 0;
+				}
+			}
+			Debug.Log ( "CurrentElite Updated" );
+			newElite = true;
+			nextElite = false;
+			
+			cameraObject.MoveCameraTo(cameraObject.transform.position, elite[currentElite].transform.position);
+			Debug.Log ( "Starting New Elite Buffer " );
+			startBuffer(2);
+		}
+		/**
+		foreach (EliteUnit eU in elite) {
+			if( eU.health > 0 ){
+				eU.checkState();
+				eU.move();
+				eU.action();
+			}
+		}**/
+	}
+
+	void startBuffer( int bufferLength ){
+		bufferValue = bufferLength;
+		currentTime = 0;
+	}
+
+	void updateBuffer(){
+		currentTime += Time.deltaTime;
+	}
+
+	bool checkBuffer(){
+		if (currentTime >= bufferValue) {
+			return true;
+			bufferValue = 0;
+			currentTime = 0;
+		}
+		return false;
 	}
 
 	public int GetNumberOfPlayerUnits(){
@@ -564,10 +657,24 @@ public class ExploreMode_GameController : MonoBehaviour {
 		return count;
 	}
 
+	public int GetNumberOfEnemyUnits(){
+		int count = 0;
+		foreach (EliteUnit eU in elite) {
+			if( eU.isActiveAndEnabled ){
+				count++;
+			}
+		}
+		return count;
+	}
+
 	public bool canAttack(FolkUnit fU){
 		foreach (EliteUnit eU in elite) {
-			if( Vector3.Distance ( eU.transform.position, fU.transform.position ) <= 5 ){
-				return true;
+			if( eU.health > 0 ){
+				if( Vector3.Distance ( eU.transform.position, fU.transform.position ) <= 5 ){
+					if( fU.actionPoints >= 1 && !fU.hasAttacked ){
+						return true;
+					}
+				}
 			}
 		}
 		return false;
@@ -576,18 +683,20 @@ public class ExploreMode_GameController : MonoBehaviour {
 	public void enableAttackBox(FolkUnit fU){
 		foreach (EliteUnit eU in elite) {
 			if( Vector3.Distance ( eU.transform.position, fU.transform.position ) <= 5 ){
-				Transform[] eUChildren = eU.GetComponentsInChildren<Transform>(true);
-				foreach( Transform ob in eUChildren ){
-					if ( ob.tag == "enemyTouchBox" ){
-						ob.gameObject.SetActive(true);
+				if( eU.health > 0 ){
+					Transform[] eUChildren = eU.GetComponentsInChildren<Transform>(true);
+					foreach( Transform ob in eUChildren ){
+						if ( ob.tag == "enemyTouchBox" ){
+							ob.gameObject.SetActive(true);
+						}
 					}
 				}
 			}
 		}
 	}
-	public void disableAttackBox(FolkUnit fU){
+	public void disableAttackBox(){
 		foreach (EliteUnit eU in elite) {
-			if( Vector3.Distance ( eU.transform.position, fU.transform.position ) <= 5 ){
+			if( Vector3.Distance ( eU.transform.position, selectedUnit.transform.position ) <= 5 ){
 				Transform[] eUChildren = eU.GetComponentsInChildren<Transform>(true);
 				foreach( Transform ob in eUChildren ){
 					if ( ob.tag == "enemyTouchBox" ){
@@ -595,6 +704,38 @@ public class ExploreMode_GameController : MonoBehaviour {
 					}
 				}
 			}
+		}
+	}
+
+	public void selectedNextUnit(){
+		DestroyMovementRange ();
+		int i = selectedIndex;
+		if( GameState == 1 ){
+			i += 1;
+			if( i > GetNumberOfPlayerUnits()-1 ){
+				i = 0;
+			} 
+			int dCount = 0;
+			while( !folk[i].isActiveAndEnabled && folk[i].actionPoints > 0 ){
+				i++;
+				if( i > GetNumberOfPlayerUnits()-1 ){
+					i = 0;
+				} 
+				dCount++;
+				if( dCount == GetNumberOfPlayerUnits() ){
+					//GameOver
+					Debug.Log ("GAMEOVER");
+					//break;
+				}
+			}
+			selectedUnit = folk[i];
+			if( selectedUnit.canMove ){
+				selectedUnit.movePressed = false;
+			}
+			selectedIndex = i;
+			MoveIcon();
+			cameraObject.MoveCameraTo( cameraObject.transform.position, selectedUnit.transform.position );
+			
 		}
 	}
 
