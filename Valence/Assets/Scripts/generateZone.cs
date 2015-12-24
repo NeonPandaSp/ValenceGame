@@ -46,8 +46,11 @@ public class generateZone : MonoBehaviour {
 
 		if ( getZoneArea() >= 25 && zoneWidth >= 5 && zoneWidth >= 5) {
 			Vector3 landmarkPosition = new Vector3 (Random.Range (zoneX, zoneX + zoneWidth), 0.0f, Random.Range (zoneZ, zoneZ + (zoneHeight)));
-			GameObject tempLandmark = (GameObject)Instantiate (Resources.Load ("landmark_0"), landmarkPosition, Quaternion.identity);
-			tempLandmark.transform.eulerAngles = new Vector3 (0, Random.Range (0, 360), 0);
+            //GameObject tempLandmark = (GameObject)Instantiate (Resources.Load ("landmark_0"), landmarkPosition, Quaternion.identity);
+
+            //Updated this code to now use a landmark which has a serise of attached waypoints which an agent can move between - Zach
+            GameObject tempLandmark = (GameObject)Instantiate(Resources.Load("TestFarm"), landmarkPosition, Quaternion.identity);
+            tempLandmark.transform.eulerAngles = new Vector3 (0, Random.Range (0, 360), 0);
 			tempLandmark.transform.SetParent( zoneBounds.transform );
 		}
 
