@@ -25,22 +25,7 @@ public class GUIToggle_07 : MonoBehaviour {
         showError = false;
         hospitalAvailable = false;
 
-        if (!GameObject.FindWithTag("Farm"))
-        {
-            farmAvailable = false;
-        }
-        else {
-            farmAvailable = true;
-        }
-
-        if (!GameObject.FindWithTag("Hospital"))
-        {
-            hospitalAvailable = false;
-            print("No Tag Found <Hospital>");
-        }
-        else {
-            hospitalAvailable = true;
-        }
+        
         //jobUI = GameObject.Find("JobUI").GetComponent<JobUI>();
 
     }
@@ -55,7 +40,22 @@ public class GUIToggle_07 : MonoBehaviour {
     }
 
     void Update() {
-        
+		if (!GameObject.FindWithTag("Farm"))
+		{
+			farmAvailable = false;
+		}
+		else {
+			farmAvailable = true;
+		}
+		
+		if (!GameObject.FindWithTag("Hospital"))
+		{
+			hospitalAvailable = false;
+			print("No Tag Found <Hospital>");
+		}
+		else {
+			hospitalAvailable = true;
+		}
     }
 
     void OnGUI() {
