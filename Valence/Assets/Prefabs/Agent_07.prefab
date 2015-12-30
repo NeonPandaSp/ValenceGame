@@ -16,6 +16,7 @@ GameObject:
   - 114: {fileID: 11473212}
   - 114: {fileID: 11416498}
   - 114: {fileID: 11443906}
+  - 114: {fileID: 11440820}
   m_Layer: 0
   m_Name: Agent_07
   m_TagString: Untagged
@@ -103,6 +104,19 @@ MonoBehaviour:
   wanderListSize: 10
   aState: 0
   jobState: 0
+--- !u!114 &11440820
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9ab77a1f1a854729ba01cfc461a0b2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aiFollow: {fileID: 11473212}
+  agentAgility: 0
 --- !u!114 &11443906
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -130,7 +144,7 @@ MonoBehaviour:
   repathRate: .100000001
   pickNextWaypointDistance: 1
   targetReached: .200000003
-  speed: 5
+  speed: 3
   rotationSpeed: 1
   drawGizmos: 0
   canSearch: 1
@@ -192,6 +206,14 @@ Prefab:
       propertyPath: agentLogic
       value: 
       objectReference: {fileID: 11416498}
+    - target: {fileID: 0}
+      propertyPath: speed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: aiFollow
+      value: 
+      objectReference: {fileID: 11473212}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 177440}
