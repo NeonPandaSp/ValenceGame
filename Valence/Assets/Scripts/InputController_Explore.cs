@@ -87,6 +87,7 @@ public class InputController_Explore : MonoBehaviour {
 	}
 
 	public void MoveSelectedUnit( ){
+		Debug.Log ("Move Called");
 		_GameController.disableAttackBox();
 		_GameController.selectedUnit.movePressed = true;
 		_GameController.GenerateMovementRange((int)_GameController.selectedUnit.currentPosition.x, (int)_GameController.selectedUnit.currentPosition.y);

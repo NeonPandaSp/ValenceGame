@@ -10,10 +10,10 @@ public class ExploreMode_GameController : MonoBehaviour {
 	
 	public TileType[] tileTypes;
 
-	public List<FolkUnit> folk = new List<FolkUnit>();
-	public List<EliteUnit> elite = new List<EliteUnit>();
+	public List<Unit> folk = new List<Unit>();
+	public List<Unit> elite = new List<Unit>();
 
-	public FolkUnit selectedUnit;
+	public Unit selectedUnit;
 	public int selectedIndex;
 	public SelectedIcon icon;
 
@@ -52,12 +52,12 @@ public class ExploreMode_GameController : MonoBehaviour {
 		for( int x = 0; x < mapSize; x++){
 			for( int y = 0; y < mapSize; y++){
 				int rand = (int) Random.Range( 0, 100 );
-				if( rand < 100 ){
+				if( rand < 95 ){
 					tiles[x,y] = 1;
 					//Instantiate ( tileTypes[0].visualPrefab,new Vector3( x+0.5f, 0, y+0.5f ), Quaternion.identity );
 				} else{
 					tiles[x,y] = 2;
-					//Instantiate ( tileTypes[2].visualPrefab,new Vector3( x+0.5f, 0, y+0.5f ), Quaternion.identity );
+					Instantiate ( tileTypes[2].visualPrefab,new Vector3( x+0.5f, 0, y+0.5f ), Quaternion.identity );
 				}
 			}
 		}
@@ -68,13 +68,10 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 		GameState = 0;
 
-		//folk[0].transform.position =  new Vector3 (25, 0, 25);
-		//folk[0].currentPosition =  new Vector3 (25, 0, 25);
-
 		selectedUnit = folk [0];
 		selectedIndex = 0;
 
-		foreach (EliteUnit eU in elite) {
+		foreach (Unit eU in elite) {
 			eU.transform.position = new Vector3( (int) Random.Range ( 15, 25 ), 0,(int) Random.Range ( 15, 25 ) );
 		}
 
@@ -96,7 +93,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 		case 1:
 			//Debug.Log ("PlayerTurn");
 			int movementRemaing = GetNumberOfPlayerUnits();
-			foreach( FolkUnit fU in folk ){
+			foreach( Unit fU in folk ){
 				if( fU.turnComplete == false ){
 					break;
 				} else {
@@ -107,9 +104,10 @@ public class ExploreMode_GameController : MonoBehaviour {
 					Debug.Log ( "changing state" );
 					enemyTurnObject.ReStart();
 					GameState = 2; 
-					foreach( EliteUnit eU in elite ){
+					foreach( Unit eU in elite ){
 						currentElite = -1;
 						eU.canMove = true;
+						selectedUnit = elite[0];
 					}
 				}
 			}
@@ -128,9 +126,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 			break;
 		case 2:
-			//Debug.Log ("EnemyTurn");
 			int eMovementRemaing = GetNumberOfEnemyUnits();
-			foreach( EliteUnit eU in elite ){
+			foreach( Unit eU in elite ){
 				if( eU.isActiveAndEnabled ){
 					if( eU.canMove == true ){
 						break;
@@ -146,11 +143,12 @@ public class ExploreMode_GameController : MonoBehaviour {
 				
 				selectedUnit = folk[0];
 				selectedIndex = 0;
-				//GenerateMovementRange( (int) selectedUnit.currentPosition.x, (int) selectedUnit.currentPosition.y );
+
 				MoveIcon();
 				cameraObject.MoveCameraTo( cameraObject.transform.position, selectedUnit.transform.position );
 				Debug.Log ( "STATE CHANGE");
-				foreach( FolkUnit fU in folk ){
+				foreach( Unit fU in folk ){
+					Debug.Log ("reseting values");
 					fU.turnComplete = false;
 					fU.actionPoints = 2;
 					fU.canMove = true;
@@ -169,7 +167,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 		default:
 			Debug.Log("DEFAULT STATE");
 			GameState = 1;
-			foreach( FolkUnit fU in folk ){
+			foreach( Unit fU in folk ){
 				fU.canMove = true;
 			}
 			break;
@@ -268,7 +266,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 		moveTiles.Clear ();
 	}
 	public void GenerateMovementRange(int x, int y){
-
+		Debug.Log ("Generating Movement Range");
 		int[,] vectors = new int[mapSize,mapSize];
 
 		foreach( GameObject n in moveTiles){
@@ -282,7 +280,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 					(int)selectedUnit.currentPosition.y + j >= 0 && (int)selectedUnit.currentPosition.y + j < mapSize) {
 
 					if (selectedUnit.withinMoveRange ( new Vector2( (int)selectedUnit.currentPosition.x + i, (int)selectedUnit.currentPosition.y + j) ) && 
-					    CostToEnterTile((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y, (int)selectedUnit.currentPosition.x + i, (int)selectedUnit.currentPosition.y + j) < selectedUnit.movement ) {
+					    GeneratePathTo ((int)selectedUnit.currentPosition.x + i,(int)selectedUnit.currentPosition.y + j,0) ) {
 						//int tPx = (int)selectedUnit.currentPosition.x + i;
 						//int tPy = (int)selectedUnit.currentPosition.y + j;
 
@@ -297,12 +295,11 @@ public class ExploreMode_GameController : MonoBehaviour {
 						//Debug.Log ("Loaded"+i+" "+j);
 						//GameObject ob = (GameObject)Instantiate (moveTile, new Vector3 ((int)selectedUnit.currentPosition.x + i, 0,(int)selectedUnit.currentPosition.y + j), Quaternion.identity);
 						//ob.transform.SetParent (selectedUnit.transform);
-					}
+					} 
 				}
 			}
 		}
 		borderVectors = vectors;
-		//Debug.Log ("borderVectors set");
 
 
 	}
@@ -351,9 +348,9 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 	public void GeneratePathTo(int x, int y) {
 		// Clear out our unit's old path.
-		selectedUnit.GetComponent<FolkUnit>().currentPath = null;
-		
+		selectedUnit.currentPath = null;
 		if( UnitCanEnterTile(x,y) == false ) {
+
 			// We probably clicked on a mountain or something, so just quit out.
 			return;
 		}
@@ -365,8 +362,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 		List<Node> unvisited = new List<Node>();
 		
 		Node source = graph[
-		                    (int) selectedUnit.GetComponent<FolkUnit>().currentPosition.x, 
-		                    (int) selectedUnit.GetComponent<FolkUnit>().currentPosition.y
+		                    (int) selectedUnit.currentPosition.x, 
+		                    (int) selectedUnit.currentPosition.y
 		                    ];
 		
 		Node target = graph[
@@ -439,15 +436,14 @@ public class ExploreMode_GameController : MonoBehaviour {
 		// So we need to invert it!
 		
 		currentPath.Reverse();
-		if (currentPath.Count - 1 <= selectedUnit.GetComponent<FolkUnit> ().movement) {
-			selectedUnit.GetComponent<FolkUnit> ().currentPath = currentPath;
+		if (currentPath.Count - 1 <= selectedUnit.movement) {
+			selectedUnit.currentPath = currentPath;
 		}
 	}
 
-	public bool GeneratePathTo(int x, int y, EliteUnit eU) {
+	public bool GeneratePathTo(int x, int y, int w ) {
 		// Clear out our unit's old path.
-		eU.currentPath = null;
-		
+		selectedUnit.currentPath = null;
 		if( UnitCanEnterTile(x,y) == false ) {
 			// We probably clicked on a mountain or something, so just quit out.
 			return false;
@@ -460,8 +456,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 		List<Node> unvisited = new List<Node>();
 		
 		Node source = graph[
-		                    (int) eU.currentPosition.x, 
-		                    (int) eU.currentPosition.y
+		                    (int) selectedUnit.currentPosition.x, 
+		                    (int) selectedUnit.currentPosition.y
 		                    ];
 		
 		Node target = graph[
@@ -515,7 +511,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 		// If we get there, the either we found the shortest route
 		// to our target, or there is no route at ALL to our target.
 		
-		if(prev[target] == null) {
+		if (prev [target] == null) {
 			// No route between our target and the source
 			return false;
 		}
@@ -534,16 +530,17 @@ public class ExploreMode_GameController : MonoBehaviour {
 		// So we need to invert it!
 		
 		currentPath.Reverse();
-		if (currentPath.Count - 1 <= selectedUnit.GetComponent<FolkUnit> ().movement) {
-			eU.currentPath = currentPath;
+		if (currentPath.Count - 1 <= selectedUnit.movement) {
+			return true;
+		} else {
+			return false;
 		}
-		return true;
+		
 	}
 
 	public float CostToEnterTile(int sourceX, int sourceY, int targetX, int targetY) {
 		
 		TileType tt = tileTypes[ tiles[targetX,targetY] ];
-		
 		if(UnitCanEnterTile(targetX, targetY) == false)
 			return Mathf.Infinity;
 		
@@ -569,6 +566,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 	public void EnemyTurn(){
 		bool nextElite = false;
+
 		if (currentElite == -1) {
 			nextElite = true;
 			Debug.Log ( "Selecting next available Elite" );
@@ -578,7 +576,10 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 		if (checkBuffer () && newElite ) {
 			Debug.Log ( "Moving Unit" );
-			elite [currentElite].move ();
+			elite[currentElite].EliteObserve();
+			elite[currentElite].EliteDetermineState();
+			elite[currentElite].Move (elite[currentElite].EliteCalcOptMoveTile());
+			elite[currentElite].canMove = false;
 			newElite = false;
 			newAction = true;
 			Debug.Log ( "Starting New Action Buffer " );
@@ -587,7 +588,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 		if (checkBuffer () && newAction) {
 			Debug.Log ( "Unit Action" );
-			elite[currentElite].action ();
+			//elite[currentElite].action ();
 			newAction = false;
 			newElite = false;
 			nextElite = true;
@@ -612,6 +613,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 				}
 			}
 			Debug.Log ( "CurrentElite Updated" );
+			selectedUnit = elite[ currentElite ];
 			newElite = true;
 			nextElite = false;
 			
@@ -619,14 +621,6 @@ public class ExploreMode_GameController : MonoBehaviour {
 			Debug.Log ( "Starting New Elite Buffer " );
 			startBuffer(2);
 		}
-		/**
-		foreach (EliteUnit eU in elite) {
-			if( eU.health > 0 ){
-				eU.checkState();
-				eU.move();
-				eU.action();
-			}
-		}**/
 	}
 
 	void startBuffer( int bufferLength ){
@@ -649,7 +643,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 	public int GetNumberOfPlayerUnits(){
 		int count = 0;
-		foreach (FolkUnit fU in folk) {
+		foreach (Unit fU in folk) {
 			if( fU.isActiveAndEnabled ){
 				count++;
 			}
@@ -659,7 +653,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 	public int GetNumberOfEnemyUnits(){
 		int count = 0;
-		foreach (EliteUnit eU in elite) {
+		foreach (Unit eU in elite) {
 			if( eU.isActiveAndEnabled ){
 				count++;
 			}
@@ -667,8 +661,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 		return count;
 	}
 
-	public bool canAttack(FolkUnit fU){
-		foreach (EliteUnit eU in elite) {
+	public bool canAttack(Unit fU){
+		foreach (Unit eU in elite) {
 			if( eU.health > 0 ){
 				if( Vector3.Distance ( eU.transform.position, fU.transform.position ) <= 5 ){
 					if( fU.actionPoints >= 1 && !fU.hasAttacked ){
@@ -680,8 +674,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 		return false;
 	}
 
-	public void enableAttackBox(FolkUnit fU){
-		foreach (EliteUnit eU in elite) {
+	public void enableAttackBox(Unit fU){
+		foreach (Unit eU in elite) {
 			if( Vector3.Distance ( eU.transform.position, fU.transform.position ) <= 5 ){
 				if( eU.health > 0 ){
 					Transform[] eUChildren = eU.GetComponentsInChildren<Transform>(true);
@@ -695,7 +689,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 		}
 	}
 	public void disableAttackBox(){
-		foreach (EliteUnit eU in elite) {
+		foreach (Unit eU in elite) {
 			if( Vector3.Distance ( eU.transform.position, selectedUnit.transform.position ) <= 5 ){
 				Transform[] eUChildren = eU.GetComponentsInChildren<Transform>(true);
 				foreach( Transform ob in eUChildren ){

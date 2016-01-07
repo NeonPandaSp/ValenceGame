@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class SelectedIcon : MonoBehaviour {
-	public FolkUnit selectUnit;
+	public Unit selectUnit;
 	// Use this for initialization
 	void Start () {
 	

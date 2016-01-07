@@ -25,47 +25,24 @@ public class EliteUnit : MonoBehaviour {
 	}
 
 	public void checkState(){
-		/**
-		foreach (FolkUnit fU in _GameController.folk) {
-			float dist = Vector3.Distance( transform.position, fU.transform.position );
-			if( dist <= 10 ){
-				state = 2;
-			} else{
-				state = 1;
-			}
-		}**/
+
 	}
 	public void move(){
 		switch (state)
 		{
 		case 1:
-//			int moveAmount = (int) Random.Range(1, maxMovement);
-//			int moveX = (int) Random.Range (1,moveAmount);
-//			int moveY = (int) moveAmount - moveX;
-//			int hDirection = (int) Random.Range (0,1) - 1;
-//			int vDirection = (int) Random.Range (0,1) - 1;
-//
-//			moveX = moveX * hDirection;
-//			moveY = moveY * vDirection;
-//
-//			transform.position = new Vector3( transform.position.x + moveX, 0, transform.position.z + moveY );
-//
 			float minDist = 99.9f;
 			Vector2 minDistTarget = new Vector2( transform.position.x, transform.position.z);
 			for( int i = (int) currentPosition.x-maxMovement; i <= (int) currentPosition.x+maxMovement; i++){
 				for( int j = (int) currentPosition.y-maxMovement; j <= (int) currentPosition.y+maxMovement; j++){
-					//Debug.Log ( i + " " + j );
 					if( i < 50 && i > 0 && j < 50 && j > 0 ){
-						//if( _GameController.GeneratePathTo( i, j, this ) || true ){
-							foreach (FolkUnit fU in _GameController.folk) {
+							foreach (Unit fU in _GameController.folk) {
 								float dist = Vector3.Distance( new Vector3(i,0,j), fU.transform.position );
 								if( dist < minDist && dist > 0 ){
 									minDist = dist;
 									minDistTarget = new Vector2(i,j);
 								}
 							}
-						//}
-
 					}
 				}
 			}
@@ -84,8 +61,8 @@ public class EliteUnit : MonoBehaviour {
 	}
 	public void action(){
 		Debug.Log ("No Action");
-		FolkUnit targetFolk = null;
-		foreach (FolkUnit fU in _GameController.folk) {
+		Unit targetFolk = null;
+		foreach (Unit fU in _GameController.folk) {
 			float dist = Vector3.Distance( transform.position, fU.transform.position );
 			if( dist > 0 && dist < 2 ){
 				targetFolk = fU;
@@ -96,7 +73,7 @@ public class EliteUnit : MonoBehaviour {
 		}
 	}
 
-	public void Attack( FolkUnit target ){
+	public void Attack( Unit target ){
 		target.health--;
 		if (target.health <= 0) {
 			target.gameObject.SetActive(false);

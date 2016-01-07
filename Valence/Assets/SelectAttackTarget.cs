@@ -35,7 +35,7 @@ public class SelectAttackTarget : MonoBehaviour {
 	}
 
 	void RemoveEnemy(){
-		_GameController.elite.Remove (this.transform.parent.gameObject.GetComponent<EliteUnit>());
+		_GameController.elite.Remove (this.transform.parent.gameObject.GetComponent<Unit>());
 		this.transform.GetComponentInParent<EliteUnit> ().health--;
 		_GameController.selectedUnit.hasAttacked = true;
 		//this.transform.parent.gameObject.GetComponent<EliteUnit>().enabled = false;
