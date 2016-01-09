@@ -29,9 +29,9 @@ public class Fade : MonoBehaviour {
 
 	public void ReStart(){
 		currentTime = 0;
-		Debug.Log ("Pre:" + fadeObject.color.r);
+		//Debug.Log ("Pre:" + fadeObject.color.r);
 		fadeObject.color = new Color (fadeObject.color.r, fadeObject.color.g, fadeObject.color.b, 0.4f);
 		text.color = new Color (text.color.r, text.color.g, text.color.b, 1.0f);
-		Debug.Log ("Post: " + fadeObject.color.a);
+		//Debug.Log ("Post: " + fadeObject.color.a);
 	}
 }

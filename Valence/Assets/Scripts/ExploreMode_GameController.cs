@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class ExploreMode_GameController : MonoBehaviour {
 	
-	static int mapSize = 50;
+	public int mapSize = 50;
 	public int[,] tiles;
 	public Node[,] graph;
 	
@@ -29,7 +29,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 	public List<GameObject> moveTiles = new List<GameObject>();
 
 	public GameObject pointObject;
-	int[,] borderVectors = new int[mapSize,mapSize];
+	int[,] borderVectors;
 
 	public int GameState;
 	public Transform GUIFrame;
@@ -44,15 +44,15 @@ public class ExploreMode_GameController : MonoBehaviour {
 	void Start () {
 		tiles = new int[mapSize,mapSize];
 		tileVisuals = new GameObject[mapSize, mapSize];
+		
+		borderVectors = new int[mapSize, mapSize];
 
 		GenerateNodeGraph ();
-
-
 
 		for( int x = 0; x < mapSize; x++){
 			for( int y = 0; y < mapSize; y++){
 				int rand = (int) Random.Range( 0, 100 );
-				if( rand < 95 ){
+				if( rand < 100 ){
 					tiles[x,y] = 1;
 					//Instantiate ( tileTypes[0].visualPrefab,new Vector3( x+0.5f, 0, y+0.5f ), Quaternion.identity );
 				} else{
@@ -61,19 +61,11 @@ public class ExploreMode_GameController : MonoBehaviour {
 				}
 			}
 		}
-		for (int i = 0; i < GetNumberOfPlayerUnits(); i++) {
-			folk[i].transform.position =  new Vector3 (i * 2, 0, i*2);
-			folk[i].currentPosition = new Vector2( i * 2, i*2);
-		}
 
 		GameState = 0;
 
 		selectedUnit = folk [0];
 		selectedIndex = 0;
-
-		foreach (Unit eU in elite) {
-			eU.transform.position = new Vector3( (int) Random.Range ( 15, 25 ), 0,(int) Random.Range ( 15, 25 ) );
-		}
 
 		icon.selectUnit = selectedUnit;
 		//GenerateMovementRange ((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y);
@@ -91,7 +83,6 @@ public class ExploreMode_GameController : MonoBehaviour {
 		switch (GameState)
 		{
 		case 1:
-			//Debug.Log ("PlayerTurn");
 			int movementRemaing = GetNumberOfPlayerUnits();
 			foreach( Unit fU in folk ){
 				if( fU.turnComplete == false ){
@@ -101,7 +92,6 @@ public class ExploreMode_GameController : MonoBehaviour {
 				}
 				
 				if( movementRemaing == 0 ){
-					Debug.Log ( "changing state" );
 					enemyTurnObject.ReStart();
 					GameState = 2; 
 					foreach( Unit eU in elite ){
@@ -146,9 +136,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 				MoveIcon();
 				cameraObject.MoveCameraTo( cameraObject.transform.position, selectedUnit.transform.position );
-				Debug.Log ( "STATE CHANGE");
 				foreach( Unit fU in folk ){
-					Debug.Log ("reseting values");
 					fU.turnComplete = false;
 					fU.actionPoints = 2;
 					fU.canMove = true;
@@ -165,7 +153,6 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 			break;
 		default:
-			Debug.Log("DEFAULT STATE");
 			GameState = 1;
 			foreach( Unit fU in folk ){
 				fU.canMove = true;
@@ -266,7 +253,6 @@ public class ExploreMode_GameController : MonoBehaviour {
 		moveTiles.Clear ();
 	}
 	public void GenerateMovementRange(int x, int y){
-		Debug.Log ("Generating Movement Range");
 		int[,] vectors = new int[mapSize,mapSize];
 
 		foreach( GameObject n in moveTiles){
@@ -334,7 +320,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 				if( x < mapSize - 1 )
 					graph[x,y].neighbours.Add (graph[x+1, y ] );
 				if( y > 0 )
-					graph[x,y].neighbours.Add ( graph[x, y-1 ] );
+					graph[x,y].neighbours.Add (graph[x, y-1 ] );
 				if( y < mapSize - 1 )
 					graph[x,y].neighbours.Add (graph[x, y+1 ] );
 			}
@@ -436,9 +422,12 @@ public class ExploreMode_GameController : MonoBehaviour {
 		// So we need to invert it!
 		
 		currentPath.Reverse();
+		selectedUnit.currentPath = currentPath;
+		/**
 		if (currentPath.Count - 1 <= selectedUnit.movement) {
 			selectedUnit.currentPath = currentPath;
 		}
+		**/
 	}
 
 	public bool GeneratePathTo(int x, int y, int w ) {
@@ -525,7 +514,6 @@ public class ExploreMode_GameController : MonoBehaviour {
 			currentPath.Add(curr);
 			curr = prev[curr];
 		}
-		
 		// Right now, currentPath describes a route from out target to our source
 		// So we need to invert it!
 		
@@ -569,30 +557,25 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 		if (currentElite == -1) {
 			nextElite = true;
-			Debug.Log ( "Selecting next available Elite" );
 		}
 
 		updateBuffer ();
 
 		if (checkBuffer () && newElite ) {
-			Debug.Log ( "Moving Unit" );
 			elite[currentElite].EliteObserve();
 			elite[currentElite].EliteDetermineState();
 			elite[currentElite].Move (elite[currentElite].EliteCalcOptMoveTile());
 			elite[currentElite].canMove = false;
 			newElite = false;
 			newAction = true;
-			Debug.Log ( "Starting New Action Buffer " );
 			startBuffer(1);
 		} 
 
 		if (checkBuffer () && newAction) {
-			Debug.Log ( "Unit Action" );
 			//elite[currentElite].action ();
 			newAction = false;
 			newElite = false;
 			nextElite = true;
-			Debug.Log ( "Selecting next available Elite" );
 		}
 
 		
@@ -607,18 +590,15 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 			while( !elite[currentElite].isActiveAndEnabled ){
 				currentElite++;
-				Debug.Log ( "NumElite: " + GetNumberOfEnemyUnits());
 				if( currentElite >= GetNumberOfEnemyUnits() ){
 					currentElite = 0;
 				}
 			}
-			Debug.Log ( "CurrentElite Updated" );
 			selectedUnit = elite[ currentElite ];
 			newElite = true;
 			nextElite = false;
 			
 			cameraObject.MoveCameraTo(cameraObject.transform.position, elite[currentElite].transform.position);
-			Debug.Log ( "Starting New Elite Buffer " );
 			startBuffer(2);
 		}
 	}
