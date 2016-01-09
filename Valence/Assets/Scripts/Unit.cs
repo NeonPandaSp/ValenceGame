@@ -63,6 +63,7 @@ public class Unit : MonoBehaviour {
 		for( int  i = 0; i < _GameController.GetNumberOfPlayerUnits(); i++ ){
 			knownPosition [i] = new Vector2 (-1,-1);
 		}
+		//_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 2;
 	}
 	
 	// Update is called once per frame
@@ -99,11 +100,11 @@ public class Unit : MonoBehaviour {
 			Vector2 tempFacing = new Vector2( currentPath[1].x, currentPath[1].y ) - currentPosition;
 			tempFacing.Normalize();
 			facing = new Vector3( tempFacing.x, 0, tempFacing.y );
-
+			//_GameController.tiles [(int)currentPosition.x,(int) currentPosition.y] = 1;
 			// Move us to the next tile in the sequence
 			currentPosition.x = currentPath[1].x;
 			currentPosition.y = currentPath[1].y;
-			
+			//_GameController.tiles [(int)currentPosition.x,(int) currentPosition.y] = 2;
 			transform.position = new Vector3(currentPosition.x, 0, currentPosition.y);
 			
 			// Remove the old "current" tile
