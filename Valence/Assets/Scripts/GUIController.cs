@@ -7,7 +7,17 @@ public class GUIController : MonoBehaviour {
 	public InputController _inputController;
 	public GameObject GUIObject;
 
-	public Text scrapText, popText, moraleText, foodText, waterText, powerText;
+	//Time variables
+	public float updateInterval = 0.5F;
+	private double lastInterval;
+	private int frames = 0;
+	private float fps;
+
+	int hour;
+	int minute;
+	int second;
+
+	public Text timeText, scrapText, popText, moraleText, foodText, waterText, powerText;
 	//public Button shelterButton, foodButton, powerButton;
 
 	Vector2 lastMousePos;
@@ -24,6 +34,7 @@ public class GUIController : MonoBehaviour {
 		water = 0;
 		power = 0;
 
+		setTimeText ();
 		setScrapText ();
 		setPopText ();
 		setMoraleText ();
@@ -32,6 +43,13 @@ public class GUIController : MonoBehaviour {
 		setPowerText ();
 
 		lastMousePos = Input.mousePosition;
+
+		//Time
+		lastInterval = Time.realtimeSinceStartup;
+		frames = 0;
+		hour = 0;
+		minute = 0;
+		second = 0;
 	}
 
 	// Update is called once per frame
@@ -43,6 +61,7 @@ public class GUIController : MonoBehaviour {
 		water++;
 		power++;
 
+		setTimeText ();
 		setScrapText ();
 		setPopText ();
 		setMoraleText ();
@@ -68,9 +87,27 @@ public class GUIController : MonoBehaviour {
 		}
 
 		lastMousePos = Input.mousePosition;
+
+		//Time
+		hour = Mathf.FloorToInt( Time.realtimeSinceStartup / ( 60 * 60 ) );
+		minute = Mathf.FloorToInt( Time.realtimeSinceStartup / 60 ) - ( hour * 60 );
+		second = (int) Time.realtimeSinceStartup - (minute * 60);
+
+		//Frames
+		++frames;
+		float timeNow = Time.realtimeSinceStartup;
+		if (timeNow > lastInterval + updateInterval) {
+			fps = (float) (frames / (timeNow - lastInterval));
+			frames = 0;
+			lastInterval = timeNow;
+		}
 	}
 
 	//Setting Global Texts
+	void setTimeText (){
+		timeText.text = hour.ToString () + ":" + minute.ToString () + ":" + second.ToString ();
+	}
+
 	void setScrapText (){
 		scrapText.text = "Scrap: " + scrap.ToString ();
 	}
@@ -84,7 +121,7 @@ public class GUIController : MonoBehaviour {
 	}
 
 	void setFoodText (){
-		foodText.text = "Hunger: " + food.ToString ();
+		foodText.text = "Food: " + food.ToString ();
 	}
 
 	void setWaterText (){
@@ -108,15 +145,14 @@ public class GUIController : MonoBehaviour {
 	}
 	*/
 
-		void OnGUI() {
-		if (GUI.Button (new Rect (845, 10, 100, 100), "CLICK ME!"))
-			print (morale);
+	void OnGUI() {
+	if (GUI.Button (new Rect (845, 10, 100, 100), "CLICK ME!"))
+		print (morale);
 
-		DateTime time = DateTime.Now;
-		String hour = time.Hour.ToString().PadLeft(2, '0');
-		String minute = time.Minute.ToString().PadLeft(2, '0');
-		string second = time.Second.ToString().PadLeft(2, '0');
-		
-		GUILayout.Label(hour +":"+ minute +":"+ second);
+	GUI.BeginGroup (new Rect(Screen.width -100, 0, 200, 200));
+		GUILayout.Label ("FPS: " + fps.ToString ("f2"));
+	GUI.EndGroup();
+
+	//GUILayout.Label (hour + ":" + minute + ":" + second);
 	}
 }
