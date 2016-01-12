@@ -19,7 +19,8 @@ public class generateZone : MonoBehaviour {
         "shelter",
         "hospital",
         "power station",
-        "water station"
+        "water station",
+        "tavern"
 
     };
 
@@ -65,7 +66,7 @@ public class generateZone : MonoBehaviour {
 	void OnGUI() {
 
 		//Create a GUI toggle section where the user can select between a serise of building types, assigned variable is passed to Generate function -Zach
-		buildingType = GUI.SelectionGrid(new Rect(Screen.width - 100, 50, 100, 110), buildingType, buildingArray, 1);
+		buildingType = GUI.SelectionGrid(new Rect(Screen.width - 100, 50, 100, 130), buildingType, buildingArray, 1);
         //As you add more buttons to the selection grid, you will need to increase the height variable of the Rect to accomidate the additional space -Zach
 	}
 
@@ -115,6 +116,14 @@ public class generateZone : MonoBehaviour {
                 case 4:
 
                     tempLandmark = (GameObject)Instantiate(Resources.Load("WaterStation"), landmarkPosition, Quaternion.identity);
+                    tempLandmark.transform.eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
+                    tempLandmark.transform.SetParent(zoneBounds.transform);
+
+                break;
+
+                case 5:
+
+                    tempLandmark = (GameObject)Instantiate(Resources.Load("Tavern"), landmarkPosition, Quaternion.identity);
                     tempLandmark.transform.eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
                     tempLandmark.transform.SetParent(zoneBounds.transform);
 
