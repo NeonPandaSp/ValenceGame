@@ -76,7 +76,7 @@ public class generateZone : MonoBehaviour {
 				//Case number is associated to the value stored in building type, 0 = index 0 of buildingArray -Zach
 				case 0:
 					//Updated this code to now use a landmark which has a serise of attached waypoints which an agent can move between - Zach
-					tempLandmark = (GameObject)Instantiate(Resources.Load("TestFarm"), landmarkPosition, Quaternion.identity);
+					tempLandmark = (GameObject)Instantiate(Resources.Load("Farm"), landmarkPosition, Quaternion.identity);
 					tempLandmark.transform.eulerAngles = new Vector3 (0, Random.Range (0, 360), 0);
 					tempLandmark.transform.SetParent( zoneBounds.transform );
 					
