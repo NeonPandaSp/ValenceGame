@@ -108,7 +108,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 				moveButton.interactable = false;
 			} 
 
-			if( canAttack(selectedUnit)) {
+			if( canAttack(selectedUnit) ) {
 				attackButton.interactable = true;
 			} else {
 				attackButton.interactable = false;
@@ -644,7 +644,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 	public bool canAttack(Unit fU){
 		foreach (Unit eU in elite) {
 			if( eU.health > 0 ){
-				if( Vector3.Distance ( eU.transform.position, fU.transform.position ) <= 5 ){
+				if( fU.isWithinAttackRange(eU) ){
 					if( fU.actionPoints >= 1 && !fU.hasAttacked ){
 						return true;
 					}
@@ -656,7 +656,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 	public void enableAttackBox(Unit fU){
 		foreach (Unit eU in elite) {
-			if( Vector3.Distance ( eU.transform.position, fU.transform.position ) <= 5 ){
+			if( fU.isWithinAttackRange(eU) ){
 				if( eU.health > 0 ){
 					Transform[] eUChildren = eU.GetComponentsInChildren<Transform>(true);
 					foreach( Transform ob in eUChildren ){
