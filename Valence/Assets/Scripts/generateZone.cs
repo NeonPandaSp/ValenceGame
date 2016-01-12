@@ -14,9 +14,14 @@ public class generateZone : MonoBehaviour {
 	public string[] buildingArray = new string[] {
 
 		//NOTE: ensure that you have created a corresponding prefab which matches the building added here -Zach
-		"farm", 
-		"hospital"
-	};
+        //NOTE: ensure that you have increased the array size in the Unity editor when adding aditional buildings to this array -Zach
+		"farm",
+        "shelter",
+        "hospital",
+        "power station",
+        "water station"
+
+    };
 
 	//Temp variable to contain current building selected from building list -Zach
 	public int buildingType;
@@ -60,7 +65,8 @@ public class generateZone : MonoBehaviour {
 	void OnGUI() {
 
 		//Create a GUI toggle section where the user can select between a serise of building types, assigned variable is passed to Generate function -Zach
-		buildingType = GUI.SelectionGrid(new Rect(Screen.width - 100, 50, 100, 50), buildingType, buildingArray, 1);
+		buildingType = GUI.SelectionGrid(new Rect(Screen.width - 100, 50, 100, 110), buildingType, buildingArray, 1);
+        //As you add more buttons to the selection grid, you will need to increase the height variable of the Rect to accomidate the additional space -Zach
 	}
 
 	public void Generate(int numProps){
@@ -90,7 +96,31 @@ public class generateZone : MonoBehaviour {
 
 				break;
 
-				default:
+                case 2:
+
+                    tempLandmark = (GameObject)Instantiate(Resources.Load("Shelter"), landmarkPosition, Quaternion.identity);
+                    tempLandmark.transform.eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
+                    tempLandmark.transform.SetParent(zoneBounds.transform);
+
+                break;
+
+                case 3:
+
+                    tempLandmark = (GameObject)Instantiate(Resources.Load("PowerStation"), landmarkPosition, Quaternion.identity);
+                    tempLandmark.transform.eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
+                    tempLandmark.transform.SetParent(zoneBounds.transform);
+
+                break;
+
+                case 4:
+
+                    tempLandmark = (GameObject)Instantiate(Resources.Load("WaterStation"), landmarkPosition, Quaternion.identity);
+                    tempLandmark.transform.eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
+                    tempLandmark.transform.SetParent(zoneBounds.transform);
+
+                break;
+
+                default:
 					print ("default reached in Generate function in generateZone.cs");
 				break;
 			}
