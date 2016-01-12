@@ -7,8 +7,8 @@ public class GUIController : MonoBehaviour {
 	public InputController _inputController;
 	public GameObject GUIObject;
 
-	//Time variables
-	public float updateInterval = 0.5F;
+	//FPS variables
+	private float updateInterval = 0.5F;
 	private double lastInterval;
 	private int frames = 0;
 	private float fps;
@@ -20,10 +20,19 @@ public class GUIController : MonoBehaviour {
 	public Text timeText, scrapText, popText, moraleText, foodText, waterText, powerText;
 	//public Button shelterButton, foodButton, powerButton;
 
+	//Buttons
+	public Texture2D buildIcon;
+	public Texture2D destroyIcon;
+
+
 	Vector2 lastMousePos;
 
 	public int scrap, population;
 	public float morale, food, water, power;
+
+	//=================\\
+	//===== Start =====\\
+	//=================\\
 
 	// Use this for initialization
 	void Start () {
@@ -51,6 +60,10 @@ public class GUIController : MonoBehaviour {
 		minute = 0;
 		second = 0;
 	}
+	 
+	//==================\\
+	//===== Update =====\\
+	//==================\\
 
 	// Update is called once per frame
 	void Update () {
@@ -89,8 +102,8 @@ public class GUIController : MonoBehaviour {
 		lastMousePos = Input.mousePosition;
 
 		//Time
-		hour = Mathf.FloorToInt( Time.realtimeSinceStartup / ( 60 * 60 ) );
-		minute = Mathf.FloorToInt( Time.realtimeSinceStartup / 60 ) - ( hour * 60 );
+		hour = Mathf.FloorToInt( Time.realtimeSinceStartup / (60 * 60));
+		minute = Mathf.FloorToInt( Time.realtimeSinceStartup / 60) - (hour * 60);
 		second = (int) Time.realtimeSinceStartup - (minute * 60);
 
 		//Frames
@@ -102,6 +115,10 @@ public class GUIController : MonoBehaviour {
 			lastInterval = timeNow;
 		}
 	}
+
+	//==================\\
+	//==== Functions ===\\
+	//==================\\
 
 	//Setting Global Texts
 	void setTimeText (){
@@ -132,27 +149,25 @@ public class GUIController : MonoBehaviour {
 		powerText.text = "Power: " + power.ToString ();
 	}
 
-	/*
-	public void shelterPressed(){
-		_inputController.selectedMaterial ("blue");
-		Debug.Log ("Green!");
-	}
-	public void foodPressed(){
-		_inputController.selectedMaterial ("green");
-	}
-	public void powerPressed(){
-		_inputController.selectedMaterial ("yellow");
-	}
-	*/
+	//==================\\
+	//===== ON GUI =====\\
+	//==================\\
 
 	void OnGUI() {
-	if (GUI.Button (new Rect (845, 10, 100, 100), "CLICK ME!"))
-		print (morale);
+		if (GUI.Button (new Rect (Screen.width / 2 - 100, Screen.height / 2 - 100, 100, 100), buildIcon)) {
+			print ("Build Icon clicked");
+		}
 
-	GUI.BeginGroup (new Rect(Screen.width -100, 0, 200, 200));
+		if (GUI.Button (new Rect (Screen.width / 2 - 200, Screen.height / 2 - 200, 100, 100), destroyIcon)) {
+			print ("Destroy Icon clicked");
+		}
+	
+		if (GUI.Button (new Rect (845, 10, 100, 100), "Build"))
+			print (morale);
+
+	
+ 	GUI.BeginGroup (new Rect (Screen.width -100, 0, 200, 200));
 		GUILayout.Label ("FPS: " + fps.ToString ("f2"));
-	GUI.EndGroup();
-
-	//GUILayout.Label (hour + ":" + minute + ":" + second);
+	GUI.EndGroup ();
 	}
 }

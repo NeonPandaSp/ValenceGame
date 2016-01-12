@@ -37,7 +37,7 @@ public class generateZone : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		print (buildingType);
+		//print (buildingType);
 	}
 
 	public void setZoneSize( Vector2 minPos, Vector2 maxPos ){

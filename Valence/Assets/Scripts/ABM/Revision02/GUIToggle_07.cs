@@ -51,7 +51,7 @@ public class GUIToggle_07 : MonoBehaviour {
 		if (!GameObject.FindWithTag("Hospital"))
 		{
 			hospitalAvailable = false;
-			print("No Tag Found <Hospital>");
+			//print("No Tag Found <Hospital>");
 		}
 		else {
 			hospitalAvailable = true;
