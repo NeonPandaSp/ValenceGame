@@ -190,10 +190,16 @@ public class InputController : MonoBehaviour {
 				if( hoverState == "water" ){
 					if( _gameController.scrap >= 25 ){
 						_gameController.scrap -= 25;
-						GameObject tempObject = ( GameObject ) Instantiate ( waterBuild, new Vector3( currentTile.x, 0, currentTile.y ), Quaternion.identity );
+						GameObject tempObject = ( GameObject ) Instantiate (Resources.Load("WaterStation"), new Vector3( currentTile.x, 0, currentTile.y ), Quaternion.identity );
 						tempObject.GetComponent<BuildingScript>().initBuildingType();
 						tempObject.GetComponent<BuildingScript>().beginProduction();
-						foreach(Transform child in tempObject.transform){
+
+                        //Update agent pathfinding to account for this new obstical -Zach
+                        foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
+                            AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
+                        }
+
+                        foreach (Transform child in tempObject.transform){
 							if(child.gameObject.tag == "buildTrans"){
 								child.gameObject.SetActive(false);
 							}
@@ -206,10 +212,16 @@ public class InputController : MonoBehaviour {
 				if( hoverState == "power" ){
 					if( _gameController.scrap >= 25 ){
 						_gameController.scrap -= 25;
-						GameObject tempObject = ( GameObject ) Instantiate ( powerBuild, new Vector3( currentTile.x, 0, currentTile.y ), Quaternion.identity );
+						GameObject tempObject = ( GameObject ) Instantiate (Resources.Load("PowerStation"), new Vector3( currentTile.x, 0, currentTile.y ), Quaternion.identity );
 						tempObject.GetComponent<BuildingScript>().initBuildingType();
 						tempObject.GetComponent<BuildingScript>().beginProduction();
-						foreach(Transform child in tempObject.transform){
+
+                        //Update agent pathfinding to account for this new obstical -Zach
+                        foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
+                            AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
+                        }
+
+                        foreach (Transform child in tempObject.transform){
 							if(child.gameObject.tag == "buildTrans"){
 								child.gameObject.SetActive(false);
 							}

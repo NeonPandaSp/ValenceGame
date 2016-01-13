@@ -8,10 +8,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 483702}
-  - 114: {fileID: 11489090}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Trans_PowerStation
-  m_TagString: prop
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25,7 +24,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 473216}
   - 33: {fileID: 3397324}
-  - 64: {fileID: 6411384}
   - 23: {fileID: 2390308}
   m_Layer: 0
   m_Name: BuildSpace
@@ -44,7 +42,7 @@ GameObject:
   - 4: {fileID: 443798}
   - 33: {fileID: 3348944}
   - 23: {fileID: 2380714}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: GasGenBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +59,7 @@ GameObject:
   - 4: {fileID: 472340}
   - 33: {fileID: 3384454}
   - 23: {fileID: 2310074}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: WaterPipe7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,7 +76,7 @@ GameObject:
   - 4: {fileID: 486652}
   - 33: {fileID: 3362200}
   - 23: {fileID: 2315378}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Pipe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +93,7 @@ GameObject:
   - 4: {fileID: 496482}
   - 33: {fileID: 3332186}
   - 23: {fileID: 2349626}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: GasGeneraton1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +110,7 @@ GameObject:
   - 4: {fileID: 454526}
   - 33: {fileID: 3307594}
   - 23: {fileID: 2335856}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: GasGenerator2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +127,7 @@ GameObject:
   - 4: {fileID: 426638}
   - 33: {fileID: 3323250}
   - 23: {fileID: 2337550}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Gear1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +144,7 @@ GameObject:
   - 4: {fileID: 494350}
   - 33: {fileID: 3321518}
   - 23: {fileID: 2316694}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Gear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,7 +161,7 @@ GameObject:
   - 4: {fileID: 479270}
   - 33: {fileID: 3398400}
   - 23: {fileID: 2324024}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: PipeConnector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,7 +178,7 @@ GameObject:
   - 4: {fileID: 402832}
   - 33: {fileID: 3397456}
   - 23: {fileID: 2360128}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: GasGeneratorContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -639,47 +637,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 180976}
   m_Mesh: {fileID: 4300008, guid: ea69521a92176fc43a551b519ea7d8f5, type: 3}
---- !u!64 &6411384
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 104306}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &11489090
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 102708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3f902df69981bb4b93f0f5847001085, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _myGameController: {fileID: 0}
-  bType:
-    typeName: 
-    cost: 0
-    pRate: 0
-    pTime: 0
-    area: 0
-  myType: power
-  myArea: 8
-  assignedAgents: []
-  initProduction: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 102708}

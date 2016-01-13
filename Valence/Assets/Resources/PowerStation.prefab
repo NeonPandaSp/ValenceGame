@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 481236}
   - 33: {fileID: 3337588}
   - 23: {fileID: 2354336}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: GasGenerator2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,6 +32,7 @@ GameObject:
   - 65: {fileID: 6543312}
   - 65: {fileID: 6563208}
   - 54: {fileID: 5420118}
+  - 114: {fileID: 11411522}
   m_Layer: 8
   m_Name: PowerStation
   m_TagString: prop
@@ -49,7 +50,7 @@ GameObject:
   - 4: {fileID: 465664}
   - 33: {fileID: 3387274}
   - 23: {fileID: 2371832}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: GasGeneratorContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,7 +67,7 @@ GameObject:
   - 4: {fileID: 410996}
   - 33: {fileID: 3343096}
   - 23: {fileID: 2335300}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: GasGenBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,7 +84,7 @@ GameObject:
   - 4: {fileID: 475396}
   - 33: {fileID: 3384208}
   - 23: {fileID: 2310292}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: GasGeneraton1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +101,7 @@ GameObject:
   - 4: {fileID: 431582}
   - 33: {fileID: 3319030}
   - 23: {fileID: 2302612}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Gear1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +118,7 @@ GameObject:
   - 4: {fileID: 406164}
   - 33: {fileID: 3390706}
   - 23: {fileID: 2394264}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: PipeConnector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +135,7 @@ GameObject:
   - 4: {fileID: 407620}
   - 33: {fileID: 3351628}
   - 23: {fileID: 2344892}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: WaterPipe7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +152,7 @@ GameObject:
   - 4: {fileID: 402152}
   - 33: {fileID: 3354380}
   - 23: {fileID: 2319096}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Pipe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,7 +169,7 @@ GameObject:
   - 4: {fileID: 452872}
   - 33: {fileID: 3318844}
   - 23: {fileID: 2308064}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Gear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -670,6 +671,28 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 79.3851013, y: 19.6382675, z: 16.2906208}
   m_Center: {x: -128.712296, y: 111.940865, z: -.689279139}
+--- !u!114 &11411522
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 114192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f902df69981bb4b93f0f5847001085, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myGameController: {fileID: 0}
+  bType:
+    typeName: 
+    cost: 0
+    pRate: 0
+    pTime: 0
+    area: 0
+  myType: power
+  myArea: 27
+  assignedAgents: []
+  initProduction: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -680,6 +703,26 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Mass
       value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: myType
+      value: power
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: myArea
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_UseGravity
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
