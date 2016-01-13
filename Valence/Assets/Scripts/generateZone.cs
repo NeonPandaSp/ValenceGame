@@ -16,8 +16,8 @@ public class generateZone : MonoBehaviour {
 		//NOTE: ensure that you have created a corresponding prefab which matches the building added here -Zach
         //NOTE: ensure that you have increased the array size in the Unity editor when adding aditional buildings to this array -Zach
 		"farm",
-        "shelter",
         "hospital",
+        "shelter",
         "power station",
         "water station",
         "tavern"

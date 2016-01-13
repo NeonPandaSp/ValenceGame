@@ -167,11 +167,17 @@ public class InputController : MonoBehaviour {
 				if( hoverState == "food" ){
 					if( _gameController.scrap >= 25 ){
 						_gameController.scrap -= 25;
-						GameObject tempObject = ( GameObject ) Instantiate ( foodBuild, new Vector3( currentTile.x, 0, currentTile.y ), Quaternion.identity );
+						GameObject tempObject = ( GameObject ) Instantiate (Resources.Load("Farm"), new Vector3( currentTile.x, 0, currentTile.y ), Quaternion.identity );
 						tempObject.GetComponent<BuildingScript>().initBuildingType();
 						tempObject.GetComponent<BuildingScript>().beginProduction();
-						//Debug.Log ( tempObject.GetComponent<BuildingScript>().initProduction );
-						foreach(Transform child in tempObject.transform){
+                        //Debug.Log ( tempObject.GetComponent<BuildingScript>().initProduction );
+
+                        //Update agent pathfinding to account for this new obstical -Zach
+                        foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
+                            AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
+                        }
+
+                        foreach (Transform child in tempObject.transform){
 							if(child.gameObject.tag == "buildTrans"){
 								child.gameObject.SetActive(false);
 							}
@@ -217,7 +223,7 @@ public class InputController : MonoBehaviour {
 			if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
 				myHoverObject.transform.position = new Vector3( currentTile.x, 1, currentTile.y );
 			}
-			myHoverObject.transform.localScale = new Vector3( 1, 1 , 1); 
+			//myHoverObject.transform.localScale = new Vector3( 1, 1 , 1); 
 
 		}
 
