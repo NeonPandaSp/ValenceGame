@@ -6,6 +6,7 @@ public class weaponScript : MonoBehaviour {
 	public int damageModifier;
 	public int range;
 	public float accuracy;
+	public float soundRange;
 
 	// Use this for initialization
 	void Start () {

@@ -48,7 +48,7 @@ public class Unit : MonoBehaviour {
 	public int EliteState;
 	public List<Unit> FolkUnits;
 	public List<Unit> FolkUnitsWithinView;
-	public Vector2[] knownPosition;
+	public List<Vector2> knownPosition;
 
 	public Vector2 startPosition;
 	public string EliteBehaviour;
@@ -84,12 +84,7 @@ public class Unit : MonoBehaviour {
 		foreach( Unit fU in _GameController.folk ){
 			FolkUnits.Add (fU);
 		}
-
-		knownPosition = new Vector2[_GameController.GetNumberOfPlayerUnits()];
-		for( int  i = 0; i < _GameController.GetNumberOfPlayerUnits(); i++ ){
-			knownPosition [i] = new Vector2 (-1,-1);
-		}
-		//_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 2;
+		//_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 3;
 	}
 	
 	// Update is called once per frame
@@ -126,11 +121,11 @@ public class Unit : MonoBehaviour {
 			Vector2 tempFacing = new Vector2( currentPath[1].x, currentPath[1].y ) - currentPosition;
 			tempFacing.Normalize();
 			facing = new Vector3( tempFacing.x, 0, tempFacing.y );
-			//_GameController.tiles [(int)currentPosition.x,(int) currentPosition.y] = 1;
+			//_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 1;
 			// Move us to the next tile in the sequence
 			currentPosition.x = currentPath[1].x;
 			currentPosition.y = currentPath[1].y;
-			//_GameController.tiles [(int)currentPosition.x,(int) currentPosition.y] = 2;
+			//_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 3;
 			transform.position = new Vector3(currentPosition.x, 0, currentPosition.y);
 			
 			// Remove the old "current" tile
@@ -188,65 +183,48 @@ public class Unit : MonoBehaviour {
 	}
 
 	public void EliteObserve(){
-		int loopIndex = 0;
+		int loopIndex = knownPosition.Count;
 		foreach (Unit fU in FolkUnits) {
 
 			if( raycastLineOfSight(fU,false) ){
 				if( !FolkUnitsWithinView.Contains (fU) ){
 					// ... the player is in sight.
 					Debug.Log ("SPOTTED");
-					
+					generateSound(currentPosition,3.0f);
 					FolkUnitsWithinView.Add (fU);
-					
+
+					if( !knownPosition.Contains ( fU.currentPosition ) )
+						knownPosition.Add( fU.currentPosition );
 					// Set the last global sighting is the players current position.
-					knownPosition[loopIndex] = fU.currentPosition;
+					
 				} else {
 					// Set the last global sighting is the players current position.
-					knownPosition[loopIndex] = fU.currentPosition;
+					if( !knownPosition.Contains ( fU.currentPosition ) )
+						knownPosition.Add( fU.currentPosition );
 				} 
 			} else {
 				if( FolkUnitsWithinView.Contains (fU) )
 					FolkUnitsWithinView.Remove (fU);
 			}
 			loopIndex++;
+		}
+		for (int i = 0; i < knownPosition.Count; i++) {
+			if (currentPosition == knownPosition[i]) {
+				knownPosition.Remove( knownPosition[i] );
+				i--;
+			}
+		}
 
-			/**
-			if( Vector2.Distance ( currentPosition, fU.currentPosition ) < 6 ){
-				if( !FolkUnitsWithinView.Contains( fU ) ){
-					FolkUnitsWithinView.Add (fU);
-					knownPosition.Add (fU.currentPosition);
-				} else {
-					knownPosition.Add (fU.currentPosition);
-				}
-			} else {
-				if( FolkUnitsWithinView.Contains( fU ) ){
-					FolkUnitsWithinView.Remove (fU);
-				}
-			}
-			**/
-		}
-		for (int i = 0; i < knownPosition.Length; i++) {
-			if (currentPosition == knownPosition [i]) {
-				knownPosition [i] = new Vector2 (-1, -1);
-			}
-		}
+
 	}
 
 	public void EliteDetermineState(){
-		int knownPositionCount = 0;
-		Vector2 negVector = new Vector2 (-1, -1);
 
-		for (int i = 0; i < knownPosition.Length; i++) {
-			if( knownPosition[i] != negVector ){
-				knownPositionCount++;
-			}
-		}
-
-		if (knownPositionCount <= 0) {
+		if (knownPosition.Count <= 0) {
 			EliteState = 1; // Idle
-		} else if (knownPositionCount > 0 && FolkUnitsWithinView.Count > 0) {
+		} else if (knownPosition.Count > 0 && FolkUnitsWithinView.Count > 0) {
 			EliteState = 3; // Attack
-		} else if (knownPositionCount > 0) {
+		} else if (knownPosition.Count > 0) {
 			EliteState = 2; // Search
 		}
 
@@ -332,13 +310,7 @@ public class Unit : MonoBehaviour {
 			}
 		}
 		else if (EliteState == 2) {
-			Vector2 negVector = new Vector2 (-1, -1);
-			
-			for (int i = 0; i < knownPosition.Length; i++) {
-				if( knownPosition[i] != negVector ){
-					targetPosition = knownPosition[i];
-				}
-			}
+			targetPosition = knownPosition[knownPosition.Count-1];
 
 		} else if (EliteState == 3) {
 			GameObject tempUnit = (GameObject) Instantiate ( prefabUnit, this.transform.position, Quaternion.identity );
@@ -367,17 +339,10 @@ public class Unit : MonoBehaviour {
 									scores[i,j] -= 10;
 								}
 								if( tempScript.raycastLineOfSight(fU,false) && tempScript.isWithinAttackRange(fU) ){
-									scores[i,j] += 20;
+									scores[i,j] += 40;
 								}
 							}
 						}
-
-
-						// how many Folk can attack me
-						// how many Folk can I attack
-
-
-						// how likely am I to hit my opponent
 					}
 				}
 			}
@@ -396,8 +361,38 @@ public class Unit : MonoBehaviour {
 				}
 			}
 			targetPosition = highVector;
-			//targetPosition = FolkUnitsWithinView[0].currentPosition;
 		}
+//
+//		while (_GameController.tiles[(int)targetPosition.x,(int)targetPosition.y] == 2) {
+//			List<Vector2> neighbours = new List<Vector2>();
+//			if( targetPosition.x > 0 )
+//				neighbours.Add ( new Vector2( targetPosition.x-1,targetPosition.y));
+//			if( targetPosition.x < myMapSize - 1 )
+//				neighbours.Add ( new Vector2(targetPosition.x+1,targetPosition.y) );
+//			if( targetPosition.y > 0 )
+//				neighbours.Add ( new Vector2(targetPosition.x,targetPosition.y-1) );
+//			if( targetPosition.y < myMapSize - 1 )
+//				neighbours.Add ( new Vector2(targetPosition.x,targetPosition.y+1) );
+//			int numValid = 0;
+//			foreach(Vector2 n in neighbours ){
+//				if( _GameController.tiles[(int)n.x,(int)n.y] == 1){
+//					targetPosition = n;
+//					numValid++;
+//				}
+//			}
+//			if( numValid <= 0 ){
+//				Vector2 shortestVector = currentPosition;
+//				int shortestDist = 99;
+//				foreach(Vector2 n in neighbours ){
+//					int dist = getDistance ( currentPosition, n );
+//					if( shortestDist > dist ){
+//						shortestVector = n;
+//						shortestDist = dist;
+//					}
+//				}
+//				targetPosition = shortestVector;
+//			}
+//		}
 		return targetPosition;
 	}
 
@@ -418,6 +413,15 @@ public class Unit : MonoBehaviour {
 				return true;
 			else
 				return false;
+		}
+	}
+
+	public void generateSound(Vector2 source, float sndDistance ){
+		foreach (Unit eU in _GameController.elite) {
+			if( getDistance ( source, eU.currentPosition ) <= sndDistance ){
+				if( !eU.knownPosition.Contains(source) )
+					eU.knownPosition.Add (source);
+			}
 		}
 	}
 
