@@ -58,6 +58,12 @@ public class Unit : MonoBehaviour {
 	public float fieldOfViewAngle = 90;
 
 	public GameObject prefabUnit;
+
+	public List<Vector3> transPath;
+	public float journeyLength;
+	public float startTime;
+	public float speed = 1;
+
 	// Use this for initialization
 	void Start () {
 
@@ -84,7 +90,7 @@ public class Unit : MonoBehaviour {
 		foreach( Unit fU in _GameController.folk ){
 			FolkUnits.Add (fU);
 		}
-		//_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 3;
+		_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 3;
 	}
 	
 	// Update is called once per frame
@@ -94,7 +100,7 @@ public class Unit : MonoBehaviour {
 			turnComplete = true;
 		}
 		if(currentPath != null) {
-			
+			_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 1;
 			int currNode = 0;
 			
 			while( currNode < currentPath.Count-1 ) {
@@ -107,25 +113,45 @@ public class Unit : MonoBehaviour {
 			
 		}
 		MoveNextTile ();
+		//translateUnit ();
+	}
+
+	public void translateUnit(){
+		while (transPath.Count > 1) {
+			float distCovered = (Time.time - startTime) * speed;
+			float fracJourney = distCovered / journeyLength;
+			transform.position = Vector3.Lerp (transPath [0], transPath [1], fracJourney);
+			if( Vector3.Distance( transform.position, transPath[1] ) < 0.25f ){
+				transform.position = transPath[1];
+				transPath.Remove (transPath[0]);
+				if( transPath[1] != null ){
+					startTime = Time.time;
+					journeyLength = Vector3.Distance(transPath[0], transPath[1]);
+				} else {
+					transPath = null;
+				}
+			}
+		}
 	}
 	public void MoveNextTile() {
 		float remainingMovement = movement;
-		
+
+		//_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 1;
 		while(remainingMovement > 0) {
 			if(currentPath==null)
 				return;
-			
+
+
 			// Get cost from current tile to next tile
 			remainingMovement -= _GameController.CostToEnterTile(currentPath[0].x, currentPath[0].y, currentPath[1].x, currentPath[1].y );
-
+			transPath.Add (  new Vector3(currentPosition.x, 0, currentPosition.y) );
 			Vector2 tempFacing = new Vector2( currentPath[1].x, currentPath[1].y ) - currentPosition;
 			tempFacing.Normalize();
 			facing = new Vector3( tempFacing.x, 0, tempFacing.y );
-			//_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 1;
 			// Move us to the next tile in the sequence
 			currentPosition.x = currentPath[1].x;
 			currentPosition.y = currentPath[1].y;
-			//_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 3;
+			 
 			transform.position = new Vector3(currentPosition.x, 0, currentPosition.y);
 			
 			// Remove the old "current" tile
@@ -143,10 +169,14 @@ public class Unit : MonoBehaviour {
 				// We only have one tile left in the path, and that tile MUST be our ultimate
 				// destination -- and we are standing on it!
 				// So let's just clear our pathfinding info.
+				startTime = Time.time;
+				journeyLength = Vector3.Distance(transPath[0], transPath[1]);
+				_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 3;
 				currentPath = null;
 				canMove = false;
 			}
-		} 
+		}
+
 		currentPath = null;
 		canMove = false;
 	}
@@ -327,13 +357,15 @@ public class Unit : MonoBehaviour {
 						// is it pathable
 						if( _GameController.GeneratePathTo(i,j,0)){
 							scores[i,j] += 100;
-						}
-						_GameController.selectedUnit = tempScript;
-						tempScript.currentPosition = currentPosition;
-						tempScript.currentPath = null;
-						if( _GameController.GeneratePathTo( i , j , 0 ) ){
-							_GameController.GeneratePathTo( i , j );
-							tempScript.MoveNextTile();
+							
+							_GameController.selectedUnit = tempScript;
+							//tempScript.currentPosition = currentPosition;
+							tempScript.currentPosition = new Vector2(i,j);
+							tempScript.transform.position = new Vector3(i , 0 , j );
+							//tempScript.currentPath = null;
+							//_GameController.GeneratePathTo( i , j );
+							//tempScript.MoveNextTile();
+
 							foreach( Unit fU in FolkUnitsWithinView ){
 								if( fU.raycastLineOfSight(tempScript,true) && fU.isWithinAttackRange(tempScript) ){
 									scores[i,j] -= 10;
@@ -362,37 +394,6 @@ public class Unit : MonoBehaviour {
 			}
 			targetPosition = highVector;
 		}
-//
-//		while (_GameController.tiles[(int)targetPosition.x,(int)targetPosition.y] == 2) {
-//			List<Vector2> neighbours = new List<Vector2>();
-//			if( targetPosition.x > 0 )
-//				neighbours.Add ( new Vector2( targetPosition.x-1,targetPosition.y));
-//			if( targetPosition.x < myMapSize - 1 )
-//				neighbours.Add ( new Vector2(targetPosition.x+1,targetPosition.y) );
-//			if( targetPosition.y > 0 )
-//				neighbours.Add ( new Vector2(targetPosition.x,targetPosition.y-1) );
-//			if( targetPosition.y < myMapSize - 1 )
-//				neighbours.Add ( new Vector2(targetPosition.x,targetPosition.y+1) );
-//			int numValid = 0;
-//			foreach(Vector2 n in neighbours ){
-//				if( _GameController.tiles[(int)n.x,(int)n.y] == 1){
-//					targetPosition = n;
-//					numValid++;
-//				}
-//			}
-//			if( numValid <= 0 ){
-//				Vector2 shortestVector = currentPosition;
-//				int shortestDist = 99;
-//				foreach(Vector2 n in neighbours ){
-//					int dist = getDistance ( currentPosition, n );
-//					if( shortestDist > dist ){
-//						shortestVector = n;
-//						shortestDist = dist;
-//					}
-//				}
-//				targetPosition = shortestVector;
-//			}
-//		}
 		return targetPosition;
 	}
 

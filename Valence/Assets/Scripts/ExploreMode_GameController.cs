@@ -28,6 +28,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 	public GameObject moveTile;
 	public List<GameObject> moveTiles = new List<GameObject>();
 
+	public List<Node> evaluatedPath = null;
+
 	public GameObject pointObject;
 	int[,] borderVectors;
 
@@ -252,6 +254,22 @@ public class ExploreMode_GameController : MonoBehaviour {
 		}
 		moveTiles.Clear ();
 	}
+
+	public void placeMovementTile(int i, int j){
+		GameObject tempObject = (GameObject) Instantiate( moveTile , new Vector3(i,0,j), Quaternion.identity ); 
+		tempObject.transform.SetParent( this.transform );
+		moveTiles.Add( tempObject );
+	}
+
+	public bool checkIfTileAlreadyPlaced( int i, int j ){
+		foreach (GameObject obj in moveTiles) {
+			if( obj.transform.position.x == i && obj.transform.position.z == j ){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public void GenerateMovementRange(int x, int y){
 		int[,] vectors = new int[mapSize,mapSize];
 
@@ -259,32 +277,44 @@ public class ExploreMode_GameController : MonoBehaviour {
 			Destroy (n);
 		}
 		moveTiles.Clear ();
-		for (int i = -selectedUnit.movement; i <= selectedUnit.movement; i++) {
-			for (int j=-selectedUnit.movement; j <= selectedUnit.movement; j++) {
+		int pathingCalled = 0;
+		int tilesPlaced = 0;
+		
+		Dictionary<Vector2,int> mTiles = new Dictionary<Vector2, int> ();
 
-				if ((int)selectedUnit.currentPosition.x + i >= 0 && (int)selectedUnit.currentPosition.x + i < mapSize && 
-					(int)selectedUnit.currentPosition.y + j >= 0 && (int)selectedUnit.currentPosition.y + j < mapSize) {
-
-					if (selectedUnit.withinMoveRange ( new Vector2( (int)selectedUnit.currentPosition.x + i, (int)selectedUnit.currentPosition.y + j) ) && 
-					    GeneratePathTo ((int)selectedUnit.currentPosition.x + i,(int)selectedUnit.currentPosition.y + j,0) ) {
-						//int tPx = (int)selectedUnit.currentPosition.x + i;
-						//int tPy = (int)selectedUnit.currentPosition.y + j;
-
-						//vectors[tPx, tPy] += 1;
-						//vectors[tPx+1, tPy] += 1;
-						//vectors[tPx+1, tPy+1] += 1;
-						//vectors[tPx, tPy+1] += 1;
-
-						GameObject tempObject = (GameObject) Instantiate( moveTile , new Vector3((int)selectedUnit.currentPosition.x + i, 0, (int)selectedUnit.currentPosition.y + j), Quaternion.identity ); 
-						tempObject.transform.SetParent( this.transform );
-						moveTiles.Add( tempObject );
-						//Debug.Log ("Loaded"+i+" "+j);
-						//GameObject ob = (GameObject)Instantiate (moveTile, new Vector3 ((int)selectedUnit.currentPosition.x + i, 0,(int)selectedUnit.currentPosition.y + j), Quaternion.identity);
-						//ob.transform.SetParent (selectedUnit.transform);
-					} 
+		for (int i = (int)selectedUnit.currentPosition.x-selectedUnit.movement; i <= (int)selectedUnit.currentPosition.x + selectedUnit.movement; i++) {
+			for (int j=(int)selectedUnit.currentPosition.y -selectedUnit.movement; j <= (int)selectedUnit.currentPosition.y +selectedUnit.movement; j++) {
+				if (i >= 0 && i < mapSize && j >= 0 && j < mapSize) {
+					if (selectedUnit.withinMoveRange (new Vector2 (i, j))) {
+						mTiles.Add ( new Vector2( i , j ), selectedUnit.getDistance (selectedUnit.currentPosition, new Vector2 (i, j)) );
+					}
 				}
 			}
 		}
+		List<Vector2> vTiles = new List<Vector2>();
+		int currentD = selectedUnit.movement;
+		while (currentD > 0) {
+			foreach (KeyValuePair<Vector2, int> entry in mTiles) {
+				if( entry.Value == currentD ){
+					int vX = (int) entry.Key.x;
+					int vY = (int) entry.Key.y;
+					if (!checkIfTileAlreadyPlaced (vX, vY)) {
+						if (GeneratePathTo (vX, vY, 0)) {
+							pathingCalled++;
+							foreach (Node n in evaluatedPath) {
+								if (!checkIfTileAlreadyPlaced ((int)n.nodePos.x, (int)n.nodePos.y)) {
+									placeMovementTile ((int)n.nodePos.x, (int)n.nodePos.y);
+									tilesPlaced++;
+								}
+							}
+						}
+					}
+				}
+			}
+			currentD--;
+		}
+		Debug.Log (pathingCalled);
+		Debug.Log (tilesPlaced);
 		borderVectors = vectors;
 
 
@@ -393,7 +423,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 			foreach(Node v in u.neighbours) {
 				//float alt = dist[u] + u.DistanceTo(v);
 				float alt = dist[u] + CostToEnterTile(u.x, u.y, v.x, v.y);
-				if( alt < dist[v] ) {
+				if( alt < dist[v] && alt <= selectedUnit.movement ) {
 					dist[v] = alt;
 					prev[v] = u;
 				}
@@ -490,7 +520,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 			foreach(Node v in u.neighbours) {
 				//float alt = dist[u] + u.DistanceTo(v);
 				float alt = dist[u] + CostToEnterTile(u.x, u.y, v.x, v.y);
-				if( alt < dist[v] ) {
+				if( alt < dist[v] && alt <= selectedUnit.movement  ) {
 					dist[v] = alt;
 					prev[v] = u;
 				}
@@ -517,8 +547,9 @@ public class ExploreMode_GameController : MonoBehaviour {
 		// Right now, currentPath describes a route from out target to our source
 		// So we need to invert it!
 		
-		currentPath.Reverse();
+		//currentPath.Reverse();
 		if (currentPath.Count - 1 <= selectedUnit.movement) {
+			evaluatedPath = currentPath;
 			return true;
 		} else {
 			return false;
@@ -572,7 +603,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 		} 
 
 		if (checkBuffer () && newAction) {
-			//elite[currentElite].action ();
+			if( selectedUnit.FolkUnitsWithinView.Count > 0 )
+				elite[currentElite].Attack (selectedUnit.FolkUnitsWithinView[0]);
 			newAction = false;
 			newElite = false;
 			nextElite = true;
