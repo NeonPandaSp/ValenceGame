@@ -84,11 +84,22 @@ public class GUIToggle_07 : MonoBehaviour {
     }
 
     void OnGUI() {
+        
 
-        //Here it becomes a little complex, itterate through all buildings and see what's available. Then create a button to assign an agent to that building, when pressed find all waypoints with the correct building tag and move there.
+
+            //Here it becomes a little complex, itterate through all buildings and see what's available. Then create a button to assign an agent to that building, when pressed find all waypoints with the correct building tag and move there.
         switch (showMenu) {
+
+
+
             case true:
-            //Check if there is a farm
+
+                if (GUI.Button(new Rect(500, 10, 100, 20), "Make Hungry"))
+                {
+                    agentLogic.aState = AgentLogic_07.agentState.Hungry;
+                }
+
+                //Check if there is a farm
                 switch (farmAvailable){
                     case true:
                         if (GUI.Button(new Rect(10, 10, 100, 20), "Assign Farmer") && (agentLogic.jobState != AgentLogic_07.jobSubState.Farmer))
@@ -143,7 +154,7 @@ public class GUIToggle_07 : MonoBehaviour {
                 switch (powerstationAvailable)
                 {
                     case true:
-                        if (GUI.Button(new Rect(10, 30, 150, 20), "Assign Power Engineer") && (agentLogic.jobState != AgentLogic_07.jobSubState.PowerWorker))
+                        if (GUI.Button(new Rect(10, 50, 150, 20), "Assign Power Engineer") && (agentLogic.jobState != AgentLogic_07.jobSubState.PowerWorker))
                         {
 
                             //Obtain all farm waypoints that the agent should move between when working
@@ -171,7 +182,7 @@ public class GUIToggle_07 : MonoBehaviour {
                 switch (hospitalAvailable)
                 {
                     case true:
-                        if (GUI.Button(new Rect(10, 50, 100, 20), "Assign Medic") && (agentLogic.jobState != AgentLogic_07.jobSubState.Medic)) {
+                        if (GUI.Button(new Rect(10, 70, 100, 20), "Assign Medic") && (agentLogic.jobState != AgentLogic_07.jobSubState.Medic)) {
                     
                         //Obtain all farm waypoints that the agent should move between when working
                         agentLogic.workWaypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("HospitalWaypoint"));

@@ -14,12 +14,15 @@ public class AgentLogic_07 : MonoBehaviour {
     //List of all waypoints agent can wander to
     public List<Vector3> wanderWaypoints = new List<Vector3>();
 
+    //List all waypoints found on the storage facility
+    public List<GameObject> storageWaypoints = new List<GameObject>();
+
     //Dictates the max number of waypoints agent can wander to
     public int wanderListSize = 10;
 
     //Keep track of the current waypoint the agent moves to when working
     //Counter associated to workWaypoints & wanderWaypoints list index
-    int workWaypointIndex, wanderWaypointIndex;
+    int workWaypointIndex, wanderWaypointIndex, storageWaypointIndex;
 
     //Check if a target has been assigned, if yes wait, otherwise assign a new target
     bool assignedTarget;
@@ -54,12 +57,16 @@ public class AgentLogic_07 : MonoBehaviour {
        
         wanderWaypoints = new List<Vector3>();
 
+        //Populate the following waypoints when an agent is spawned
         while (wanderWaypoints.Count < wanderListSize) {
             wanderWaypoints.Add(new Vector3(Random.Range(0, 160), 0, Random.Range(0, 120)));
         }
 
+        storageWaypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("StorageWaypoint"));
+
         workWaypointIndex = 0;
         wanderWaypointIndex = 0;
+        storageWaypointIndex = Random.Range(0, storageWaypoints.Count);
         
         assignedTarget = false;
 
@@ -78,8 +85,8 @@ public class AgentLogic_07 : MonoBehaviour {
 
                 break;
 		    case agentState.Hungry:
-						
-			    break;
+                aiFollow.target = storageWaypoints[storageWaypointIndex].transform.position;
+                break;
 			
 		    case agentState.Working:
                
@@ -147,11 +154,16 @@ public class AgentLogic_07 : MonoBehaviour {
             workWaypointIndex = Random.Range(0, workWaypoints.Count);
             aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
 
+        }   else if (aState == agentState.Working){
+
+            //Reset hunger level or start replenishing
+            //Go back to previous task
+
         }
 
 
 
-		/*
+        /*
 		 * if State1 
 		 * 	do this
 		 * if State2
@@ -161,6 +173,6 @@ public class AgentLogic_07 : MonoBehaviour {
 		 * if State4
 		 * 	do this
 		 * 
-		 */ 
-	}
+		 */
+    }
 }
