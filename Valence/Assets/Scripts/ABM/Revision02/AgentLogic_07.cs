@@ -38,7 +38,9 @@ public class AgentLogic_07 : MonoBehaviour {
     {
         Default,
         Farmer,
-        Medic
+        Medic,
+        WaterPurifier,
+        PowerWorker
     }
 
     public agentState aState;
@@ -94,6 +96,18 @@ public class AgentLogic_07 : MonoBehaviour {
 
                         break;
 
+                    case jobSubState.WaterPurifier:
+
+                        aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
+
+                        break;
+
+                    case jobSubState.PowerWorker:
+
+                        aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
+
+                        break;
+
                     case jobSubState.Default:
 
                         print("Default reached in Working SubState in AgentLogic_07 Update");
@@ -120,7 +134,6 @@ public class AgentLogic_07 : MonoBehaviour {
 		return Vector3.Distance(point, center) < radius;
 	}
 
-    
 	public void TargetReached(){
 
 

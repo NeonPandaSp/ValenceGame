@@ -84,7 +84,7 @@ public class InputController : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit hitInfo;
 
@@ -195,6 +195,7 @@ public class InputController : MonoBehaviour {
 						tempObject.GetComponent<BuildingScript>().beginProduction();
 
                         //Update agent pathfinding to account for this new obstical -Zach
+
                         foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
                             AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
                         }
@@ -264,7 +265,8 @@ public class InputController : MonoBehaviour {
 			}
 			zoning = false;
 		} else if (Input.GetKey (KeyCode.Alpha4)) {
-			myHoverObject = (GameObject) Instantiate (Resources.Load("Tile"), new Vector3 (0, 0, 0), Quaternion.identity);
+            Destroy(myHoverObject);
+            myHoverObject = (GameObject) Instantiate (Resources.Load("Tile"), new Vector3 (0, 0, 0), Quaternion.identity);
 			zoning = true;
 			hoverState = "zone";
 		}

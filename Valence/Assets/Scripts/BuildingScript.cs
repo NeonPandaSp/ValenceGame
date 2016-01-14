@@ -26,7 +26,7 @@ public class BuildingScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        print("#: "+assignedAgents.Length   );
 	}
 
 	public void initBuildingType(){
@@ -44,7 +44,11 @@ public class BuildingScript : MonoBehaviour {
 			// nada 
 		} else if (bType.typeName == "food") {
             //We should look into updating the generation algorithm to be affected by the number of agents assigned,ie. more farmers working = increased production rate -Zach
-			_myGameController.food += bType.pRate;
+
+            /*if () {
+            }*/
+
+            _myGameController.food += bType.pRate;
 		} else if (bType.typeName == "power") {
 			_myGameController.power += bType.pRate;
 		} else if (bType.typeName == "water") {

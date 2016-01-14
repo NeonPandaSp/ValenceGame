@@ -15,7 +15,7 @@ public class GUIToggle_07 : MonoBehaviour {
     JobUI jobUI;
 
     //Return true if a gameobject with corresponding tag has been spawned, vise versa for false
-    bool farmAvailable, hospitalAvailable;
+    bool farmAvailable, hospitalAvailable, waterstationAvailable, powerstationAvailable;
 
     //Return true if error message should be shown
     bool showError;
@@ -24,8 +24,10 @@ public class GUIToggle_07 : MonoBehaviour {
 
         showError = false;
         hospitalAvailable = false;
+        farmAvailable = false;
+        waterstationAvailable = false;
+        powerstationAvailable = false;
 
-        
         //jobUI = GameObject.Find("JobUI").GetComponent<JobUI>();
 
     }
@@ -40,6 +42,9 @@ public class GUIToggle_07 : MonoBehaviour {
     }
 
     void Update() {
+
+        //Check to see if there are any gameobjects with the appropriate building tag, used to toggle the correlated gui buttons
+
 		if (!GameObject.FindWithTag("Farm"))
 		{
 			farmAvailable = false;
@@ -56,10 +61,31 @@ public class GUIToggle_07 : MonoBehaviour {
 		else {
 			hospitalAvailable = true;
 		}
+
+        if (!GameObject.FindWithTag("WaterStation"))
+        {
+            waterstationAvailable = false;
+            //print("No Tag Found <Hospital>");
+        }
+        else
+        {
+            waterstationAvailable = true;
+        }
+
+        if (!GameObject.FindWithTag("PowerStation"))
+        {
+            powerstationAvailable = false;
+            //print("No Tag Found <Hospital>");
+        }
+        else
+        {
+            powerstationAvailable = true;
+        }
     }
 
     void OnGUI() {
 
+        //Here it becomes a little complex, itterate through all buildings and see what's available. Then create a button to assign an agent to that building, when pressed find all waypoints with the correct building tag and move there.
         switch (showMenu) {
             case true:
             //Check if there is a farm
@@ -88,12 +114,64 @@ public class GUIToggle_07 : MonoBehaviour {
                         break;
                 }
 
+                switch (waterstationAvailable)
+                {
+                    case true:
+                        if (GUI.Button(new Rect(10, 30, 150, 20), "Assign Water Purifier") && (agentLogic.jobState != AgentLogic_07.jobSubState.WaterPurifier))
+                        {
+
+                            //Obtain all farm waypoints that the agent should move between when working
+                            agentLogic.workWaypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("WaterWaypoint"));
+
+                            //Set the agent to working
+                            agentLogic.aState = AgentLogic_07.agentState.Working;
+
+                            //Define the working state as farming
+                            agentLogic.jobState = AgentLogic_07.jobSubState.WaterPurifier;
+                        }
+                        break;
+
+                    case false:
+                        StartCoroutine(MissingBuildingError(3.0f, "Water Station"));
+                        break;
+
+                    default:
+                        print("Default reached in GUIToggle_07.cs Line 98");
+                        break;
+                }
+
+                switch (powerstationAvailable)
+                {
+                    case true:
+                        if (GUI.Button(new Rect(10, 30, 150, 20), "Assign Power Engineer") && (agentLogic.jobState != AgentLogic_07.jobSubState.PowerWorker))
+                        {
+
+                            //Obtain all farm waypoints that the agent should move between when working
+                            agentLogic.workWaypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("PowerWaypoint"));
+
+                            //Set the agent to working
+                            agentLogic.aState = AgentLogic_07.agentState.Working;
+
+                            //Define the working state as farming
+                            agentLogic.jobState = AgentLogic_07.jobSubState.PowerWorker;
+                        }
+                        break;
+
+                    case false:
+                        StartCoroutine(MissingBuildingError(3.0f, "Power Station"));
+                        break;
+
+                    default:
+                        print("Default reached in GUIToggle_07.cs Line 98");
+                        break;
+                }
+
                 //Check if there is a hospital
                 //if (GameObject.FindWithTag("Hospital")) {
                 switch (hospitalAvailable)
                 {
                     case true:
-                        if (GUI.Button(new Rect(10, 30, 100, 20), "Assign Medic") && (agentLogic.jobState != AgentLogic_07.jobSubState.Medic)) {
+                        if (GUI.Button(new Rect(10, 50, 100, 20), "Assign Medic") && (agentLogic.jobState != AgentLogic_07.jobSubState.Medic)) {
                     
                         //Obtain all farm waypoints that the agent should move between when working
                         agentLogic.workWaypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("HospitalWaypoint"));
