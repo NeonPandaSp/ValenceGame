@@ -165,72 +165,86 @@ public class InputController : MonoBehaviour {
 				} 
 			} else if ( !zoning ){
 				if( hoverState == "food" ){
-					if( _gameController.scrap >= 25 ){
-						_gameController.scrap -= 25;
-						GameObject tempObject = ( GameObject ) Instantiate (Resources.Load("Farm"), new Vector3( currentTile.x, 0, currentTile.y ), Quaternion.identity );
-						tempObject.GetComponent<BuildingScript>().initBuildingType();
-						tempObject.GetComponent<BuildingScript>().beginProduction();
-                        //Debug.Log ( tempObject.GetComponent<BuildingScript>().initProduction );
+                    if (_gameController.scrap >= 25) {
+                        if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
+                            _gameController.scrap -= 25;
+                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("Farm"), new Vector3(currentTile.x, 0, currentTile.y), Quaternion.identity);
+                            tempObject.GetComponent<BuildingScript>().initBuildingType();
+                            tempObject.GetComponent<BuildingScript>().beginProduction();
+                            //Debug.Log ( tempObject.GetComponent<BuildingScript>().initProduction );
 
-                        //Update agent pathfinding to account for this new obstical -Zach
-                        foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
-                            AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
+                            //Update agent pathfinding to account for this new obstical -Zach
+                            foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
+                                AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
+                            }
+
+                            foreach (Transform child in tempObject.transform) {
+                                if (child.gameObject.tag == "buildTrans") {
+                                    child.gameObject.SetActive(false);
+                                }
+                                if (child.gameObject.tag == "buildMesh") {
+                                    child.gameObject.SetActive(true);
+                                }
+                            }
                         }
-
-                        foreach (Transform child in tempObject.transform){
-							if(child.gameObject.tag == "buildTrans"){
-								child.gameObject.SetActive(false);
-							}
-							if(child.gameObject.tag == "buildMesh"){
-								child.gameObject.SetActive(true);
-							}
-						}
-					}
+                    }
 				}
 				if( hoverState == "water" ){
-					if( _gameController.scrap >= 25 ){
-						_gameController.scrap -= 25;
-						GameObject tempObject = ( GameObject ) Instantiate (Resources.Load("WaterStation"), new Vector3( currentTile.x, 0, currentTile.y ), Quaternion.identity );
-						tempObject.GetComponent<BuildingScript>().initBuildingType();
-						tempObject.GetComponent<BuildingScript>().beginProduction();
+                    if (_gameController.scrap >= 25){
+                        if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))){
+                            _gameController.scrap -= 25;
+                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("WaterStation"), new Vector3(currentTile.x, 0, currentTile.y), Quaternion.identity);
+                            tempObject.GetComponent<BuildingScript>().initBuildingType();
+                            tempObject.GetComponent<BuildingScript>().beginProduction();
 
-                        //Update agent pathfinding to account for this new obstical -Zach
+                            //Update agent pathfinding to account for this new obstical -Zach
 
-                        foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
-                            AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
+                            foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop"))
+                            {
+                                AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
+                            }
+
+                            foreach (Transform child in tempObject.transform)
+                            {
+                                if (child.gameObject.tag == "buildTrans")
+                                {
+                                    child.gameObject.SetActive(false);
+                                }
+                                if (child.gameObject.tag == "buildMesh")
+                                {
+                                    child.gameObject.SetActive(true);
+                                }
+                            }
                         }
-
-                        foreach (Transform child in tempObject.transform){
-							if(child.gameObject.tag == "buildTrans"){
-								child.gameObject.SetActive(false);
-							}
-							if(child.gameObject.tag == "buildMesh"){
-								child.gameObject.SetActive(true);
-							}
-						}
-					}
+                    }
 				}
 				if( hoverState == "power" ){
-					if( _gameController.scrap >= 25 ){
-						_gameController.scrap -= 25;
-						GameObject tempObject = ( GameObject ) Instantiate (Resources.Load("PowerStation"), new Vector3( currentTile.x, 0, currentTile.y ), Quaternion.identity );
-						tempObject.GetComponent<BuildingScript>().initBuildingType();
-						tempObject.GetComponent<BuildingScript>().beginProduction();
+                    if (_gameController.scrap >= 25){
+                        if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))){
+                            _gameController.scrap -= 25;
+                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("PowerStation"), new Vector3(currentTile.x, 0, currentTile.y), Quaternion.identity);
+                            tempObject.GetComponent<BuildingScript>().initBuildingType();
+                            tempObject.GetComponent<BuildingScript>().beginProduction();
 
-                        //Update agent pathfinding to account for this new obstical -Zach
-                        foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
-                            AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
+                            //Update agent pathfinding to account for this new obstical -Zach
+                            foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop"))
+                            {
+                                AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
+                            }
+
+                            foreach (Transform child in tempObject.transform)
+                            {
+                                if (child.gameObject.tag == "buildTrans")
+                                {
+                                    child.gameObject.SetActive(false);
+                                }
+                                if (child.gameObject.tag == "buildMesh")
+                                {
+                                    child.gameObject.SetActive(true);
+                                }
+                            }
                         }
-
-                        foreach (Transform child in tempObject.transform){
-							if(child.gameObject.tag == "buildTrans"){
-								child.gameObject.SetActive(false);
-							}
-							if(child.gameObject.tag == "buildMesh"){
-								child.gameObject.SetActive(true);
-							}
-						}
-					}
+                    }
 				}
 			}
 			if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
@@ -271,4 +285,17 @@ public class InputController : MonoBehaviour {
 			hoverState = "zone";
 		}
 	}
+
+    bool IsOverlapping(GameObject candidate, GameObject[] others)
+    {
+        foreach (GameObject other in others)
+        {
+            if (candidate.GetComponent<Collider>().bounds.Intersects(other.GetComponent<Collider>().bounds))
+            {
+                print("WOAHHHHHHH COLLISION!!!!!");
+                return true;
+            }
+        }
+        return false;
+    }
 }
