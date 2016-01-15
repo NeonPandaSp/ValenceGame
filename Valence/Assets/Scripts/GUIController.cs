@@ -30,10 +30,15 @@ using UnityEngine.EventSystems;
 	public int scrap, population;
 	public float morale, food, water, power;
 
+	//Settler Variables
+	public float settlerHealth, settlerStrength, settlerAgility, settlerPerception, settlerIntelligence, settlerMorale, settlerHunger, settlerThirst;
+
 	//Buttons Variables
 	public Texture2D buildIcon;
 	public Texture2D destroyIcon;
 	public Texture2D HUDBg;
+
+	bool togBuildButtons;
 
 	//=================\\
 	//===== Start =====\\
@@ -43,13 +48,24 @@ using UnityEngine.EventSystems;
 	void Start () {
 		GUICam = Camera.main;
 
+		//Global Attributes
 		scrap = 0;
 		population = 0;
 		morale = 100.0f;
 		food = 0;
 		water = 0;
 		power = 0;
-		
+
+		//Settler Attributes
+		settlerHealth = 100;
+		settlerStrength = 0;
+		settlerAgility = 0;
+		settlerPerception = 0;
+		settlerIntelligence = 0;
+		settlerMorale = 0;
+		settlerHunger = 0;
+		settlerThirst = 0;
+
 		lastMousePos = Input.mousePosition;
 
 		//Time
@@ -58,6 +74,8 @@ using UnityEngine.EventSystems;
 		hour = 0;
 		minute = 0;
 		second = 0;
+
+		togBuildButtons = false;
 	}
 	 
 	//==================\\
@@ -167,14 +185,40 @@ using UnityEngine.EventSystems;
 		GUI.Label (waterPos, "Water: " + water.ToString (), HUDStyle2);
 		GUI.Label (powerPos, "Power: " + power.ToString (), HUDStyle2);
 
-		Button buttonA;
-
-
 		/* ///// BUTTONS \\\\\ */
-		if (GUI.Button (new Rect (0, 100, 75, 75), buildIcon)) {
-			//buttonA.enabled;
+		if (Input.GetMouseButtonDown(0) && GUI.Button (new Rect (0, 100, 75, 75), buildIcon)) {
+			togBuildButtons = true;
 		}
-			buttonA = GUI.Button (new Rect (1075, 0, 75, 75), "Farm");
+
+		settlerHealth = 100;
+		settlerStrength = 0;
+		settlerAgility = 0;
+		settlerPerception = 0;
+		settlerIntelligence = 0;
+		settlerMorale = 0;
+		settlerHunger = 0;
+		settlerThirst = 0;
+
+		Rect setHPPos = new Rect (350, 1050, 50, 50);
+		Rect setStrPos = new Rect (setHPPos.x + 50, 1050, 50, 50);
+		Rect setAglPos = new Rect (setStrPos.x + 55, 1050, 50, 50);
+		Rect setPrcPos = new Rect (setAglPos.x + 50, 1050, 50, 50);
+		Rect setIntPos = new Rect (setPrcPos.x + 50, 1050, 50, 50);
+		Rect setMrlPos = new Rect (setIntPos.x + 50, 1050, 50, 50);
+		Rect setHngPos = new Rect (setMrlPos.x + 50, 1050, 50, 50);
+		Rect setThrPos = new Rect (setHngPos.x + 50, 1050, 50, 50);
+
+		GUI.DrawTexture (new Rect (0, 0, 1070, 100), HUDBg);
+		GUI.Label (timePos, hourText + ":" + minText + ":" + secText, HUDStyle);
+		GUI.Label (scrapPos, "Scrap: " + scrap.ToString (), HUDStyle2);
+		GUI.Label (popPos, "Population: " + population.ToString (), HUDStyle2);
+		GUI.Label (moralePos, "Morale: " + morale.ToString (), HUDStyle2);
+		GUI.Label (foodPos, "Food: " + food.ToString (), HUDStyle2);
+		GUI.Label (waterPos, "Water: " + water.ToString (), HUDStyle2);
+		GUI.Label (powerPos, "Power: " + power.ToString (), HUDStyle2);
+
+		if (togBuildButtons == true) {
+			GUI.Button (new Rect (1075, 0, 75, 75), "Farm");
 			GUI.Button (new Rect (1150, 0, 75, 75), "Shelter");
 			GUI.Button (new Rect (1225, 0, 75, 75), "Hospital");
 			GUI.Button (new Rect (1300, 0, 75, 75), "Water plant");
@@ -184,7 +228,9 @@ using UnityEngine.EventSystems;
 			GUI.Button (new Rect (1600, 0, 75, 75), "Tavern");
 			GUI.Button (new Rect (1675, 0, 75, 75), "Hospital");
 			GUI.Button (new Rect (1750, 0, 75, 75), "School");
-
+		} else {
+			togBuildButtons = false;
+		}
 
 		GUI.Button (new Rect (0, 175, 75, 75), destroyIcon);
 	}
