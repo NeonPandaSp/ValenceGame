@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 
 	public class GUIController : MonoBehaviour {
 	public InputController _inputController;
-	public GameObject GUIObject;
 
 	Camera GUICam;
 
@@ -16,7 +15,7 @@ using UnityEngine.EventSystems;
 	private int frames = 0;
 	private float fps;
 
-	Vector2 lastMousePos;
+	//Vector2 lastMousePos; \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 	//Time variables
 	int hour;
@@ -33,7 +32,18 @@ using UnityEngine.EventSystems;
 	//Settler Variables
 	public float settlerHealth, settlerStrength, settlerAgility, settlerPerception, settlerIntelligence, settlerMorale, settlerHunger, settlerThirst;
 
+	public Canvas myCanvas;
+
 	//Buttons Variables
+	public Button farmButton;
+//	public Button farmButton;
+//	public Button farmButton;
+//	public Button farmButton;
+//	public Button farmButton;
+//	public Button farmButton;
+//	public Button farmButton;
+//	public Button farmButton;
+
 	public Texture2D buildIcon;
 	public Texture2D destroyIcon;
 	public Texture2D HUDBg;
@@ -66,7 +76,9 @@ using UnityEngine.EventSystems;
 		settlerHunger = 0;
 		settlerThirst = 0;
 
-		lastMousePos = Input.mousePosition;
+		//lastMousePos = Input.mousePosition; \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+		Button tempObject = (Button)Instantiate (farmButton, Vector3.zero, Quaternion.identity);
+		tempObject.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 
 		//Time
 		lastInterval = Time.realtimeSinceStartup;
@@ -91,24 +103,24 @@ using UnityEngine.EventSystems;
 		water++;
 		power++;
 
-		int x, y;
-		if (Input.mousePosition.x > lastMousePos.x) {
-			x = -1;
-		} else if (Input.mousePosition.x < lastMousePos.x) {
-			x = 1;
-		} else {
-			x = 0;
-		}
-
-		if (Input.mousePosition.y > lastMousePos.y) {
-			y = -1;
-		} else if (Input.mousePosition.y < lastMousePos.y) {
-			y = 1;
-		} else {
-			y = 0;
-		}
-
-		lastMousePos = Input.mousePosition;
+//		int x, y;
+//		if (Input.mousePosition.x > lastMousePos.x) {
+//			x = -1;
+//		} else if (Input.mousePosition.x < lastMousePos.x) {
+//			x = 1;
+//		} else {
+//			x = 0;
+//		}
+//
+//		if (Input.mousePosition.y > lastMousePos.y) {
+//			y = -1;
+//		} else if (Input.mousePosition.y < lastMousePos.y) {
+//			y = 1;
+//		} else {
+//			y = 0;
+//		}
+//
+//		lastMousePos = Input.mousePosition;
 
 		//Time
 		bool hourZero = false;
@@ -186,8 +198,20 @@ using UnityEngine.EventSystems;
 		GUI.Label (powerPos, "Power: " + power.ToString (), HUDStyle2);
 
 		/* ///// BUTTONS \\\\\ */
-		if (Input.GetMouseButtonDown(0) && GUI.Button (new Rect (0, 100, 75, 75), buildIcon)) {
-			togBuildButtons = true;
+		GUI.Button (new Rect (0, 100, 75, 75), buildIcon);
+		GUI.Button (new Rect (0, 175, 75, 75), destroyIcon);
+
+//		if (GUI.Button (new Rect (0, 100, 75, 75), buildIcon)) {
+//			print ("hi");
+//			//togBuildButtons = true;
+//		} else {
+//			//Do nothing
+//		}
+		if (Input.GetMouseButtonDown (0) )
+		{
+			if (!EventSystem.current.IsPointerOverGameObject ())
+				Debug.Log ("Button has been clicked!");
+			else Debug.Log ("It's just a regular ass left-click!");
 		}
 
 		settlerHealth = 100;
@@ -218,7 +242,10 @@ using UnityEngine.EventSystems;
 		GUI.Label (powerPos, "Power: " + power.ToString (), HUDStyle2);
 
 		if (togBuildButtons == true) {
-			GUI.Button (new Rect (1075, 0, 75, 75), "Farm");
+			//Button newButton = new Button();
+		
+			//Button farmButton = new Button ();
+			//(new Rect (1075, 0, 75, 75), "Farm");
 			GUI.Button (new Rect (1150, 0, 75, 75), "Shelter");
 			GUI.Button (new Rect (1225, 0, 75, 75), "Hospital");
 			GUI.Button (new Rect (1300, 0, 75, 75), "Water plant");
@@ -229,9 +256,7 @@ using UnityEngine.EventSystems;
 			GUI.Button (new Rect (1675, 0, 75, 75), "Hospital");
 			GUI.Button (new Rect (1750, 0, 75, 75), "School");
 		} else {
-			togBuildButtons = false;
+			//
 		}
-
-		GUI.Button (new Rect (0, 175, 75, 75), destroyIcon);
 	}
 }
