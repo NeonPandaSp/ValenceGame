@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0606a414adfb64d488e2ef87c7815daa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Agent: {fileID: 108768, guid: e735ecc86f29fe040b12f30ae8316197, type: 2}
+  Agent: {fileID: 169446, guid: e735ecc86f29fe040b12f30ae8316197, type: 2}
   popSize: 0
 --- !u!4 &65488305
 Transform:
@@ -125,7 +125,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
 --- !u!1 &66523347
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +198,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
 --- !u!1 &135222445
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,7 +794,7 @@ Transform:
   - {fileID: 1294408764}
   - {fileID: 1035582278}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
 --- !u!114 &713036265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -817,48 +817,6 @@ MonoBehaviour:
 Transform:
   m_PrefabParentObject: {fileID: 403288, guid: 6c41250e6f732204b87d6069c8ab1c39, type: 2}
   m_PrefabInternal: {fileID: 1769481051}
---- !u!1001 &779884106
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 429840, guid: e735ecc86f29fe040b12f30ae8316197, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 2.1482408
-      objectReference: {fileID: 0}
-    - target: {fileID: 429840, guid: e735ecc86f29fe040b12f30ae8316197, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: .723654032
-      objectReference: {fileID: 0}
-    - target: {fileID: 429840, guid: e735ecc86f29fe040b12f30ae8316197, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 1.78894639
-      objectReference: {fileID: 0}
-    - target: {fileID: 429840, guid: e735ecc86f29fe040b12f30ae8316197, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 429840, guid: e735ecc86f29fe040b12f30ae8316197, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 429840, guid: e735ecc86f29fe040b12f30ae8316197, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 429840, guid: e735ecc86f29fe040b12f30ae8316197, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 429840, guid: e735ecc86f29fe040b12f30ae8316197, type: 2}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: e735ecc86f29fe040b12f30ae8316197, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &863678634
 GameObject:
   m_ObjectHideFlags: 0
@@ -939,7 +897,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
 --- !u!1 &938398285
 GameObject:
   m_ObjectHideFlags: 0
@@ -1200,7 +1158,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
 --- !u!1 &1143935503
 GameObject:
   m_ObjectHideFlags: 0
@@ -1264,7 +1222,7 @@ RectTransform:
   m_Children:
   - {fileID: 1807062225}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -1336,7 +1294,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputController: {fileID: 0}
-  GUIObject: {fileID: 0}
   scrap: 0
   population: 0
   morale: 0
@@ -1351,6 +1308,8 @@ MonoBehaviour:
   settlerMorale: 0
   settlerHunger: 0
   settlerThirst: 0
+  myCanvas: {fileID: 0}
+  farmButton: {fileID: 0}
   buildIcon: {fileID: 0}
   destroyIcon: {fileID: 0}
   HUDBg: {fileID: 0}
@@ -1457,7 +1416,7 @@ MonoBehaviour:
     pivotPointRoot: {fileID: 0}
     spreadOutCount: 1
   showGraphs: 1
-  lastUniqueAreaIndex: 371
+  lastUniqueAreaIndex: 415
 --- !u!4 &1202770368
 Transform:
   m_ObjectHideFlags: 0
@@ -1469,7 +1428,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
 --- !u!1 &1294408763
 GameObject:
   m_ObjectHideFlags: 0
@@ -1670,7 +1629,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
 --- !u!1 &1530475969
 GameObject:
   m_ObjectHideFlags: 0
