@@ -77,8 +77,8 @@ using UnityEngine.EventSystems;
 		settlerThirst = 0;
 
 		//lastMousePos = Input.mousePosition; \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-		Button tempObject = (Button)Instantiate (farmButton, Vector3.zero, Quaternion.identity);
-		tempObject.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		//Button tempObject = (Button)Instantiate (farmButton, Vector3.zero, Quaternion.identity);
+		//tempObject.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 
 		//Time
 		lastInterval = Time.realtimeSinceStartup;
@@ -96,6 +96,7 @@ using UnityEngine.EventSystems;
 
 	// Update is called once per frame
 	void Update () {
+
 		scrap++;
 		population++;
 		morale--;
