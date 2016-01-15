@@ -15,8 +15,6 @@ using UnityEngine.EventSystems;
 	private int frames = 0;
 	private float fps;
 
-	//Vector2 lastMousePos; \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
 	//Time variables
 	int hour;
 	int minute;
@@ -34,19 +32,15 @@ using UnityEngine.EventSystems;
 
 	public Canvas myCanvas;
 
-	//Buttons Variables
-	public Button farmButton;
-//	public Button farmButton;
-//	public Button farmButton;
-//	public Button farmButton;
-//	public Button farmButton;
-//	public Button farmButton;
-//	public Button farmButton;
-//	public Button farmButton;
-
 	public Texture2D buildIcon;
 	public Texture2D destroyIcon;
 	public Texture2D HUDBg;
+
+	public Button buildButton;
+	public Button destroyButton;
+
+	//Building Buttons
+	public Button[] buildBtnArray = new Button[11];
 
 	bool togBuildButtons;
 
@@ -76,9 +70,80 @@ using UnityEngine.EventSystems;
 		settlerHunger = 0;
 		settlerThirst = 0;
 
-		//lastMousePos = Input.mousePosition; \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-		//Button tempObject = (Button)Instantiate (farmButton, Vector3.zero, Quaternion.identity);
-		//tempObject.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		//Building Buttons
+		for (int i = 0; i < buildBtnArray.Length; i++)
+		{
+			Button tempButton = (Button)Instantiate (buildBtnArray[i], Vector3.zero, Quaternion.identity);
+			tempButton.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+			buildBtnArray[i] = tempButton;
+		}
+
+		//	GUI.Button (new Rect (1150, 0, 75, 75), "Shelter");
+		//	GUI.Button (new Rect (1225, 0, 75, 75), "Farm");
+		//	GUI.Button (new Rect (1300, 0, 75, 75), "Water plant");
+		//	GUI.Button (new Rect (1375, 0, 75, 75), "Power plant");
+		//	GUI.Button (new Rect (1450, 0, 75, 75), "Storage");
+		//	GUI.Button (new Rect (1525, 0, 75, 75), "Shrine");
+		//	GUI.Button (new Rect (1600, 0, 75, 75), "Tavern");
+		//	GUI.Button (new Rect (1675, 0, 75, 75), "Hospital");
+		//	GUI.Button (new Rect (1750, 0, 75, 75), "School");
+
+		//Build Button
+		buildBtnArray [0].name = "buildBtn";
+		buildBtnArray [0].image.rectTransform.sizeDelta = new Vector2 (75, 75);
+		buildBtnArray [0].transform.Translate (32.5f, Screen.height - 155, 0);
+
+		//Destroy Button
+		buildBtnArray [1].name = "destroyBtn";
+		buildBtnArray [1].image.rectTransform.sizeDelta = new Vector2 (75, 75);
+		buildBtnArray [1].transform.Translate (32.5f, Screen.height - 75, 0);
+
+		//Shelter Button
+		buildBtnArray [2].name = "shelterBtn";
+		buildBtnArray [2].image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		buildBtnArray [2].transform.Translate (97.5f, Screen.height - 155, 0);
+
+		//Farm Button
+		buildBtnArray [3].name = "farmBtn";
+		buildBtnArray [3].image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		buildBtnArray [3].transform.Translate (97.5f, Screen.height - 210, 0);
+
+		//Water Station Button
+		buildBtnArray [4].name = "waterStationBtn";
+		buildBtnArray [4].image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		buildBtnArray [4].transform.Translate (97.5f, Screen.height - 275, 0);
+
+		//Power Station Button
+		buildBtnArray [5].name = "powerStationBtn";
+		buildBtnArray [5].image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		buildBtnArray [5].transform.Translate (97.5f, Screen.height - 355, 1);
+
+		//Storage Button
+		buildBtnArray [6].name = "storageBtn";
+		buildBtnArray [6].image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		buildBtnArray [6].transform.Translate (97.5f, Screen.height - 410, 0);
+
+		//Shrine Button
+		buildBtnArray [7].name = "shrineBtn";
+		buildBtnArray [7].image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		buildBtnArray [7].transform.Translate (97.5f, Screen.height - 155, 0);
+
+		//Tavern Button
+		buildBtnArray [8].name = "tavernBtn";
+		buildBtnArray [8].image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		buildBtnArray [8].transform.Translate (97.5f, 0, 0);
+
+		//Hospital Button
+		buildBtnArray [9].name = "hospitalBtn";
+		buildBtnArray [9].image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		buildBtnArray [9].transform.Translate (97.5f, 0, 0);
+
+		//School Button
+		buildBtnArray [10].name = "schoolBtn";
+		buildBtnArray [10].image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		buildBtnArray [10].transform.Translate (97.5f, 0, 0);
+
+		togBuildButtons = false;
 
 		//Time
 		lastInterval = Time.realtimeSinceStartup;
@@ -86,8 +151,6 @@ using UnityEngine.EventSystems;
 		hour = 0;
 		minute = 0;
 		second = 0;
-
-		togBuildButtons = false;
 	}
 	 
 	//==================\\
@@ -103,25 +166,6 @@ using UnityEngine.EventSystems;
 		food--;
 		water++;
 		power++;
-
-//		int x, y;
-//		if (Input.mousePosition.x > lastMousePos.x) {
-//			x = -1;
-//		} else if (Input.mousePosition.x < lastMousePos.x) {
-//			x = 1;
-//		} else {
-//			x = 0;
-//		}
-//
-//		if (Input.mousePosition.y > lastMousePos.y) {
-//			y = -1;
-//		} else if (Input.mousePosition.y < lastMousePos.y) {
-//			y = 1;
-//		} else {
-//			y = 0;
-//		}
-//
-//		lastMousePos = Input.mousePosition;
 
 		//Time
 		bool hourZero = false;
@@ -181,7 +225,7 @@ using UnityEngine.EventSystems;
 		HUDStyle2.normal.textColor = new Color (244, 244, 244);
 		HUDStyle2.fontSize = 20;
 
-		//Global Attributes		
+		//Global Attributes
 		Rect scrapPos = new Rect (timePos.x + 175, 15, 100, 100);
 		Rect popPos = new Rect (scrapPos.x + 127, 15, 100, 100);
 		Rect moralePos = new Rect (popPos.x + 165, 15, 100, 100);
@@ -199,20 +243,14 @@ using UnityEngine.EventSystems;
 		GUI.Label (powerPos, "Power: " + power.ToString (), HUDStyle2);
 
 		/* ///// BUTTONS \\\\\ */
-		GUI.Button (new Rect (0, 100, 75, 75), buildIcon);
+		//buildButton (new Rect (0, 100, 75, 75), buildIcon);
 		GUI.Button (new Rect (0, 175, 75, 75), destroyIcon);
 
-//		if (GUI.Button (new Rect (0, 100, 75, 75), buildIcon)) {
-//			print ("hi");
-//			//togBuildButtons = true;
-//		} else {
-//			//Do nothing
-//		}
 		if (Input.GetMouseButtonDown (0) )
 		{
-			if (!EventSystem.current.IsPointerOverGameObject ())
-				Debug.Log ("Button has been clicked!");
-			else Debug.Log ("It's just a regular ass left-click!");
+			//if (EventSystem.current.IsPointerOverGameObject (buildBtnArray[0]))
+				//Debug.Log ("Button has been clicked!");
+			//else Debug.Log ("It's just a regular ass left-click!");
 		}
 
 		settlerHealth = 100;
@@ -247,15 +285,7 @@ using UnityEngine.EventSystems;
 		
 			//Button farmButton = new Button ();
 			//(new Rect (1075, 0, 75, 75), "Farm");
-			GUI.Button (new Rect (1150, 0, 75, 75), "Shelter");
-			GUI.Button (new Rect (1225, 0, 75, 75), "Hospital");
-			GUI.Button (new Rect (1300, 0, 75, 75), "Water plant");
-			GUI.Button (new Rect (1375, 0, 75, 75), "Power plant");
-			GUI.Button (new Rect (1450, 0, 75, 75), "Storage");
-			GUI.Button (new Rect (1525, 0, 75, 75), "Shrine");
-			GUI.Button (new Rect (1600, 0, 75, 75), "Tavern");
-			GUI.Button (new Rect (1675, 0, 75, 75), "Hospital");
-			GUI.Button (new Rect (1750, 0, 75, 75), "School");
+			print ("hi");
 		} else {
 			//
 		}

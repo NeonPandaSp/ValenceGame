@@ -38,7 +38,7 @@ public class BuildingScript : MonoBehaviour {
 	}
 
 	void GenerateResource(){
-		Debug.Log ("GENERATING!");
+	//	Debug.Log ("GENERATING!");
 		if (bType.typeName == "shelter") {
 			// nada 
 		} else if (bType.typeName == "food") {
