@@ -2,9 +2,9 @@
 using System.Collections;
 using UnityEngine.UI;
 using System;
-using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
-public class GUIController : MonoBehaviour {
+	public class GUIController : MonoBehaviour {
 	public InputController _inputController;
 	public GameObject GUIObject;
 
@@ -29,7 +29,6 @@ public class GUIController : MonoBehaviour {
 	//HUD Variables
 	public int scrap, population;
 	public float morale, food, water, power;
-	//public Text timeText, scrapText, popText, moraleText, foodText, waterText, powerText;
 
 	//Buttons Variables
 	public Texture2D buildIcon;
@@ -134,7 +133,7 @@ public class GUIController : MonoBehaviour {
 	void OnGUI() {
 		/* ///// HUD \\\\\ */
 		//FPS
-		GUI.BeginGroup (new Rect (Screen.width -100, 0, 200, 200));
+		GUI.BeginGroup (new Rect (Screen.width - 75, 0, 200, 200));
 		GUILayout.Label ("FPS: " + fps.ToString ("f2"));
 		GUI.EndGroup ();
 		
@@ -144,43 +143,48 @@ public class GUIController : MonoBehaviour {
 		HUDStyle.fontSize = 28;
 
 		//Time
-		Rect timePos = new Rect (0, 0, 100, 100);
-		GUI.color = new Color (109, 110, 113);
+		Rect timePos = new Rect (25, 25, 100, 100);
 
-		//Global Attributes
 		GUIStyle HUDStyle2 = new GUIStyle ();
+		HUDStyle2.font = (Font)Resources.Load ("Segoe_UI_Light", typeof(Font));
+		HUDStyle2.normal.textColor = new Color (244, 244, 244);
 		HUDStyle2.fontSize = 20;
-		
-		Rect scrapPos = new Rect (timePos.x + 100, 0, 100, 100);
-		Rect popPos = new Rect (scrapPos.x + 100, 0, 100, 100);
-		Rect moralePos = new Rect (popPos.x + 175, 0, 100, 100);
-		Rect foodPos = new Rect (moralePos.x + 100, 0, 100, 100);
-		Rect waterPos = new Rect (foodPos.x + 100, 0, 100, 100);
-		Rect powerPos = new Rect (waterPos.x + 100, 0, 100, 100);
+
+		//Global Attributes		
+		Rect scrapPos = new Rect (timePos.x + 175, 15, 100, 100);
+		Rect popPos = new Rect (scrapPos.x + 127, 15, 100, 100);
+		Rect moralePos = new Rect (popPos.x + 165, 15, 100, 100);
+		Rect foodPos = new Rect (moralePos.x + 150, 15, 100, 100);
+		Rect waterPos = new Rect (foodPos.x + 150, 15, 100, 100);
+		Rect powerPos = new Rect (waterPos.x + 150, 15, 100, 100);
 		
 		GUI.DrawTexture (new Rect (0, 0, 1070, 100), HUDBg);
 		GUI.Label (timePos, hourText + ":" + minText + ":" + secText, HUDStyle);
-		GUI.Label (scrapPos, "Scrap: " + scrap.ToString (), HUDStyle);
-		GUI.Label (popPos, "Population: " + population.ToString (), HUDStyle);
-		GUI.Label (moralePos, "Morale: " + morale.ToString (), HUDStyle);
-		GUI.Label (foodPos, "Food: " + food.ToString (), HUDStyle);
-		GUI.Label (waterPos, "Water: " + water.ToString (), HUDStyle);
-		GUI.Label (powerPos, "Power: " + power.ToString (), HUDStyle);
+		GUI.Label (scrapPos, "Scrap: " + scrap.ToString (), HUDStyle2);
+		GUI.Label (popPos, "Population: " + population.ToString (), HUDStyle2);
+		GUI.Label (moralePos, "Morale: " + morale.ToString (), HUDStyle2);
+		GUI.Label (foodPos, "Food: " + food.ToString (), HUDStyle2);
+		GUI.Label (waterPos, "Water: " + water.ToString (), HUDStyle2);
+		GUI.Label (powerPos, "Power: " + power.ToString (), HUDStyle2);
+
+		Button buttonA;
+
 
 		/* ///// BUTTONS \\\\\ */
 		if (GUI.Button (new Rect (0, 100, 75, 75), buildIcon)) {
-			print ("hi");
-			GUI.Button (new Rect (0, (Screen.height - 205) - 200, 75, 75), "Farm");
-			GUI.Button (new Rect (0, (Screen.height - 205) - 250, 75, 75), "Shelter");
-			GUI.Button (new Rect (0, (Screen.height - 205) - 300, 75, 75), "Hospital");
-			GUI.Button (new Rect (0, (Screen.height - 205) - 350, 75, 75), "Water plant");
-			GUI.Button (new Rect (0, (Screen.height - 205) - 400, 75, 75), "Power plant");
-			GUI.Button (new Rect (0, (Screen.height - 205) - 100, 75, 75), "Storage");
-			GUI.Button (new Rect (0, (Screen.height - 205) - 100, 75, 75), "Shrine");
-			GUI.Button (new Rect (0, (Screen.height - 205) - 100, 75, 75), "Tavern");
-			GUI.Button (new Rect (0, (Screen.height - 205) - 100, 75, 75), "Hospital");
-			GUI.Button (new Rect (0, (Screen.height - 205) - 100, 75, 75), "School");
+			//buttonA.enabled;
 		}
+			buttonA = GUI.Button (new Rect (1075, 0, 75, 75), "Farm");
+			GUI.Button (new Rect (1150, 0, 75, 75), "Shelter");
+			GUI.Button (new Rect (1225, 0, 75, 75), "Hospital");
+			GUI.Button (new Rect (1300, 0, 75, 75), "Water plant");
+			GUI.Button (new Rect (1375, 0, 75, 75), "Power plant");
+			GUI.Button (new Rect (1450, 0, 75, 75), "Storage");
+			GUI.Button (new Rect (1525, 0, 75, 75), "Shrine");
+			GUI.Button (new Rect (1600, 0, 75, 75), "Tavern");
+			GUI.Button (new Rect (1675, 0, 75, 75), "Hospital");
+			GUI.Button (new Rect (1750, 0, 75, 75), "School");
+
 
 		GUI.Button (new Rect (0, 175, 75, 75), destroyIcon);
 	}
