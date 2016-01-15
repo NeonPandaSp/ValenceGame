@@ -17,9 +17,9 @@ GameObject:
   - 114: {fileID: 11430132}
   - 114: {fileID: 11469586}
   - 114: {fileID: 11405398}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Folk_Female_Agent
-  m_TagString: prop
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,6 +142,8 @@ MonoBehaviour:
   wanderListSize: 10
   aState: 0
   jobState: 0
+  transitionSource: 0
+  currentState: 0
 --- !u!114 &11451128
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -198,7 +200,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 169446}

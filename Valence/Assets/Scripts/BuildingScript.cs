@@ -14,7 +14,7 @@ public class BuildingScript : MonoBehaviour {
 	public bool initProduction;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		GameObject gameControllerObject =  GameObject.FindGameObjectWithTag("GameController");
 		_myGameController = gameControllerObject.GetComponent<GameController> ();
 
@@ -26,14 +26,19 @@ public class BuildingScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
 	}
 
 	public void initBuildingType(){
+        //Create a new buildingtype and pass the type of building, the area of that building, the number of similar building, and the number of agents currently working at that building type
 		bType = new BuildingType (myType, myArea);
-	}
+        //bType.farmerVal = _myGameController.farmerList.Count;
+        //bType.farmVal = _myGameController.farmBuildingList.Count;
+    }
 
 	public void beginProduction(){
 		Debug.Log (bType.pTime);
+
 		InvokeRepeating("GenerateResource",bType.pTime,bType.pTime);
 	}
 
@@ -47,7 +52,9 @@ public class BuildingScript : MonoBehaviour {
             /*if () {
             }*/
 
-            _myGameController.food += bType.pRate;
+            Debug.Log("bType.pRate: " + bType.pRate);
+
+            _myGameController.food += bType.pRate * _myGameController.farmerList.Count/_myGameController.farmBuildingList.Count;
 		} else if (bType.typeName == "power") {
 			_myGameController.power += bType.pRate;
 		} else if (bType.typeName == "water") {

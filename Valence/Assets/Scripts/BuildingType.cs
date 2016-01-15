@@ -3,6 +3,7 @@ using System.Collections;
 
 [System.Serializable]
 public class BuildingType  {
+
 	public string typeName;
 
 	public int cost;
@@ -10,14 +11,21 @@ public class BuildingType  {
 	public float pRate;
 	public float pTime;
 	public int area;
-	// Use this for initialization
 
-	public BuildingType( string n, int a ){
+    public int farmerVal, farmVal;
+    // Use this for initialization
+
+    void Awake() {
+    }
+
+	public BuildingType( string n, int a){
 		typeName = n;
 		area = a;
 
+        Debug.Log("farmerVal " + farmerVal);
+
 		cost = getBuildingCost ();
-		pRate = getProductionRate (area);
+		pRate = getProductionRate (area, farmVal, farmerVal);
 		pTime = getProductionTime ();
 	}
 	public int getBuildingCost(){
@@ -35,12 +43,12 @@ public class BuildingType  {
 		}
 	}
 
-	public float getProductionRate(int a){
+	public float getProductionRate(int a, int bCount, int aCount){
 		if (typeName == "shelter") {
 			return 0.0f * a;
 		} else if (typeName == "food") {
-			return 1.0f * a;
-		} else if (typeName == "power") {
+            return 1.0f * a;
+        } else if (typeName == "power") {
 			return 1.0f * a;
 		} else if (typeName == "water") {
 			return 1.0f * a;

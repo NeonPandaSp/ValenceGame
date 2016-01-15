@@ -27,7 +27,12 @@ public class AgentLogic_07 : MonoBehaviour {
     //Check if a target has been assigned, if yes wait, otherwise assign a new target
     bool assignedTarget;
 
+    //Check if the current agent has been assigned to the correct list
+    bool populateList;
+
+
     AIFollow_07 aiFollow;
+    GameController gameController;
 
 	public enum agentState
 	{
@@ -50,7 +55,6 @@ public class AgentLogic_07 : MonoBehaviour {
     public jobSubState jobState;
 
     //Variable used to save the last active state
-    public agentState transitionSource;
     public agentState currentState;
 
     void Start(){
@@ -68,13 +72,15 @@ public class AgentLogic_07 : MonoBehaviour {
 
         storageWaypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("StorageWaypoint"));
 
+        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+
         workWaypointIndex = 0;
         wanderWaypointIndex = 0;
         storageWaypointIndex = Random.Range(0, storageWaypoints.Count);
         
         assignedTarget = false;
+        populateList = false;
 
-        
         //When an agent spawns, he should start by wandering
         aState = agentState.Wandering;
 
@@ -97,8 +103,16 @@ public class AgentLogic_07 : MonoBehaviour {
                 switch (jobState) {
                     case jobSubState.Farmer:
 
+                        //Set the agent to move towards the farm waypoints
                         aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
 
+                        //Add the agent to the list of farmers
+                        
+                        if (!populateList)
+                        {
+                            gameController.farmerList.Add(this.gameObject);
+                            populateList = true;
+                        }
                         break;
                     case jobSubState.Medic:
 
@@ -162,6 +176,9 @@ public class AgentLogic_07 : MonoBehaviour {
             //Reset hunger level or start replenishing
             //Go back to previous task
             aState = currentState;
+
+            //Need to Update the wait length to take into account the % of hunger missing (Higher hunger missing = longer wait time)
+
         }
 
 

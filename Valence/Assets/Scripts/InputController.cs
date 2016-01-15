@@ -171,6 +171,10 @@ public class InputController : MonoBehaviour {
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("Farm"), new Vector3(currentTile.x, 0, currentTile.y), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
+
+                            //Increase the list of current farms placed
+                            _gameController.farmBuildingList.Add(tempObject);
+                            
                             //Debug.Log ( tempObject.GetComponent<BuildingScript>().initProduction );
 
                             //Update agent pathfinding to account for this new obstical -Zach
