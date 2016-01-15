@@ -26,7 +26,6 @@ public class BuildingScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        print("#: "+assignedAgents.Length   );
 	}
 
 	public void initBuildingType(){

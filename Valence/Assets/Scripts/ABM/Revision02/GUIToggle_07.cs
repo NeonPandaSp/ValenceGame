@@ -96,6 +96,8 @@ public class GUIToggle_07 : MonoBehaviour {
 
                 if (GUI.Button(new Rect(500, 10, 100, 20), "Make Hungry"))
                 {
+                    print("Current state" + agentLogic.aState);
+                    agentLogic.currentState = agentLogic.aState;
                     agentLogic.aState = AgentLogic_07.agentState.Hungry;
                 }
 

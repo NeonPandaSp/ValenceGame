@@ -49,6 +49,10 @@ public class AgentLogic_07 : MonoBehaviour {
     public agentState aState;
     public jobSubState jobState;
 
+    //Variable used to save the last active state
+    public agentState transitionSource;
+    public agentState currentState;
+
     void Start(){
 
         
@@ -82,7 +86,6 @@ public class AgentLogic_07 : MonoBehaviour {
             case agentState.Wandering:
 
                 aiFollow.target = wanderWaypoints[wanderWaypointIndex];
-
                 break;
 		    case agentState.Hungry:
                 aiFollow.target = storageWaypoints[storageWaypointIndex].transform.position;
@@ -154,11 +157,11 @@ public class AgentLogic_07 : MonoBehaviour {
             workWaypointIndex = Random.Range(0, workWaypoints.Count);
             aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
 
-        }   else if (aState == agentState.Working){
+        }   else if (aState == agentState.Hungry){
 
             //Reset hunger level or start replenishing
             //Go back to previous task
-
+            aState = currentState;
         }
 
 
