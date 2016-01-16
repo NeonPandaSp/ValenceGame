@@ -91,57 +91,68 @@ using UnityEngine.EventSystems;
 		//Build Button
 		buildBtnArray [0].name = "buildBtn";
 		buildBtnArray [0].image.rectTransform.sizeDelta = new Vector2 (75, 75);
-		buildBtnArray [0].transform.Translate (32.5f, Screen.height - 155, 0);
+		buildBtnArray [0].transform.Translate (40, Screen.height - 155, 0);
+		buildBtnArray [0].GetComponentInChildren<Text> ().text = "";
 
 		//Destroy Button
 		buildBtnArray [1].name = "destroyBtn";
 		buildBtnArray [1].image.rectTransform.sizeDelta = new Vector2 (75, 75);
-		buildBtnArray [1].transform.Translate (32.5f, Screen.height - 75, 0);
+		buildBtnArray [1].transform.Translate (40, Screen.height - 280, 0);
+		buildBtnArray [1].GetComponentInChildren<Text> ().text = "";
 
 		//Shelter Button
 		buildBtnArray [2].name = "shelterBtn";
 		buildBtnArray [2].image.rectTransform.sizeDelta = new Vector2 (65, 65);
 		buildBtnArray [2].transform.Translate (97.5f, Screen.height - 155, 0);
+		buildBtnArray [2].GetComponentInChildren<Text> ().text = "Shelter";
 
 		//Farm Button
 		buildBtnArray [3].name = "farmBtn";
 		buildBtnArray [3].image.rectTransform.sizeDelta = new Vector2 (65, 65);
 		buildBtnArray [3].transform.Translate (97.5f, Screen.height - 210, 0);
+		buildBtnArray [3].GetComponentInChildren<Text> ().text = "Farm";
 
 		//Water Station Button
 		buildBtnArray [4].name = "waterStationBtn";
 		buildBtnArray [4].image.rectTransform.sizeDelta = new Vector2 (65, 65);
 		buildBtnArray [4].transform.Translate (97.5f, Screen.height - 275, 0);
+		buildBtnArray [4].GetComponentInChildren<Text> ().text = "Water Station";
 
 		//Power Station Button
 		buildBtnArray [5].name = "powerStationBtn";
 		buildBtnArray [5].image.rectTransform.sizeDelta = new Vector2 (65, 65);
 		buildBtnArray [5].transform.Translate (97.5f, Screen.height - 355, 1);
+		buildBtnArray [5].GetComponentInChildren<Text> ().text = "Power Station";
 
 		//Storage Button
 		buildBtnArray [6].name = "storageBtn";
 		buildBtnArray [6].image.rectTransform.sizeDelta = new Vector2 (65, 65);
 		buildBtnArray [6].transform.Translate (97.5f, Screen.height - 410, 0);
+		buildBtnArray [6].GetComponentInChildren<Text> ().text = "Storage";
 
 		//Shrine Button
 		buildBtnArray [7].name = "shrineBtn";
 		buildBtnArray [7].image.rectTransform.sizeDelta = new Vector2 (65, 65);
 		buildBtnArray [7].transform.Translate (97.5f, Screen.height - 155, 0);
+		buildBtnArray [7].GetComponentInChildren<Text> ().text = "Shrine";
 
 		//Tavern Button
 		buildBtnArray [8].name = "tavernBtn";
 		buildBtnArray [8].image.rectTransform.sizeDelta = new Vector2 (65, 65);
 		buildBtnArray [8].transform.Translate (97.5f, 0, 0);
+		buildBtnArray [8].GetComponentInChildren<Text> ().text = "Tavern";
 
 		//Hospital Button
 		buildBtnArray [9].name = "hospitalBtn";
 		buildBtnArray [9].image.rectTransform.sizeDelta = new Vector2 (65, 65);
 		buildBtnArray [9].transform.Translate (97.5f, 0, 0);
+		buildBtnArray [9].GetComponentInChildren<Text> ().text = "Hospital";
 
 		//School Button
 		buildBtnArray [10].name = "schoolBtn";
 		buildBtnArray [10].image.rectTransform.sizeDelta = new Vector2 (65, 65);
 		buildBtnArray [10].transform.Translate (97.5f, 0, 0);
+		buildBtnArray [10].GetComponentInChildren<Text> ().text = "School";
 
 		togBuildButtons = false;
 
@@ -218,7 +229,7 @@ using UnityEngine.EventSystems;
 		HUDStyle.fontSize = 28;
 
 		//Time
-		Rect timePos = new Rect (25, 25, 100, 100);
+		Rect timePos = new Rect (30, 25, 100, 100);
 
 		GUIStyle HUDStyle2 = new GUIStyle ();
 		HUDStyle2.font = (Font)Resources.Load ("Segoe_UI_Light", typeof(Font));
