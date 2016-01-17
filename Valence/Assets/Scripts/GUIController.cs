@@ -36,13 +36,15 @@ using UnityEngine.EventSystems;
 	public Texture2D destroyIcon;
 	public Texture2D HUDBg;
 
-	public Button buildButton;
-	public Button destroyButton;
-
 	//Building Buttons
-	public Button[] buildBtnArray = new Button[11];
-
+	public Button[] buildBtnArray = new Button[2];
 	bool togBuildButtons;
+
+	public Button shelterBtn, farmBtn, waterStationBtn, powerStationBtn, storageBtn, shrineBtn, tavernBtn, hospitalBtn, schoolBtn;
+	Button shelterDelBtn, farmDelBtn, waterStationDelBtn, powerStationDelBtn, storageDelBtn, shrineDelBtn, tavernDelBtn, hospitalDelBtn, schoolDelBtn;
+
+	//test button
+	public Button mFG;
 
 	//=================\\
 	//===== Start =====\\
@@ -70,7 +72,7 @@ using UnityEngine.EventSystems;
 		settlerHunger = 0;
 		settlerThirst = 0;
 
-		//Building Buttons
+		// === Building Buttons === \\
 		for (int i = 0; i < buildBtnArray.Length; i++)
 		{
 			Button tempButton = (Button)Instantiate (buildBtnArray[i], Vector3.zero, Quaternion.identity);
@@ -78,83 +80,100 @@ using UnityEngine.EventSystems;
 			buildBtnArray[i] = tempButton;
 		}
 
-		//	GUI.Button (new Rect (1150, 0, 75, 75), "Shelter");
-		//	GUI.Button (new Rect (1225, 0, 75, 75), "Farm");
-		//	GUI.Button (new Rect (1300, 0, 75, 75), "Water plant");
-		//	GUI.Button (new Rect (1375, 0, 75, 75), "Power plant");
-		//	GUI.Button (new Rect (1450, 0, 75, 75), "Storage");
-		//	GUI.Button (new Rect (1525, 0, 75, 75), "Shrine");
-		//	GUI.Button (new Rect (1600, 0, 75, 75), "Tavern");
-		//	GUI.Button (new Rect (1675, 0, 75, 75), "Hospital");
-		//	GUI.Button (new Rect (1750, 0, 75, 75), "School");
-
 		//Build Button
 		buildBtnArray [0].name = "buildBtn";
 		buildBtnArray [0].image.rectTransform.sizeDelta = new Vector2 (75, 75);
 		buildBtnArray [0].transform.Translate (40, Screen.height - 155, 0);
 		buildBtnArray [0].GetComponentInChildren<Text> ().text = "";
+		buildBtnArray [0].onClick.AddListener (() => buildBtneClicked ());
 
 		//Destroy Button
 		buildBtnArray [1].name = "destroyBtn";
 		buildBtnArray [1].image.rectTransform.sizeDelta = new Vector2 (75, 75);
-		buildBtnArray [1].transform.Translate (40, Screen.height - 280, 0);
+		buildBtnArray [1].transform.Translate (40, Screen.height - 235, 0);
 		buildBtnArray [1].GetComponentInChildren<Text> ().text = "";
 
-		//Shelter Button
-		buildBtnArray [2].name = "shelterBtn";
-		buildBtnArray [2].image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		buildBtnArray [2].transform.Translate (97.5f, Screen.height - 155, 0);
-		buildBtnArray [2].GetComponentInChildren<Text> ().text = "Shelter";
+		// === Building Buttons === \\
+		//Shelter Button				
+		shelterDelBtn = (Button)Instantiate (shelterBtn);
+		shelterDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		shelterDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		shelterDelBtn.transform.Translate (112.5f, Screen.height - 155, 0);
+		shelterDelBtn.GetComponentInChildren<Text> ().text = "Shelter";
+		shelterDelBtn.gameObject.SetActive (false);
 
 		//Farm Button
-		buildBtnArray [3].name = "farmBtn";
-		buildBtnArray [3].image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		buildBtnArray [3].transform.Translate (97.5f, Screen.height - 210, 0);
-		buildBtnArray [3].GetComponentInChildren<Text> ().text = "Farm";
-
+		farmDelBtn = (Button)Instantiate (farmBtn);
+		farmDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		farmDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		farmDelBtn.transform.Translate (112.5f, Screen.height - 220, 0);
+		farmDelBtn.GetComponentInChildren<Text> ().text = "Farm";
+		farmDelBtn.gameObject.SetActive (false);
+		
 		//Water Station Button
-		buildBtnArray [4].name = "waterStationBtn";
-		buildBtnArray [4].image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		buildBtnArray [4].transform.Translate (97.5f, Screen.height - 275, 0);
-		buildBtnArray [4].GetComponentInChildren<Text> ().text = "Water Station";
-
+		waterStationDelBtn = (Button)Instantiate (waterStationBtn);
+		waterStationDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		waterStationDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		waterStationDelBtn.transform.Translate (112.5f, Screen.height - 285, 0);
+		waterStationDelBtn.GetComponentInChildren<Text> ().text = "Water Station";
+		waterStationDelBtn.gameObject.SetActive (false);
+		
 		//Power Station Button
-		buildBtnArray [5].name = "powerStationBtn";
-		buildBtnArray [5].image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		buildBtnArray [5].transform.Translate (97.5f, Screen.height - 355, 1);
-		buildBtnArray [5].GetComponentInChildren<Text> ().text = "Power Station";
-
+		powerStationDelBtn = (Button)Instantiate (powerStationBtn);
+		powerStationDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		powerStationDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		powerStationDelBtn.transform.Translate (112.5f, Screen.height - 350, 1);
+		powerStationDelBtn.GetComponentInChildren<Text> ().text = "Power Station";
+		powerStationDelBtn.gameObject.SetActive (false);
+		
 		//Storage Button
-		buildBtnArray [6].name = "storageBtn";
-		buildBtnArray [6].image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		buildBtnArray [6].transform.Translate (97.5f, Screen.height - 410, 0);
-		buildBtnArray [6].GetComponentInChildren<Text> ().text = "Storage";
-
+		storageDelBtn = (Button)Instantiate (storageBtn);
+		storageDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		storageDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		storageDelBtn.transform.Translate (112.5f, Screen.height - 415, 0);
+		storageDelBtn.GetComponentInChildren<Text> ().text = "Storage";
+		storageDelBtn.gameObject.SetActive (false);
+		
 		//Shrine Button
-		buildBtnArray [7].name = "shrineBtn";
-		buildBtnArray [7].image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		buildBtnArray [7].transform.Translate (97.5f, Screen.height - 155, 0);
-		buildBtnArray [7].GetComponentInChildren<Text> ().text = "Shrine";
-
+		shrineDelBtn = (Button)Instantiate (shrineBtn);
+		shrineDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		shrineDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		shrineDelBtn.transform.Translate (112.5f, Screen.height - 480, 0);
+		shrineDelBtn.GetComponentInChildren<Text> ().text = "Shrine";
+		shrineDelBtn.gameObject.SetActive (false);
+		
 		//Tavern Button
-		buildBtnArray [8].name = "tavernBtn";
-		buildBtnArray [8].image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		buildBtnArray [8].transform.Translate (97.5f, 0, 0);
-		buildBtnArray [8].GetComponentInChildren<Text> ().text = "Tavern";
-
+		tavernDelBtn = (Button)Instantiate (tavernBtn);
+		tavernDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		tavernDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		tavernDelBtn.transform.Translate (112.5f, Screen.height - 545, 0);
+		tavernDelBtn.GetComponentInChildren<Text> ().text = "Tavern";
+		tavernDelBtn.gameObject.SetActive (false);
+		
 		//Hospital Button
-		buildBtnArray [9].name = "hospitalBtn";
-		buildBtnArray [9].image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		buildBtnArray [9].transform.Translate (97.5f, 0, 0);
-		buildBtnArray [9].GetComponentInChildren<Text> ().text = "Hospital";
-
+		hospitalDelBtn = (Button)Instantiate (hospitalBtn);
+		hospitalDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		hospitalDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		hospitalDelBtn.transform.Translate (112.5f, Screen.height - 610, 0);
+		hospitalDelBtn.GetComponentInChildren<Text> ().text = "Hospital";
+		hospitalDelBtn.gameObject.SetActive (false);
+		
 		//School Button
-		buildBtnArray [10].name = "schoolBtn";
-		buildBtnArray [10].image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		buildBtnArray [10].transform.Translate (97.5f, 0, 0);
-		buildBtnArray [10].GetComponentInChildren<Text> ().text = "School";
-
-		togBuildButtons = false;
+		schoolDelBtn = (Button)Instantiate (schoolBtn);
+		schoolDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		schoolDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		schoolDelBtn.transform.Translate (112.5f, Screen.height - 675, 0);
+		schoolDelBtn.GetComponentInChildren<Text> ().text = "School";
+		schoolDelBtn.gameObject.SetActive (false);
 
 		//Time
 		lastInterval = Time.realtimeSinceStartup;
@@ -162,6 +181,29 @@ using UnityEngine.EventSystems;
 		hour = 0;
 		minute = 0;
 		second = 0;
+
+		//Test button
+		Button mfg = (Button)Instantiate(mFG);
+		mfg.transform.SetParent(myCanvas.transform, false);
+		
+		//mfg.onClick.AddListener(() => ButtonClicked());
+		//mfg.GetComponentInChildren<Text> ().text = "mFG Button";
+	}
+
+	//=================\\
+	//=== Functions ===\\
+	//=================\\
+	void buildBtneClicked ()
+	{
+		Debug.Log ("Build button clicked");
+		shelterDelBtn.gameObject.SetActive (true);
+		farmDelBtn.gameObject.SetActive (true);
+		waterStationDelBtn.gameObject.SetActive (true);
+		powerStationDelBtn.gameObject.SetActive (true);
+		storageDelBtn.gameObject.SetActive (true);
+		shrineDelBtn.gameObject.SetActive (true);
+		tavernDelBtn.gameObject.SetActive (true);
+		hospitalDelBtn.gameObject.SetActive (true);
 	}
 	 
 	//==================\\
@@ -170,14 +212,6 @@ using UnityEngine.EventSystems;
 
 	// Update is called once per frame
 	void Update () {
-
-		scrap++;
-		population++;
-		morale--;
-		food--;
-		water++;
-		power++;
-
 		//Time
 		bool hourZero = false;
 		bool minZero = false;
@@ -209,6 +243,23 @@ using UnityEngine.EventSystems;
 			fps = (float) (frames / (timeNow - lastInterval));
 			frames = 0;
 			lastInterval = timeNow;
+		}
+
+		/* ///// BUTTONS \\\\\ */
+		//String whatButtonIsIt = EventSystem.current.currentSelectedGameObject.name.ToString ();		// Checks what the current pointer is hovering over
+		
+		if (Input.GetMouseButtonDown (0)) {
+			Debug.Log ("This isn't the button you are looking for");
+			//buildBtnArray[0].interactable = false;
+			shelterDelBtn.gameObject.SetActive (false);
+			farmDelBtn.gameObject.SetActive (false);
+			waterStationDelBtn.gameObject.SetActive (false);
+			powerStationDelBtn.gameObject.SetActive (false);
+			storageDelBtn.gameObject.SetActive (false);
+			shrineDelBtn.gameObject.SetActive (false);
+			tavernDelBtn.gameObject.SetActive (false);
+			hospitalDelBtn.gameObject.SetActive (false);
+			schoolDelBtn.gameObject.SetActive (false);
 		}
 	}
 
@@ -253,17 +304,6 @@ using UnityEngine.EventSystems;
 		GUI.Label (waterPos, "Water: " + water.ToString (), HUDStyle2);
 		GUI.Label (powerPos, "Power: " + power.ToString (), HUDStyle2);
 
-		/* ///// BUTTONS \\\\\ */
-		//buildButton (new Rect (0, 100, 75, 75), buildIcon);
-		GUI.Button (new Rect (0, 175, 75, 75), destroyIcon);
-
-		if (Input.GetMouseButtonDown (0) )
-		{
-			//if (EventSystem.current.IsPointerOverGameObject (buildBtnArray[0]))
-				//Debug.Log ("Button has been clicked!");
-			//else Debug.Log ("It's just a regular ass left-click!");
-		}
-
 		settlerHealth = 100;
 		settlerStrength = 0;
 		settlerAgility = 0;
@@ -290,15 +330,5 @@ using UnityEngine.EventSystems;
 		GUI.Label (foodPos, "Food: " + food.ToString (), HUDStyle2);
 		GUI.Label (waterPos, "Water: " + water.ToString (), HUDStyle2);
 		GUI.Label (powerPos, "Power: " + power.ToString (), HUDStyle2);
-
-		if (togBuildButtons == true) {
-			//Button newButton = new Button();
-		
-			//Button farmButton = new Button ();
-			//(new Rect (1075, 0, 75, 75), "Farm");
-			print ("hi");
-		} else {
-			//
-		}
 	}
 }
