@@ -286,9 +286,18 @@ public class InputController : MonoBehaviour {
 				hoverState = "power";
 			}
 			zoning = false;
-		} 
+		}
+        else if (Input.GetKey(KeyCode.Alpha4)) {
+            Debug.Log("power");
+            if (hoverState != "power") {
+                Destroy(myHoverObject);
+                myHoverObject = (GameObject)Instantiate(powerBuild, new Vector3(0, 0, 0), Quaternion.identity);
+                hoverState = "power";
+            }
+            zoning = false;
+        }
 
-	}
+    }
 
     bool IsOverlapping(GameObject candidate, GameObject[] others)
     {

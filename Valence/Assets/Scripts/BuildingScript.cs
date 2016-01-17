@@ -52,16 +52,9 @@ public class BuildingScript : MonoBehaviour {
             }
             else if (bType.typeName == "food") {
                 //We should look into updating the generation algorithm to be affected by the number of agents assigned,ie. more farmers working = increased production rate -Zach
-
-                /*if () {
-                }*/
-
                 Debug.Log("bType.pRate: " + bType.pRate);
 
                 _myGameController.food += bType.pRate * _myGameController.farmerList.Count / _myGameController.farmBuildingList.Count;
-            }
-            else if (bType.typeName == "power") {
-                _myGameController.power += bType.pRate;
             }
             else if (bType.typeName == "water") {
                 _myGameController.water += bType.pRate;
@@ -74,7 +67,12 @@ public class BuildingScript : MonoBehaviour {
             
             Debug.Log("No power! We require more minerals");
         }
-	}
+
+        //Since power stations do not consume power, they are not restricted by no power
+        if (bType.typeName == "power") {
+            _myGameController.power += bType.pRate;
+        }
+    }
 
     void ConsumeResource() {
         //	Debug.Log ("GENERATING!");
