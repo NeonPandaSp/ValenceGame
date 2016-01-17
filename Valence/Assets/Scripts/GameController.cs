@@ -33,6 +33,9 @@ public class GameController : MonoBehaviour {
 				
 			}
 		}
+
+        InvokeRepeating("updateGridGraph",3,10);
+
 	}
 	
 	// Update is called once per frame
@@ -40,7 +43,17 @@ public class GameController : MonoBehaviour {
         if (power < 0) {
             power = 0;
         }
-
 	}
+
+    void updateGridGraph() {
+
+        //yield return new WaitForSeconds(wait);
+        Debug.Log("Updated gridgraph..");
+        //Update agent pathfinding to account for this new obstical -Zach
+        foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
+            AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
+        }
+        //yield return new WaitForSeconds(wait);
+    }
 
 }

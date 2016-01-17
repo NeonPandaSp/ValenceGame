@@ -245,20 +245,23 @@ public class AgentLogic_07 : MonoBehaviour {
                     switch (hungerValue) {
                         case 25:
 
-                            isHungry = Choose();
+                            //if the agent reaches 25% hunger throw a dice with 10% probability of success
+                            isHungry = Choose(10);
                         break;
 
                         case 50:
                             for (amount = 0; amount < 3; amount++)
                                 if (!isHungry) {
-                                    isHungry = Choose();
+                                    //if the agent reaches 50% hunger throw a dice with 35% probability of success
+                                    isHungry = Choose(35);
                                 }
                         break;
 
                         case 75:
                             for (amount = 0; amount < 6; amount++)
                                 if (!isHungry) {
-                                    isHungry = Choose();
+                                    //if the agent reaches 75% hunger throw a dice with 65% probability of success
+                                    isHungry = Choose(65);
                                 }
                     break;
                     }
@@ -275,7 +278,7 @@ public class AgentLogic_07 : MonoBehaviour {
 
     }
 
-    bool Choose() {
+    bool Choose(int probability) {
 
         //Calc the bayes theorm on probability of hunger after 100 tries at 20%
         /*float probability = 0.20f;
@@ -288,7 +291,7 @@ public class AgentLogic_07 : MonoBehaviour {
             Debug.Log("Probability: " + tempVal2);
         }*/
 
-        if (Random.Range(1.0f, 100.0f) < 50) {
+        if (Random.Range(1.0f, 100.0f) < probability) {
             // will be true 10% of the time
             Debug.Log("True");
             return true;
