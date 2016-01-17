@@ -90,7 +90,7 @@ public class BuildingScript : MonoBehaviour {
             //_myGameController.power += bType.cRate;
         }
         else if (bType.typeName == "water") {
-            _myGameController.water -= bType.cRate;
+            _myGameController.power -= bType.cRate;
         }
         else {
             Debug.Log("Production Type Error @ Resource Generation");
