@@ -168,6 +168,10 @@ public class AgentLogic_07 : MonoBehaviour {
 
                         aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
 
+                        if (!populateList) {
+                            gameController.powerWorkerList.Add(this.gameObject);
+                            populateList = true;
+                        }
                         break;
 
                     case jobSubState.Default:

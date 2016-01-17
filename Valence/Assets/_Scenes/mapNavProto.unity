@@ -1294,12 +1294,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputController: {fileID: 0}
-  scrap: 0
-  population: 0
-  morale: 0
-  food: 0
-  water: 0
-  power: 0
   settlerHealth: 0
   settlerStrength: 0
   settlerAgility: 0
@@ -1309,10 +1303,22 @@ MonoBehaviour:
   settlerHunger: 0
   settlerThirst: 0
   myCanvas: {fileID: 0}
-  farmButton: {fileID: 0}
   buildIcon: {fileID: 0}
   destroyIcon: {fileID: 0}
   HUDBg: {fileID: 0}
+  buildBtnArray:
+  - {fileID: 0}
+  - {fileID: 0}
+  shelterBtn: {fileID: 0}
+  farmBtn: {fileID: 0}
+  waterStationBtn: {fileID: 0}
+  powerStationBtn: {fileID: 0}
+  storageBtn: {fileID: 0}
+  shrineBtn: {fileID: 0}
+  tavernBtn: {fileID: 0}
+  hospitalBtn: {fileID: 0}
+  schoolBtn: {fileID: 0}
+  mFG: {fileID: 0}
 --- !u!1 &1202770366
 GameObject:
   m_ObjectHideFlags: 0

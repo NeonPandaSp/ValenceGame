@@ -10,6 +10,7 @@ public class BuildingType  {
 
 	public float pRate;
 	public float pTime;
+    public float cRate;
 	public int area;
 
     public int farmerVal, farmVal;
@@ -25,8 +26,9 @@ public class BuildingType  {
         Debug.Log("farmerVal " + farmerVal);
 
 		cost = getBuildingCost ();
-		pRate = getProductionRate (area, farmVal, farmerVal);
+		pRate = getProductionRate (area);
 		pTime = getProductionTime ();
+        cRate = getConsumptionRate(area);
 	}
 	public int getBuildingCost(){
 		if (typeName == "shelter") {
@@ -43,13 +45,14 @@ public class BuildingType  {
 		}
 	}
 
-	public float getProductionRate(int a, int bCount, int aCount){
+	public float getProductionRate(int a){
 		if (typeName == "shelter") {
 			return 0.0f * a;
 		} else if (typeName == "food") {
             return 1.0f * a;
         } else if (typeName == "power") {
-			return 1.0f * a;
+            //Each power station should produce 100 power
+            return 100;
 		} else if (typeName == "water") {
 			return 1.0f * a;
 		} else {
@@ -58,7 +61,27 @@ public class BuildingType  {
 		}
 	}
 
-	public float getProductionTime(){
+    //Currently buildings consume 1 power per tile they consume, 80 tiles = 80 power -Zach
+    public float getConsumptionRate(int a) {
+        if (typeName == "shelter") {
+            return 0.0f * a;
+        }
+        else if (typeName == "food") {
+            return 1.0f * a;
+        }
+        else if (typeName == "power") {
+            return 1.0f * a;
+        }
+        else if (typeName == "water") {
+            return 1.0f * a;
+        }
+        else {
+            Debug.Log("Consumption Type Error");
+            return 0.0f;
+        }
+    }
+
+    public float getProductionTime(){
 		if (typeName == "shelter") {
 			return 5.0f;
 		} else if (typeName == "food") {

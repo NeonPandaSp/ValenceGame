@@ -257,8 +257,12 @@ public class InputController : MonoBehaviour {
 			//myHoverObject.transform.localScale = new Vector3( 1, 1 , 1); 
 
 		}
-
-		if (Input.GetKey (KeyCode.Alpha1)) {
+        if (Input.GetKey(KeyCode.Alpha0)) {
+            Destroy(myHoverObject);
+            myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
+            zoning = true;
+            hoverState = "zone";
+        } else if (Input.GetKey (KeyCode.Alpha1)) {
 			Debug.Log ("food");
 			if( hoverState != "food" ){
 				Destroy( myHoverObject );
@@ -282,12 +286,8 @@ public class InputController : MonoBehaviour {
 				hoverState = "power";
 			}
 			zoning = false;
-		} else if (Input.GetKey (KeyCode.Alpha4)) {
-            Destroy(myHoverObject);
-            myHoverObject = (GameObject) Instantiate (Resources.Load("Tile"), new Vector3 (0, 0, 0), Quaternion.identity);
-			zoning = true;
-			hoverState = "zone";
-		}
+		} 
+
 	}
 
     bool IsOverlapping(GameObject candidate, GameObject[] others)
