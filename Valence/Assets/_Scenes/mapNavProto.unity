@@ -125,7 +125,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
 --- !u!1 &66523347
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +198,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
 --- !u!1 &135222445
 GameObject:
   m_ObjectHideFlags: 0
@@ -649,6 +649,14 @@ Prefab:
       propertyPath: buildingArray.Array.data[1]
       value: hospital
       objectReference: {fileID: 0}
+    - target: {fileID: 11409728, guid: c3e3742574207e449b1839e600945537, type: 2}
+      propertyPath: shelterBuild
+      value: 
+      objectReference: {fileID: 117808, guid: a6d632de38aaa534c8d7fb4d216b1af4, type: 2}
+    - target: {fileID: 11409728, guid: c3e3742574207e449b1839e600945537, type: 2}
+      propertyPath: tavernBuild
+      value: 
+      objectReference: {fileID: 176646, guid: df03cb97d908ca04eb9502c650adf6fe, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c3e3742574207e449b1839e600945537, type: 2}
   m_IsPrefabParent: 0
@@ -794,7 +802,7 @@ Transform:
   - {fileID: 1294408764}
   - {fileID: 1035582278}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
 --- !u!114 &713036265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1434,7 +1442,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
 --- !u!1 &1294408763
 GameObject:
   m_ObjectHideFlags: 0
@@ -1745,7 +1753,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400014, guid: b2404e16499c34346a90c11d78e51b48, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b2404e16499c34346a90c11d78e51b48, type: 3}
@@ -1944,7 +1952,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 403288, guid: 6c41250e6f732204b87d6069c8ab1c39, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2392410, guid: 6c41250e6f732204b87d6069c8ab1c39, type: 2}
       propertyPath: m_Materials.Array.data[0]

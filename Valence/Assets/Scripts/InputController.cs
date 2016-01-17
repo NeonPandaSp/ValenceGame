@@ -15,7 +15,7 @@ public class InputController : MonoBehaviour {
 
 	public Material redMat, blueMat, yellowMat, greenMat;
 
-	public GameObject foodBuild, waterBuild, powerBuild;
+	public GameObject foodBuild, waterBuild, powerBuild, shelterBuild, tavernBuild;
 
 	string currentColor;
 
@@ -250,18 +250,41 @@ public class InputController : MonoBehaviour {
                         }
                     }
 				}
-			}
+               if (hoverState == "shelter") {
+                    if (_gameController.scrap >= 25) {
+                        if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
+                            _gameController.scrap -= 25;
+                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("Shelter"), new Vector3(currentTile.x, 0, currentTile.y), Quaternion.identity);
+                            tempObject.GetComponent<BuildingScript>().initBuildingType();
+                            tempObject.GetComponent<BuildingScript>().beginProduction();
+
+                            //Update agent pathfinding to account for this new obstical -Zach
+                            foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
+                                AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
+                            }
+
+                            foreach (Transform child in tempObject.transform) {
+                                if (child.gameObject.tag == "buildTrans") {
+                                    child.gameObject.SetActive(false);
+                                }
+                                if (child.gameObject.tag == "buildMesh") {
+                                    child.gameObject.SetActive(true);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 			if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
 				myHoverObject.transform.position = new Vector3( currentTile.x, 1, currentTile.y );
 			}
 			//myHoverObject.transform.localScale = new Vector3( 1, 1 , 1); 
 
 		}
+
         if (Input.GetKey(KeyCode.Alpha0)) {
-            Destroy(myHoverObject);
-            myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
-            zoning = true;
-            hoverState = "zone";
+            Debug.Log("None");
+            zoning = false;
         } else if (Input.GetKey (KeyCode.Alpha1)) {
 			Debug.Log ("food");
 			if( hoverState != "food" ){
@@ -286,16 +309,31 @@ public class InputController : MonoBehaviour {
 				hoverState = "power";
 			}
 			zoning = false;
-		}
-        else if (Input.GetKey(KeyCode.Alpha4)) {
-            Debug.Log("power");
-            if (hoverState != "power") {
+		} else if (Input.GetKey(KeyCode.Alpha4)) {
+            Debug.Log("shelter");
+            if (hoverState != "shelter") {
                 Destroy(myHoverObject);
-                myHoverObject = (GameObject)Instantiate(powerBuild, new Vector3(0, 0, 0), Quaternion.identity);
-                hoverState = "power";
+                myHoverObject = (GameObject)Instantiate(shelterBuild, new Vector3(0, 0, 0), Quaternion.identity);
+                hoverState = "shelter";
+            }
+            zoning = false;
+        } else if (Input.GetKey(KeyCode.Alpha5)) {
+            Debug.Log("tavern");
+            if (hoverState != "tavern") {
+                Destroy(myHoverObject);
+                myHoverObject = (GameObject)Instantiate(tavernBuild, new Vector3(0, 0, 0), Quaternion.identity);
+                hoverState = "tavern";
             }
             zoning = false;
         }
+
+        else if (Input.GetKey(KeyCode.Alpha9)) {
+            Destroy(myHoverObject);
+            myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
+            zoning = true;
+            hoverState = "zone";
+        }
+        
 
     }
 
