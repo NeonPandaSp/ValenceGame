@@ -164,6 +164,7 @@ GameObject:
   - 65: {fileID: 6539014}
   - 65: {fileID: 6543514}
   - 65: {fileID: 6516968}
+  - 114: {fileID: 11415300}
   m_Layer: 8
   m_Name: Tavern
   m_TagString: prop
@@ -5327,13 +5328,46 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 234.695145, y: 120.578171, z: 241.541382}
   m_Center: {x: -222.52121, y: 59.7890854, z: -145.066071}
+--- !u!114 &11415300
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 117934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f902df69981bb4b93f0f5847001085, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _myGameController: {fileID: 0}
+  bType:
+    typeName: 
+    cost: 0
+    pRate: 0
+    pTime: 0
+    cRate: 0
+    area: 0
+    farmerVal: 0
+    farmVal: 0
+  myType: tavern
+  myArea: 67
+  assignedAgents: []
+  initProduction: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: myType
+      value: tavern
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: myArea
+      value: 67
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 117934}

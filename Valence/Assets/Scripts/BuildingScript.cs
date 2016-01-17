@@ -59,6 +59,9 @@ public class BuildingScript : MonoBehaviour {
             else if (bType.typeName == "water") {
                 _myGameController.water += bType.pRate;
             }
+            else if (bType.typeName == "tavern") {
+                //Maybe add a moral increase rate?
+            }
             else {
                 Debug.Log("Production Type Error @ Resource Generation");
             }
@@ -88,6 +91,9 @@ public class BuildingScript : MonoBehaviour {
             //_myGameController.power += bType.cRate;
         }
         else if (bType.typeName == "water") {
+            _myGameController.power -= bType.cRate;
+        }
+        else if (bType.typeName == "tavern") {
             _myGameController.power -= bType.cRate;
         }
         else {

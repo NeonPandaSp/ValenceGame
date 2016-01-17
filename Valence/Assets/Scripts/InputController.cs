@@ -274,6 +274,31 @@ public class InputController : MonoBehaviour {
                         }
                     }
                 }
+                if (hoverState == "tavern") {
+                    if (_gameController.scrap >= 25) {
+                        if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
+                            _gameController.scrap -= 25;
+                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("Tavern"), new Vector3(currentTile.x, 0, currentTile.y), Quaternion.identity);
+                            tempObject.GetComponent<BuildingScript>().initBuildingType();
+                            tempObject.GetComponent<BuildingScript>().beginProduction();
+
+                            //Update agent pathfinding to account for this new obstical -Zach
+                            foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
+                                AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
+                            }
+
+                            foreach (Transform child in tempObject.transform) {
+                                if (child.gameObject.tag == "buildTrans") {
+                                    child.gameObject.SetActive(false);
+                                }
+                                if (child.gameObject.tag == "buildMesh") {
+                                    child.gameObject.SetActive(true);
+                                }
+                            }
+                        }
+                    }
+                }
+
             }
 			if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
 				myHoverObject.transform.position = new Vector3( currentTile.x, 1, currentTile.y );
