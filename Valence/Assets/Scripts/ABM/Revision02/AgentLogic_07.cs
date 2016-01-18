@@ -42,6 +42,9 @@ public class AgentLogic_07 : MonoBehaviour {
     //0-100 int which holds the agent's current hunger level. 0% = full, 100% = starving 
     public int hungerValue;
 
+    //0-100 int which holds the agent's current health. 0%= dead, 100% = perfectly healthy
+    public int health;
+
     int amount = 0;
 
     AIFollow_07 aiFollow;
@@ -75,7 +78,9 @@ public class AgentLogic_07 : MonoBehaviour {
 
         //Init the agent's hunger value to 0 when spawned (they shouldnt be hungry at start)
         hungerValue = 0;
-        
+        //Init the agent's health to 100 when spawned (they should be perfectly healthy)
+        health = 100;
+
         aiFollow = GetComponent<AIFollow_07>();
         wanderWaypoints = new List<Vector3>();
 
@@ -109,8 +114,9 @@ public class AgentLogic_07 : MonoBehaviour {
 
 	void Update() {
 
-     
-        
+        if (health <= 0) {
+            Destroy(this.gameObject);
+        }
 
         switch (aState) {
 
@@ -209,6 +215,10 @@ public class AgentLogic_07 : MonoBehaviour {
 
         //Todo: need to update this function to take into account the current food the agent has collected...
         //ie. once they collect 100 food ONLY start increasing the hungerValue once he has finished feeding on that 100 food
+        if (hungerValue >= 100)
+        {
+            health--;
+        }
 
         switch (hasFood) {
             case true:
@@ -263,7 +273,14 @@ public class AgentLogic_07 : MonoBehaviour {
                                     //if the agent reaches 75% hunger throw a dice with 65% probability of success
                                     isHungry = Choose(65);
                                 }
-                    break;
+                        break;
+
+                        case 100:
+                            isHungry = Choose(101);
+
+                            
+
+                        break;
                     }
                     
                 //Choose(hungerValue);
