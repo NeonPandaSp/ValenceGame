@@ -77,7 +77,7 @@ public class AgentLogic_07 : MonoBehaviour {
     void Start(){
 
         //Init the agent's hunger value to 0 when spawned (they shouldnt be hungry at start)
-        hungerValue = 90;
+        hungerValue = 0;
         //Init the agent's health to 100 when spawned (they should be perfectly healthy)
         health = 100;
 
@@ -138,7 +138,7 @@ public class AgentLogic_07 : MonoBehaviour {
                 //remove this agent from all worker lists
                 //Todo do this with a function call
                 gameController.farmerList.Remove(this.gameObject);
-
+                populateList = false;
                 break;
 			
 		    case agentState.Working:
@@ -152,10 +152,10 @@ public class AgentLogic_07 : MonoBehaviour {
 
                         //Add the agent to the list of farmers 
                         //Todo: Should update this to a function which when called takes a passed value of the substate and adds this agent to the correct list
-                        if (!populateList)
+                        if (!gameController.farmerList.Contains(this.gameObject))
                         {
                             gameController.farmerList.Add(this.gameObject);
-                            populateList = true;
+                            //populateList = true;
                         }
                         break;
                     case jobSubState.Medic:
@@ -207,7 +207,7 @@ public class AgentLogic_07 : MonoBehaviour {
 
         Debug.Log("Agent has begun consuming resources...");
         //Repeat the function ConsumeResource, for 1 second, every 1 second
-        InvokeRepeating("ConsumeResource", 1.0f, 1.0f);
+        InvokeRepeating("ConsumeResource", 1.0f, 3.0f);
     }
             
     //When the agent's hunger % reaches a critial amount, then switch the current state of the agent to hunger state (search for food)
@@ -227,7 +227,16 @@ public class AgentLogic_07 : MonoBehaviour {
                 if (foodStored > 0) {
                     //if yes then decrease the amount of food stored on the agent and increase their health
                     foodStored--;
-                    health++;
+
+                    if (health > 100){
+                        //Increase the missing health of the agent when eating food
+                        health++;
+                    }
+                    else {
+                        //Do nothing
+                    }
+
+                    
                 }
                 else {
                     //if there is no more food stored on the agent, then start starving the agent
@@ -338,6 +347,14 @@ public class AgentLogic_07 : MonoBehaviour {
 		return Vector3.Distance(point, center) < radius;
 	}
 
+    IEnumerator DelayNewWorkTarget(Transform waypoint) {
+        //Wait for how ever long it takes to play the work animation
+        yield return new WaitForSeconds(3.0f);
+        workWaypointIndex = Random.Range(0, workWaypoints.Count);
+        //aiFollow.target = waypoint.position;
+        
+    }
+
 	public void TargetReached(){
 
 
@@ -348,7 +365,8 @@ public class AgentLogic_07 : MonoBehaviour {
 
         }   else if (aState == agentState.Working){
 
-            workWaypointIndex = Random.Range(0, workWaypoints.Count);
+            //workWaypointIndex = Random.Range(0, workWaypoints.Count);
+            StartCoroutine(DelayNewWorkTarget(workWaypoints[workWaypointIndex].transform));
             aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
 
         }   else if (aState == agentState.Hungry){
