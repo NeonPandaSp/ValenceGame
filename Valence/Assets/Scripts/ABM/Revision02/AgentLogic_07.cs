@@ -77,7 +77,7 @@ public class AgentLogic_07 : MonoBehaviour {
     void Start(){
 
         //Init the agent's hunger value to 0 when spawned (they shouldnt be hungry at start)
-        hungerValue = 0;
+        hungerValue = 90;
         //Init the agent's health to 100 when spawned (they should be perfectly healthy)
         health = 100;
 
@@ -224,12 +224,14 @@ public class AgentLogic_07 : MonoBehaviour {
             case true:
 
                 //Check that there still is food stored
-                if (foodStored != 0) {
-                    //if yes then decrease the amount of food stored on the agent
+                if (foodStored > 0) {
+                    //if yes then decrease the amount of food stored on the agent and increase their health
                     foodStored--;
+                    health++;
                 }
                 else {
                     //if there is no more food stored on the agent, then start starving the agent
+                    foodStored = 0;
                     hasFood = false;
                 }
 
@@ -237,8 +239,13 @@ public class AgentLogic_07 : MonoBehaviour {
             case false:
                 //check if the agent's hunger% has reached 25%, otherwise keep increasing the hungerValue
                 //Todo update this if statement to check boolean, boolean set based on probability
-                // if (hungerValue >= 25) {
 
+                if (hungerValue >= 100){
+                    hungerValue = 100;
+                } else {
+                    //Increase the current hunger value of the agent by 1
+                    hungerValue++;
+                }
                 //Bool set if true then change state to hungry
                 if (isHungry) { 
                     //if yes then set the agent's state to hungry, but first save the previous state..
@@ -247,9 +254,9 @@ public class AgentLogic_07 : MonoBehaviour {
                     aState = agentState.Hungry;
                 }
                 else {
-                    //Increase the current hunger value of the agent by 1
+                    
                     //Todo: need to incorporate a probability factor that is affected by the current hunger value %, higher % = higher probablility to change Astate to hungry
-                    hungerValue++;
+                    
 
                     //Throw a series of dice at each milestone 25,50,75% hunger, if any dice roll true, then move to the food source
                     switch (hungerValue) {
@@ -263,7 +270,7 @@ public class AgentLogic_07 : MonoBehaviour {
                             for (amount = 0; amount < 3; amount++)
                                 if (!isHungry) {
                                     //if the agent reaches 50% hunger throw a dice with 35% probability of success
-                                    isHungry = Choose(35);
+                                    isHungry = Choose(10);
                                 }
                         break;
 
@@ -271,15 +278,13 @@ public class AgentLogic_07 : MonoBehaviour {
                             for (amount = 0; amount < 6; amount++)
                                 if (!isHungry) {
                                     //if the agent reaches 75% hunger throw a dice with 65% probability of success
-                                    isHungry = Choose(65);
+                                    isHungry = Choose(10);
                                 }
                         break;
 
                         case 100:
-                            isHungry = Choose(101);
-
-                            
-
+                            StartCoroutine(CheckFoodSource());
+                           // isHungry = Choose(101);
                         break;
                     }
                     
@@ -293,6 +298,12 @@ public class AgentLogic_07 : MonoBehaviour {
 
        
 
+    }
+
+    IEnumerator CheckFoodSource() {
+        yield return new WaitForSeconds(10.0f);
+        isHungry = true;
+       
     }
 
     bool Choose(int probability) {
@@ -344,13 +355,21 @@ public class AgentLogic_07 : MonoBehaviour {
 
             //Reset hunger level or start replenishing
             //Todo slowly start decreasing hunger value
-            hungerValue = 0;
+            
             isHungry = false;
 
             //Give the agent 10% of the current food stored
             //Todo need to figureout a beter method for this algorithm
             foodStored = 0.10f * gameController.food;
             gameController.food -= foodStored;
+
+            if (foodStored > 0) {
+                hungerValue = 0;
+            }
+            else {
+                //The agent is now starving!
+                Debug.Log("Agent is starving!");
+            }
 
             //Tell the agent that they current have food and should not starve
             hasFood = true;
