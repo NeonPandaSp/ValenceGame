@@ -550,6 +550,55 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1458884503}
   m_Script: {fileID: 11500000, guid: 958c2333d2f002b4996b5368277e62a1, type: 3}
+--- !u!1 &363820909
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 363820911}
+  - 114: {fileID: 363820910}
+  m_Layer: 0
+  m_Name: WeaponGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &363820910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 363820909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7886677ed22e724399fa2ec6610aec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponList: []
+  myType: 
+  wRare: 0
+  wType:
+    typeName: 
+    rare: 0
+    damageModifier: 0
+    range: 0
+    accuracy: 0
+    soundRange: 0
+--- !u!4 &363820911
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 363820909}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.3191366, y: 11.2467499, z: 27.9937706}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
 --- !u!1001 &455996716
 Prefab:
   m_ObjectHideFlags: 0
@@ -1302,6 +1351,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputController: {fileID: 0}
+  scrapText: {fileID: 0}
+  populationText: {fileID: 0}
+  moraleText: {fileID: 0}
+  foodText: {fileID: 0}
+  waterText: {fileID: 0}
+  powerText: {fileID: 0}
+  timeText: {fileID: 0}
   settlerHealth: 0
   settlerStrength: 0
   settlerAgility: 0
@@ -1326,6 +1382,7 @@ MonoBehaviour:
   tavernBtn: {fileID: 0}
   hospitalBtn: {fileID: 0}
   schoolBtn: {fileID: 0}
+  switchModeBtn: {fileID: 0}
   mFG: {fileID: 0}
 --- !u!1 &1202770366
 GameObject:
