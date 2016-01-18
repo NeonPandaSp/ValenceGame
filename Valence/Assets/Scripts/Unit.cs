@@ -18,6 +18,7 @@ public class Unit : MonoBehaviour {
 	public bool waitPressed;
 	
 	public bool turnComplete;
+	public bool hasScrap;
 
 	/// //////////////////////////////////////////////
 
@@ -37,7 +38,7 @@ public class Unit : MonoBehaviour {
 	public int attackRating;
 	public float aimRating;
 	
-	public bool moving, hasAttacked;
+	public bool moving, hasAttacked, isMoving;
 	public Vector2 target;
 	
 	public float moveSpeed = 1;
@@ -64,6 +65,8 @@ public class Unit : MonoBehaviour {
 	public float startTime;
 	public float speed = 1;
 
+	public GameObject AlertObject, CautionObject;
+
 	// Use this for initialization
 	void Start () {
 
@@ -78,6 +81,7 @@ public class Unit : MonoBehaviour {
 		waitPressed = false;
 		turnComplete = false;
 		hasAttacked = false;
+		isMoving = false;
 
 		currentPatrolPoint = 0;
 
@@ -112,23 +116,39 @@ public class Unit : MonoBehaviour {
 			}
 			
 		}
+
+		if (isElite && FolkUnitsWithinView.Count > 0) {
+			AlertObject.SetActive (true);
+			CautionObject.SetActive (false);
+		} else if (isElite && knownPosition.Count > 0) {
+			AlertObject.SetActive (false);
+			CautionObject.SetActive (true);
+		} else if (isElite) {
+			AlertObject.SetActive (false);
+			CautionObject.SetActive (false);
+		}
 		MoveNextTile ();
-		//translateUnit ();
+		translateUnit ();
 	}
 
 	public void translateUnit(){
-		while (transPath.Count > 1) {
+		if ( transPath != null && transPath.Count > 1) {
+			isMoving = true;
+			Vector2 tempFacing = new Vector2( transPath[1].x, transPath[1].z ) - new Vector2(transPath[0].x, transPath[0].z);
+			tempFacing.Normalize();
+			facing = new Vector3( tempFacing.x, 0, tempFacing.y);
 			float distCovered = (Time.time - startTime) * speed;
 			float fracJourney = distCovered / journeyLength;
 			transform.position = Vector3.Lerp (transPath [0], transPath [1], fracJourney);
-			if( Vector3.Distance( transform.position, transPath[1] ) < 0.25f ){
-				transform.position = transPath[1];
+			if( Vector3.Distance( transform.position, transPath[1] ) < 0.001f ){
 				transPath.Remove (transPath[0]);
-				if( transPath[1] != null ){
+				if( transPath.Count > 1 ){
 					startTime = Time.time;
 					journeyLength = Vector3.Distance(transPath[0], transPath[1]);
 				} else {
-					transPath = null;
+					transform.position = transPath[0];
+					transPath.Remove(transPath[0]);
+					isMoving = false;
 				}
 			}
 		}
@@ -141,13 +161,10 @@ public class Unit : MonoBehaviour {
 			if(currentPath==null)
 				return;
 
-
 			// Get cost from current tile to next tile
 			remainingMovement -= _GameController.CostToEnterTile(currentPath[0].x, currentPath[0].y, currentPath[1].x, currentPath[1].y );
 			transPath.Add (  new Vector3(currentPosition.x, 0, currentPosition.y) );
-			Vector2 tempFacing = new Vector2( currentPath[1].x, currentPath[1].y ) - currentPosition;
-			tempFacing.Normalize();
-			facing = new Vector3( tempFacing.x, 0, tempFacing.y );
+
 			// Move us to the next tile in the sequence
 			currentPosition.x = currentPath[1].x;
 			currentPosition.y = currentPath[1].y;
@@ -172,6 +189,7 @@ public class Unit : MonoBehaviour {
 				startTime = Time.time;
 				journeyLength = Vector3.Distance(transPath[0], transPath[1]);
 				_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 3;
+				transPath.Add (  new Vector3(currentPosition.x, 0, currentPosition.y) );
 				currentPath = null;
 				canMove = false;
 			}

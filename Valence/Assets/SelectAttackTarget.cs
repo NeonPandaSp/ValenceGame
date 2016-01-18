@@ -26,6 +26,7 @@ public class SelectAttackTarget : MonoBehaviour {
 			_GameController.selectedUnit.hasAttacked = true;
 
 			if( myParentScript.health <= 0 ){
+				_GameController.tiles[(int)myParentScript.currentPosition.x, (int)myParentScript.currentPosition.y ] = 1;
 				_GameController.elite.Remove (myParentScript);
 				myParentScript.gameObject.SetActive (false);
 			}

@@ -42,6 +42,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 	public Button moveButton, attackButton, pickUpButton, waitButton;
 
+	public GameObject scrapObj;
+
 	// Use this for initialization
 	void Start () {
 		tiles = new int[mapSize,mapSize];
@@ -98,6 +100,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 					GameState = 2; 
 					foreach( Unit eU in elite ){
 						currentElite = -1;
+						eU.turnComplete = false;
 						eU.canMove = true;
 						selectedUnit = elite[0];
 					}
@@ -110,15 +113,22 @@ public class ExploreMode_GameController : MonoBehaviour {
 				moveButton.interactable = false;
 			} 
 
-			if( canAttack(selectedUnit) ) {
+			if( canAttack(selectedUnit) && !selectedUnit.isMoving && !selectedUnit.hasScrap ) {
 				attackButton.interactable = true;
 			} else {
 				attackButton.interactable = false;
-			} 
+			}
+
+			if( canPickUp(selectedUnit) && !selectedUnit.isMoving ){
+				pickUpButton.interactable = true;
+			} else {
+				pickUpButton.interactable = false;
+			}
 
 			break;
 		case 2:
 			int eMovementRemaing = GetNumberOfEnemyUnits();
+			bool EnemyTurnComplete = true;
 			foreach( Unit eU in elite ){
 				if( eU.isActiveAndEnabled ){
 					if( eU.canMove == true ){
@@ -126,16 +136,22 @@ public class ExploreMode_GameController : MonoBehaviour {
 					} else {
 						eMovementRemaing--;
 					}
+
+					if( !eU.turnComplete ){
+						Debug.Log ( "A FALSE EXISTS");
+						EnemyTurnComplete = false;
+					}
 				}
 			}
-			if( eMovementRemaing == 0 ){
 
+
+
+			if( EnemyTurnComplete && eMovementRemaing <= 0){
+				Debug.Log ( "Turn Complete");
 				GameState = 1;
 				playerTurnObject.ReStart();
-				
 				selectedUnit = folk[0];
 				selectedIndex = 0;
-
 				MoveIcon();
 				cameraObject.MoveCameraTo( cameraObject.transform.position, selectedUnit.transform.position );
 				foreach( Unit fU in folk ){
@@ -150,6 +166,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 				}
 				break;
 			} else {
+				Debug.Log("EnemyTurn");
 				EnemyTurn();
 			}
 
@@ -161,70 +178,6 @@ public class ExploreMode_GameController : MonoBehaviour {
 			}
 			break;
 		}
-
-
-
-
-
-		// LINE MOVEMENT RADIUS CODE DO NOT DELETE
-//		List<Vector3> lineVertex = new List<Vector3> ();
-//		Vector3 lastVector = new Vector3( -1, -1, -1 );
-//		
-//		for( int i = 0; i < mapSize; i++ ){
-//			for( int j = 0; j < mapSize; j++ ){
-//				if( borderVectors[i,j] <= 3 && borderVectors[i,j] >= 1 ){
-//					// border vertex!
-//					lineVertex.Add ( new Vector3( i, 0.1f, j ) );
-//					//Debug.Log ( "borderVectors added To Line Vertex" );
-//					//Instantiate ( pointObject, new Vector3( i, 0.5f, j ), Quaternion.identity );
-//				}
-//			}
-//		}
-//		//Instantiate ( pointObject, lineVertex[0], Quaternion.identity );
-//		List<Vector3> orderedVertex = new List<Vector3>();
-//		orderedVertex.Add ( lineVertex[0] );
-//		int index = 0;
-//		while (index < lineVertex.Count) {
-//			if( lineVertex.Contains( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z-1 ) ) && 
-//			   !orderedVertex.Contains( new Vector3( orderedVertex[index].x,0.1f, orderedVertex[index].z-1 ) ) &&
-//			   CostToEnterTile((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y, (int)orderedVertex[index].x, (int)orderedVertex[index].z-1) < selectedUnit.movement  ){
-//				//Down
-//				orderedVertex.Add ( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z-1 ) );
-//				
-//				
-//			} else if( lineVertex.Contains( new Vector3( orderedVertex[index].x + 1, 0.1f, orderedVertex[index].z ) ) && 
-//			        !orderedVertex.Contains( new Vector3( orderedVertex[index].x + 1, 0.1f, orderedVertex[index].z ) ) &&
-//			          CostToEnterTile((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y, (int)orderedVertex[index].x, (int)orderedVertex[index].z) < selectedUnit.movement ){
-//				//Right
-//				orderedVertex.Add ( new Vector3( orderedVertex[index].x + 1, 0.1f, orderedVertex[index].z ) );
-//				
-//			} else if( lineVertex.Contains( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z+1) ) && 
-//			          !orderedVertex.Contains( new Vector3( orderedVertex[index].x , 0.1f, orderedVertex[index].z+1 ) ) &&
-//			         CostToEnterTile((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y, (int)orderedVertex[index].x-1, (int)orderedVertex[index].z) < selectedUnit.movement){
-//				//Up
-//				orderedVertex.Add ( new Vector3( orderedVertex[index].x, 0.1f, orderedVertex[index].z+1) );
-//			} else if( lineVertex.Contains( new Vector3( orderedVertex[index].x -1, 0.1f, orderedVertex[index].z ) ) && 
-//			         !orderedVertex.Contains( new Vector3( orderedVertex[index].x -1 ,0.1f, orderedVertex[index].z ) ) &&
-//			          CostToEnterTile((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y, (int)orderedVertex[index].x-1, (int)orderedVertex[index].z-1) < selectedUnit.movement ){
-//				//Left
-//				orderedVertex.Add ( new Vector3( orderedVertex[index].x -1, 0.1f, orderedVertex[index].z ) );
-//				
-//			}  else {
-//				orderedVertex.Add( orderedVertex[0] );
-//
-//			}
-//			index++;
-//
-//		}
-//		for (int i = 0; i < 12; i++) {
-//			//Instantiate ( pointObject, orderedVertex[i], Quaternion.identity );
-//		}
-//		foreach( Vector3 v in orderedVertex ){
-//			if( lastVector.x != -1 || lastVector.y != -1 || lastVector.z != -1 ){
-//				//Debug.DrawLine(lastVector, v, Color.blue);
-//			}
-//			lastVector = v;
-//		}
 
 	}
 
@@ -593,6 +546,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 		updateBuffer ();
 
 		if (checkBuffer () && newElite ) {
+			Debug.Log ( "Movement" );
 			elite[currentElite].EliteObserve();
 			elite[currentElite].EliteDetermineState();
 			elite[currentElite].Move (elite[currentElite].EliteCalcOptMoveTile());
@@ -603,8 +557,11 @@ public class ExploreMode_GameController : MonoBehaviour {
 		} 
 
 		if (checkBuffer () && newAction) {
-			if( selectedUnit.FolkUnitsWithinView.Count > 0 )
-				elite[currentElite].Attack (selectedUnit.FolkUnitsWithinView[0]);
+			Debug.Log ( "Action" );
+			if( elite[currentElite].FolkUnitsWithinView.Count > 0 )
+				elite[currentElite].Attack (elite[currentElite].FolkUnitsWithinView[0]);
+
+			elite[currentElite].turnComplete = true;
 			newAction = false;
 			newElite = false;
 			nextElite = true;
@@ -683,6 +640,14 @@ public class ExploreMode_GameController : MonoBehaviour {
 				}
 			}
 		}
+		return false;
+	}
+
+	public bool canPickUp(Unit myUnit){
+		if (selectedUnit.getDistance (selectedUnit.currentPosition, new Vector2(scrapObj.transform.position.x, scrapObj.transform.position.z)) <= 1) {
+			return true;
+		}
+
 		return false;
 	}
 

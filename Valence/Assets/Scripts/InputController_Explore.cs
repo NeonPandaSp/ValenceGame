@@ -18,6 +18,8 @@ public class InputController_Explore : MonoBehaviour {
 	string currentColor;
 	
 	bool generate;
+
+	public GameObject wallObject, boundObject;
 	
 	void Start(){
 		_tileMap = GetComponent<TileMap> ();
@@ -84,8 +86,21 @@ public class InputController_Explore : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Return)) {
 			_GameController.selectedNextUnit ();
 		}
-	}
 
+		if(Input.GetKeyDown ( KeyCode.V )){
+			ToggleWallVisibilty();
+		}
+	}
+	
+	public void ToggleWallVisibilty (){
+		if (wallObject.activeInHierarchy) {
+			wallObject.SetActive (false);
+			boundObject.SetActive(true);
+		} else {
+			wallObject.SetActive (true);
+			boundObject.SetActive(false);
+		}
+	}
 	public void MoveSelectedUnit( ){
 		Debug.Log ("Move Called");
 		_GameController.disableAttackBox();
@@ -104,6 +119,14 @@ public class InputController_Explore : MonoBehaviour {
 		_GameController.selectedUnit.canMove = false;
 		_GameController.selectedUnit.actionPoints = 0;
 		selectedNextUnit ();
+	}
+
+	public void PickupSelectedUnit(){
+		_GameController.disableAttackBox ();
+		_GameController.selectedUnit.grabPressed = true;
+		_GameController.scrapObj.transform.SetParent( _GameController.selectedUnit.gameObject.transform );
+		_GameController.scrapObj.transform.position = _GameController.selectedUnit.gameObject.transform.position;
+		_GameController.selectedUnit.hasScrap = true;
 	}
 
 	public void selectedNextUnit(){
