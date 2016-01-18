@@ -11,10 +11,13 @@ using UnityEngine.EventSystems;
 
 	//HUD Variables
 	//GameObject globalAttributes;
-	private Text timeText;
-	Text scrapText, populationText, moraleText, foodText, waterText, powerText;
+	public Text scrapText, populationText, moraleText, foodText, waterText, powerText, timeText;
+	Text scrapDelText, populationDelText, moraleDelText, foodDelText, waterDelText, powerDelText, timeDelText;
 
-	//public float moraleValue, foodValue, waterValue, powerValue;
+	GameController globalAttributes;
+
+	int scrap, population;
+	float morale, food, water, power;
 
 	//Time variables
 	int hour;
@@ -46,6 +49,9 @@ using UnityEngine.EventSystems;
 	public Button shelterBtn, farmBtn, waterStationBtn, powerStationBtn, storageBtn, shrineBtn, tavernBtn, hospitalBtn, schoolBtn;
 	Button shelterDelBtn, farmDelBtn, waterStationDelBtn, powerStationDelBtn, storageDelBtn, shrineDelBtn, tavernDelBtn, hospitalDelBtn, schoolDelBtn;
 
+	public Button switchModeBtn;
+	Button switchModeDelBtn;
+
 	//test button
 	public Button mFG;
 
@@ -56,13 +62,7 @@ using UnityEngine.EventSystems;
 	// Use this for initialization
 	void Start () {
 		GUICam = Camera.main;
-
-//		var globalAttributes : GameObject[];
-//		GameController flower = globalAttributes.GetComponent <GameController> ();
-//		Debug.Log ("FWWWWWWWWW: " + flower);
-
-//		GameObject gameControllerObject =  GameObject.FindGameObjectWithTag("scrap");
-//		_myGameController = gameControllerObject.GetComponent<GameController> ();
+		globalAttributes = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 
 		//Settler Attributes
 		settlerHealth = 100;
@@ -75,11 +75,10 @@ using UnityEngine.EventSystems;
 		settlerThirst = 0;
 
 		// === Building Buttons === \\
-		for (int i = 0; i < buildBtnArray.Length; i++)
-		{
-			Button tempButton = (Button)Instantiate (buildBtnArray[i], Vector3.zero, Quaternion.identity);
+		for (int i = 0; i < buildBtnArray.Length; i++) {
+			Button tempButton = (Button)Instantiate (buildBtnArray [i], Vector3.zero, Quaternion.identity);
 			tempButton.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-			buildBtnArray[i] = tempButton;
+			buildBtnArray [i] = tempButton;
 		}
 
 		//Build Button
@@ -95,7 +94,7 @@ using UnityEngine.EventSystems;
 		buildBtnArray [1].transform.Translate (40, Screen.height - 235, 0);
 		buildBtnArray [1].GetComponentInChildren<Text> ().text = "";
 
-		// === Building Buttons === \\
+		// === Structure Buttons === \\
 		//Shelter Button				
 		shelterDelBtn = (Button)Instantiate (shelterBtn);
 		shelterDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
@@ -189,6 +188,77 @@ using UnityEngine.EventSystems;
 //		mfg.gameObject.transform.SetParent(myCanvas.gameObject.transform);
 //		mfg.onClick.AddListener(() => ButtonClicked());
 //		mfg.GetComponentInChildren<Text> ().text = "mFG Button";
+
+		// === Global Attributes === \\
+		// FOR SCRAP: Color (13, 13, 13); AND fontSize = 28;
+		// FOR THE OTHER GLOBAL VARS Color (244, 244, 244); AND fontSize = 20;
+
+		//Scrap
+		scrapDelText = (Text)Instantiate (scrapText);
+		scrapDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+
+		scrapText.text = "";
+		scrapText.fontSize = 14;
+		scrapText.transform.position = new Vector2 (130, Screen.height / 2);
+		//scrapDelText.transform.Translate (30, Screen.height - 55, 1);
+
+		//Population
+		populationDelText = (Text)Instantiate (populationText);
+		populationDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+
+		populationText.text = "";
+		populationText.fontSize = 20;
+		populationText.transform.position = new Vector2 (scrapText.transform.position.x + 127, Screen.height - 22.5f);
+
+		//Morale		
+		moraleDelText = (Text)Instantiate (moraleText);
+		moraleDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+
+		moraleText.text = "";
+		moraleText.fontSize = 20;
+		moraleText.transform.position = new Vector2 (populationText.rectTransform.position.x + 165, Screen.height - 22.5f);
+				
+		//Food
+		foodDelText = (Text)Instantiate (foodText);
+		foodDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+
+		foodText.text = "";
+		foodText.fontSize = 20;
+		foodText.transform.position = new Vector2 (moraleText.rectTransform.position.x + 150, Screen.height - 22.5f);
+		
+		//Water
+		waterDelText = (Text)Instantiate (waterText);
+		waterDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+
+		waterText.text = "";
+		waterText.fontSize = 20;
+		waterText.transform.position = new Vector2 (foodText.rectTransform.position.x + 150, Screen.height - 22.5f);
+		
+		//Power
+		powerDelText = (Text)Instantiate (powerText);
+		powerDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+
+		powerText.text = "";
+		powerText.fontSize = 20;
+		powerText.transform.position = new Vector2 (waterText.rectTransform.position.x + 150, Screen.height - 22.5f);
+		
+		//Time
+		timeDelText = (Text)Instantiate (timeText);
+		timeDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+
+		timeText.text = "";
+		timeText.fontSize = 20;
+		timeText.transform.position = new Vector2 (1810, Screen.height - 22.5f);
+		timeText.color = new Color (1, 1, 1);
+
+		//Switch Modes
+		switchModeDelBtn = (Button)Instantiate (switchModeBtn);
+		switchModeDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		switchModeDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		switchModeDelBtn.transform.Translate (Screen.width - 32.5f, 32.5f, 0);
+		switchModeDelBtn.GetComponentInChildren<Text> ().text = "";
+		switchModeDelBtn.onClick.AddListener (() => switchMode ());
 	}
 
 	//=================\\
@@ -206,6 +276,16 @@ using UnityEngine.EventSystems;
 		tavernDelBtn.gameObject.SetActive (true);
 		hospitalDelBtn.gameObject.SetActive (true);
 	}
+
+	void switchMode ()
+	{
+		Debug.Log ("Switch Mode button clicked");
+		scrap = scrap + UnityEngine.Random.Range (10, 101);
+		print ("Scrap is now: " + scrap);
+
+		population = population + UnityEngine.Random.Range (10, 101);
+		print ("Population is now: " + population);
+	}
 	 
 	//==================\\
 	//===== Update =====\\
@@ -214,34 +294,69 @@ using UnityEngine.EventSystems;
 	// Update is called once per frame
 	void Update () {
 		/*/////HUD Text\\\\\*/
-		//Scrap
-		//scrapText.text = "Scrap: " + globalAttributes.ToString ();
-		//scrapText.color = new Color (13, 13, 13);
-		//scrapText.fontSize = 28;
-
-		//Population
-		//populationText.text = "Population: " + 0; //.ToString ();
-
-		//Morale
-		//moraleText.text = "Morale: " + 0; //.ToString ();
-
-		//Food
-		//foodText.text = "Food: " + 0; //oodValue.ToString ();
-
-		//Water
-		//waterText.text = "Water: " + 0; //waterValue.ToString ();
-
-		//Power
-		//powerText.text = "Power: " + 0; //powerValue.ToString ();
-
-		//Time
-		//timeText.text = hourText + ":" + minText + ":" + secText;
-
-		//Time
 		bool hourZero = false;
 		bool minZero = false;
 		bool secZero = false;
 		
+		//Scrap
+		scrap = globalAttributes.scrap;
+		scrapText.text = "Scrap: " + scrap.ToString ();
+		scrapText.color = new Color (244, 244, 244);
+		print ("SCRAP POS IS: " + scrapText.transform.position);
+
+		//Population
+		//population = 0;		//Placeholder ---- globalAttributes.population;
+		populationText.text = "Population: " + population.ToString (); //.ToString ();
+		if (population < 5)
+			populationText.color = new Color (1, 0, 0);
+		else if (population > 5 || population < 30)
+			populationText.color = new Color (1, 1, 1);
+		else if (population > 30)
+			populationText.color = new Color (0, 1, 0);
+
+		print ("Population = " + population.ToString ());
+
+		//Morale
+		//morale = 0;			//Placeholder ---- globalAttributes.morale;
+		moraleText.text = "Morale: " + morale.ToString ();
+		if (morale < 50)
+			moraleText.color = new Color (1, 0, 0);
+		else if (morale >= 50 || morale < 80)
+			moraleText.color = new Color (1, 1, 1);
+		else if (morale >= 80)
+			moraleText.color = new Color (0, 1, 0);
+
+		//Food
+		food = globalAttributes.food;
+		foodText.text = "Food: " + food.ToString ();
+		if (food <= 30)
+			foodText.color = new Color (1, 0, 0);
+		else if (food > 30 || food < 300)
+			foodText.color = new Color (1, 1, 1);
+		else if (food >= 300)
+			foodText.color = new Color (0, 1, 0);
+
+		//Water
+		water = globalAttributes.water;
+		waterText.text = "Water: " + water.ToString ();
+		if (water <= 30)
+			waterText.color = new Color (1, 0, 0);
+		else if (water > 30 || water < 300)
+			waterText.color = new Color (1, 1, 1);
+		else if (water >= 300)
+			waterText.color = new Color (0, 1, 0);
+
+		//Power
+		power = globalAttributes.power;
+		powerText.text = "Power: " + power.ToString ();
+		if (power <= 30)
+			powerText.color = new Color (1, 0, 0);
+		else if (power > 30 || power < 300)
+			powerText.color = new Color (1, 1, 1);
+		else if (power >= 300)
+			powerText.color = new Color (0, 1, 0);
+
+		//Time
 		hour = Mathf.FloorToInt (Time.realtimeSinceStartup / (60 * 60));
 		minute = Mathf.FloorToInt (Time.realtimeSinceStartup / 60) - (hour * 60);
 		second = (int) Time.realtimeSinceStartup - (minute * 60);
@@ -260,6 +375,8 @@ using UnityEngine.EventSystems;
 			secText = "0" + second.ToString ();
 		} else
 			secText = second.ToString ();
+
+		timeText.text = hourText + ":" + minText + ":" + secText;
 
 		//Frames
 		++frames;
@@ -296,38 +413,9 @@ using UnityEngine.EventSystems;
 		GUI.BeginGroup (new Rect (Screen.width - 75, 0, 200, 200));
 		GUILayout.Label ("FPS: " + fps.ToString ("f2"));
 		GUI.EndGroup ();
-		
-		//HUD Styles
-		GUIStyle HUDStyle1 = new GUIStyle ();
-		HUDStyle1.font = (Font)Resources.Load ("Segoe_UI_Light", typeof(Font));
-		HUDStyle1.normal.textColor = new Color (13, 13, 13);
-		HUDStyle1.fontSize = 28;
 
-		GUIStyle HUDStyle2 = new GUIStyle ();
-		HUDStyle2.font = (Font)Resources.Load ("Segoe_UI_Light", typeof(Font));
-		HUDStyle2.normal.textColor = new Color (244, 244, 244);
-		HUDStyle2.fontSize = 20;
-
-		/*///// Global Attributes \\\\\*/
-		Rect scrapPos = new Rect (30, 25, 100, 100);
-		Rect popPos = new Rect (scrapPos.x + 127, 15, 100, 100);
-		Rect moralePos = new Rect (popPos.x + 165, 15, 100, 100);
-		Rect foodPos = new Rect (moralePos.x + 150, 15, 100, 100);
-		Rect waterPos = new Rect (foodPos.x + 150, 15, 100, 100);
-		Rect powerPos = new Rect (waterPos.x + 150, 15, 100, 100);
-		Rect timePos = new Rect (1810, 25, 100, 100);
-		
 		GUI.DrawTexture (new Rect (0, 0, 1920, 100), HUDBg);
 
-//		//Text
-//		GUI.Label (scrapPos, "Scrap: " + globalAttributes.ToString (), HUDStyle1);
-//		GUI.Label (popPos, "Population: " + populationValue.ToString (), HUDStyle2);
-//		GUI.Label (moralePos, "Morale: " + moraleValue.ToString (), HUDStyle2);
-//		GUI.Label (foodPos, "Food: " + foodValue.ToString (), HUDStyle2);
-//		GUI.Label (waterPos, "Water: " + waterValue.ToString (), HUDStyle2);
-//		GUI.Label (powerPos, "Power: " + powerValue.ToString (), HUDStyle2);
-//		GUI.Label (timePos, hourText + ":" + minText + ":" + secText, HUDStyle2);
-		
 		/*///// Settler Attributes (Currently invisbile) \\\\\*/
 		Rect setHPPos = new Rect (350, 1050, 50, 50);
 		Rect setStrPos = new Rect (setHPPos.x + 50, 1050, 50, 50);
