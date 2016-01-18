@@ -83,12 +83,39 @@ public class InputController_Explore : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetKeyDown (KeyCode.Return)) {
+		if (Input.GetKeyDown (KeyCode.Tab)) {
 			_GameController.selectedNextUnit ();
 		}
 
 		if(Input.GetKeyDown ( KeyCode.V )){
 			ToggleWallVisibilty();
+		}
+
+		if (Input.GetKey (KeyCode.Alpha1)) {
+			_GameController.selectedUnit = _GameController.folk[0];
+			_GameController.selectedIndex = 0;
+			_GameController.MoveIcon();
+			_GameController.cameraObject.MoveCameraTo( _GameController.cameraObject.transform.position, _GameController.selectedUnit.transform.position );
+		} else if (Input.GetKey (KeyCode.Alpha2)) {
+			_GameController.selectedUnit = _GameController.folk[1];
+			_GameController.selectedIndex = 1;
+			_GameController.MoveIcon();
+			_GameController.cameraObject.MoveCameraTo( _GameController.cameraObject.transform.position, _GameController.selectedUnit.transform.position );
+		} else if (Input.GetKey (KeyCode.Alpha3)) {
+			_GameController.selectedUnit = _GameController.folk[2];
+			_GameController.selectedIndex = 2;
+			_GameController.MoveIcon();
+			_GameController.cameraObject.MoveCameraTo( _GameController.cameraObject.transform.position, _GameController.selectedUnit.transform.position );
+		} else if (Input.GetKey (KeyCode.Alpha4)) {
+			_GameController.selectedUnit = _GameController.folk[3];
+			_GameController.selectedIndex = 3;
+			_GameController.MoveIcon();
+			_GameController.cameraObject.MoveCameraTo( _GameController.cameraObject.transform.position, _GameController.selectedUnit.transform.position );
+		} else if (Input.GetKey (KeyCode.Alpha5)) {
+			_GameController.selectedUnit = _GameController.folk[4];
+			_GameController.selectedIndex = 4;
+			_GameController.MoveIcon();
+			_GameController.cameraObject.MoveCameraTo( _GameController.cameraObject.transform.position, _GameController.selectedUnit.transform.position );
 		}
 	}
 	
@@ -102,7 +129,6 @@ public class InputController_Explore : MonoBehaviour {
 		}
 	}
 	public void MoveSelectedUnit( ){
-		Debug.Log ("Move Called");
 		_GameController.disableAttackBox();
 		_GameController.selectedUnit.movePressed = true;
 		_GameController.GenerateMovementRange((int)_GameController.selectedUnit.currentPosition.x, (int)_GameController.selectedUnit.currentPosition.y);
@@ -129,6 +155,14 @@ public class InputController_Explore : MonoBehaviour {
 		_GameController.selectedUnit.hasScrap = true;
 	}
 
+	public void selectUnit(int index){
+		_GameController.selectedUnit = _GameController.folk[index];
+		_GameController.selectedIndex = index;
+		_GameController.MoveIcon();
+		_GameController.cameraObject.MoveCameraTo( _GameController.cameraObject.transform.position, _GameController.selectedUnit.transform.position );
+
+	}
+
 	public void selectedNextUnit(){
 		_GameController.DestroyMovementRange ();
 		int i = _GameController.selectedIndex;
@@ -140,12 +174,11 @@ public class InputController_Explore : MonoBehaviour {
 			int dCount = 0;
 			while( !_GameController.folk[i].isActiveAndEnabled && _GameController.folk[i].actionPoints > 0 ){
 				i++;
-				if( i > _GameController.GetNumberOfPlayerUnits()-1 ){
+				if( i > _GameController.folk.Count-1 ){
 					i = 0;
 				} 
 				dCount++;
-				if( dCount == _GameController.GetNumberOfPlayerUnits() ){
-					//GameOver
+				if( dCount == _GameController.folk.Count ){
 					break;
 				}
 			}

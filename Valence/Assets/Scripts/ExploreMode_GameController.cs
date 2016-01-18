@@ -42,7 +42,11 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 	public Button moveButton, attackButton, pickUpButton, waitButton;
 
+	public List<Button> PartyButtons;
+
 	public GameObject scrapObj;
+
+	public Text chanceToHitText;
 
 	// Use this for initialization
 	void Start () {
@@ -77,6 +81,10 @@ public class ExploreMode_GameController : MonoBehaviour {
 		GenerateMap();
 
 		cameraObject.MoveCameraTo (cameraObject.transform.position, folk [0].transform.position);
+		while (PartyButtons.Count > folk.Count) {
+			Destroy( PartyButtons[PartyButtons.Count-1].gameObject );
+			PartyButtons.Remove (PartyButtons[PartyButtons.Count-1]);
+		}
 	}
 
 	// Update is called once per frame
@@ -138,7 +146,6 @@ public class ExploreMode_GameController : MonoBehaviour {
 					}
 
 					if( !eU.turnComplete ){
-						Debug.Log ( "A FALSE EXISTS");
 						EnemyTurnComplete = false;
 					}
 				}
@@ -147,7 +154,6 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 
 			if( EnemyTurnComplete && eMovementRemaing <= 0){
-				Debug.Log ( "Turn Complete");
 				GameState = 1;
 				playerTurnObject.ReStart();
 				selectedUnit = folk[0];
@@ -166,7 +172,6 @@ public class ExploreMode_GameController : MonoBehaviour {
 				}
 				break;
 			} else {
-				Debug.Log("EnemyTurn");
 				EnemyTurn();
 			}
 

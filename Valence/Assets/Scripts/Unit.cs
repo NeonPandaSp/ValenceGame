@@ -51,6 +51,8 @@ public class Unit : MonoBehaviour {
 	public List<Unit> FolkUnitsWithinView;
 	public List<Vector2> knownPosition;
 
+	public Vector2 lastKnownPosition;
+
 	public Vector2 startPosition;
 	public string EliteBehaviour;
 	public List<Vector2> PatrolPoints;
@@ -117,15 +119,33 @@ public class Unit : MonoBehaviour {
 			
 		}
 
+		if (!isElite && health <= 0) {
+			_GameController.tiles[(int)currentPosition.x, (int)currentPosition.y ] = 1;
+			//int index = _GameController.folk.IndexOf(this);
+			Destroy ( _GameController.PartyButtons[_GameController.PartyButtons.Count-1].gameObject ) ;
+			_GameController.PartyButtons.Remove(_GameController.PartyButtons[_GameController.PartyButtons.Count-1]);
+			_GameController.folk.Remove (this.gameObject.GetComponent<Unit>());
+			gameObject.SetActive (false);
+		}
+
 		if (isElite && FolkUnitsWithinView.Count > 0) {
 			AlertObject.SetActive (true);
 			CautionObject.SetActive (false);
+			lastKnownPosition = knownPosition [knownPosition.Count - 1];
+			Vector2 tempFacing = FolkUnitsWithinView[0].currentPosition - currentPosition;
+			tempFacing.Normalize ();
+			facing = new Vector3 (tempFacing.x, 0, tempFacing.y);
 		} else if (isElite && knownPosition.Count > 0) {
 			AlertObject.SetActive (false);
 			CautionObject.SetActive (true);
+			lastKnownPosition = knownPosition [knownPosition.Count - 1];
+			Vector2 tempFacing = lastKnownPosition - currentPosition;
+			tempFacing.Normalize ();
+			facing = new Vector3 (tempFacing.x, 0, tempFacing.y);
 		} else if (isElite) {
 			AlertObject.SetActive (false);
 			CautionObject.SetActive (false);
+			lastKnownPosition = Vector2.zero;
 		}
 		MoveNextTile ();
 		translateUnit ();
@@ -140,6 +160,13 @@ public class Unit : MonoBehaviour {
 			float distCovered = (Time.time - startTime) * speed;
 			float fracJourney = distCovered / journeyLength;
 			transform.position = Vector3.Lerp (transPath [0], transPath [1], fracJourney);
+			if( isElite ){
+				EliteObserve ();
+			} else {
+				foreach( Unit eU in _GameController.elite ){
+					eU.EliteObserve();
+				}
+			}
 			if( Vector3.Distance( transform.position, transPath[1] ) < 0.001f ){
 				transPath.Remove (transPath[0]);
 				if( transPath.Count > 1 ){
@@ -155,8 +182,6 @@ public class Unit : MonoBehaviour {
 	}
 	public void MoveNextTile() {
 		float remainingMovement = movement;
-
-		//_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 1;
 		while(remainingMovement > 0) {
 			if(currentPath==null)
 				return;
@@ -174,13 +199,7 @@ public class Unit : MonoBehaviour {
 			// Remove the old "current" tile
 			currentPath.RemoveAt(0);
 
-			if( isElite ){
-				EliteObserve ();
-			} else {
-				foreach( Unit eU in _GameController.elite ){
-					eU.EliteObserve();
-				}
-			}
+
 
 			if(currentPath.Count == 1) {
 				// We only have one tile left in the path, and that tile MUST be our ultimate
@@ -262,7 +281,6 @@ public class Unit : MonoBehaviour {
 				i--;
 			}
 		}
-
 
 	}
 
@@ -358,7 +376,7 @@ public class Unit : MonoBehaviour {
 			}
 		}
 		else if (EliteState == 2) {
-			targetPosition = knownPosition[knownPosition.Count-1];
+			targetPosition = lastKnownPosition;
 
 		} else if (EliteState == 3) {
 			GameObject tempUnit = (GameObject) Instantiate ( prefabUnit, this.transform.position, Quaternion.identity );
@@ -450,6 +468,10 @@ public class Unit : MonoBehaviour {
 		chance = chance * 100;
 		Debug.Log ("Chance to hit: " + chance + "%");
 		int rand = Random.Range (0, 100);
+
+		if (!isElite) {
+			_GameController.chanceToHitText.text = ""+chance;
+		}
 
 		if (rand < chance) {
 			Debug.Log("HIT!");
