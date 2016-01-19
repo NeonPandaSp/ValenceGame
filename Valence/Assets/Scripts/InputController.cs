@@ -25,7 +25,7 @@ public class InputController : MonoBehaviour {
 
 	string hoverState;
 
-	public GameController getBuildingTypeName;
+	public GUIController _GUIController;
 
 	void Start(){
 		_tileMap = GetComponent<TileMap> ();
@@ -35,9 +35,7 @@ public class InputController : MonoBehaviour {
 		zoning = true;
 		currentColor = "blue";
 
-		//getBuildingTypeName = GameObject.FindGameObjectWithTag ("setBuildingTypeName").GetComponent<GameController> ();
-		//print ("THE FETCHED BUILDING TYPE IS: " + getBuildingTypeName);
-
+		_GUIController = GameObject.Find ("Canvas").GetComponent<GUIController> ();
 	}
 
 	public void selectedMaterial( string color ){
@@ -113,7 +111,7 @@ public class InputController : MonoBehaviour {
 				rootMousePos = currentTile;
 			}
 		}
-		if (Input.GetMouseButton (0) && !Input.GetKey ( KeyCode.LeftAlt ) ) {
+		if (Input.GetMouseButton (0) && !Input.GetKey ( KeyCode.LeftAlt )) {
 
 			if( zoning ){
 				if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
@@ -169,7 +167,7 @@ public class InputController : MonoBehaviour {
 					AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
 				} 
 			} else if ( !zoning ){
-				if( hoverState == "food" ){
+				if (hoverState == "food" || _GUIController.setBuildingTypeName == "food"){
                     if (_gameController.scrap >= 25) {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
                             _gameController.scrap -= 25;
@@ -198,7 +196,7 @@ public class InputController : MonoBehaviour {
                         }
                     }
 				}
-				if( hoverState == "water" ){
+				if (hoverState == "water" || _GUIController.setBuildingTypeName == "water"){
                     if (_gameController.scrap >= 25){
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))){
                             _gameController.scrap -= 25;
@@ -227,7 +225,7 @@ public class InputController : MonoBehaviour {
                         }
                     }
 				}
-				if( hoverState == "power" ){
+				if (hoverState == "power" || _GUIController.setBuildingTypeName == "power"){
                     if (_gameController.scrap >= 25){
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))){
                             _gameController.scrap -= 25;
@@ -255,7 +253,7 @@ public class InputController : MonoBehaviour {
                         }
                     }
 				}
-               if (hoverState == "shelter") {
+				if (hoverState == "shelter" || _GUIController.setBuildingTypeName == "shelter") {
                     if (_gameController.scrap >= 25) {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
                             _gameController.scrap -= 25;
@@ -279,7 +277,7 @@ public class InputController : MonoBehaviour {
                         }
                     }
                 }
-                if (hoverState == "tavern") {
+				if (hoverState == "tavern"  || _GUIController.setBuildingTypeName == "tavern") {
                     if (_gameController.scrap >= 25) {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
                             _gameController.scrap -= 25;
