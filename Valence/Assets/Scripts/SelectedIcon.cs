@@ -10,9 +10,9 @@ public class SelectedIcon : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-		transform.position = new Vector3(  selectUnit.transform.position.x + 0.5f, 0,  selectUnit.transform.position.z + 0.5f );
-
-		transform.Rotate(0,50 * Time.deltaTime,0);
+		if (selectUnit != null) {
+			transform.position = new Vector3 (selectUnit.transform.position.x + 0.5f, 0, selectUnit.transform.position.z + 0.5f);
+		}
+		transform.Rotate (0, 50 * Time.deltaTime, 0);
 	}
 }

@@ -53,6 +53,9 @@ public class Unit : MonoBehaviour {
 
 	public Vector2 lastKnownPosition;
 
+	public List<Unit> AttackTargets;
+	public int currentAttackTarget;
+
 	public Vector2 startPosition;
 	public string EliteBehaviour;
 	public List<Vector2> PatrolPoints;
@@ -146,6 +149,7 @@ public class Unit : MonoBehaviour {
 			CautionObject.SetActive (false);
 			lastKnownPosition = Vector2.zero;
 		}
+
 		MoveNextTile ();
 		translateUnit ();
 	}
@@ -228,7 +232,6 @@ public class Unit : MonoBehaviour {
 		currentPath = null;
 		canMove = false;
 	}
-	
 	
 	public void Move( Vector2 targetPosition ){
 		_GameController.GeneratePathTo ((int)targetPosition.x, (int)targetPosition.y);
@@ -479,11 +482,13 @@ public class Unit : MonoBehaviour {
 		}
 	}
 
-	public bool calcChanceToHit(float distance){
+	public float calcChanceToHit(float distance){
 		float chance = aimRating - ( 0.1f * distance );
 
 		chance = chance * 100;
-		Debug.Log ("Chance to hit: " + chance + "%");
+		//Debug.Log ("Chance to hit: " + chance + "%");
+		return chance;
+		/**
 		int rand = Random.Range (0, 100);
 
 		if (!isElite) {
@@ -497,5 +502,6 @@ public class Unit : MonoBehaviour {
 			Debug.Log("Miss. #sadness #onlyFolkKidsWouldUnderstand");
 			return false;
 		}
+		**/
 	}
 }

@@ -16,6 +16,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 	public Unit selectedUnit;
 	public int selectedIndex;
 	public SelectedIcon icon;
+	public SelectedIcon attackIcon;
 
 	public int currentElite = -1;
 	public float bufferValue;
@@ -41,6 +42,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 	public CameraTargetController cameraObject;
 
 	public Button moveButton, attackButton, pickUpButton, waitButton;
+	public Button attackSelectButton, attackNext, attackPrev;
 
 	public List<Button> PartyButtons;
 
@@ -78,6 +80,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 		selectedUnit = folk [0];
 		selectedIndex = 0;
 
+		attackIcon.gameObject.SetActive (false);
 		icon.selectUnit = selectedUnit;
 		//GenerateMovementRange ((int)selectedUnit.currentPosition.x, (int)selectedUnit.currentPosition.y);
 
@@ -134,6 +137,17 @@ public class ExploreMode_GameController : MonoBehaviour {
 				pickUpButton.interactable = true;
 			} else {
 				pickUpButton.interactable = false;
+			}
+
+			if( selectedUnit.AttackTargets.Count > 0 ){
+				attackSelectButton.interactable = true;
+				attackNext.interactable = true;
+				attackPrev.interactable = true;
+				chanceToHitText.text = ""+ selectedUnit.calcChanceToHit (selectedUnit.getDistance (selectedUnit.currentPosition, selectedUnit.AttackTargets[selectedUnit.currentAttackTarget].currentPosition));
+			} else {
+				attackSelectButton.interactable = false;
+				attackNext.interactable = false;
+				attackPrev.interactable = false;
 			}
 
 			break;
@@ -581,7 +595,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 		if (checkBuffer () && newAction) {
 			Debug.Log ( "Action" );
 			if( elite[currentElite].FolkUnitsWithinView.Count > 0 ){
-				if( elite[currentElite].calcChanceToHit(elite[currentElite].getDistance(elite[currentElite].currentPosition, elite[currentElite].FolkUnitsWithinView[0].currentPosition))){
+				float rand = Random.Range (0, 100);
+				if( elite[currentElite].calcChanceToHit(elite[currentElite].getDistance(elite[currentElite].currentPosition, elite[currentElite].FolkUnitsWithinView[0].currentPosition)) > rand){
 					elite[currentElite].Attack (elite[currentElite].FolkUnitsWithinView[0]);
 				}
 			}
@@ -672,7 +687,6 @@ public class ExploreMode_GameController : MonoBehaviour {
 		if (selectedUnit.getDistance (selectedUnit.currentPosition, new Vector2(scrapObj.transform.position.x, scrapObj.transform.position.z)) <= 1) {
 			return true;
 		}
-
 		return false;
 	}
 
@@ -680,27 +694,35 @@ public class ExploreMode_GameController : MonoBehaviour {
 		foreach (Unit eU in elite) {
 			if( fU.isWithinAttackRange(eU) ){
 				if( eU.health > 0 ){
+					selectedUnit.AttackTargets.Add(eU);
+					selectedUnit.currentAttackTarget = 0;
+					/**
 					Transform[] eUChildren = eU.GetComponentsInChildren<Transform>(true);
 					foreach( Transform ob in eUChildren ){
 						if ( ob.tag == "enemyTouchBox" ){
 							ob.gameObject.SetActive(true);
 						}
-					}
+					}**/
 				}
 			}
 		}
+		attackIcon.gameObject.SetActive (true);
+		attackIcon.selectUnit = selectedUnit.AttackTargets [0];
 	}
 	public void disableAttackBox(){
-		foreach (Unit eU in elite) {
-			if( Vector3.Distance ( eU.transform.position, selectedUnit.transform.position ) <= 5 ){
-				Transform[] eUChildren = eU.GetComponentsInChildren<Transform>(true);
-				foreach( Transform ob in eUChildren ){
-					if ( ob.tag == "enemyTouchBox" ){
-						ob.gameObject.SetActive(false);
-					}
-				}
-			}
-		}
+		selectedUnit.AttackTargets.Clear();
+		attackIcon.gameObject.SetActive (false);
+		chanceToHitText.text = "X";
+//		foreach (Unit eU in elite) {
+//			if( Vector3.Distance ( eU.transform.position, selectedUnit.transform.position ) <= 5 ){
+//				Transform[] eUChildren = eU.GetComponentsInChildren<Transform>(true);
+//				foreach( Transform ob in eUChildren ){
+//					if ( ob.tag == "enemyTouchBox" ){
+//						ob.gameObject.SetActive(false);
+//					}
+//				}
+//			}
+//		}
 	}
 
 	public void selectedNextUnit(){

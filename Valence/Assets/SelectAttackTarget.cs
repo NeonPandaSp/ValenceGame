@@ -21,7 +21,8 @@ public class SelectAttackTarget : MonoBehaviour {
 		Vector2 tempFacing = myParentScript.currentPosition - _GameController.selectedUnit.currentPosition;
 		tempFacing.Normalize();
 		_GameController.selectedUnit.facing = new Vector3( tempFacing.x, 0, tempFacing.y );
-		if (_GameController.selectedUnit.calcChanceToHit(_GameController.selectedUnit.getDistance(_GameController.selectedUnit.currentPosition, myParentScript.currentPosition ) ) ) {
+		int rand = Random.Range (0, 100);
+		if (_GameController.selectedUnit.calcChanceToHit(_GameController.selectedUnit.getDistance(_GameController.selectedUnit.currentPosition, myParentScript.currentPosition ) ) > rand ) {
 			_GameController.selectedUnit.Attack( myParentScript );
 			_GameController.selectedUnit.hasAttacked = true;
 

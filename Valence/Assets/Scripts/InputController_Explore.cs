@@ -136,6 +136,7 @@ public class InputController_Explore : MonoBehaviour {
 
 	public void AttackWithSelectedUnit(){
 		_GameController.enableAttackBox (_GameController.selectedUnit);
+
 		_GameController.selectedUnit.attackPressed = true;
 	}
 
@@ -191,6 +192,45 @@ public class InputController_Explore : MonoBehaviour {
 			_GameController.cameraObject.MoveCameraTo( _GameController.cameraObject.transform.position, _GameController.selectedUnit.transform.position );
 
 		}
+	}
+
+	public void attackConfirmed(){
+		Unit attackTarget = _GameController.selectedUnit.AttackTargets [_GameController.selectedUnit.currentAttackTarget];
+		_GameController.selectedUnit.actionPoints--;
+		attackTarget.generateSound (_GameController.selectedUnit.currentPosition, _GameController.selectedUnit.myWeapon.GetComponent<weaponScript> ().soundRange);
+		Vector2 tempFacing = attackTarget.currentPosition - _GameController.selectedUnit.currentPosition;
+		tempFacing.Normalize();
+		_GameController.selectedUnit.facing = new Vector3( tempFacing.x, 0, tempFacing.y );
+		int rand = Random.Range (0, 100);
+		
+
+		if (_GameController.selectedUnit.calcChanceToHit (_GameController.selectedUnit.getDistance (_GameController.selectedUnit.currentPosition, attackTarget.currentPosition)) > rand) {
+			Debug.Log("HIT");
+			_GameController.selectedUnit.Attack (attackTarget);
+			_GameController.selectedUnit.hasAttacked = true;
+			
+			if (attackTarget.health <= 0) {
+				_GameController.tiles [(int)attackTarget.currentPosition.x, (int)attackTarget.currentPosition.y] = 1;
+				_GameController.elite.Remove (attackTarget);
+				attackTarget.gameObject.SetActive (false);
+			}
+		} else {
+			Debug.Log("Miss. #sadness #onlyFolkKidsWouldUnderstand");
+		}
+		_GameController.disableAttackBox();
+	}
+
+	public void selectAttackTarget(int x){
+		_GameController.selectedUnit.currentAttackTarget += x;
+
+		if (_GameController.selectedUnit.currentAttackTarget >= _GameController.selectedUnit.AttackTargets.Count) {
+			_GameController.selectedUnit.currentAttackTarget = 0;
+		} else if ( _GameController.selectedUnit.currentAttackTarget < 0 ) {
+			_GameController.selectedUnit.currentAttackTarget = _GameController.selectedUnit.AttackTargets.Count-1;
+		}
+		_GameController.chanceToHitText.text = ""+ _GameController.selectedUnit.calcChanceToHit (_GameController.selectedUnit.getDistance (_GameController.selectedUnit.currentPosition, _GameController.selectedUnit.AttackTargets[_GameController.selectedUnit.currentAttackTarget].currentPosition));
+		_GameController.attackIcon.selectUnit = _GameController.selectedUnit.AttackTargets [_GameController.selectedUnit.currentAttackTarget];
+
 	}
 
 }
