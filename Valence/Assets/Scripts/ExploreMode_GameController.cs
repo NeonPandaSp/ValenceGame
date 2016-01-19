@@ -48,6 +48,9 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 	public Text chanceToHitText;
 
+	public Image actionPointGfx_01, actionPointGfx_02;
+	public Image healthBar;
+
 	// Use this for initialization
 	void Start () {
 		tiles = new int[mapSize,mapSize];
@@ -183,6 +186,20 @@ public class ExploreMode_GameController : MonoBehaviour {
 			}
 			break;
 		}
+
+		if (!selectedUnit.isElite && selectedUnit.actionPoints >= 2) {
+			actionPointGfx_01.gameObject.SetActive(true);
+			actionPointGfx_02.gameObject.SetActive(true);
+		} else if (!selectedUnit.isElite && selectedUnit.actionPoints == 1) {
+			actionPointGfx_01.gameObject.SetActive(true);
+			actionPointGfx_02.gameObject.SetActive(false);
+		} else {
+			actionPointGfx_01.gameObject.SetActive(false);
+			actionPointGfx_02.gameObject.SetActive(false);
+		}
+
+		healthBar.rectTransform.sizeDelta = new Vector2( selectedUnit.health * 10, healthBar.rectTransform.rect.height );
+		healthBar.rectTransform.position = new Vector3 ( ( selectedUnit.health * 5 + 58 ) - (10 - selectedUnit.health), healthBar.rectTransform.position.y,healthBar.rectTransform.position.z);
 
 	}
 
@@ -563,8 +580,11 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 		if (checkBuffer () && newAction) {
 			Debug.Log ( "Action" );
-			if( elite[currentElite].FolkUnitsWithinView.Count > 0 )
-				elite[currentElite].Attack (elite[currentElite].FolkUnitsWithinView[0]);
+			if( elite[currentElite].FolkUnitsWithinView.Count > 0 ){
+				if( elite[currentElite].calcChanceToHit(elite[currentElite].getDistance(elite[currentElite].currentPosition, elite[currentElite].FolkUnitsWithinView[0].currentPosition))){
+					elite[currentElite].Attack (elite[currentElite].FolkUnitsWithinView[0]);
+				}
+			}
 
 			elite[currentElite].turnComplete = true;
 			newAction = false;

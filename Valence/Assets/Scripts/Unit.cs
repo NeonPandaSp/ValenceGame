@@ -110,7 +110,6 @@ public class Unit : MonoBehaviour {
 			int currNode = 0;
 			
 			while( currNode < currentPath.Count-1 ) {
-				//Debug.Log ( "generating line" );
 				Vector3 start = new Vector3( currentPath[currNode].x +0.5f, 1, currentPath[currNode].y+0.5f );
 				Vector3 end   = new Vector3( currentPath[currNode+1].x+0.5f,1, currentPath[currNode+1].y+0.5f );
 				
@@ -160,9 +159,7 @@ public class Unit : MonoBehaviour {
 			float distCovered = (Time.time - startTime) * speed;
 			float fracJourney = distCovered / journeyLength;
 			transform.position = Vector3.Lerp (transPath [0], transPath [1], fracJourney);
-			if( isElite ){
-				EliteObserve ();
-			} else {
+			if( !isElite ){
 				foreach( Unit eU in _GameController.elite ){
 					eU.EliteObserve();
 				}
@@ -182,33 +179,47 @@ public class Unit : MonoBehaviour {
 	}
 	public void MoveNextTile() {
 		float remainingMovement = movement;
+		int pathCount;
+		if (currentPath != null) {
+			pathCount = currentPath.Count;
+		} else {
+			pathCount = 0;
+		}
 		while(remainingMovement > 0) {
 			if(currentPath==null)
 				return;
 
 			// Get cost from current tile to next tile
 			remainingMovement -= _GameController.CostToEnterTile(currentPath[0].x, currentPath[0].y, currentPath[1].x, currentPath[1].y );
+
 			transPath.Add (  new Vector3(currentPosition.x, 0, currentPosition.y) );
 
 			// Move us to the next tile in the sequence
 			currentPosition.x = currentPath[1].x;
 			currentPosition.y = currentPath[1].y;
-			 
+
 			transform.position = new Vector3(currentPosition.x, 0, currentPosition.y);
-			
+
+			if( isElite ){
+				foreach( Unit eU in _GameController.elite ){
+					eU.EliteObserve();
+				}
+			}
 			// Remove the old "current" tile
 			currentPath.RemoveAt(0);
-
-
 
 			if(currentPath.Count == 1) {
 				// We only have one tile left in the path, and that tile MUST be our ultimate
 				// destination -- and we are standing on it!
 				// So let's just clear our pathfinding info.
 				startTime = Time.time;
+				if( pathCount == 1 ){
+					transPath.Add (new Vector3( currentPosition.x, 0, currentPosition.y));
+				}
+				transPath.Add (  new Vector3(currentPosition.x, 0, currentPosition.y) );
+
 				journeyLength = Vector3.Distance(transPath[0], transPath[1]);
 				_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 3;
-				transPath.Add (  new Vector3(currentPosition.x, 0, currentPosition.y) );
 				currentPath = null;
 				canMove = false;
 			}
@@ -274,6 +285,12 @@ public class Unit : MonoBehaviour {
 					FolkUnitsWithinView.Remove (fU);
 			}
 			loopIndex++;
+		}
+		if (lastKnownPosition == currentPosition) {
+			if( knownPosition.Count > 0 )
+				lastKnownPosition = knownPosition[knownPosition.Count-1];
+			else
+				lastKnownPosition = new Vector2(-1,-1);
 		}
 		for (int i = 0; i < knownPosition.Count; i++) {
 			if (currentPosition == knownPosition[i]) {

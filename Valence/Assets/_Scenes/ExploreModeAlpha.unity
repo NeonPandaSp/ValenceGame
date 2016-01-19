@@ -4312,6 +4312,9 @@ MonoBehaviour:
   - {fileID: 175095814}
   scrapObj: {fileID: 838115104}
   chanceToHitText: {fileID: 1133093093}
+  actionPointGfx_01: {fileID: 250545134}
+  actionPointGfx_02: {fileID: 898156316}
+  healthBar: {fileID: 1423228029}
 --- !u!4 &435930104
 Transform:
   m_ObjectHideFlags: 0
@@ -7464,7 +7467,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 838115104}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9, y: 0, z: 4}
+  m_LocalPosition: {x: 13, y: 0, z: 15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 688496418}
@@ -9116,7 +9119,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e2f27541055abd245b912d489a80e54f, type: 3}
+    m_Font: {fileID: 12800000, guid: 752b4fabb53f7e440ab09ef91c0f7e93, type: 3}
     m_FontSize: 75
     m_FontStyle: 0
     m_BestFit: 0
@@ -9910,7 +9913,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e2f27541055abd245b912d489a80e54f, type: 3}
+    m_Font: {fileID: 12800000, guid: 752b4fabb53f7e440ab09ef91c0f7e93, type: 3}
     m_FontSize: 131
     m_FontStyle: 0
     m_BestFit: 0
@@ -12290,7 +12293,7 @@ RectTransform:
   m_RootOrder: 10
   m_AnchorMin: {x: 0, y: .5}
   m_AnchorMax: {x: 0, y: .5}
-  m_AnchoredPosition: {x: 90, y: -195.09996}
+  m_AnchoredPosition: {x: 90, y: -195.5}
   m_SizeDelta: {x: 100, y: 10}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1423228029
