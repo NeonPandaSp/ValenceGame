@@ -13,8 +13,8 @@ public class AgentAttributes : MonoBehaviour {
 		//Init all attributes with a random value
 		agentAgility = AttributeInit ();
 
-		//Apply the attribute values to corresponding agent ability
-		SetAttributes ();
+        //Apply the attribute values to corresponding agent ability
+        SetAgility();
 
 	}
 
@@ -26,7 +26,7 @@ public class AgentAttributes : MonoBehaviour {
 	}
 
 	//	
-	void SetAttributes(){
+	void SetAgility(){
 
 		float tempAgility = agentAgility / 10;
 		float tempSpeed = aiFollow.speed * tempAgility;
@@ -38,4 +38,15 @@ public class AgentAttributes : MonoBehaviour {
 		aiFollow.speed = tempSpeed;*/
 	}
 
+    void SetStrength(){
+
+        float tempAgility = agentAgility / 10;
+        float tempSpeed = aiFollow.speed * tempAgility;
+
+        aiFollow.speed = aiFollow.speed + tempSpeed;
+
+        /*float tempSpeed = (agentAgility - aiFollow.speed);
+		tempSpeed = ((tempSpeed/aiFollow.speed)*100);
+		aiFollow.speed = tempSpeed;*/
+    }
 }

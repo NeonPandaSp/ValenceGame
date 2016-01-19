@@ -1,24 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
 [System.Serializable]
 
 public class WeaponType {
 
     public string typeName;
-
+    
     //public int cost;
 
     public int rare;
 
+    public string weaponName;
     public int damageModifier;
     public int range;
     public float accuracy;
     public int soundRange;
 
     // Use this for initialization
-    void Start () {
-	
-	}
+    void Start()
+    {
+        
+    }
 
     public WeaponType(string n, int a)
     {
@@ -29,6 +33,12 @@ public class WeaponType {
         range = getWeaponRange();
         accuracy = getWeaponAccuracy();
         soundRange = getSoundRange();
+
+        //weaponName = getWeaponName();
+
+        if (damageModifier > 5) {
+
+        }
     }
 
     public int getWeaponDamage(){
@@ -49,6 +59,10 @@ public class WeaponType {
             return 0;
         }
     }
+
+    //public string getWeaponName() {
+        //if()
+    //}
 
     public int getWeaponRange()
     {
