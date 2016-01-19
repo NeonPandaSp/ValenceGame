@@ -271,9 +271,9 @@ public class Unit : MonoBehaviour {
 				if( !FolkUnitsWithinView.Contains (fU) ){
 					// ... the player is in sight.
 					Debug.Log ("SPOTTED");
-					generateSound(currentPosition,3.0f);
-					FolkUnitsWithinView.Add (fU);
 
+					FolkUnitsWithinView.Add (fU);
+					//generateSound(currentPosition,3.0f);
 					if( !knownPosition.Contains ( fU.currentPosition ) )
 						knownPosition.Add( fU.currentPosition );
 					// Set the last global sighting is the players current position.
@@ -397,7 +397,6 @@ public class Unit : MonoBehaviour {
 		}
 		else if (EliteState == 2) {
 			targetPosition = lastKnownPosition;
-
 		} else if (EliteState == 3) {
 			GameObject tempUnit = (GameObject) Instantiate ( prefabUnit, this.transform.position, Quaternion.identity );
 			Unit tempScript = tempUnit.GetComponent<Unit>();
@@ -406,55 +405,84 @@ public class Unit : MonoBehaviour {
 			tempScript.attackRange = attackRange;
 			tempScript.currentPosition = currentPosition;
 			tempScript.currentPath = null;
-			int[,] scores = new int[myMapSize,myMapSize];
 			for( int i = (int)currentPosition.x-movement; i < (int)currentPosition.x + movement; i++){
 				for( int j = (int) currentPosition.y-movement; j < (int)currentPosition.y + movement; j++){
 					if( i >= 0 && i <= myMapSize && j >= 0 && j <= myMapSize ){
-						// is it pathable
-						if( _GameController.GeneratePathTo(i,j,0)){
-							scores[i,j] += 100;
-							
-							_GameController.selectedUnit = tempScript;
-							//tempScript.currentPosition = currentPosition;
-							tempScript.currentPosition = new Vector2(i,j);
-							tempScript.transform.position = new Vector3(i , 0 , j );
-							//tempScript.currentPath = null;
-							//_GameController.GeneratePathTo( i , j );
-							//tempScript.MoveNextTile();
-
-							foreach( Unit fU in FolkUnitsWithinView ){
-								if( fU.raycastLineOfSight(tempScript,true) && fU.isWithinAttackRange(tempScript) ){
-									scores[i,j] -= 10;
-								}
-								if( tempScript.raycastLineOfSight(fU,false) && tempScript.isWithinAttackRange(fU) ){
-									scores[i,j] += 40;
+						tempScript.currentPosition = new Vector2( i , j );
+						foreach( Unit fU in FolkUnitsWithinView ){
+							Vector2 tempFacing = fU.currentPosition - tempScript.currentPosition;
+							tempFacing.Normalize();
+							tempScript.facing = new Vector3( tempFacing.x, 0, tempFacing.y);
+							if( tempScript.isWithinAttackRange(fU) ){
+								if( _GameController.GeneratePathTo(i,j,0)){
+									targetPosition = new Vector2(i,j );
+									Destroy (tempUnit);
+									return targetPosition;
 								}
 							}
 						}
 					}
 				}
 			}
-			Destroy ( tempUnit );
-			_GameController.selectedUnit = this.gameObject.GetComponent<Unit>();
-			int highestScore = 0;
-			Vector2 highVector = new Vector2(-1,-1);
-			for( int i = (int)currentPosition.x-movement; i < (int)currentPosition.x + movement; i++){
-				for( int j = (int) currentPosition.y-movement; j < (int)currentPosition.y + movement; j++){
-					if( i >= 0 && i <= myMapSize && j >= 0 && j <= myMapSize ){
-						if( scores[i,j] > highestScore ){
-							highestScore = scores[i,j];
-							highVector = new Vector2(i,j);
-						}
-					}
-				}
-			}
-			targetPosition = highVector;
+			Destroy (tempUnit);
 		}
+
+//			GameObject tempUnit = (GameObject) Instantiate ( prefabUnit, this.transform.position, Quaternion.identity );
+//			Unit tempScript = tempUnit.GetComponent<Unit>();
+//			tempScript._GameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<ExploreMode_GameController> ();
+//			_GameController.selectedUnit = tempScript;
+//			tempScript.attackRange = attackRange;
+//			tempScript.currentPosition = currentPosition;
+//			tempScript.currentPath = null;
+//			int[,] scores = new int[myMapSize,myMapSize];
+//			for( int i = (int)currentPosition.x-movement; i < (int)currentPosition.x + movement; i++){
+//				for( int j = (int) currentPosition.y-movement; j < (int)currentPosition.y + movement; j++){
+//					if( i >= 0 && i <= myMapSize && j >= 0 && j <= myMapSize ){
+//						// is it pathable
+//						if( _GameController.GeneratePathTo(i,j,0)){
+//							scores[i,j] += 100;
+//							
+//							_GameController.selectedUnit = tempScript;
+//							//tempScript.currentPosition = currentPosition;
+//							tempScript.currentPosition = new Vector2(i,j);
+//							tempScript.transform.position = new Vector3(i , 0 , j );
+//							//tempScript.currentPath = null;
+//							//_GameController.GeneratePathTo( i , j );
+//							//tempScript.MoveNextTile();
+//
+//							foreach( Unit fU in FolkUnitsWithinView ){
+//								if( fU.raycastLineOfSight(tempScript,true) && fU.isWithinAttackRange(tempScript) ){
+//									scores[i,j] -= 10;
+//								}
+//								if( tempScript.raycastLineOfSight(fU,false) && tempScript.isWithinAttackRange(fU) ){
+//									scores[i,j] += 40;
+//								}
+//							}
+//						}
+//					}
+//				}
+//			}
+//			Destroy ( tempUnit );
+//			_GameController.selectedUnit = this.gameObject.GetComponent<Unit>();
+//			int highestScore = 0;
+//			Vector2 highVector = new Vector2(-1,-1);
+//			for( int i = (int)currentPosition.x-movement; i < (int)currentPosition.x + movement; i++){
+//				for( int j = (int) currentPosition.y-movement; j < (int)currentPosition.y + movement; j++){
+//					if( i >= 0 && i <= myMapSize && j >= 0 && j <= myMapSize ){
+//						if( scores[i,j] > highestScore ){
+//							highestScore = scores[i,j];
+//							highVector = new Vector2(i,j);
+//						}
+//					}
+//				}
+//			}
+//			targetPosition = highVector;
 		return targetPosition;
 	}
 
 	public void Attack(Unit targetUnit){
 		targetUnit.health -= attackRating;
+		generateSound (currentPosition, myWeapon.GetComponent<weaponScript> ().soundRange);
 		Debug.Log ("Attack Dealt " + attackRating + " Damage.");
 		Debug.Log ("Unit has " + targetUnit.health + " remaining.");
 	}
@@ -473,11 +501,13 @@ public class Unit : MonoBehaviour {
 		}
 	}
 
-	public void generateSound(Vector2 source, float sndDistance ){
+	public void generateSound(Vector2 source, float sndDistance){
 		foreach (Unit eU in _GameController.elite) {
 			if( getDistance ( source, eU.currentPosition ) <= sndDistance ){
-				if( !eU.knownPosition.Contains(source) )
+				if( !eU.knownPosition.Contains(source) ){
 					eU.knownPosition.Add (source);
+					eU.lastKnownPosition = eU.knownPosition[eU.knownPosition.Count-1];
+				}
 			}
 		}
 	}

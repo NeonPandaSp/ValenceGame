@@ -51,7 +51,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 	public Text chanceToHitText;
 
 	public Image actionPointGfx_01, actionPointGfx_02;
-	public Image healthBar;
+	public List<Image> healthBar;
 
 	// Use this for initialization
 	void Start () {
@@ -212,8 +212,13 @@ public class ExploreMode_GameController : MonoBehaviour {
 			actionPointGfx_02.gameObject.SetActive(false);
 		}
 
-		healthBar.rectTransform.sizeDelta = new Vector2( selectedUnit.health * 10, healthBar.rectTransform.rect.height );
-		healthBar.rectTransform.position = new Vector3 ( ( selectedUnit.health * 5 + 58 ) - (10 - selectedUnit.health), healthBar.rectTransform.position.y,healthBar.rectTransform.position.z);
+		foreach (Image i in healthBar) {
+			if( selectedUnit.health < healthBar.IndexOf(i)+1){
+				i.gameObject.SetActive(false);
+			} else {
+				i.gameObject.SetActive(true);
+			}
+		}
 
 	}
 
