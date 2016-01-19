@@ -21,6 +21,7 @@ public class BuildingType  {
 
 	public BuildingType( string n, int a){
 		typeName = n;
+		Debug.Log ("Building Type in BuildType.cs is: " + n);
 		area = a;
 
         Debug.Log("farmerVal " + farmerVal);

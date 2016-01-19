@@ -13,10 +13,9 @@ using System.Collections.Generic;
 	//GameObject globalAttributes;
 	public Text scrapText, populationText, moraleText, foodText, waterText, powerText, timeText;
 	Text scrapDelText, populationDelText, moraleDelText, foodDelText, waterDelText, powerDelText, timeDelText;
-
-	public AgentLogic_07 agentLogicForUI;
-
+	
 	public GameController globalAttributes;
+	public string setBuildingTypeName;
 
 	int scrap, population;
 	float morale, food, water, power;
@@ -79,12 +78,72 @@ using System.Collections.Generic;
 		HUDDelBg.rectTransform.sizeDelta = new Vector2 (1920, 100);
 		HUDDelBg.transform.Translate (960, Screen.height - 50, 0);
 
+		// === Global Attributes === \\
+		//Scrap
+		scrapDelText = (Text)Instantiate (scrapText);
+		scrapDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		scrapDelText.text = "";
+		scrapDelText.fontSize = 28;
+		scrapDelText.transform.position = new Vector2 (122, Screen.height - 50);
+		scrapDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
+		
+		//Population
+		populationDelText = (Text)Instantiate (populationText);
+		populationDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		populationDelText.text = "";
+		populationDelText.fontSize = 20;
+		populationDelText.transform.position = new Vector2 (scrapDelText.transform.position.x + 150, scrapDelText.transform.position.y + 15);
+		
+		//Morale		
+		moraleDelText = (Text)Instantiate (moraleText);
+		moraleDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		moraleDelText.text = "";
+		moraleDelText.fontSize = 20;
+		moraleDelText.transform.position = new Vector2 (populationDelText.transform.position.x + 160, scrapDelText.transform.position.y + 15);
+		
+		//Food
+		foodDelText = (Text)Instantiate (foodText);
+		foodDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		foodDelText.text = "";
+		foodDelText.fontSize = 20;
+		foodDelText.transform.position = new Vector2 (moraleDelText.transform.position.x + 160, scrapDelText.transform.position.y + 15);
+		
+		//Water
+		waterDelText = (Text)Instantiate (waterText);
+		waterDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		waterDelText.text = "";
+		waterDelText.fontSize = 20;
+		waterDelText.transform.position = new Vector2 (foodDelText.transform.position.x + 150, scrapDelText.transform.position.y + 15);
+		
+		//Power
+		powerDelText = (Text)Instantiate (powerText);
+		powerDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		powerDelText.text = "";
+		powerDelText.fontSize = 20;
+		powerDelText.transform.position = new Vector2 (waterDelText.transform.position.x + 140, scrapDelText.transform.position.y + 15);
+		
+		//Time
+		timeDelText = (Text)Instantiate (timeText);
+		timeDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		timeDelText.text = "";
+		timeDelText.fontSize = 20;
+		timeDelText.transform.position = new Vector2 (scrapDelText.transform.position.x + 1770, scrapDelText.transform.position.y + 15);
+		timeDelText.color = new Color (0.0509803921568627f, 0.0509803921568627f, 0.0509803921568627f);
+
+		//=== BUTTONS ===\\
 		//Build Button
 		buildBtnArray [0].name = "buildBtn";
 		buildBtnArray [0].image.rectTransform.sizeDelta = new Vector2 (75, 75);
 		buildBtnArray [0].transform.Translate (40, Screen.height - 155, 0);
 		buildBtnArray [0].GetComponentInChildren<Text> ().text = "";
-		buildBtnArray [0].onClick.AddListener (() => buildBtneClicked ());
+		buildBtnArray [0].onClick.AddListener (() => buildBtnClicked ());
 
 		//Destroy Button
 		buildBtnArray [1].name = "destroyBtn";
@@ -100,6 +159,7 @@ using System.Collections.Generic;
 		shelterDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
 		shelterDelBtn.transform.Translate (112.5f, Screen.height - 155, 0);
 		shelterDelBtn.GetComponentInChildren<Text> ().text = "Shelter";
+		shelterDelBtn.onClick.AddListener (() => shelterBtnClicked ());
 		shelterDelBtn.gameObject.SetActive (false);
 
 		//Farm Button
@@ -109,6 +169,7 @@ using System.Collections.Generic;
 		farmDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
 		farmDelBtn.transform.Translate (112.5f, Screen.height - 220, 0);
 		farmDelBtn.GetComponentInChildren<Text> ().text = "Farm";
+		farmDelBtn.onClick.AddListener (() => farmBtnClicked ());
 		farmDelBtn.gameObject.SetActive (false);
 		
 		//Water Station Button
@@ -118,6 +179,7 @@ using System.Collections.Generic;
 		waterStationDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
 		waterStationDelBtn.transform.Translate (112.5f, Screen.height - 285, 0);
 		waterStationDelBtn.GetComponentInChildren<Text> ().text = "Water Station";
+		waterStationDelBtn.onClick.AddListener (() => waterStationBtnClicked ());
 		waterStationDelBtn.gameObject.SetActive (false);
 		
 		//Power Station Button
@@ -127,6 +189,7 @@ using System.Collections.Generic;
 		powerStationDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
 		powerStationDelBtn.transform.Translate (112.5f, Screen.height - 350, 1);
 		powerStationDelBtn.GetComponentInChildren<Text> ().text = "Power Station";
+		powerStationDelBtn.onClick.AddListener (() => powerStationBtnClicked ());
 		powerStationDelBtn.gameObject.SetActive (false);
 		
 		//Storage Button
@@ -136,6 +199,7 @@ using System.Collections.Generic;
 		storageDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
 		storageDelBtn.transform.Translate (112.5f, Screen.height - 415, 0);
 		storageDelBtn.GetComponentInChildren<Text> ().text = "Storage";
+		storageDelBtn.onClick.AddListener (() => storageBtnClicked ());
 		storageDelBtn.gameObject.SetActive (false);
 		
 		//Shrine Button
@@ -145,6 +209,7 @@ using System.Collections.Generic;
 		shrineDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
 		shrineDelBtn.transform.Translate (112.5f, Screen.height - 480, 0);
 		shrineDelBtn.GetComponentInChildren<Text> ().text = "Shrine";
+		shrineDelBtn.onClick.AddListener (() => shrineBtnClicked ());
 		shrineDelBtn.gameObject.SetActive (false);
 		
 		//Tavern Button
@@ -154,6 +219,7 @@ using System.Collections.Generic;
 		tavernDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
 		tavernDelBtn.transform.Translate (112.5f, Screen.height - 545, 0);
 		tavernDelBtn.GetComponentInChildren<Text> ().text = "Tavern";
+		tavernDelBtn.onClick.AddListener (() => tavernBtnClicked ());
 		tavernDelBtn.gameObject.SetActive (false);
 		
 		//Hospital Button
@@ -163,6 +229,7 @@ using System.Collections.Generic;
 		hospitalDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
 		hospitalDelBtn.transform.Translate (112.5f, Screen.height - 610, 0);
 		hospitalDelBtn.GetComponentInChildren<Text> ().text = "Hospital";
+		hospitalDelBtn.onClick.AddListener (() => hospitalBtnClicked ());
 		hospitalDelBtn.gameObject.SetActive (false);
 		
 		//School Button
@@ -172,6 +239,7 @@ using System.Collections.Generic;
 		schoolDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
 		schoolDelBtn.transform.Translate (112.5f, Screen.height - 675, 0);
 		schoolDelBtn.GetComponentInChildren<Text> ().text = "School";
+		schoolDelBtn.onClick.AddListener (() => schoolBtnClicked ());
 		schoolDelBtn.gameObject.SetActive (false);
 
 		//Time
@@ -187,119 +255,6 @@ using System.Collections.Generic;
 //		mfg.onClick.AddListener(() => ButtonClicked());
 //		mfg.GetComponentInChildren<Text> ().text = "mFG Button";
 
-		// === Global Attributes === \\
-		// FOR SCRAP: Color (13, 13, 13); AND fontSize = 28;
-		// FOR THE OTHER GLOBAL VARS Color (244, 244, 244); AND fontSize = 20;
-
-		//Scrap
-		scrapDelText = (Text)Instantiate (scrapText);
-		scrapDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-
-		scrapDelText.text = "";
-		scrapDelText.fontSize = 28;
-		scrapDelText.transform.position = new Vector2 (122, Screen.height - 50);
-		scrapDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
-
-		//Population
-		populationDelText = (Text)Instantiate (populationText);
-		populationDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-
-		populationDelText.text = "";
-		populationDelText.fontSize = 20;
-		populationDelText.transform.position = new Vector2 (scrapDelText.transform.position.x + 150, scrapDelText.transform.position.y + 15);
-
-		//Morale		
-		moraleDelText = (Text)Instantiate (moraleText);
-		moraleDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-
-		moraleDelText.text = "";
-		moraleDelText.fontSize = 20;
-		moraleDelText.transform.position = new Vector2 (populationDelText.transform.position.x + 160, scrapDelText.transform.position.y + 15);
-				
-		//Food
-		foodDelText = (Text)Instantiate (foodText);
-		foodDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-
-		foodDelText.text = "";
-		foodDelText.fontSize = 20;
-		foodDelText.transform.position = new Vector2 (moraleDelText.transform.position.x + 160, scrapDelText.transform.position.y + 15);
-		
-		//Water
-		waterDelText = (Text)Instantiate (waterText);
-		waterDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-
-		waterDelText.text = "";
-		waterDelText.fontSize = 20;
-		waterDelText.transform.position = new Vector2 (foodDelText.transform.position.x + 150, scrapDelText.transform.position.y + 15);
-		
-		//Power
-		powerDelText = (Text)Instantiate (powerText);
-		powerDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-
-		powerDelText.text = "";
-		powerDelText.fontSize = 20;
-		powerDelText.transform.position = new Vector2 (waterDelText.transform.position.x + 140, scrapDelText.transform.position.y + 15);
-		
-		//Time
-		timeDelText = (Text)Instantiate (timeText);
-		timeDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-
-		timeDelText.text = "";
-		timeDelText.fontSize = 20;
-		timeDelText.transform.position = new Vector2 (scrapDelText.transform.position.x + 1770, scrapDelText.transform.position.y + 15);
-		timeDelText.color = new Color (0.0509803921568627f, 0.0509803921568627f, 0.0509803921568627f);
-
-
-		// === Settler Traits === \\
-
-		//Attributes Title
-
-		//Settler Health
-
-		//Settler Stamina
-
-		//Settler Morale
-
-		//Settler Hunger
-
-		//Settler Thirst
-
-		//Settler Strength
-
-		//Settler Intelligence
-
-		//Settler Agility
-
-		//Settler Agility
-
-		//Settler Perception
-
-		//Settler Charisma
-
-		// === Settler Inventory === \\
-
-		//Inventory Title
-
-		// === Settler Assign Role === \\
-		
-		//Roles Title
-
-		//Farmer Role Button
-		
-		//Mechanic Role Button
-		
-		//Technician Role Button
-		
-		//Storage Worker Role Button
-		
-		//Doctor Role Button
-		
-		//Teacher Role Button
-		
-		//Worshipper Role Button
-		
-		//Bartender Role Button
-
 		//Switch Modes
 		switchModeDelBtn = (Button)Instantiate (switchModeBtn);
 		switchModeDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
@@ -313,9 +268,9 @@ using System.Collections.Generic;
 	//=================\\
 	//=== Functions ===\\
 	//=================\\
-	void buildBtneClicked ()
+	void buildBtnClicked ()
 	{
-		Debug.Log ("Build button clicked");
+		//Debug.Log ("Build button clicked");
 		shelterDelBtn.gameObject.SetActive (true);
 		farmDelBtn.gameObject.SetActive (true);
 		waterStationDelBtn.gameObject.SetActive (true);
@@ -324,6 +279,60 @@ using System.Collections.Generic;
 		shrineDelBtn.gameObject.SetActive (true);
 		tavernDelBtn.gameObject.SetActive (true);
 		hospitalDelBtn.gameObject.SetActive (true);
+	}
+
+	void shelterBtnClicked () {
+		//MAKE SHELTER
+		setBuildingTypeName = "shelter";
+		print ("setBuildingTypeName is: " + setBuildingTypeName);
+	}
+
+	void farmBtnClicked () {
+		//MAKE FARM
+		setBuildingTypeName = "farm";
+		print ("setBuildingTypeName is: " + setBuildingTypeName);
+	}
+
+	void waterStationBtnClicked () {
+		//MAKE WATER STATION
+		setBuildingTypeName = "water";
+		print ("setBuildingTypeName is: " + setBuildingTypeName);
+	}
+
+	void powerStationBtnClicked () {
+		//MAKE POWER STATION
+		setBuildingTypeName = "power";
+		print ("setBuildingTypeName is: " + setBuildingTypeName);
+	}
+
+	void storageBtnClicked () {
+		//MAKE STORAGE
+		setBuildingTypeName = "storage";
+		print ("setBuildingTypeName is: " + setBuildingTypeName);
+	}
+
+	void shrineBtnClicked () {
+		//MAKE SHRINE
+		setBuildingTypeName = "shrine";
+		print ("setBuildingTypeName is: " + setBuildingTypeName);
+	}
+
+	void tavernBtnClicked () {
+		//MAKE TAVERN
+		setBuildingTypeName = "tavern";
+		print ("setBuildingTypeName is: " + setBuildingTypeName);
+	}
+
+	void hospitalBtnClicked () {
+		//MAKE HOSPITAL
+		setBuildingTypeName = "hospital";
+		print ("setBuildingTypeName is: " + setBuildingTypeName);
+	}
+
+	void schoolBtnClicked () {
+		//MAKE SCHOOL
+		setBuildingTypeName = "school";
+		print ("setBuildingTypeName is: " + setBuildingTypeName);
 	}
 
 	void switchMode ()
@@ -445,19 +454,19 @@ using System.Collections.Generic;
 
 		//String whatButtonIsIt = EventSystem.current.currentSelectedGameObject.name.ToString ();		// Checks what the current pointer is hovering over
 		/*///// BUTTONS \\\\\*/
-		if (Input.GetMouseButtonDown (0)) {
-			//Debug.Log ("This isn't the button you are looking for");
-			//buildBtnArray[0].interactable = false;
-			shelterDelBtn.gameObject.SetActive (false);
-			farmDelBtn.gameObject.SetActive (false);
-			waterStationDelBtn.gameObject.SetActive (false);
-			powerStationDelBtn.gameObject.SetActive (false);
-			storageDelBtn.gameObject.SetActive (false);
-			shrineDelBtn.gameObject.SetActive (false);
-			tavernDelBtn.gameObject.SetActive (false);
-			hospitalDelBtn.gameObject.SetActive (false);
-			schoolDelBtn.gameObject.SetActive (false);
-		}
+//		if (Input.GetMouseButtonDown (0)) {
+//			//Debug.Log ("This isn't the button you are looking for");
+//			//buildBtnArray[0].interactable = false;
+//			shelterDelBtn.gameObject.SetActive (false);
+//			farmDelBtn.gameObject.SetActive (false);
+//			waterStationDelBtn.gameObject.SetActive (false);
+//			powerStationDelBtn.gameObject.SetActive (false);
+//			storageDelBtn.gameObject.SetActive (false);
+//			shrineDelBtn.gameObject.SetActive (false);
+//			tavernDelBtn.gameObject.SetActive (false);
+//			hospitalDelBtn.gameObject.SetActive (false);
+//			schoolDelBtn.gameObject.SetActive (false);
+//		}
 	}
 
 	//==================\\
@@ -469,15 +478,5 @@ using System.Collections.Generic;
 		GUI.BeginGroup (new Rect (Screen.width - 75, 0, 200, 200));
 		GUILayout.Label ("FPS: " + fps.ToString ("f2"));
 		GUI.EndGroup ();
-
-		/*///// Settler Attributes (Currently invisbile) \\\\\*/
-		Rect setHPPos = new Rect (350, 1050, 50, 50);
-		Rect setStrPos = new Rect (setHPPos.x + 50, 1050, 50, 50);
-		Rect setAglPos = new Rect (setStrPos.x + 55, 1050, 50, 50);
-		Rect setPrcPos = new Rect (setAglPos.x + 50, 1050, 50, 50);
-		Rect setIntPos = new Rect (setPrcPos.x + 50, 1050, 50, 50);
-		Rect setMrlPos = new Rect (setIntPos.x + 50, 1050, 50, 50);
-		Rect setHngPos = new Rect (setMrlPos.x + 50, 1050, 50, 50);
-		Rect setThrPos = new Rect (setHngPos.x + 50, 1050, 50, 50);
 	}
 }

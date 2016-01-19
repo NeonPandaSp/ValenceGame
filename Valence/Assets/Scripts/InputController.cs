@@ -25,6 +25,8 @@ public class InputController : MonoBehaviour {
 
 	string hoverState;
 
+	public GameController getBuildingTypeName;
+
 	void Start(){
 		_tileMap = GetComponent<TileMap> ();
 		_generateZone = GetComponent < generateZone >();
@@ -32,8 +34,11 @@ public class InputController : MonoBehaviour {
 		generate = false;
 		zoning = true;
 		currentColor = "blue";
-	}
 
+		//getBuildingTypeName = GameObject.FindGameObjectWithTag ("setBuildingTypeName").GetComponent<GameController> ();
+		//print ("THE FETCHED BUILDING TYPE IS: " + getBuildingTypeName);
+
+	}
 
 	public void selectedMaterial( string color ){
 		if (color == "blue") {
