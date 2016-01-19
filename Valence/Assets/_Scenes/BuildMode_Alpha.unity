@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0606a414adfb64d488e2ef87c7815daa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Agent: {fileID: 169446, guid: e735ecc86f29fe040b12f30ae8316197, type: 2}
+  Agent: {fileID: 162184, guid: a672dc22af32e3545b51ece838fa72ed, type: 2}
   popSize: 0
 --- !u!4 &65488305
 Transform:
@@ -872,15 +872,8 @@ MonoBehaviour:
   waterText: {fileID: 11462606, guid: d266db0c6deb7b84880e7e7a74aeb601, type: 2}
   powerText: {fileID: 11455138, guid: 83ee526932a920b41a222efd14acb42e, type: 2}
   timeText: {fileID: 11480344, guid: 60683c40e4df7454b9e7e8d10a90e59c, type: 2}
+  agentLogicForUI: {fileID: 0}
   globalAttributes: {fileID: 0}
-  settlerHealth: 0
-  settlerStrength: 0
-  settlerAgility: 0
-  settlerPerception: 0
-  settlerIntelligence: 0
-  settlerMorale: 0
-  settlerHunger: 0
-  settlerThirst: 0
   myCanvas: {fileID: 1172176570}
   buildIcon: {fileID: 2800000, guid: ca48cd365c4be034eb6a1453a1a16f4d, type: 3}
   destroyIcon: {fileID: 2800000, guid: 4fd64592dd5e50743b65d72ccda6ddeb, type: 3}
@@ -898,6 +891,28 @@ MonoBehaviour:
   hospitalBtn: {fileID: 11484926, guid: f896b0c6420f50b43b62f20bf26d576c, type: 2}
   schoolBtn: {fileID: 11492400, guid: 9aa27aa42aa4f6e49acfa05f700be100, type: 2}
   switchModeBtn: {fileID: 11420956, guid: f04af185f7bb81241a1aa1619bce2d5b, type: 2}
+  SettlerInfoBg: {fileID: 11419220, guid: cd9fed07742c23f4198b49b24244ae41, type: 2}
+  attributesTitle: {fileID: 11479862, guid: b58ebe5d486c62043bb3ef083843ac08, type: 2}
+  settlerHealthText: {fileID: 0}
+  settlerStaminaText: {fileID: 0}
+  settlerMoraleText: {fileID: 0}
+  settlerHungerText: {fileID: 0}
+  settlerThirstText: {fileID: 0}
+  settlerStrengthText: {fileID: 0}
+  settlerIntelligenceText: {fileID: 0}
+  settlerAgilityText: {fileID: 0}
+  settlerPerceptionText: {fileID: 0}
+  settlerCharismaText: {fileID: 0}
+  inventoryTitle: {fileID: 0}
+  rolesTitle: {fileID: 0}
+  farmerRoleButton: {fileID: 0}
+  mechanicRoleButton: {fileID: 0}
+  technicianRoleButton: {fileID: 0}
+  storageWorkerRoleButton: {fileID: 0}
+  doctorRoleButton: {fileID: 0}
+  teacherRoleButton: {fileID: 0}
+  WorshipperRoleButton: {fileID: 0}
+  BartenderRoleButton: {fileID: 0}
   mFG: {fileID: 11492400, guid: 9aa27aa42aa4f6e49acfa05f700be100, type: 2}
 --- !u!1 &1202770366
 GameObject:

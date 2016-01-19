@@ -3,9 +3,9 @@ using System.Collections;
 using UnityEngine.UI;
 using System;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 	public class GUIController : MonoBehaviour {
-	public InputController _inputController;
 
 	Camera GUICam;
 
@@ -13,6 +13,8 @@ using UnityEngine.EventSystems;
 	//GameObject globalAttributes;
 	public Text scrapText, populationText, moraleText, foodText, waterText, powerText, timeText;
 	Text scrapDelText, populationDelText, moraleDelText, foodDelText, waterDelText, powerDelText, timeDelText;
+
+	public AgentLogic_07 agentLogicForUI;
 
 	public GameController globalAttributes;
 
@@ -33,15 +35,13 @@ using UnityEngine.EventSystems;
 	private int frames = 0;
 	private float fps;
 	
-	//Settler Variables
-	public float settlerHealth, settlerStrength, settlerAgility, settlerPerception, settlerIntelligence, settlerMorale, settlerHunger, settlerThirst;
-
 	public Canvas myCanvas;
 
-	public Texture2D buildIcon;
-	public Texture2D destroyIcon;
 	public Image HUDBg;
 	Image HUDDelBg;
+	
+	public Texture2D buildIcon;
+	public Texture2D destroyIcon;
 
 	//Building Buttons
 	public Button[] buildBtnArray = new Button[2];
@@ -65,29 +65,19 @@ using UnityEngine.EventSystems;
 		GUICam = Camera.main;
 		globalAttributes = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 
-		//Settler Attributes
-		settlerHealth = 100;
-		settlerStrength = 0;
-		settlerAgility = 0;
-		settlerPerception = 0;
-		settlerIntelligence = 0;
-		settlerMorale = 0;
-		settlerHunger = 0;
-		settlerThirst = 0;
-
-		// === HUD Background ===\\
-		HUDDelBg = (Image)Instantiate (HUDBg);
-		HUDDelBg.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-
-		HUDDelBg.rectTransform.sizeDelta = new Vector2 (1920, 100);
-		HUDDelBg.transform.Translate (960, Screen.height - 50, 0);
-
 		// === Building Buttons === \\
 		for (int i = 0; i < buildBtnArray.Length; i++) {
 			Button tempButton = (Button)Instantiate (buildBtnArray [i], Vector3.zero, Quaternion.identity);
 			tempButton.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 			buildBtnArray [i] = tempButton;
 		}
+
+		// === HUD Background ===\\
+		HUDDelBg = (Image)Instantiate (HUDBg);
+		HUDDelBg.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		HUDDelBg.rectTransform.sizeDelta = new Vector2 (1920, 100);
+		HUDDelBg.transform.Translate (960, Screen.height - 50, 0);
 
 		//Build Button
 		buildBtnArray [0].name = "buildBtn";
@@ -207,7 +197,7 @@ using UnityEngine.EventSystems;
 
 		scrapDelText.text = "";
 		scrapDelText.fontSize = 28;
-		scrapDelText.transform.position = new Vector2 (120, Screen.height - 45);
+		scrapDelText.transform.position = new Vector2 (122, Screen.height - 50);
 		scrapDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
 
 		//Population
@@ -259,6 +249,57 @@ using UnityEngine.EventSystems;
 		timeDelText.transform.position = new Vector2 (scrapDelText.transform.position.x + 1770, scrapDelText.transform.position.y + 15);
 		timeDelText.color = new Color (0.0509803921568627f, 0.0509803921568627f, 0.0509803921568627f);
 
+
+		// === Settler Traits === \\
+
+		//Attributes Title
+
+		//Settler Health
+
+		//Settler Stamina
+
+		//Settler Morale
+
+		//Settler Hunger
+
+		//Settler Thirst
+
+		//Settler Strength
+
+		//Settler Intelligence
+
+		//Settler Agility
+
+		//Settler Agility
+
+		//Settler Perception
+
+		//Settler Charisma
+
+		// === Settler Inventory === \\
+
+		//Inventory Title
+
+		// === Settler Assign Role === \\
+		
+		//Roles Title
+
+		//Farmer Role Button
+		
+		//Mechanic Role Button
+		
+		//Technician Role Button
+		
+		//Storage Worker Role Button
+		
+		//Doctor Role Button
+		
+		//Teacher Role Button
+		
+		//Worshipper Role Button
+		
+		//Bartender Role Button
+
 		//Switch Modes
 		switchModeDelBtn = (Button)Instantiate (switchModeBtn);
 		switchModeDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
@@ -309,7 +350,7 @@ using UnityEngine.EventSystems;
 		scrapDelText.color = new Color (244, 244, 244);
 //		Debug.Log ("String: " + scrapDelText.text);
 //		Debug.Log ("Int: " + scrap);
-
+			
 		if (scrap < 50)
 			scrapDelText.color = new Color (0.4509803921568627f, 0.3529411764705882f, 0.3176470588235294f);
 		else if (scrap >= 50 || scrap <= 100)
@@ -328,8 +369,6 @@ using UnityEngine.EventSystems;
 			populationDelText.color = new Color (0.0509803921568627f, 0.0509803921568627f, 0.0509803921568627f);
 		else if (population > 30)
 			populationDelText.color = new Color (0.7372549019607843f, 0.8196078431372549f, 0.7098039215686275f);
-
-		print ("Population = " + population.ToString ());
 
 		//Morale
 		//morale = globalAttributes.morale;

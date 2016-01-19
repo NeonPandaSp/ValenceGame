@@ -84,10 +84,7 @@ public class GUIToggle_07 : MonoBehaviour {
     }
 
     void OnGUI() {
-        
-
-
-            //Here it becomes a little complex, itterate through all buildings and see what's available. Then create a button to assign an agent to that building, when pressed find all waypoints with the correct building tag and move there.
+        //Here it becomes a little complex, itterate through all buildings and see what's available. Then create a button to assign an agent to that building, when pressed find all waypoints with the correct building tag and move there.
         switch (showMenu) {
 
 
