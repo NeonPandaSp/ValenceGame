@@ -446,7 +446,7 @@ using System.Collections.Generic;
 		//String whatButtonIsIt = EventSystem.current.currentSelectedGameObject.name.ToString ();		// Checks what the current pointer is hovering over
 		/*///// BUTTONS \\\\\*/
 		if (Input.GetMouseButtonDown (0)) {
-			Debug.Log ("This isn't the button you are looking for");
+			//Debug.Log ("This isn't the button you are looking for");
 			//buildBtnArray[0].interactable = false;
 			shelterDelBtn.gameObject.SetActive (false);
 			farmDelBtn.gameObject.SetActive (false);

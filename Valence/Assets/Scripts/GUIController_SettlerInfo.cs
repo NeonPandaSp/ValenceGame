@@ -208,7 +208,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		storageWorkerRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (100, 50);
 		storageWorkerRoleButtonDel.transform.Translate (669, 25, 0);
 		storageWorkerRoleButtonDel.GetComponentInChildren<Text> ().text = "Storage Worker";
-		storageWorkerRoleButtonDel.onClick.AddListener (() => storageWorkerRoleClicked());
+		//storageWorkerRoleButtonDel.onClick.AddListener (() => storageWorkerRoleClicked());
 		storageWorkerRoleButtonDel.gameObject.SetActive (false);
 
 		//Medic Role Button
@@ -228,7 +228,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		teacherRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (100, 50);
 		teacherRoleButtonDel.transform.Translate (766, 125, 0);
 		teacherRoleButtonDel.GetComponentInChildren<Text> ().text = "Teacher";
-		teacherRoleButtonDel.onClick.AddListener (() => teacherRoleClicked());
+		//teacherRoleButtonDel.onClick.AddListener (() => teacherRoleClicked());
 		teacherRoleButtonDel.gameObject.SetActive (false);
 
 		//Worshipper Role Button
@@ -238,7 +238,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		worshipperRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (100, 50);
 		worshipperRoleButtonDel.transform.Translate (766, 75, 0);
 		worshipperRoleButtonDel.GetComponentInChildren<Text> ().text = "Worshipper";
-		worshipperRoleButtonDel.onClick.AddListener (() => worshipperRoleClicked());
+		//worshipperRoleButtonDel.onClick.AddListener (() => worshipperRoleClicked());
 		worshipperRoleButtonDel.gameObject.SetActive (false);
 
 		//Bartender Role Button
@@ -248,7 +248,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		bartenderRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (100, 50);
 		bartenderRoleButtonDel.transform.Translate (766, 25, 0);
 		bartenderRoleButtonDel.GetComponentInChildren<Text> ().text = "Bartender";
-		bartenderRoleButtonDel.onClick.AddListener (() => bartenderRoleClicked());
+		//bartenderRoleButtonDel.onClick.AddListener (() => bartenderRoleClicked());
 		bartenderRoleButtonDel.gameObject.SetActive (false);
     }
 
@@ -306,131 +306,173 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 
 	void waterPurifierRoleClicked ()
 	{
-		agentLogic.workWaypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag ("WaterWaypoint"));
-		
-		//Set the agent to working
-		agentLogic.aState = AgentLogic_07.agentState.Working;
-		
-		//Define the working state as farming
-		agentLogic.jobState = AgentLogic_07.jobSubState.WaterPurifier;
+		if ((agentLogic.jobState != AgentLogic_07.jobSubState.WaterPurifier) && waterstationAvailable) {
+			agentLogic.workWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("WaterWaypoint"));
+			
+			//Set the agent to working
+			agentLogic.aState = AgentLogic_07.agentState.Working;
+			
+			//Define the working state as farming
+			agentLogic.jobState = AgentLogic_07.jobSubState.WaterPurifier;
+		}
 	}
 
 	void powerEngineerRoleClicked ()
 	{
-		//Obtain all farm waypoints that the agent should move between when working
-		agentLogic.workWaypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag ("PowerWaypoint"));
-		
-		//Set the agent to working
-		agentLogic.aState = AgentLogic_07.agentState.Working;
-		
-		//Define the working state as farming
-		agentLogic.jobState = AgentLogic_07.jobSubState.PowerWorker;
+		if ((agentLogic.jobState != AgentLogic_07.jobSubState.PowerWorker) && powerstationAvailable) {
+			//Obtain all farm waypoints that the agent should move between when working
+			agentLogic.workWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("PowerWaypoint"));
+			
+			//Set the agent to working
+			agentLogic.aState = AgentLogic_07.agentState.Working;
+			
+			//Define the working state as farming
+			agentLogic.jobState = AgentLogic_07.jobSubState.PowerWorker;
+		}
 	}
 
-	void storageWorkerRoleClicked ()
-	{
-		//STORAGE WORKER
-	}
+//	void storageWorkerRoleClicked ()
+//	{
+//		//STORAGE WORKER
+//	}
 
 	void medicRoleClicked ()
 	{
-		agentLogic.workWaypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag ("HospitalWaypoint"));
+		if ((agentLogic.jobState != AgentLogic_07.jobSubState.Medic) && hospitalAvailable) {
+			agentLogic.workWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("HospitalWaypoint"));
 		
-		//Shuffle the order of the waypoints
-		for (int i = 0; i < agentLogic.workWaypoints.Count; i++){
+			//Shuffle the order of the waypoints
+			for (int i = 0; i < agentLogic.workWaypoints.Count; i++){
+				
+				//Set the current list value to a temp var
+				GameObject temp = agentLogic.workWaypoints[i];
+				
+				//Obtain a random index value within the scope of the waypoint list size
+				int randomIndex = UnityEngine.Random.Range (i, agentLogic.workWaypoints.Count);
+				
+				//Set the current list index to the new shuffled index
+				agentLogic.workWaypoints[i] = agentLogic.workWaypoints[randomIndex];
+				
+				//Replace the contents into the list
+				agentLogic.workWaypoints[randomIndex] = temp;
+			}
 			
-			//Set the current list value to a temp var
-			GameObject temp = agentLogic.workWaypoints[i];
+			//Set the agent to working
+			agentLogic.aState = AgentLogic_07.agentState.Working;
 			
-			//Obtain a random index value within the scope of the waypoint list size
-			int randomIndex = UnityEngine.Random.Range (i, agentLogic.workWaypoints.Count);
-			
-			//Set the current list index to the new shuffled index
-			agentLogic.workWaypoints[i] = agentLogic.workWaypoints[randomIndex];
-			
-			//Replace the contents into the list
-			agentLogic.workWaypoints[randomIndex] = temp;
+			//Define the working state as farming
+			agentLogic.jobState = AgentLogic_07.jobSubState.Medic;
 		}
-		
-		//Set the agent to working
-		agentLogic.aState = AgentLogic_07.agentState.Working;
-		
-		//Define the working state as farming
-		agentLogic.jobState = AgentLogic_07.jobSubState.Medic;
 	}
 
-	void teacherRoleClicked ()
-	{
-		//TEACHER
-	}
-
-	void worshipperRoleClicked ()
-	{
-		//WORSHIPPER
-	}
-
-	void bartenderRoleClicked ()
-	{
-		//BARTENDER
-	}
+//	void teacherRoleClicked ()
+//	{
+//		//TEACHER
+//	}
+//
+//	void worshipperRoleClicked ()
+//	{
+//		//WORSHIPPER
+//	}
+//
+//	void bartenderRoleClicked ()
+//	{
+//		//BARTENDER
+//	}
 
 	//==================\\
 	//===== Update =====\\
 	//==================\\
 
     void Update() {
-        //Check to see if there are any gameobjects with the appropriate building tag, used to toggle the correlated gui buttons
-
-		if (!GameObject.FindWithTag ("Farm"))
+        //Check to see if there are any gameobjects with the appropriate building tag
+		if (GameObject.FindWithTag ("Farm"))
 		{
-			farmAvailable = false;
+			farmAvailable = true;
+			farmerRoleButtonDel.interactable = true;
 		}
 		else {
-			farmAvailable = true;
+			farmAvailable = false;
+			farmerRoleButtonDel.interactable = false;
 		}
 		
-		if (!GameObject.FindWithTag ("Hospital"))
-		{
-			hospitalAvailable = false;
-			//print("No Tag Found <Hospital>");
-		}
-		else {
-			hospitalAvailable = true;
-		}
-
         if (!GameObject.FindWithTag ("WaterStation"))
         {
             waterstationAvailable = false;
-            //print("No Tag Found <Hospital>");
+			waterPurifierRoleButtonDel.interactable = false;
         }
         else
         {
             waterstationAvailable = true;
+			waterPurifierRoleButtonDel.interactable = true;
         }
 
         if (!GameObject.FindWithTag ("PowerStation"))
         {
             powerstationAvailable = false;
-            //print("No Tag Found <Hospital>");
+			powerEngineerRoleButtonDel.interactable = false;
         }
         else
         {
             powerstationAvailable = true;
+			powerEngineerRoleButtonDel.interactable = true;
         }
-    }
+
+		if (!GameObject.FindWithTag ("Hospital"))
+		{
+			hospitalAvailable = false;
+			medicRoleButtonDel.interactable = false;
+		}
+		else {
+			hospitalAvailable = true;
+			medicRoleButtonDel.interactable = true;
+		}
+
+//		if (!GameObject.FindWithTag ("Storage"))
+//		{
+//			storageAvailable = false;
+//			storageWorkerRoleButtonDel.interactable = false;
+//		}
+//		else {
+//			storageAvailable = true;
+//			storageWorkerRoleButtonDel.interactable = true;
+//		}
+//
+//		if (!GameObject.FindWithTag ("School"))
+//		{
+//			schoolAvailable = false;
+//			teacherRoleButtonDel.interactable = false;
+//		}
+//		else {
+//			schoolAvailable = true;
+//			teacherRoleButtonDel.interactable = true;
+//		}
+
+//		if (!GameObject.FindWithTag ("Shrine"))
+//		{
+//			shrineAvailable = false;
+//			worshipperRoleButtonDel.interactable = false;
+//		}
+//		else {
+//			shrineAvailable = true;
+//			worshipperRoleButtonDel.interactable = true;
+//		}
+
+//		if (!GameObject.FindWithTag ("Tavern"))
+//		{
+//			tavernAvailable = false;
+//			bartenderRoleButtonDel.interactable = false;
+//		}
+//		else {
+//			tavernAvailable = true;
+//			bartenderRoleButtonDel.interactable = true;
+//		}
+	}
 
     void OnGUI() {
         //Here it becomes a little complex, itterate through all buildings and see what's available. Then create a button to assign an agent to that building, when pressed find all waypoints with the correct building tag and move there.
         switch (showMenu) {
             case true:
-
-                if (GUI.Button(new Rect(500, 10, 100, 20), "Make Hungry"))
-                {
-                    print("Current state" + agentLogic.aState);
-                    agentLogic.currentState = agentLogic.aState;
-                    agentLogic.aState = AgentLogic_07.agentState.Hungry;
-                }
-
                 //Check if there is a farm
                 switch (farmAvailable){
                     case true:
@@ -448,7 +490,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
                         break;
 
                     case false:
-                        StartCoroutine(MissingBuildingError(3.0f, "Farm"));
+                        StartCoroutine (MissingBuildingError(3.0f, "Farm"));
                         break;
 
                     default:
@@ -459,7 +501,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
                 switch (waterstationAvailable)
                 {
                     case true:
-                        if (GUI.Button(new Rect(10, 30, 150, 20), "Assign Water Purifier") && (agentLogic.jobState != AgentLogic_07.jobSubState.WaterPurifier))
+                        if (GUI.Button(new Rect (10, 30, 150, 20), "Assign Water Purifier") && (agentLogic.jobState != AgentLogic_07.jobSubState.WaterPurifier))
                         {
                             //Obtain all farm waypoints that the agent should move between when working
                             agentLogic.workWaypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag ("WaterWaypoint"));
@@ -473,7 +515,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
                         break;
 
                     case false:
-                        StartCoroutine(MissingBuildingError(3.0f, "Water Station"));
+                        StartCoroutine(MissingBuildingError (3.0f, "Water Station"));
                         break;
 
                     default:
@@ -484,10 +526,10 @@ public class GUIController_SettlerInfo : MonoBehaviour {
                 switch (powerstationAvailable)
                 {
                     case true:
-                        if (GUI.Button(new Rect(10, 50, 150, 20), "Assign Power Engineer") && (agentLogic.jobState != AgentLogic_07.jobSubState.PowerWorker))
+                        if (GUI.Button (new Rect (10, 50, 150, 20), "Assign Power Engineer") && (agentLogic.jobState != AgentLogic_07.jobSubState.PowerWorker))
                         {
                             //Obtain all farm waypoints that the agent should move between when working
-                            agentLogic.workWaypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag ("PowerWaypoint"));
+                            agentLogic.workWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("PowerWaypoint"));
 
                             //Set the agent to working
                             agentLogic.aState = AgentLogic_07.agentState.Working;
@@ -498,7 +540,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
                         break;
 
                     case false:
-                        StartCoroutine(MissingBuildingError(3.0f, "Power Station"));
+                        StartCoroutine(MissingBuildingError (3.0f, "Power Station"));
                         break;
                     default:
                         print("Default reached in GUIToggle_07.cs Line 98");
@@ -510,10 +552,10 @@ public class GUIController_SettlerInfo : MonoBehaviour {
                 switch (hospitalAvailable)
                 {
                     case true:
-                        if (GUI.Button(new Rect(10, 70, 100, 20), "Assign Medic") && (agentLogic.jobState != AgentLogic_07.jobSubState.Medic)) {
+                        if (GUI.Button (new Rect (10, 70, 100, 20), "Assign Medic") && (agentLogic.jobState != AgentLogic_07.jobSubState.Medic)) {
                     
                         //Obtain all farm waypoints that the agent should move between when working
-                        agentLogic.workWaypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag ("HospitalWaypoint"));
+                        agentLogic.workWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("HospitalWaypoint"));
 
                         //Shuffle the order of the waypoints
                         for (int i = 0; i < agentLogic.workWaypoints.Count; i++){
@@ -550,19 +592,17 @@ public class GUIController_SettlerInfo : MonoBehaviour {
                 break;
 
             case false:
-                
                 //Reset warning messages when user closes the GUI
                 showError = true;
                 break;
         }
     }
 
-    IEnumerator MissingBuildingError(float wait, string building) {
-        //showError = true;
+    IEnumerator MissingBuildingError (float wait, string building) {
         if (showError)
         {
-            GUI.Box(new Rect(Screen.width / 2 - 150, Screen.height / 2 - 50, 250, 25), "No Building with tag " + building + " placed...");
-            yield return new WaitForSeconds(wait);
+            GUI.Box (new Rect(Screen.width / 2 - 150, Screen.height / 2 - 50, 250, 25), "No Building with tag " + building + " placed...");
+            yield return new WaitForSeconds (wait);
             showError = false;
         }
     }

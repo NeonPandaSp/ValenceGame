@@ -580,6 +580,72 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!1 &935694913
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 935694916}
+  - 222: {fileID: 935694915}
+  - 114: {fileID: 935694914}
+  m_Layer: 5
+  m_Name: inventoryTitle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &935694914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 935694913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: .196078435, g: .196078435, b: .196078435, a: 1}
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!222 &935694915
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 935694913}
+--- !u!224 &935694916
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 935694913}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1172176567}
+  m_RootOrder: 0
+  m_AnchorMin: {x: .5, y: .5}
+  m_AnchorMax: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: .5, y: .5}
 --- !u!1 &938398285
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,7 +857,10 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
-  m_Children: []
+  m_Children:
+  - {fileID: 935694916}
+  - {fileID: 2049740143}
+  - {fileID: 1464797139}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_AnchorMin: {x: 0, y: 0}
@@ -864,7 +933,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6446bbe4ee194c04c87c52c56560c3af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputController: {fileID: 0}
   scrapText: {fileID: 11450354, guid: 7aef2a8473aab564d8042c1d1595ac16, type: 2}
   populationText: {fileID: 11491448, guid: 92414ce3c1551d74eb709ea4d32ff4c6, type: 2}
   moraleText: {fileID: 11467008, guid: 2bcdb4cfd8aacb54eac606246f7e3e5f, type: 2}
@@ -875,9 +943,9 @@ MonoBehaviour:
   agentLogicForUI: {fileID: 0}
   globalAttributes: {fileID: 0}
   myCanvas: {fileID: 1172176570}
+  HUDBg: {fileID: 11430912, guid: f456028d77ffefb4e82936dd9929a3f5, type: 2}
   buildIcon: {fileID: 2800000, guid: ca48cd365c4be034eb6a1453a1a16f4d, type: 3}
   destroyIcon: {fileID: 2800000, guid: 4fd64592dd5e50743b65d72ccda6ddeb, type: 3}
-  HUDBg: {fileID: 11430912, guid: f456028d77ffefb4e82936dd9929a3f5, type: 2}
   buildBtnArray:
   - {fileID: 11443594, guid: 2dc5ed66c1a01a14ba80bfc69dd8e92e, type: 2}
   - {fileID: 11431726, guid: 0e4b7ac01633e5c4dac01c64e346f9c2, type: 2}
@@ -891,28 +959,6 @@ MonoBehaviour:
   hospitalBtn: {fileID: 11484926, guid: f896b0c6420f50b43b62f20bf26d576c, type: 2}
   schoolBtn: {fileID: 11492400, guid: 9aa27aa42aa4f6e49acfa05f700be100, type: 2}
   switchModeBtn: {fileID: 11420956, guid: f04af185f7bb81241a1aa1619bce2d5b, type: 2}
-  SettlerInfoBg: {fileID: 11419220, guid: cd9fed07742c23f4198b49b24244ae41, type: 2}
-  attributesTitle: {fileID: 11479862, guid: b58ebe5d486c62043bb3ef083843ac08, type: 2}
-  settlerHealthText: {fileID: 0}
-  settlerStaminaText: {fileID: 0}
-  settlerMoraleText: {fileID: 0}
-  settlerHungerText: {fileID: 0}
-  settlerThirstText: {fileID: 0}
-  settlerStrengthText: {fileID: 0}
-  settlerIntelligenceText: {fileID: 0}
-  settlerAgilityText: {fileID: 0}
-  settlerPerceptionText: {fileID: 0}
-  settlerCharismaText: {fileID: 0}
-  inventoryTitle: {fileID: 0}
-  rolesTitle: {fileID: 0}
-  farmerRoleButton: {fileID: 0}
-  mechanicRoleButton: {fileID: 0}
-  technicianRoleButton: {fileID: 0}
-  storageWorkerRoleButton: {fileID: 0}
-  doctorRoleButton: {fileID: 0}
-  teacherRoleButton: {fileID: 0}
-  WorshipperRoleButton: {fileID: 0}
-  BartenderRoleButton: {fileID: 0}
   mFG: {fileID: 11492400, guid: 9aa27aa42aa4f6e49acfa05f700be100, type: 2}
 --- !u!1 &1202770366
 GameObject:
@@ -1157,6 +1203,72 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 586afe5116ba4e4409014324bb083452, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1464797138
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 1464797139}
+  - 222: {fileID: 1464797141}
+  - 114: {fileID: 1464797140}
+  m_Layer: 5
+  m_Name: attributesTitle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1464797139
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1464797138}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1172176567}
+  m_RootOrder: 2
+  m_AnchorMin: {x: .5, y: .5}
+  m_AnchorMax: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: .5, y: .5}
+--- !u!114 &1464797140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1464797138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: .196078435, g: .196078435, b: .196078435, a: 1}
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!222 &1464797141
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1464797138}
 --- !u!1 &1509926058
 GameObject:
   m_ObjectHideFlags: 0
@@ -1639,6 +1751,72 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1143935504}
   m_RootOrder: 0
+--- !u!1 &2049740142
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 2049740143}
+  - 222: {fileID: 2049740145}
+  - 114: {fileID: 2049740144}
+  m_Layer: 5
+  m_Name: rolesTitle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2049740143
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2049740142}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1172176567}
+  m_RootOrder: 1
+  m_AnchorMin: {x: .5, y: .5}
+  m_AnchorMax: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: .5, y: .5}
+--- !u!114 &2049740144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2049740142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: .196078435, g: .196078435, b: .196078435, a: 1}
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!222 &2049740145
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2049740142}
 --- !u!21 &2107555505
 Material:
   serializedVersion: 5

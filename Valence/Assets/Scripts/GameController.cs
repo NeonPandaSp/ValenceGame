@@ -48,7 +48,7 @@ public class GameController : MonoBehaviour {
     void updateGridGraph() {
 
         //yield return new WaitForSeconds(wait);
-        Debug.Log("Updated gridgraph..");
+        //Debug.Log("Updated gridgraph..");
         //Update agent pathfinding to account for this new obstical -Zach
         foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
             AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
