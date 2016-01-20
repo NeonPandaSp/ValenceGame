@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class InputController_Explore : MonoBehaviour {
 	TileMap _tileMap;
@@ -20,6 +21,9 @@ public class InputController_Explore : MonoBehaviour {
 	bool generate;
 
 	public GameObject wallObject, boundObject;
+
+	public Canvas myCanvas;
+	public GameObject dmgText;
 	
 	void Start(){
 		_tileMap = GetComponent<TileMap> ();
@@ -206,6 +210,16 @@ public class InputController_Explore : MonoBehaviour {
 
 		if (_GameController.selectedUnit.calcChanceToHit (_GameController.selectedUnit.getDistance (_GameController.selectedUnit.currentPosition, attackTarget.currentPosition)) > rand) {
 			Debug.Log("HIT");
+
+			GameObject tempObj = (GameObject) Instantiate ( dmgText, Camera.main.WorldToScreenPoint(attackTarget.gameObject.transform.position), Quaternion.identity );
+			tempObj.gameObject.transform.SetParent(myCanvas.gameObject.transform);
+			tempObj.GetComponent<Text>().text = ""+_GameController.selectedUnit.attackRating;
+			tempObj.GetComponent<Text>().color = Color.red;
+			Vector3 tempPosition = attackTarget.gameObject.transform.position;
+			tempPosition.x = tempPosition.x+0.5f;
+			tempPosition.y = 1.0f;
+			tempPosition.z = tempPosition.z+0.5f;
+			tempObj.transform.position = Camera.main.WorldToScreenPoint(tempPosition);
 			_GameController.selectedUnit.Attack (attackTarget);
 			_GameController.selectedUnit.hasAttacked = true;
 			
@@ -215,6 +229,15 @@ public class InputController_Explore : MonoBehaviour {
 				attackTarget.gameObject.SetActive (false);
 			}
 		} else {
+			GameObject tempObj = (GameObject) Instantiate ( dmgText, Vector3.zero, Quaternion.identity );
+			tempObj.gameObject.transform.SetParent(myCanvas.gameObject.transform);
+			tempObj.GetComponent<Text>().text = "MISS";
+			tempObj.GetComponent<Text>().color = Color.yellow;
+			Vector3 tempPosition = attackTarget.gameObject.transform.position;
+			tempPosition.x = tempPosition.x+0.5f;
+			tempPosition.y = 1.0f;
+			tempPosition.z = tempPosition.z+0.5f;
+			tempObj.transform.position = Camera.main.WorldToScreenPoint(tempPosition);
 			Debug.Log("Miss. #sadness #onlyFolkKidsWouldUnderstand");
 		}
 		_GameController.disableAttackBox();

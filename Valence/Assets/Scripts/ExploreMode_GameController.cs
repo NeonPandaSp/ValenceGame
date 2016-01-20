@@ -53,6 +53,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 	public Image actionPointGfx_01, actionPointGfx_02;
 	public List<Image> healthBar;
 
+	public InputController_Explore _inputController;
+
 	// Use this for initialization
 	void Start () {
 		tiles = new int[mapSize,mapSize];
@@ -211,12 +213,13 @@ public class ExploreMode_GameController : MonoBehaviour {
 			actionPointGfx_01.gameObject.SetActive(false);
 			actionPointGfx_02.gameObject.SetActive(false);
 		}
-
-		foreach (Image i in healthBar) {
-			if( selectedUnit.health < healthBar.IndexOf(i)+1){
-				i.gameObject.SetActive(false);
-			} else {
-				i.gameObject.SetActive(true);
+		if (!selectedUnit.isElite) {
+			foreach (Image i in healthBar) {
+				if (selectedUnit.health < healthBar.IndexOf (i) + 1) {
+					i.gameObject.SetActive (false);
+				} else {
+					i.gameObject.SetActive (true);
+				}
 			}
 		}
 
@@ -307,8 +310,6 @@ public class ExploreMode_GameController : MonoBehaviour {
 			}
 			currentD--;
 		}
-		Debug.Log (pathingCalled);
-		Debug.Log (tilesPlaced);
 		borderVectors = vectors;
 
 
@@ -551,6 +552,97 @@ public class ExploreMode_GameController : MonoBehaviour {
 		
 	}
 
+	public List<Node> GenerateNodePath(int x, int y ){
+		// Clear out our unit's old path.
+		selectedUnit.currentPath = null;
+		if( UnitCanEnterTile(x,y) == false ) {
+			// We probably clicked on a mountain or something, so just quit out.
+			return null;
+		}
+		
+		Dictionary<Node, float> dist = new Dictionary<Node, float>();
+		Dictionary<Node, Node> prev = new Dictionary<Node, Node>();
+		
+		// Setup the "Q" -- the list of nodes we haven't checked yet.
+		List<Node> unvisited = new List<Node>();
+		
+		Node source = graph[
+		                    (int) selectedUnit.currentPosition.x, 
+		                    (int) selectedUnit.currentPosition.y
+		                    ];
+		
+		Node target = graph[
+		                    x, 
+		                    y
+		                    ];
+		
+		dist[source] = 0;
+		prev[source] = null;
+		
+		// Initialize everything to have INFINITY distance, since
+		// we don't know any better right now. Also, it's possible
+		// that some nodes CAN'T be reached from the source,
+		// which would make INFINITY a reasonable value
+		foreach(Node v in graph) {
+			if(v != source) {
+				dist[v] = Mathf.Infinity;
+				//dist[v] = selectedUnit.movement;
+				prev[v] = null;
+			}
+			
+			unvisited.Add(v);
+		}
+		
+		while(unvisited.Count > 0) {
+			// "u" is going to be the unvisited node with the smallest distance.
+			Node u = null;
+			
+			foreach(Node possibleU in unvisited) {
+				if(u == null || dist[possibleU] < dist[u]) {
+					u = possibleU;
+				}
+			}
+			
+			if(u == target) {
+				break;	// Exit the while loop!
+			}
+			
+			unvisited.Remove(u);
+			
+			foreach(Node v in u.neighbours) {
+				//float alt = dist[u] + u.DistanceTo(v);
+				float alt = dist[u] + CostToEnterTile(u.x, u.y, v.x, v.y);
+				if( alt < dist[v] ) {
+					dist[v] = alt;
+					prev[v] = u;
+				}
+			}
+		}
+		
+		// If we get there, the either we found the shortest route
+		// to our target, or there is no route at ALL to our target.
+		
+		if (prev [target] == null) {
+			// No route between our target and the source
+			return null;
+		}
+		
+		List<Node> currentPath = new List<Node>();
+		
+		Node curr = target;
+		
+		// Step through the "prev" chain and add it to our path
+		while(curr != null) {
+			currentPath.Add(curr);
+			curr = prev[curr];
+		}
+		// Right now, currentPath describes a route from out target to our source
+		// So we need to invert it!
+		
+		//currentPath.Reverse();
+		return currentPath;
+	}
+
 	public float CostToEnterTile(int sourceX, int sourceY, int targetX, int targetY) {
 		
 		TileType tt = tileTypes[ tiles[targetX,targetY] ];
@@ -602,7 +694,26 @@ public class ExploreMode_GameController : MonoBehaviour {
 			if( elite[currentElite].FolkUnitsWithinView.Count > 0 ){
 				float rand = Random.Range (0, 100);
 				if( elite[currentElite].calcChanceToHit(elite[currentElite].getDistance(elite[currentElite].currentPosition, elite[currentElite].FolkUnitsWithinView[0].currentPosition)) > rand){
+					GameObject tempObj = (GameObject) Instantiate ( _inputController.dmgText, Camera.main.WorldToScreenPoint(elite[currentElite].FolkUnitsWithinView[0].gameObject.transform.position), Quaternion.identity );
+					tempObj.gameObject.transform.SetParent(_inputController.myCanvas.gameObject.transform);
+					tempObj.GetComponent<Text>().text = ""+elite[currentElite].FolkUnitsWithinView[0].attackRating;
+					tempObj.GetComponent<Text>().color = Color.red;
+					Vector3 tempPosition = elite[currentElite].FolkUnitsWithinView[0].gameObject.transform.position;
+					tempPosition.x = tempPosition.x+0.5f;
+					tempPosition.y = 1.0f;
+					tempPosition.z = tempPosition.z+0.5f;
+					tempObj.transform.position = Camera.main.WorldToScreenPoint(tempPosition);
 					elite[currentElite].Attack (elite[currentElite].FolkUnitsWithinView[0]);
+				} else{
+					GameObject tempObj = (GameObject) Instantiate ( _inputController.dmgText, Vector3.zero, Quaternion.identity );
+					tempObj.gameObject.transform.SetParent(_inputController.myCanvas.gameObject.transform);
+					tempObj.GetComponent<Text>().text = "MISS";
+					tempObj.GetComponent<Text>().color = Color.yellow;
+					Vector3 tempPosition = elite[currentElite].FolkUnitsWithinView[0].gameObject.transform.position;
+					tempPosition.x = tempPosition.x+0.5f;
+					tempPosition.y = 1.0f;
+					tempPosition.z = tempPosition.z+0.5f;
+					tempObj.transform.position = Camera.main.WorldToScreenPoint(tempPosition);
 				}
 			}
 

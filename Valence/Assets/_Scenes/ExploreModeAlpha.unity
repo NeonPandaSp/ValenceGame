@@ -2270,6 +2270,8 @@ MonoBehaviour:
   greenMat: {fileID: 0}
   wallObject: {fileID: 1673591697}
   boundObject: {fileID: 971385828}
+  myCanvas: {fileID: 669474817}
+  dmgText: {fileID: 150284, guid: 8098717826442cc46a9aabdb13d606eb, type: 2}
 --- !u!4 &188109006
 Transform:
   m_PrefabParentObject: {fileID: 497258, guid: a916a978b537f3c4ab9b8388202173cf, type: 2}
@@ -4457,6 +4459,7 @@ MonoBehaviour:
   - {fileID: 1032270706}
   - {fileID: 263862113}
   - {fileID: 2007323069}
+  _inputController: {fileID: 186758059}
 --- !u!4 &435930104
 Transform:
   m_ObjectHideFlags: 0
@@ -5868,7 +5871,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 433772, guid: d5b978a89dc57674189c7c5baf055b8d, type: 2}
       propertyPath: m_RootOrder
-      value: 16
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 140342, guid: d5b978a89dc57674189c7c5baf055b8d, type: 2}
       propertyPath: m_IsActive
@@ -11771,7 +11774,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 465628, guid: cb3d9ddc879335a4586b227d60fd203a, type: 2}
       propertyPath: m_RootOrder
-      value: 14
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 175794, guid: cb3d9ddc879335a4586b227d60fd203a, type: 2}
       propertyPath: m_IsActive
@@ -15062,7 +15065,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1556358874
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19495,7 +19498,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 429180, guid: ec351765c225a2f49ae252c15b4903c8, type: 2}
       propertyPath: m_RootOrder
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 164534, guid: ec351765c225a2f49ae252c15b4903c8, type: 2}
       propertyPath: m_IsActive

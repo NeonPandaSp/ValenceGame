@@ -203,7 +203,15 @@ public class Unit : MonoBehaviour {
 			currentPosition.y = currentPath[1].y;
 
 			transform.position = new Vector3(currentPosition.x, 0, currentPosition.y);
-
+			if( isElite) {
+				foreach( Vector2 pos in knownPosition ){
+					if( currentPosition == pos ){
+						knownPosition.Remove (pos);
+						if( knownPosition.Count > 0 )
+							lastKnownPosition = knownPosition[knownPosition.Count-1];
+					}
+				}
+			}
 			if( isElite ){
 				foreach( Unit eU in _GameController.elite ){
 					eU.EliteObserve();
@@ -384,7 +392,24 @@ public class Unit : MonoBehaviour {
 		if (EliteState == 1) {
 			float distToTargetPosition = 99.9f;
 			if( currentPosition != startPosition && EliteBehaviour == "Guard" ){
-				targetPosition = startPosition;
+				if(  _GameController.GeneratePathTo((int)startPosition.x,(int)startPosition.y,0) ){
+					targetPosition = startPosition;
+				} else{ 
+					List<ExploreMode_GameController.Node> path = _GameController.GenerateNodePath((int)startPosition.x,(int)startPosition.y);
+					if( path == null ){
+						Debug.Log ( "I HAVE FUCKED THE HELL UP");
+					}
+					while( targetPosition == new Vector2(-1,-1) ){
+						if(  _GameController.GeneratePathTo(path[0].x,path[0].y,0) ){
+							targetPosition = new Vector2( path[0].x, path[0].y );
+						} else {
+							path.Remove(path[0]);
+							if( path.Count <= 0 ){
+								targetPosition = currentPosition;
+							}
+						}
+					}
+				}
 			} else if ( EliteBehaviour == "Patrol" ){
 				if( currentPosition == PatrolPoints[currentPatrolPoint] ){
 					currentPatrolPoint++;
@@ -392,11 +417,47 @@ public class Unit : MonoBehaviour {
 						currentPatrolPoint = 0;
 					}
 				}
-				targetPosition = PatrolPoints[currentPatrolPoint];
+				targetPosition = new Vector2(-1,-1);
+				if(  _GameController.GeneratePathTo((int)PatrolPoints[currentPatrolPoint].x,(int)PatrolPoints[currentPatrolPoint].y,0) ){
+					targetPosition = PatrolPoints[currentPatrolPoint];
+				} else{ 
+					List<ExploreMode_GameController.Node> path = _GameController.GenerateNodePath((int)PatrolPoints[currentPatrolPoint].x,(int)PatrolPoints[currentPatrolPoint].y);
+					if( path == null ){
+						Debug.Log ( "I HAVE FUCKED THE HELL UP");
+					}
+					while( targetPosition == new Vector2(-1,-1) ){
+						if(  _GameController.GeneratePathTo(path[0].x,path[0].y,0) ){
+							targetPosition = new Vector2( path[0].x, path[0].y );
+						} else {
+							path.Remove(path[0]);
+							if( path.Count <= 0 ){
+								targetPosition = currentPosition;
+							}
+						}
+					}
+				}
+				//targetPosition = PatrolPoints[currentPatrolPoint];
 			}
 		}
 		else if (EliteState == 2) {
-			targetPosition = lastKnownPosition;
+			targetPosition = new Vector2(-1,-1);
+			if(  _GameController.GeneratePathTo((int)lastKnownPosition.x,(int)lastKnownPosition.y,0) )
+				targetPosition = lastKnownPosition;
+			List<ExploreMode_GameController.Node> path = _GameController.GenerateNodePath((int)lastKnownPosition.x,(int)lastKnownPosition.y);
+			if( path == null ){
+				Debug.Log ( "I HAVE FUCKED THE HELL UP");
+			}
+			while( targetPosition == new Vector2(-1,-1) ){
+				if(  _GameController.GeneratePathTo(path[0].x,path[0].y,0) ){
+					targetPosition = new Vector2( path[0].x, path[0].y );
+				} else {
+					path.Remove(path[0]);
+					if( path.Count <= 0 ){
+						targetPosition = currentPosition;
+					}
+				}
+	      	}
+
 		} else if (EliteState == 3) {
 			GameObject tempUnit = (GameObject) Instantiate ( prefabUnit, this.transform.position, Quaternion.identity );
 			Unit tempScript = tempUnit.GetComponent<Unit>();
