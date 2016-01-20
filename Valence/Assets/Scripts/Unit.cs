@@ -149,7 +149,8 @@ public class Unit : MonoBehaviour {
 			CautionObject.SetActive (false);
 			lastKnownPosition = Vector2.zero;
 		}
-
+		if (isElite)
+			EliteObserve ();
 		MoveNextTile ();
 		translateUnit ();
 	}
@@ -202,7 +203,7 @@ public class Unit : MonoBehaviour {
 			currentPosition.x = currentPath[1].x;
 			currentPosition.y = currentPath[1].y;
 
-			transform.position = new Vector3(currentPosition.x, 0, currentPosition.y);
+			//transform.position = new Vector3(currentPosition.x, 0, currentPosition.y);
 			if( isElite) {
 				foreach( Vector2 pos in knownPosition ){
 					if( currentPosition == pos ){
@@ -357,19 +358,6 @@ public class Unit : MonoBehaviour {
 				if(hit.collider.gameObject == fU.gameObject )
 				{
 					return true;
-					/**
-					if( !FolkUnitsWithinView.Contains (fU) ){
-						// ... the player is in sight.
-						Debug.Log ("SPOTTED");
-
-						FolkUnitsWithinView.Add (fU);
-						
-						// Set the last global sighting is the players current position.
-						knownPosition[loopIndex] = fU.currentPosition;
-					} else {
-						// Set the last global sighting is the players current position.
-						knownPosition[loopIndex] = fU.currentPosition;
-					} **/
 				} else {
 					return false;
 					//FolkUnitsWithinView.Remove (fU);
@@ -405,7 +393,8 @@ public class Unit : MonoBehaviour {
 						} else {
 							path.Remove(path[0]);
 							if( path.Count <= 0 ){
-								targetPosition = currentPosition;
+								//targetPosition = currentPosition;
+								Debug.Log ( "I aint moving");
 							}
 						}
 					}
@@ -437,6 +426,8 @@ public class Unit : MonoBehaviour {
 					}
 				}
 				//targetPosition = PatrolPoints[currentPatrolPoint];
+			} else {
+				facing = new Vector3( (int) Random.Range (-1,2), 0,(int) Random.Range (-1,2) );
 			}
 		}
 		else if (EliteState == 2) {
@@ -463,12 +454,13 @@ public class Unit : MonoBehaviour {
 			Unit tempScript = tempUnit.GetComponent<Unit>();
 			tempScript._GameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<ExploreMode_GameController> ();
 			_GameController.selectedUnit = tempScript;
+			tempScript.myWeapon = myWeapon;
 			tempScript.attackRange = attackRange;
 			tempScript.currentPosition = currentPosition;
 			tempScript.currentPath = null;
 			for( int i = (int)currentPosition.x-movement; i < (int)currentPosition.x + movement; i++){
 				for( int j = (int) currentPosition.y-movement; j < (int)currentPosition.y + movement; j++){
-					if( i >= 0 && i <= myMapSize && j >= 0 && j <= myMapSize ){
+					if( i >= 0 && i < myMapSize && j >= 0 && j < myMapSize ){
 						tempScript.currentPosition = new Vector2( i , j );
 						foreach( Unit fU in FolkUnitsWithinView ){
 							Vector2 tempFacing = fU.currentPosition - tempScript.currentPosition;

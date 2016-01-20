@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class InputController_Explore : MonoBehaviour {
 	TileMap _tileMap;
@@ -11,6 +12,8 @@ public class InputController_Explore : MonoBehaviour {
 	Vector2 currentTile;
 	
 	Vector2 rootMousePos;
+
+	Vector2 targetMovementPos;
 	
 	GameObject myHoverObject;
 	
@@ -24,11 +27,18 @@ public class InputController_Explore : MonoBehaviour {
 
 	public Canvas myCanvas;
 	public GameObject dmgText;
-	
+
+	public GameObject moveTargetIcon;
+
+	public LineRenderer myLine;
+
+	public Button moveConfirmedButton, attackConfirmedButton;
+
 	void Start(){
 		_tileMap = GetComponent<TileMap> ();
 		myHoverObject = (GameObject) Instantiate (Resources.Load("Tile"), new Vector3 (0, 0, 0), Quaternion.identity);
-
+		myLine.gameObject.SetActive (false);
+		moveTargetIcon.gameObject.SetActive (false);
 		currentColor = "blue";
 	}
 	
@@ -70,16 +80,23 @@ public class InputController_Explore : MonoBehaviour {
 			
 		}
 
-		if( Input.GetMouseButton(0) ){
+		if( Input.GetMouseButton(0) && !Input.GetKey (KeyCode.LeftAlt) ){
 
 			if( _GameController.selectedUnit.canMove && _GameController.GameState == 1 && _GameController.selectedUnit.movePressed ){
 				if( _GameController.selectedUnit.withinMoveRange( currentTile ) ){
-					_GameController.selectedUnit.Move(currentTile);
+					//_GameController.selectedUnit.Move(currentTile);
+					//Instantiate( moveTargetIcon, new Vector3( currentTile.x, 0.1f, currentTile.y), Quaternion.identity );
+					moveTargetIcon.SetActive(true);
+					moveTargetIcon.transform.position = new Vector3( currentTile.x, 0.1f, currentTile.y);
+					targetMovementPos = currentTile;
+					List<ExploreMode_GameController.Node> pathToSelected = _GameController.GenerateNodePath((int)currentTile.x,(int)currentTile.y);
+					DrawLine( pathToSelected );
 					foreach( GameObject n in _GameController.moveTiles){
 						Destroy (n);
 					}
 					_GameController.moveTiles.Clear();
-					_GameController.selectedUnit.actionPoints--;
+					moveConfirmedButton.gameObject.SetActive(true);
+					//_GameController.selectedUnit.actionPoints--;
 					_GameController.selectedUnit.movePressed = false;
 				} else {
 					// not within range
@@ -140,7 +157,7 @@ public class InputController_Explore : MonoBehaviour {
 
 	public void AttackWithSelectedUnit(){
 		_GameController.enableAttackBox (_GameController.selectedUnit);
-
+		attackConfirmedButton.gameObject.SetActive(true);
 		_GameController.selectedUnit.attackPressed = true;
 	}
 
@@ -240,9 +257,19 @@ public class InputController_Explore : MonoBehaviour {
 			tempObj.transform.position = Camera.main.WorldToScreenPoint(tempPosition);
 			Debug.Log("Miss. #sadness #onlyFolkKidsWouldUnderstand");
 		}
+		attackConfirmedButton.gameObject.SetActive (false);
 		_GameController.disableAttackBox();
 	}
 
+	public void moveConfirmed(){
+		myLine.gameObject.SetActive (false);
+		moveTargetIcon.gameObject.SetActive (false);
+		_GameController.selectedUnit.Move(targetMovementPos);
+		_GameController.selectedUnit.actionPoints--;
+
+		moveConfirmedButton.gameObject.SetActive (false);
+	}
+	
 	public void selectAttackTarget(int x){
 		_GameController.selectedUnit.currentAttackTarget += x;
 
@@ -254,6 +281,16 @@ public class InputController_Explore : MonoBehaviour {
 		_GameController.chanceToHitText.text = ""+ _GameController.selectedUnit.calcChanceToHit (_GameController.selectedUnit.getDistance (_GameController.selectedUnit.currentPosition, _GameController.selectedUnit.AttackTargets[_GameController.selectedUnit.currentAttackTarget].currentPosition));
 		_GameController.attackIcon.selectUnit = _GameController.selectedUnit.AttackTargets [_GameController.selectedUnit.currentAttackTarget];
 
+	}
+
+	public void DrawLine(List<ExploreMode_GameController.Node> path){
+		myLine.gameObject.SetActive (true);
+		myLine.SetVertexCount (path.Count);
+		int index = 0;
+		foreach (ExploreMode_GameController.Node n in path) {
+			myLine.SetPosition( index, new Vector3( n.x+0.5f, 0.1f, n.y+0.5f ) );
+			index++;
+		}
 	}
 
 }
