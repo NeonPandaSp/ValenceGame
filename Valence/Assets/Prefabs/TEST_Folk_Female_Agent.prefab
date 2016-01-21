@@ -761,14 +761,13 @@ GameObject:
   - 95: {fileID: 9528742}
   - 111: {fileID: 11193060}
   - 143: {fileID: 14355112}
-  - 114: {fileID: 11463210}
   - 114: {fileID: 11408490}
-  - 114: {fileID: 11418052}
   - 114: {fileID: 11411862}
   - 114: {fileID: 11486026}
-  - 114: {fileID: 11414958}
+  - 114: {fileID: 11481510}
+  - 114: {fileID: 11469100}
   m_Layer: 0
-  m_Name: Folk_Female_Agent
+  m_Name: TEST_Folk_Female_Agent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2264,7 +2263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drawGizmos: 1
-  detailedGizmos: 0
+  detailedGizmos: 1
   startEndModifier:
     priority: 1
     addPoints: 0
@@ -2286,14 +2285,14 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 162184}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9ab77a1f1a854729ba01cfc461a0b2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aiFollow: {fileID: 11463210}
+  aiFollow: {fileID: 0}
   agentAgility: 0
---- !u!114 &11414958
+--- !u!114 &11469100
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2301,42 +2300,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 162184}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3248efcb1853d4b47991baebefb7b52b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2922f37579e8c7046868b7cfda667748, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agentLogic: {fileID: 11418052}
-  SettlerInfoBg: {fileID: 11419220, guid: cd9fed07742c23f4198b49b24244ae41, type: 2}
-  attributesTitle: {fileID: 11479862, guid: b58ebe5d486c62043bb3ef083843ac08, type: 2}
-  settlerHealthText: {fileID: 11487996, guid: d6de52cdc1c88d34a9c53f0432281484, type: 2}
-  settlerStaminaText: {fileID: 11421148, guid: ace65f56e864007429b79fe846c1da34, type: 2}
-  settlerMoraleText: {fileID: 11451942, guid: 785e5bc4c4ae9584f9feebc891d0d894, type: 2}
-  settlerHungerText: {fileID: 11421320, guid: 17f6a2406b158e34f81e453870f9ac9d, type: 2}
-  settlerThirstText: {fileID: 11432934, guid: 86b552125d6200e47b93b35e1f9892ab, type: 2}
-  settlerStrengthText: {fileID: 11464788, guid: 400459e8befbcec4f8a1573c7359053e,
-    type: 2}
-  settlerIntelligenceText: {fileID: 11471294, guid: 15566fa09eb1baa46b21259c98b268b9,
-    type: 2}
-  settlerAgilityText: {fileID: 11410394, guid: c42a768d80e0dbb47abad8157d1860fc, type: 2}
-  settlerPerceptionText: {fileID: 11449890, guid: 62f8dd4171bd46a4093a502ab33013bb,
-    type: 2}
-  settlerCharismaText: {fileID: 11435666, guid: f3ba5e6cb10d9174088b3378921c8442,
-    type: 2}
-  inventoryTitle: {fileID: 11479412, guid: bdd929af1f799694d8a2cf5e655dd790, type: 2}
-  rolesTitle: {fileID: 11441918, guid: e70e88d985985614b8ab203e7c2776f7, type: 2}
-  farmerRoleButton: {fileID: 11426372, guid: 1ffd3ec782d9ba34587f607efcdcb7e3, type: 2}
-  waterPurifierRoleButton: {fileID: 11439568, guid: 6b79d5ce3db0dd246a54d46e017384e2,
-    type: 2}
-  powerEngineerRoleButton: {fileID: 11476706, guid: 9831faa3ff8967f4083bc9d3f6dff597,
-    type: 2}
-  storageWorkerRoleButton: {fileID: 11433272, guid: deabeda781465244db21ee0b4dddd855,
-    type: 2}
-  medicRoleButton: {fileID: 11433474, guid: 69a9d67da4d49d745a449f7fb6d875aa, type: 2}
-  teacherRoleButton: {fileID: 11474070, guid: c3ba80c3a6c17a14ebb6efd94ec7c635, type: 2}
-  worshipperRoleButton: {fileID: 11477148, guid: 4ebbab99cbd2fb940bde9d8e21327776,
-    type: 2}
-  bartenderRoleButton: {fileID: 11486602, guid: 5722de5a90444de438f08bdc40d8dc7f,
-    type: 2}
---- !u!114 &11418052
+  target: {x: 0, y: 0, z: 0}
+  repathRate: .100000001
+  pickNextWaypointDistance: 1
+  targetReached: .200000003
+  speed: 1
+  rotationSpeed: 1
+  drawGizmos: 1
+  canSearch: 1
+  canMove: 1
+  agentLogic: {fileID: 11481510}
+--- !u!114 &11481510
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2344,7 +2321,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 162184}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a732c91bc674e114ca9ee5ec260b8337, type: 3}
+  m_Script: {fileID: 11500000, guid: 094a0ceb5b05b6e4091afc857f87e6ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   workWaypoints: []
@@ -2354,30 +2331,9 @@ MonoBehaviour:
   foodStored: 0
   hungerValue: 0
   health: 0
-  aState: 0
+  aState: 1
   jobState: 0
   currentState: 0
---- !u!114 &11463210
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 162184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fed024f4d0f928d48953b9ee32a18a60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {x: 0, y: 0, z: 0}
-  repathRate: .100000001
-  pickNextWaypointDistance: 1
-  targetReached: .200000003
-  speed: 1
-  rotationSpeed: 1
-  drawGizmos: 0
-  canSearch: 1
-  canMove: 1
-  agentLogic: {fileID: 11418052}
 --- !u!114 &11486026
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2389,7 +2345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11a33b35535452a4b9471e2545928e14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agentLogic: {fileID: 11418052}
+  agentLogic: {fileID: 0}
 --- !u!137 &13727118
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -2518,6 +2474,26 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: aState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: speed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: pickNextWaypointDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: drawGizmos
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: detailedGizmos
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
