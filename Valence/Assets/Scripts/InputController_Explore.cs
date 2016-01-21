@@ -80,10 +80,19 @@ public class InputController_Explore : MonoBehaviour {
 			
 		}
 
+		if (_GameController.selectedUnit.isElite) {
+			_GameController.moveButton.interactable = false;
+			_GameController.attackButton.interactable = false;
+			_GameController.waitButton.interactable = false;
+			_GameController.pickUpButton.interactable = false;
+		} else {
+			_GameController.waitButton.interactable = true;
+		}
+
 		if( Input.GetMouseButton(0) && !Input.GetKey (KeyCode.LeftAlt) ){
 
 			if( _GameController.selectedUnit.canMove && _GameController.GameState == 1 && _GameController.selectedUnit.movePressed ){
-				if( _GameController.selectedUnit.withinMoveRange( currentTile ) ){
+				if( _GameController.selectedUnit.withinMoveRange( currentTile ) && _GameController.GeneratePathTo((int)currentTile.x,(int)currentTile.y, 0 ) ){
 					//_GameController.selectedUnit.Move(currentTile);
 					//Instantiate( moveTargetIcon, new Vector3( currentTile.x, 0.1f, currentTile.y), Quaternion.identity );
 					moveTargetIcon.SetActive(true);
@@ -96,7 +105,6 @@ public class InputController_Explore : MonoBehaviour {
 					}
 					_GameController.moveTiles.Clear();
 					moveConfirmedButton.gameObject.SetActive(true);
-					//_GameController.selectedUnit.actionPoints--;
 					_GameController.selectedUnit.movePressed = false;
 				} else {
 					// not within range
@@ -105,34 +113,49 @@ public class InputController_Explore : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown (KeyCode.Tab)) {
-			_GameController.selectedNextUnit ();
+			selectedNextUnit ();
 		}
 
 		if(Input.GetKeyDown ( KeyCode.V )){
 			ToggleWallVisibilty();
 		}
 
-		if (Input.GetKey (KeyCode.Alpha1)) {
+		if (Input.GetKey (KeyCode.Alpha1) && _GameController.folk.Count > 1 ) {
+			moveTargetIcon.SetActive (false);
+			myLine.gameObject.SetActive (false);
+			_GameController.DestroyMovementRange ();
 			_GameController.selectedUnit = _GameController.folk[0];
 			_GameController.selectedIndex = 0;
 			_GameController.MoveIcon();
 			_GameController.cameraObject.MoveCameraTo( _GameController.cameraObject.transform.position, _GameController.selectedUnit.transform.position );
-		} else if (Input.GetKey (KeyCode.Alpha2)) {
+		} else if (Input.GetKey (KeyCode.Alpha2) && _GameController.folk.Count > 2) {
+			moveTargetIcon.SetActive (false);
+			myLine.gameObject.SetActive (false);
+			_GameController.DestroyMovementRange ();
 			_GameController.selectedUnit = _GameController.folk[1];
 			_GameController.selectedIndex = 1;
 			_GameController.MoveIcon();
 			_GameController.cameraObject.MoveCameraTo( _GameController.cameraObject.transform.position, _GameController.selectedUnit.transform.position );
-		} else if (Input.GetKey (KeyCode.Alpha3)) {
+		} else if (Input.GetKey (KeyCode.Alpha3) && _GameController.folk.Count > 3 ) {
+			moveTargetIcon.SetActive (false);
+			myLine.gameObject.SetActive (false);
+			_GameController.DestroyMovementRange ();
 			_GameController.selectedUnit = _GameController.folk[2];
 			_GameController.selectedIndex = 2;
 			_GameController.MoveIcon();
 			_GameController.cameraObject.MoveCameraTo( _GameController.cameraObject.transform.position, _GameController.selectedUnit.transform.position );
-		} else if (Input.GetKey (KeyCode.Alpha4)) {
+		} else if (Input.GetKey (KeyCode.Alpha4) && _GameController.folk.Count > 4 ) {
+			moveTargetIcon.SetActive (false);
+			myLine.gameObject.SetActive (false);
+			_GameController.DestroyMovementRange ();
 			_GameController.selectedUnit = _GameController.folk[3];
 			_GameController.selectedIndex = 3;
 			_GameController.MoveIcon();
 			_GameController.cameraObject.MoveCameraTo( _GameController.cameraObject.transform.position, _GameController.selectedUnit.transform.position );
-		} else if (Input.GetKey (KeyCode.Alpha5)) {
+		} else if (Input.GetKey (KeyCode.Alpha5) && _GameController.folk.Count > 5 ) {
+			moveTargetIcon.SetActive (false);
+			myLine.gameObject.SetActive (false);
+			_GameController.DestroyMovementRange ();
 			_GameController.selectedUnit = _GameController.folk[4];
 			_GameController.selectedIndex = 4;
 			_GameController.MoveIcon();
@@ -166,6 +189,7 @@ public class InputController_Explore : MonoBehaviour {
 		_GameController.selectedUnit.waitPressed = true;
 		_GameController.selectedUnit.canMove = false;
 		_GameController.selectedUnit.actionPoints = 0;
+
 		selectedNextUnit ();
 	}
 
@@ -186,23 +210,25 @@ public class InputController_Explore : MonoBehaviour {
 	}
 
 	public void selectedNextUnit(){
+		moveTargetIcon.SetActive (false);
+		myLine.gameObject.SetActive (false);
 		_GameController.DestroyMovementRange ();
 		int i = _GameController.selectedIndex;
 		if( _GameController.GameState == 1 ){
 			i += 1;
-			if( i > _GameController.GetNumberOfPlayerUnits()-1 ){
+			if( i > _GameController.folk.Count-1 ){
 				i = 0;
 			} 
 			int dCount = 0;
-			while( !_GameController.folk[i].isActiveAndEnabled && _GameController.folk[i].actionPoints > 0 ){
+			while( !_GameController.folk[i].isActiveAndEnabled && _GameController.folk[i].actionPoints <= 0 ){
 				i++;
 				if( i > _GameController.folk.Count-1 ){
 					i = 0;
 				} 
-				dCount++;
-				if( dCount == _GameController.folk.Count ){
-					break;
-				}
+				//dCount++;
+				//if( dCount == _GameController.folk.Count ){
+					//break;
+				//}
 			}
 			_GameController.selectedUnit = _GameController.folk[i];
 			if( _GameController.selectedUnit.canMove ){
