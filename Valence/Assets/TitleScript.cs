@@ -19,4 +19,8 @@ public class TitleScript : MonoBehaviour {
 	public void loadScene(int sceneNumber){
 		Application.LoadLevel (sceneNumber);
 	}
+
+	public void quit(){
+		Application.Quit ();
+	}
 }

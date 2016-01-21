@@ -120,6 +120,10 @@ public class InputController_Explore : MonoBehaviour {
 			ToggleWallVisibilty();
 		}
 
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			Application.LoadLevel(0);
+		}
+
 		if (Input.GetKey (KeyCode.Alpha1) && _GameController.folk.Count > 1 ) {
 			moveTargetIcon.SetActive (false);
 			myLine.gameObject.SetActive (false);
