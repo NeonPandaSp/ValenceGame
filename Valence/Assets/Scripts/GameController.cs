@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour {
     public List<GameObject> powerBuildingList = new List<GameObject>();
 
     public int scrap;
-	public float food, power, water, popLimit;
+	public float food, power, water, popLimit, morale;
 	
 	// Use this for initialization
 	void Start () {

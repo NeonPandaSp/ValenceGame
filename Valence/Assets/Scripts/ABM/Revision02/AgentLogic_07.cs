@@ -42,6 +42,9 @@ public class AgentLogic_07 : MonoBehaviour {
     //0-100 int which holds the agent's current hunger level. 0% = full, 100% = starving 
     public int hungerValue;
 
+    //0-100 int which holds the agent's current happyness level. 0% = depressed, 100% = happy 
+    public int moraleLevel;
+
     //0-100 int which holds the agent's current health. 0%= dead, 100% = perfectly healthy
     public int health;
 
@@ -80,6 +83,8 @@ public class AgentLogic_07 : MonoBehaviour {
         hungerValue = 0;
         //Init the agent's health to 100 when spawned (they should be perfectly healthy)
         health = 100;
+        //Init the agent's happyness to 100 when spawned (they should be perfectly happy)
+        moraleLevel = 100;
 
         aiFollow = GetComponent<AIFollow_07>();
         wanderWaypoints = new List<Vector3>();
