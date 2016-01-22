@@ -216,12 +216,14 @@ public class InputController_Explore : MonoBehaviour {
 		if (!_GameController.selectedUnit.hasScrap) {
 			_GameController.disableAttackBox ();
 			_GameController.selectedUnit.grabPressed = true;
+			_GameController.selectedUnit.actionPoints--;
 			_GameController.scrapObj.transform.SetParent (_GameController.selectedUnit.gameObject.transform);
 			_GameController.scrapObj.transform.position = _GameController.selectedUnit.gameObject.transform.position;
 			_GameController.selectedUnit.hasScrap = true;
 		} else {
 			_GameController.disableAttackBox ();
 			_GameController.selectedUnit.grabPressed = true;
+			_GameController.selectedUnit.actionPoints--;
 			_GameController.scrapObj.transform.SetParent (null);
 			_GameController.selectedUnit.hasScrap = false;
 		}
