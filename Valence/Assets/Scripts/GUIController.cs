@@ -88,7 +88,7 @@ using System.Collections.Generic;
 		buildBtnDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 
 		buildBtnDel.GetComponentInChildren<Text> ().text = "";
-		buildBtnDel.transform.position = new Vector2 (40, Screen.height - 155);
+		buildBtnDel.transform.position = new Vector2 (140, 700);
 		buildBtnDel.image.rectTransform.sizeDelta = new Vector2 (75, 75);
 		buildBtnDel.onClick.AddListener (() => buildBtnClicked ());
 		
@@ -107,7 +107,7 @@ using System.Collections.Generic;
 		shelterDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		shelterDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		shelterDelBtn.transform.Translate (112.5f, Screen.height - 155, 0);
+		shelterDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x - 100, buildBtnDel.transform.position.y + 37.5f);
 		shelterDelBtn.GetComponentInChildren<Text> ().text = "Shelter";
 		shelterDelBtn.onClick.AddListener (() => shelterBtnClicked ());
 		shelterDelBtn.gameObject.SetActive (false);
@@ -117,7 +117,7 @@ using System.Collections.Generic;
 		farmDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		farmDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		farmDelBtn.transform.Translate (112.5f, Screen.height - 220, 0);
+		farmDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x - 37.5f, buildBtnDel.transform.position.y + 100);
 		farmDelBtn.GetComponentInChildren<Text> ().text = "Farm";
 		farmDelBtn.onClick.AddListener (() => farmBtnClicked ());
 		farmDelBtn.gameObject.SetActive (false);
@@ -127,7 +127,7 @@ using System.Collections.Generic;
 		waterStationDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		waterStationDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		waterStationDelBtn.transform.Translate (112.5f, Screen.height - 285, 0);
+		waterStationDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 37.5f, buildBtnDel.transform.position.y + 100);
 		waterStationDelBtn.GetComponentInChildren<Text> ().text = "Water Station";
 		waterStationDelBtn.onClick.AddListener (() => waterStationBtnClicked ());
 		waterStationDelBtn.gameObject.SetActive (false);
@@ -137,7 +137,7 @@ using System.Collections.Generic;
 		powerStationDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		powerStationDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		powerStationDelBtn.transform.Translate (112.5f, Screen.height - 350, 1);
+		powerStationDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 100, buildBtnDel.transform.position.y + 37.5f);
 		powerStationDelBtn.GetComponentInChildren<Text> ().text = "Power Station";
 		powerStationDelBtn.onClick.AddListener (() => powerStationBtnClicked ());
 		powerStationDelBtn.gameObject.SetActive (false);
@@ -147,27 +147,17 @@ using System.Collections.Generic;
 		storageDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		storageDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		storageDelBtn.transform.Translate (112.5f, Screen.height - 415, 0);
+		storageDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x - 100, buildBtnDel.transform.position.y - 37.5f);
 		storageDelBtn.GetComponentInChildren<Text> ().text = "Storage";
 		storageDelBtn.onClick.AddListener (() => storageBtnClicked ());
 		storageDelBtn.gameObject.SetActive (false);
-		
-		//		//Shrine Button
-		//		shrineDelBtn = (Button)Instantiate (shrineBtn);
-		//		shrineDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		//		
-		//		shrineDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		//		shrineDelBtn.transform.Translate (112.5f, Screen.height - 480, 0);
-		//		shrineDelBtn.GetComponentInChildren<Text> ().text = "Shrine";
-		//		shrineDelBtn.onClick.AddListener (() => shrineBtnClicked ());
-		//		shrineDelBtn.gameObject.SetActive (false);
-		
+
 		//Tavern Button
 		tavernDelBtn = (Button)Instantiate (tavernBtn);
 		tavernDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		tavernDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		tavernDelBtn.transform.Translate (112.5f, Screen.height - 480, 0);
+		tavernDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x - 37.5f, buildBtnDel.transform.position.y - 100);
 		tavernDelBtn.GetComponentInChildren<Text> ().text = "Tavern";
 		tavernDelBtn.onClick.AddListener (() => tavernBtnClicked ());
 		tavernDelBtn.gameObject.SetActive (false);
@@ -177,7 +167,7 @@ using System.Collections.Generic;
 		hospitalDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		hospitalDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		hospitalDelBtn.transform.Translate (112.5f, Screen.height - 545, 0);
+		hospitalDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 37.5f, buildBtnDel.transform.position.y - 100);
 		hospitalDelBtn.GetComponentInChildren<Text> ().text = "Hospital";
 		hospitalDelBtn.onClick.AddListener (() => hospitalBtnClicked ());
 		hospitalDelBtn.gameObject.SetActive (false);
@@ -187,7 +177,7 @@ using System.Collections.Generic;
 		schoolDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		schoolDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		schoolDelBtn.transform.Translate (112.5f, Screen.height - 610, 0);
+		schoolDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 100, buildBtnDel.transform.position.y - 37.5f);
 		schoolDelBtn.GetComponentInChildren<Text> ().text = "School";
 		schoolDelBtn.onClick.AddListener (() => schoolBtnClicked ());
 		schoolDelBtn.gameObject.SetActive (false);
@@ -286,7 +276,7 @@ using System.Collections.Generic;
 		waterStationDelBtn.gameObject.SetActive (true);
 		powerStationDelBtn.gameObject.SetActive (true);
 		storageDelBtn.gameObject.SetActive (true);
-//		shrineDelBtn.gameObject.SetActive (true);
+		schoolDelBtn.gameObject.SetActive (true);
 		tavernDelBtn.gameObject.SetActive (true);
 		hospitalDelBtn.gameObject.SetActive (true);
 	}
@@ -448,20 +438,6 @@ using System.Collections.Generic;
 		}
 
 		//String whatButtonIsIt = EventSystem.current.currentSelectedGameObject.name.ToString ();		// Checks what the current pointer is hovering over
-		/*///// BUTTONS \\\\\*/
-//		if (Input.GetMouseButtonDown (0)) {
-//			//Debug.Log ("This isn't the button you are looking for");
-//			//buildBtnArray[0].interactable = false;
-//			shelterDelBtn.gameObject.SetActive (false);
-//			farmDelBtn.gameObject.SetActive (false);
-//			waterStationDelBtn.gameObject.SetActive (false);
-//			powerStationDelBtn.gameObject.SetActive (false);
-//			storageDelBtn.gameObject.SetActive (false);
-//			shrineDelBtn.gameObject.SetActive (false);
-//			tavernDelBtn.gameObject.SetActive (false);
-//			hospitalDelBtn.gameObject.SetActive (false);
-//			schoolDelBtn.gameObject.SetActive (false);
-//		}
 	}
 
 	//==================\\
