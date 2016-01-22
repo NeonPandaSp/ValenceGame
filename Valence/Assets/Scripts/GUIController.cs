@@ -11,7 +11,9 @@ using System.Collections.Generic;
 	//GameObject globalAttributes;
 	public Text scrapText, populationText, moraleText, foodText, waterText, powerText, timeText;
 	Text scrapDelText, populationDelText, moraleDelText, foodDelText, waterDelText, powerDelText, timeDelText;
-	
+
+    AgentSpawner aSpawner;
+
 	public GameController globalAttributes;
 	public string setBuildingTypeName;
 
@@ -61,7 +63,7 @@ using System.Collections.Generic;
 	// Use this for initialization
 	void Start () {
 		globalAttributes = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
-
+        aSpawner = GameObject.Find("ASpawner").GetComponent<AgentSpawner>();
 		// === HUD Background ===\\
 		HUDDelBg = (Image)Instantiate (HUDBg);
 		HUDDelBg.gameObject.transform.SetParent (myCanvas.gameObject.transform);
@@ -363,13 +365,13 @@ using System.Collections.Generic;
 		//Population
 		//population = globalAttributes.population;
 		population = 5;
-		populationDelText.text = "Population: " + population;
+		populationDelText.text = "Population: " + aSpawner.popSize;
 
-		if (population < 5)
+		if (aSpawner.popSize < 5)
 			populationDelText.color = new Color (0.4509803921568627f, 0.3529411764705882f, 0.3176470588235294f);
-		else if (population > 5 || population < 30)
+		else if (aSpawner.popSize > 5 || population < 30)
 			populationDelText.color = new Color (0.0509803921568627f, 0.0509803921568627f, 0.0509803921568627f);
-		else if (population > 30)
+		else if (aSpawner.popSize > 30)
 			populationDelText.color = new Color (0.7372549019607843f, 0.8196078431372549f, 0.7098039215686275f);
 
 		//Morale
