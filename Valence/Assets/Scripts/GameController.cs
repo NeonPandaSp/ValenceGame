@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour {
     public List<GameObject> powerBuildingList = new List<GameObject>();
 
     public int scrap;
-	public float food, power, water;
+	public float food, power, water, popLimit;
 	
 	// Use this for initialization
 	void Start () {
@@ -27,6 +27,9 @@ public class GameController : MonoBehaviour {
 
         //Start the game with 100 power
         power = 100;
+
+        //Start population with a 10 person cap
+        popLimit = 10;
 
         for ( int x = 0; x < mapSize; x++){
 			for( int y = 0; y < mapSize; y++){

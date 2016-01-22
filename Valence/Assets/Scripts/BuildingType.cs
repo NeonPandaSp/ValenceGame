@@ -47,7 +47,7 @@ public class BuildingType  {
 
 	public float getProductionRate(int a){
 		if (typeName == "shelter") {
-			return 0.0f * a;
+			return 10.0f;
 		} else if (typeName == "food") {
             return 1.0f * a;
         } else if (typeName == "power") {
@@ -83,7 +83,7 @@ public class BuildingType  {
 
     public float getProductionTime(){
 		if (typeName == "shelter") {
-			return 5.0f;
+			return 0.0f;
 		} else if (typeName == "food") {
 			return 5.0f;
 		} else if (typeName == "power") {

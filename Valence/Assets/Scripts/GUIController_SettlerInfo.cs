@@ -15,14 +15,16 @@ public class GUIController_SettlerInfo : MonoBehaviour {
     public AgentLogic_07 agentLogic;
 
 	//Return true if a gameobject with corresponding tag has been spawned, vise versa for false
-    bool farmAvailable, hospitalAvailable, waterstationAvailable, powerstationAvailable;
+    bool farmAvailable, hospitalAvailable, waterstationAvailable, powerstationAvailable, storageAvailable, schoolAvailable, shrineAvailable, tavernAvailable;
 
     //Return true if error message should be shown
     bool showError;
 
 	Canvas myCanvas;
-	
-	public Image SettlerInfoBg;
+
+    public SpriteRenderer selectedIcon;
+
+    public Image SettlerInfoBg;
 	Image SettlerInfoDelBg;
 
 	public Image genericProfileIcon;
@@ -71,13 +73,15 @@ public class GUIController_SettlerInfo : MonoBehaviour {
         farmAvailable = false;
         waterstationAvailable = false;
         powerstationAvailable = false;
+        storageAvailable = false;
+        schoolAvailable = false;
 
-		myCanvas = GameObject.Find ("Canvas").GetComponent <Canvas>();
-
-		//===============================\\
-		//=== Settler Info Background ===\\
-		//===============================\\
-		SettlerInfoDelBg = (Image)Instantiate (SettlerInfoBg);
+        myCanvas = GameObject.Find ("Canvas").GetComponent <Canvas>();
+        selectedIcon = GetComponentInChildren<SpriteRenderer>();
+        //===============================\\
+        //=== Settler Info Background ===\\
+        //===============================\\
+        SettlerInfoDelBg = (Image)Instantiate (SettlerInfoBg);
 		SettlerInfoDelBg.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		SettlerInfoDelBg.rectTransform.sizeDelta = new Vector2 (820, 305);
@@ -379,7 +383,9 @@ public class GUIController_SettlerInfo : MonoBehaviour {
         // When you click, change the variables value
         if (showMenu) {
 			showMenu = false;
-			inventoryTitleDel.gameObject.SetActive (false);
+
+            selectedIcon.enabled = false;
+            inventoryTitleDel.gameObject.SetActive (false);
 			rolesTitleDel.gameObject.SetActive (false);
 			attributesTitleDel.gameObject.SetActive (false);
 			SettlerInfoDelBg.gameObject.SetActive (false);
@@ -409,8 +415,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		else {
 			showMenu = true;
 
-			
-			firstLastNameDel.gameObject.SetActive (true);
+            firstLastNameDel.gameObject.SetActive (true);
 
 			//Randomizing attributes when settler info box pops up
 			rndHP  = UnityEngine.Random.Range (1, 101);
@@ -424,7 +429,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			rndPerc = UnityEngine.Random.Range (0, 11);
 			rndChar = UnityEngine.Random.Range (0, 11);
 
-			inventoryTitleDel.gameObject.SetActive (true);
+            selectedIcon.enabled = true;
+            inventoryTitleDel.gameObject.SetActive (true);
 			rolesTitleDel.gameObject.SetActive (true);
 			attributesTitleDel.gameObject.SetActive (true);
 			SettlerInfoDelBg.gameObject.SetActive (true);
@@ -536,7 +542,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 
 	void exBtnClicked () {
 		showMenu = false;
-		inventoryTitleDel.gameObject.SetActive (false);
+        selectedIcon.enabled = false;
+        inventoryTitleDel.gameObject.SetActive (false);
 		rolesTitleDel.gameObject.SetActive (false);
 		attributesTitleDel.gameObject.SetActive (false);
 		SettlerInfoDelBg.gameObject.SetActive (false);
@@ -569,8 +576,15 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	//==================\\
 
     void Update() {
-		//Re setting random name and attributes
-		firstLastNameDel.text = firstNameArray [randomFirstName] + " " + lastNameArray [randomLastName];
+
+
+        if (agentLogic.aState == AgentLogic_07.agentState.Working) {
+            firstLastNameDel.text = firstNameArray[randomFirstName] + " " + lastNameArray[randomLastName] + " the " + agentLogic.jobState + " (" + agentLogic.aState + ")";
+        }
+        else {
+            //Re setting random name and attributes
+            firstLastNameDel.text = firstNameArray[randomFirstName] + " " + lastNameArray[randomLastName] + " (" + agentLogic.aState + ")";
+        }
 
 		settlerHealthTextDel.text = "Health: " + agentLogic.health;
 		settlerStaminaTextDel.text = "Stamina: " + rndStam;
@@ -586,14 +600,14 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		////
 
 		//Check to see if there are any gameobjects with the appropriate building tag
-		if (GameObject.FindWithTag ("Farm"))
+		if (!GameObject.FindWithTag ("Farm"))
 		{
-			farmAvailable = true;
-			farmerRoleButtonDel.interactable = true;
-		}
-		else {
 			farmAvailable = false;
 			farmerRoleButtonDel.interactable = false;
+		}
+		else {
+			farmAvailable = true;
+			farmerRoleButtonDel.interactable = true;
 		}
 		
         if (!GameObject.FindWithTag ("WaterStation"))
@@ -628,45 +642,42 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			medicRoleButtonDel.interactable = true;
 		}
 
-//		if (!GameObject.FindWithTag ("Storage"))
-//		{
-//			storageAvailable = false;
-//			storageWorkerRoleButtonDel.interactable = false;
-//		}
-//		else {
-//			storageAvailable = true;
-//			storageWorkerRoleButtonDel.interactable = true;
-//		}
-//
-//		if (!GameObject.FindWithTag ("School"))
-//		{
-//			schoolAvailable = false;
-//			teacherRoleButtonDel.interactable = false;
-//		}
-//		else {
-//			schoolAvailable = true;
-//			teacherRoleButtonDel.interactable = true;
-//		}
+		if (!GameObject.FindWithTag("Storage")) { 
 
-//		if (!GameObject.FindWithTag ("Shrine"))
-//		{
-//			shrineAvailable = false;
-//			worshipperRoleButtonDel.interactable = false;
-//		}
-//		else {
-//			shrineAvailable = true;
-//			worshipperRoleButtonDel.interactable = true;
-//		}
+		    storageAvailable = false;
+		    storageWorkerRoleButtonDel.interactable = false;
+        }
+        else {
+            storageAvailable = true;
+            storageWorkerRoleButtonDel.interactable = true;
+        }
 
-//		if (!GameObject.FindWithTag ("Tavern"))
-//		{
-//			tavernAvailable = false;
-//			bartenderRoleButtonDel.interactable = false;
-//		}
-//		else {
-//			tavernAvailable = true;
-//			bartenderRoleButtonDel.interactable = true;
-//		}
+        if (!GameObject.FindWithTag ("School")) {
+            schoolAvailable = false;
+            teacherRoleButtonDel.interactable = false;
+        }
+        else {
+            schoolAvailable = true;
+            teacherRoleButtonDel.interactable = true;
+        }
+
+		if (!GameObject.FindWithTag ("Shrine")) {
+            shrineAvailable = false;
+            worshipperRoleButtonDel.interactable = false;
+        }
+        else {
+            shrineAvailable = true;
+            worshipperRoleButtonDel.interactable = true;
+        }
+
+        if (!GameObject.FindWithTag ("Tavern")) {
+            tavernAvailable = false;
+            bartenderRoleButtonDel.interactable = false;
+        }
+        else {
+            tavernAvailable = true;
+            bartenderRoleButtonDel.interactable = true;
+        }
 	}
 
 	IEnumerator MissingBuildingError (float wait, string building) {

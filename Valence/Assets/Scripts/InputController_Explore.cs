@@ -34,6 +34,8 @@ public class InputController_Explore : MonoBehaviour {
 
 	public Button moveConfirmedButton, attackConfirmedButton;
 
+	public GameObject HintObject;
+
 	void Start(){
 		_tileMap = GetComponent<TileMap> ();
 		myHoverObject = (GameObject) Instantiate (Resources.Load("Tile"), new Vector3 (0, 0, 0), Quaternion.identity);
@@ -124,6 +126,16 @@ public class InputController_Explore : MonoBehaviour {
 			Application.LoadLevel(0);
 		}
 
+		if (Input.GetKeyDown (KeyCode.H)) {
+			if( HintObject.activeSelf ){
+				HintObject.SetActive(false);
+			} else {
+				HintObject.SetActive(true);
+				HintObject.GetComponent<HintScript>().currentTime = Time.time;
+				HintObject.GetComponent<HintScript>().timeToDelete = Time.time + 14;
+			}
+		}
+
 		if (Input.GetKey (KeyCode.Alpha1) && _GameController.folk.Count > 1 ) {
 			moveTargetIcon.SetActive (false);
 			myLine.gameObject.SetActive (false);
@@ -179,12 +191,14 @@ public class InputController_Explore : MonoBehaviour {
 	public void MoveSelectedUnit( ){
 		_GameController.disableAttackBox();
 		_GameController.selectedUnit.movePressed = true;
+		attackConfirmedButton.gameObject.SetActive (false);
 		_GameController.GenerateMovementRange((int)_GameController.selectedUnit.currentPosition.x, (int)_GameController.selectedUnit.currentPosition.y);
 	}
 
 	public void AttackWithSelectedUnit(){
 		_GameController.enableAttackBox (_GameController.selectedUnit);
 		attackConfirmedButton.gameObject.SetActive(true);
+		moveConfirmedButton.gameObject.SetActive (false);
 		_GameController.selectedUnit.attackPressed = true;
 	}
 
@@ -193,7 +207,8 @@ public class InputController_Explore : MonoBehaviour {
 		_GameController.selectedUnit.waitPressed = true;
 		_GameController.selectedUnit.canMove = false;
 		_GameController.selectedUnit.actionPoints = 0;
-
+		attackConfirmedButton.gameObject.SetActive (false);
+		moveConfirmedButton.gameObject.SetActive (false);
 		selectedNextUnit ();
 	}
 
@@ -201,12 +216,14 @@ public class InputController_Explore : MonoBehaviour {
 		if (!_GameController.selectedUnit.hasScrap) {
 			_GameController.disableAttackBox ();
 			_GameController.selectedUnit.grabPressed = true;
+			_GameController.selectedUnit.actionPoints--;
 			_GameController.scrapObj.transform.SetParent (_GameController.selectedUnit.gameObject.transform);
 			_GameController.scrapObj.transform.position = _GameController.selectedUnit.gameObject.transform.position;
 			_GameController.selectedUnit.hasScrap = true;
 		} else {
 			_GameController.disableAttackBox ();
 			_GameController.selectedUnit.grabPressed = true;
+			_GameController.selectedUnit.actionPoints--;
 			_GameController.scrapObj.transform.SetParent (null);
 			_GameController.selectedUnit.hasScrap = false;
 		}

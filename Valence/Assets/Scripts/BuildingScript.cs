@@ -48,7 +48,7 @@ public class BuildingScript : MonoBehaviour {
         //First check that we have enough power to generate resources
         if (_myGameController.power > 0) {
             if (bType.typeName == "shelter") {
-                // nada 
+                _myGameController.popLimit += bType.pRate;
             }
             else if (bType.typeName == "food") {
                 //We should look into updating the generation algorithm to be affected by the number of agents assigned,ie. more farmers working = increased production rate -Zach
