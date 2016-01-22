@@ -177,6 +177,10 @@ public class InputController : MonoBehaviour {
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
+                            Destroy(myHoverObject);
+                            myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
+                            hoverState = "zone";
+                            buildType = "Null";
                             //Increase the list of current farms placed
                             _gameController.farmBuildingList.Add(tempObject);
                             
@@ -352,7 +356,7 @@ public class InputController : MonoBehaviour {
                 hoverState = "tavern";
             }
             zoning = false;
-        } else if (Input.GetKey(KeyCode.Alpha9)) {
+        } else if (_GUIController.setBuildingTypeName == "Null" || Input.GetKey(KeyCode.Alpha9)) {
             Destroy(myHoverObject);
             myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
             zoning = true;
