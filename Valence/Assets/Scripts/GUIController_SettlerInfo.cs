@@ -109,7 +109,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		firstLastNameDel = (Text)Instantiate (firstLastName);
 		firstLastNameDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 
-		firstLastNameDel.rectTransform.sizeDelta = new Vector2 (400, 50);
+		firstLastNameDel.rectTransform.sizeDelta = new Vector2 (600, 50);
 		firstLastNameDel.transform.position = new Vector2 (500, 279);
 		
 		firstLastNameDel.fontSize = 28;

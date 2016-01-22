@@ -26,7 +26,6 @@ public class InputController : MonoBehaviour {
 	string hoverState;
 
 	public GUIController _GUIController;
-	string buildType;
 
 	void Start(){
 		_tileMap = GetComponent<TileMap> ();
@@ -39,7 +38,7 @@ public class InputController : MonoBehaviour {
 		_GUIController = GameObject.Find ("Canvas").GetComponent<GUIController> ();
 	}
 
-	public void selectedMaterial( string color ){
+	public void selectedMaterial (string color){
 		if (color == "blue") {
 			myHoverObject.GetComponentInChildren<MeshRenderer> ().material = blueMat;
 			currentColor = "blue";
@@ -47,7 +46,6 @@ public class InputController : MonoBehaviour {
 			myHoverObject.GetComponentInChildren<MeshRenderer> ().material = yellowMat;
 			currentColor = "yellow";
 		} else if (color == "green") {
-
 			myHoverObject.GetComponentInChildren<MeshRenderer> ().material = greenMat;
 			currentColor = "green";
 		}
@@ -59,7 +57,7 @@ public class InputController : MonoBehaviour {
 
 	int getCurrentWidth(){
 		float maxX, minX;
-		if( rootMousePos.x < currentTile.x ){
+		if( rootMousePos.x < currentTile.x) {
 			minX = rootMousePos.x;
 			maxX = currentTile.x;
 			
@@ -74,7 +72,7 @@ public class InputController : MonoBehaviour {
 
 	int getCurrentHeight(){
 		float maxY, minY;
-		if( rootMousePos.y < currentTile.y ){
+		if( rootMousePos.y < currentTile.y) {
 			minY = rootMousePos.y;
 			maxY = currentTile.y;
 			
@@ -169,7 +167,7 @@ public class InputController : MonoBehaviour {
 //				} 
 //			} else 
 			if ( !zoning ){
-				if (hoverState == "food" || buildType == "farm"){
+				if (hoverState == "food"){
                     if (_gameController.scrap >= 25) {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
                             _gameController.scrap -= 25;
@@ -177,16 +175,16 @@ public class InputController : MonoBehaviour {
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
-                            Destroy(myHoverObject);
-                            myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
-                            hoverState = "zone";
-                            buildType = "Null";
                             //Increase the list of current farms placed
                             _gameController.farmBuildingList.Add(tempObject);
                             
                             //Debug.Log ( tempObject.GetComponent<BuildingScript>().initProduction );
 
-                            //Update agent pathfinding to account for this new obstical -Zach
+							Destroy(myHoverObject);
+							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
+							hoverState = "zone";
+							
+							//Update agent pathfinding to account for this new obstical -Zach
                             foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
                                 AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
                             }
@@ -198,11 +196,11 @@ public class InputController : MonoBehaviour {
                                 if (child.gameObject.tag == "buildMesh") {
                                     child.gameObject.SetActive(true);
                                 }
-                            }
+							}
                         }
                     }
 				}
-				if (hoverState == "water" || buildType == "water"){
+				if (hoverState == "water"){
                     if (_gameController.scrap >= 25){
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))){
                             _gameController.scrap -= 25;
@@ -210,9 +208,12 @@ public class InputController : MonoBehaviour {
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
-                            //Update agent pathfinding to account for this new obstical -Zach
-
-                            foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop"))
+							Destroy(myHoverObject);
+							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
+							hoverState = "zone";
+							
+							//Update agent pathfinding to account for this new obstical -Zach
+							foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop"))
                             {
                                 AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
                             }
@@ -227,11 +228,11 @@ public class InputController : MonoBehaviour {
                                 {
                                     child.gameObject.SetActive(true);
                                 }
-                            }
+							}
                         }
                     }
 				}
-				if (hoverState == "power" || buildType == "power"){
+				if (hoverState == "power"){
                     if (_gameController.scrap >= 25){
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag ("prop"))){
                             _gameController.scrap -= 25;
@@ -239,8 +240,12 @@ public class InputController : MonoBehaviour {
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
-                            //Update agent pathfinding to account for this new obstical -Zach
-                            foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop"))
+							Destroy(myHoverObject);
+							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
+							hoverState = "zone";
+							
+							//Update agent pathfinding to account for this new obstical -Zach
+							foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop"))
                             {
                                 AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
                             }
@@ -255,13 +260,11 @@ public class InputController : MonoBehaviour {
                                 {
                                     child.gameObject.SetActive(true);
                                 }
-                            }
+							}
                         }
                     }
 				}
-				if (hoverState == "shelter" || buildType == "shelter") {
-					print ("BUILD TYPE IS: " + buildType);
-
+				if (hoverState == "shelter") {
 					if (_gameController.scrap >= 25) {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
                             _gameController.scrap -= 25;
@@ -269,8 +272,12 @@ public class InputController : MonoBehaviour {
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
-                            //Update agent pathfinding to account for this new obstical -Zach
-                            foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
+							Destroy(myHoverObject);
+							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
+							hoverState = "zone";
+
+							//Update agent pathfinding to account for this new obstical -Zach
+							foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
                                 AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
                             }
 
@@ -285,7 +292,7 @@ public class InputController : MonoBehaviour {
                         }
                     }
                 }
-				if (hoverState == "tavern"  || buildType == "tavern") {
+				if (hoverState == "tavern") {
                     if (_gameController.scrap >= 25) {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
                             _gameController.scrap -= 25;
@@ -293,7 +300,12 @@ public class InputController : MonoBehaviour {
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
-                            //Update agent pathfinding to account for this new obstical -Zach
+							Destroy(myHoverObject);
+							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
+							hoverState = "zone";
+							
+							//Update agent pathfinding to account for this new obstical -Zach
+
                             foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
                                 AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
                             }
@@ -309,59 +321,58 @@ public class InputController : MonoBehaviour {
                         }
                     }
                 }
-
             }
 			if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
 				myHoverObject.transform.position = new Vector3( currentTile.x, 1, currentTile.y );
 			}
-			//myHoverObject.transform.localScale = new Vector3( 1, 1 , 1); 
-
 		}
 
-        if (Input.GetKey(KeyCode.Alpha0)) {
-            Debug.Log("None");
-            zoning = false;
-		} else if (_GUIController.setBuildingTypeName == "farm" || Input.GetKey(KeyCode.Alpha1)) {
-			if (hoverState != "food"){
-				Destroy( myHoverObject );
-				myHoverObject = (GameObject) Instantiate (foodBuild, new Vector3 (0, 0, 0), Quaternion.identity);
+        if (Input.GetKey (KeyCode.Alpha0)) {
+			Debug.Log ("None");
+			zoning = false;
+		} else if (_GUIController.setBuildingTypeName == "farm" || Input.GetKey (KeyCode.Alpha1)) {
+			if (hoverState != "food") {
+				Destroy (myHoverObject);
+				myHoverObject = (GameObject)Instantiate (foodBuild, new Vector3 (0, 0, 0), Quaternion.identity);
 				hoverState = "food";
 			}
 			zoning = false;
-		} else if (_GUIController.setBuildingTypeName == "water" || Input.GetKey(KeyCode.Alpha2)) {
-			if( hoverState != "water" ){
-				Destroy( myHoverObject );
-				myHoverObject = (GameObject) Instantiate (waterBuild, new Vector3 (0, 0, 0), Quaternion.identity);
+		} else if (_GUIController.setBuildingTypeName == "water" || Input.GetKey (KeyCode.Alpha2)) {
+			if (hoverState != "water") {
+				Destroy (myHoverObject);
+				myHoverObject = (GameObject)Instantiate (waterBuild, new Vector3 (0, 0, 0), Quaternion.identity);
 				hoverState = "water";
 			}
 			zoning = false;
-		} else if (_GUIController.setBuildingTypeName == "power" || Input.GetKey(KeyCode.Alpha3)) {
-			if( hoverState != "power" ){
-				Destroy( myHoverObject );
-				myHoverObject = (GameObject) Instantiate (powerBuild, new Vector3 (0, 0, 0), Quaternion.identity);
+		} else if (_GUIController.setBuildingTypeName == "power" || Input.GetKey (KeyCode.Alpha3)) {
+			if (hoverState != "power") {
+				Destroy (myHoverObject);
+				myHoverObject = (GameObject)Instantiate (powerBuild, new Vector3 (0, 0, 0), Quaternion.identity);
 				hoverState = "power";
 			}
 			zoning = false;
-		} else if (_GUIController.setBuildingTypeName == "shelter" || Input.GetKey(KeyCode.Alpha4)) {
-            if (hoverState != "shelter") {
-                Destroy(myHoverObject);
-                myHoverObject = (GameObject)Instantiate(shelterBuild, new Vector3(0, 0, 0), Quaternion.identity);
-                hoverState = "shelter";
-            }
-            zoning = false;
-		} else if (_GUIController.setBuildingTypeName == "tavern" || Input.GetKey(KeyCode.Alpha5)) {
-            if (hoverState != "tavern") {
-                Destroy(myHoverObject);
-                myHoverObject = (GameObject)Instantiate(tavernBuild, new Vector3(0, 0, 0), Quaternion.identity);
-                hoverState = "tavern";
-            }
-            zoning = false;
-        } else if (_GUIController.setBuildingTypeName == "Null" || Input.GetKey(KeyCode.Alpha9)) {
-            Destroy(myHoverObject);
-            myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
-            zoning = true;
-            hoverState = "zone";
-        }
+		} else if (_GUIController.setBuildingTypeName == "shelter" || Input.GetKey (KeyCode.Alpha4)) {
+			if (hoverState != "shelter") {
+				Destroy (myHoverObject);
+				myHoverObject = (GameObject)Instantiate (shelterBuild, new Vector3 (0, 0, 0), Quaternion.identity);
+				hoverState = "shelter";
+			}
+			zoning = false;
+		} else if (_GUIController.setBuildingTypeName == "tavern" || Input.GetKey (KeyCode.Alpha5)) {
+			if (hoverState != "tavern") {
+				Destroy (myHoverObject);
+				myHoverObject = (GameObject)Instantiate (tavernBuild, new Vector3 (0, 0, 0), Quaternion.identity);
+				hoverState = "tavern";
+			}
+			zoning = false;
+		} else if (_GUIController.setBuildingTypeName == "Null" || Input.GetKey (KeyCode.Alpha9)) {
+			Destroy (myHoverObject);
+			myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3 (0, 0, 0), Quaternion.identity);
+			hoverState = "zone";
+			//buildType = "Null";
+			
+			//Update agent pathfinding to account for this new obstical -Zach
+		}
 
 		if (Input.GetKey (KeyCode.Escape)) {
 			Application.LoadLevel (0);
