@@ -20,11 +20,21 @@ public class GUIController_SettlerInfo : MonoBehaviour {
     //Return true if error message should be shown
     bool showError;
 
-	//\\
 	Canvas myCanvas;
 	
 	public Image SettlerInfoBg;
 	Image SettlerInfoDelBg;
+
+	public Image genericProfileIcon;
+	Image genericProfileIconDel;
+
+	int randomFirstName;
+	int randomLastName;
+	String[] firstNameArray;
+	String[] lastNameArray;
+
+	public Text firstLastName;
+	Text firstLastNameDel;
 	
 	// === Settler Attributes === \\
 	public Text attributesTitle, settlerHealthText, settlerStaminaText, settlerMoraleText, settlerHungerText, settlerThirstText;
@@ -32,6 +42,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	
 	public Text settlerStrengthText, settlerIntelligenceText, settlerAgilityText, settlerPerceptionText, settlerCharismaText;
 	Text settlerStrengthTextDel, settlerIntelligenceTextDel, settlerAgilityTextDel, settlerPerceptionTextDel, settlerCharismaTextDel;
+
+	int rndHP,rndStam, rndMor, rndHung, rndThir, rndStr, rndInt, rndAgil, rndPerc, rndChar;
 	
 	// === Settler Inventory === \\
 	public Text inventoryTitle;
@@ -43,6 +55,10 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	
 	public Button farmerRoleButton, waterPurifierRoleButton, powerEngineerRoleButton, storageWorkerRoleButton, medicRoleButton, teacherRoleButton, worshipperRoleButton, bartenderRoleButton;
 	Button farmerRoleButtonDel, waterPurifierRoleButtonDel, powerEngineerRoleButtonDel, storageWorkerRoleButtonDel, medicRoleButtonDel, teacherRoleButtonDel, worshipperRoleButtonDel, bartenderRoleButtonDel;
+
+	// === Close Window Button === \\
+	public Button exBtn;
+	Button exBtnDel;
 
 	//=================\\
 	//===== Start =====\\
@@ -58,116 +74,206 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 
 		myCanvas = GameObject.Find ("Canvas").GetComponent <Canvas>();
 
-		// === Settler Info Background === \\
+		//===============================\\
+		//=== Settler Info Background ===\\
+		//===============================\\
 		SettlerInfoDelBg = (Image)Instantiate (SettlerInfoBg);
 		SettlerInfoDelBg.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		SettlerInfoDelBg.rectTransform.sizeDelta = new Vector2 (820, 305);
 		SettlerInfoDelBg.transform.Translate (410, 152.5f, 0);
 		SettlerInfoDelBg.gameObject.SetActive (false);
+
+		//=======================\\
+		//=== Settler Picture ===\\
+		//=======================\\
+		genericProfileIconDel = (Image)Instantiate (genericProfileIcon);
+		genericProfileIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		// === Settler Attributes === \\
+		genericProfileIconDel.rectTransform.sizeDelta = new Vector2 (200, 300);
+		genericProfileIconDel.transform.Translate (105, 150, 0);
+		genericProfileIconDel.gameObject.SetActive (false);
+
+		//====================\\
+		//=== Settler Name ===\\
+		//====================\\
+		//		switch (namesList) {
+		//		case true:
+		firstNameArray = new String[14] {"Jimmy", "T.D.", "Very", "Jackery", "Fontana", "Freya", "Iris", "Dean", "Reed", "Tate", "Seth", "Larry", "Leaf", "Marco"};
+		lastNameArray = new string[14] {"Hawthorne", "Hazlewood", "Beckett", "Polo", "Mordecai", "McKnight", "Kerrigan", "Kellerman", "Stone", "Drake", "Richards", "Fontana", "Bob", "Steele"};
+		
+		randomFirstName = UnityEngine.Random.Range (0, 14);
+		randomLastName = UnityEngine.Random.Range (0, 14);
+		
+		firstLastNameDel = (Text)Instantiate (firstLastName);
+		firstLastNameDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+
+		firstLastNameDel.rectTransform.sizeDelta = new Vector2 (400, 50);
+		firstLastNameDel.transform.position = new Vector2 (500, 279);
+		
+		firstLastNameDel.fontSize = 28;
+		firstLastNameDel.gameObject.SetActive (false);
+		
+		//			break;
+		//		case false:
+		//			//LOL
+		//			break;
+		//		}
+
+		//==========================\\
+		//=== Settler Attributes ===\\
+		//==========================\\
+		//Fake Attributes
+		rndHP  = UnityEngine.Random.Range (1, 101);
+		rndStam = UnityEngine.Random.Range (0, 101);
+		rndMor = UnityEngine.Random.Range (0, 101);
+		rndHung = UnityEngine.Random.Range (0, 101);
+		rndThir = UnityEngine.Random.Range (0, 101);
+		rndStr = UnityEngine.Random.Range (0, 11);
+		rndInt = UnityEngine.Random.Range (0, 11);
+		rndAgil = UnityEngine.Random.Range (0, 11);
+		rndPerc = UnityEngine.Random.Range (0, 11);
+		rndChar = UnityEngine.Random.Range (0, 11);
+
 		// Attributes Title
 		attributesTitleDel = (Text)Instantiate (attributesTitle);
 		attributesTitleDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		attributesTitleDel.rectTransform.sizeDelta = new Vector2 (1920, 100);
-		attributesTitleDel.transform.Translate (960, Screen.height - 50, 0);
 		attributesTitleDel.text = "Attributes";
 			
 		attributesTitleDel.fontSize = 28;
-		attributesTitleDel.transform.position = new Vector2 (365, 222);
+		attributesTitleDel.transform.position = new Vector2 (315, 230);
 		attributesTitleDel.rectTransform.sizeDelta = new Vector2 (200, 50);
 		attributesTitleDel.gameObject.SetActive (false);
 		
-		//		//Settler Health
-		//		settlerHealthTextDel = (Text)Instantiate (settlerHealthText);
-		//		settlerHealthTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		//		
-		//		settlerHealthTextDel.rectTransform.sizeDelta = new Vector2 (1920, 100);
-		//		settlerHealthTextDel.transform.Translate (960, Screen.height - 50, 0);
-		//
-		//		//Settler Stamina
-		//		settlerStaminaTextDel = (Text)Instantiate (settlerStaminaText);
-		//		settlerStaminaTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		//		
-		//		settlerStaminaTextDel.rectTransform.sizeDelta = new Vector2 (1920, 100);
-		//		settlerStaminaTextDel.transform.Translate (960, Screen.height - 50, 0);
-		//
-		//		//Settler Hunger
-		//		settlerHungerTextDel = (Text)Instantiate (settlerHungerText);
-		//		settlerHungerTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		//		
-		//		settlerHungerTextDel.rectTransform.sizeDelta = new Vector2 (1920, 100);
-		//		settlerHungerTextDel.transform.Translate (960, Screen.height - 50, 0);
-		//
-		//		//Settler Morale
-		//		settlerMoraleTextDel = (Text)Instantiate (settlerMoraleText);
-		//		settlerMoraleTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		//		
-		//		settlerMoraleTextDel.rectTransform.sizeDelta = new Vector2 (1920, 100);
-		//		settlerMoraleTextDel.transform.Translate (960, Screen.height - 50, 0);
-		//
-		//		//Settler Strength
-		//		settlerStrengthTextDel = (Text)Instantiate (settlerStrengthText);
-		//		settlerStrengthTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		//		
-		//		settlerStrengthTextDel.rectTransform.sizeDelta = new Vector2 (1920, 100);
-		//		settlerStrengthTextDel.transform.Translate (960, Screen.height - 50, 0);
-		//
-		//		//Settler Intelligence
-		//		settlerIntelligenceTextDel = (Text)Instantiate (settlerIntelligenceText);
-		//		settlerIntelligenceTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		//		
-		//		settlerIntelligenceTextDel.rectTransform.sizeDelta = new Vector2 (1920, 100);
-		//		settlerIntelligenceTextDel.transform.Translate (960, Screen.height - 50, 0);
-		//
-		//		//Settler Agility
-		//		settlerAgilityTextDel = (Text)Instantiate (settlerAgilityText);
-		//		settlerAgilityTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		//		
-		//		settlerAgilityTextDel.rectTransform.sizeDelta = new Vector2 (1920, 100);
-		//		settlerAgilityTextDel.transform.Translate (960, Screen.height - 50, 0);
-		//
-		//		//Settler Perception
-		//		settlerPerceptionTextDel = (Text)Instantiate (settlerPerceptionText);
-		//		settlerPerceptionTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		//		
-		//		settlerPerceptionTextDel.rectTransform.sizeDelta = new Vector2 (1920, 100);
-		//		settlerPerceptionTextDel.transform.Translate (960, Screen.height - 50, 0);
-		//
-		//		//Settler Charisma
-		//		settlerCharismaTextDel = (Text)Instantiate (settlerCharismaText);
-		//		settlerCharismaTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		//		
-		//		settlerCharismaTextDel.rectTransform.sizeDelta = new Vector2 (1920, 100);
-		//		settlerCharismaTextDel.transform.Translate (960, Screen.height - 50, 0);
-		//
-		// === Settler Inventory === \\
+		//Health
+		settlerHealthTextDel = (Text)Instantiate (settlerHealthText);
+		settlerHealthTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		settlerHealthTextDel.rectTransform.sizeDelta = new Vector2 (300, 100);
+		settlerHealthTextDel.transform.position = new Vector2 (260, 177);
+		settlerHealthTextDel.text = "Health: " + rndHP;
+		settlerHealthTextDel.gameObject.SetActive (false);
+		settlerHealthTextDel.fontSize = 16;
+		
+		//Stamina
+		settlerStaminaTextDel = (Text)Instantiate (settlerStaminaText);
+		settlerStaminaTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		settlerStaminaTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
+		settlerStaminaTextDel.transform.position = new Vector2 (260, 137);
+		settlerStaminaTextDel.text = "Stamina: " + rndStam;
+		settlerStaminaTextDel.gameObject.SetActive (false);
+		settlerStaminaTextDel.fontSize = 16;
+
+		//Morale
+		settlerMoraleTextDel = (Text)Instantiate (settlerMoraleText);
+		settlerMoraleTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		settlerMoraleTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
+		settlerMoraleTextDel.transform.position = new Vector2 (260, 97);
+		settlerMoraleTextDel.text = "Morale: " + rndMor;
+		settlerMoraleTextDel.gameObject.SetActive (false);
+		settlerMoraleTextDel.fontSize = 16;
+
+		//Hunger
+		settlerHungerTextDel = (Text)Instantiate (settlerHungerText);
+		settlerHungerTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		settlerHungerTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
+		settlerHungerTextDel.transform.position = new Vector2 (260, 57);
+		settlerHungerTextDel.text = "Hunger: " + rndHung;
+		settlerHungerTextDel.gameObject.SetActive (false);
+		settlerHungerTextDel.fontSize = 16;
+
+		//Thirst
+		settlerThirstTextDel = (Text)Instantiate (settlerThirstText);
+		settlerThirstTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		settlerThirstTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
+		settlerThirstTextDel.transform.position = new Vector2 (260, 17);
+		settlerThirstTextDel.text = "Thirst: " + rndThir;
+		settlerThirstTextDel.gameObject.SetActive (false);
+		settlerThirstTextDel.fontSize = 16;
+
+		//Strength
+		settlerStrengthTextDel = (Text)Instantiate (settlerStrengthText);
+		settlerStrengthTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		settlerStrengthTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
+		settlerStrengthTextDel.transform.position = new Vector2 (360, 177);
+		settlerStrengthTextDel.text = "Strength: " + rndStr;
+		settlerStrengthTextDel.gameObject.SetActive (false);
+		settlerStrengthTextDel.fontSize = 16;
+
+		//Intelligence
+		settlerIntelligenceTextDel = (Text)Instantiate (settlerIntelligenceText);
+		settlerIntelligenceTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		settlerIntelligenceTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
+		settlerIntelligenceTextDel.transform.position = new Vector2 (360, 137);
+		settlerIntelligenceTextDel.text = "Intelligence: " + rndInt;
+		settlerIntelligenceTextDel.gameObject.SetActive (false);
+		settlerIntelligenceTextDel.fontSize = 16;
+
+		//Agility
+		settlerAgilityTextDel = (Text)Instantiate (settlerAgilityText);
+		settlerAgilityTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		settlerAgilityTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
+		settlerAgilityTextDel.transform.position = new Vector2 (360, 97);
+		settlerAgilityTextDel.text = "Agility: " + rndAgil;
+		settlerAgilityTextDel.gameObject.SetActive (false);
+		settlerAgilityTextDel.fontSize = 16;
+
+		//Perception
+		settlerPerceptionTextDel = (Text)Instantiate (settlerPerceptionText);
+		settlerPerceptionTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		settlerPerceptionTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
+		settlerPerceptionTextDel.transform.position = new Vector2 (360, 57);
+		settlerPerceptionTextDel.text = "Perception: " + rndPerc;
+		settlerPerceptionTextDel.gameObject.SetActive (false);
+		settlerPerceptionTextDel.fontSize = 16;
+
+		//Charisma
+		settlerCharismaTextDel = (Text)Instantiate (settlerCharismaText);
+		settlerCharismaTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		settlerCharismaTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
+		settlerCharismaTextDel.transform.position = new Vector2 (360, 17);
+		settlerCharismaTextDel.text = "Charisma: " + rndChar;
+		settlerCharismaTextDel.gameObject.SetActive (false);
+		settlerCharismaTextDel.fontSize = 16;
+		
+		//=========================\\
+		//=== Settler Inventory ===\\
+		//=========================\\
 		// Inventory Title
 		inventoryTitleDel = (Text)Instantiate (inventoryTitle);
 		inventoryTitleDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		inventoryTitleDel.rectTransform.sizeDelta = new Vector2 (1920, 100);
 		inventoryTitleDel.transform.Translate (960, Screen.height - 50, 0);
 		inventoryTitleDel.text = "Inventory";
 		
 		inventoryTitleDel.fontSize = 28;
-		inventoryTitleDel.transform.position = new Vector2 (557, 222);
+		inventoryTitleDel.transform.position = new Vector2 (515, 230);
 		inventoryTitleDel.rectTransform.sizeDelta = new Vector2 (200, 50);
 		inventoryTitleDel.gameObject.SetActive (false);
 		
-		// === Settler Assign Role === \\
+		//====================\\
+		//=== Settler Role ===\\
+		//====================\\
 		//Roles Title
 		rolesTitleDel = (Text)Instantiate (rolesTitle);
 		rolesTitleDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		rolesTitleDel.rectTransform.sizeDelta = new Vector2 (1920, 100);
 		rolesTitleDel.transform.Translate (960, Screen.height - 50, 0);
 		rolesTitleDel.text = "Role";
 		
 		rolesTitleDel.fontSize = 28;
-		rolesTitleDel.transform.position = new Vector2 (775, 222);
+		rolesTitleDel.transform.position = new Vector2 (715, 230);
 		rolesTitleDel.rectTransform.sizeDelta = new Vector2 (200, 50);
 		rolesTitleDel.gameObject.SetActive (false);
 		
@@ -250,6 +356,18 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		bartenderRoleButtonDel.GetComponentInChildren<Text> ().text = "Bartender";
 		//bartenderRoleButtonDel.onClick.AddListener (() => bartenderRoleClicked());
 		bartenderRoleButtonDel.gameObject.SetActive (false);
+
+		//Close Button
+		exBtnDel = (Button)Instantiate (exBtn);
+		exBtnDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		exBtnDel.image.rectTransform.sizeDelta = new Vector2 (20, 20);
+
+
+		exBtnDel.transform.Translate (795, 286, 0);
+		exBtnDel.GetComponentInChildren<Text> ().text = "";
+		exBtnDel.gameObject.SetActive (false);
+		exBtnDel.onClick.AddListener (() => exBtnClicked());
     }
 
 	//=================\\
@@ -272,9 +390,41 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			teacherRoleButtonDel.gameObject.SetActive (false);
 			worshipperRoleButtonDel.gameObject.SetActive (false);
 			bartenderRoleButtonDel.gameObject.SetActive (false);
+			exBtnDel.gameObject.SetActive (false);
+			genericProfileIconDel.gameObject.SetActive (false);
+			firstLastNameDel.gameObject.SetActive (false);
+			//Attributes
+			settlerHealthTextDel.gameObject.SetActive (false);
+			settlerStaminaTextDel.gameObject.SetActive (false);
+			settlerMoraleTextDel.gameObject.SetActive (false);
+			settlerHungerTextDel.gameObject.SetActive (false);
+			settlerThirstTextDel.gameObject.SetActive (false);
+			settlerStrengthTextDel.gameObject.SetActive (false);
+			settlerIntelligenceTextDel.gameObject.SetActive (false);
+			settlerAgilityTextDel.gameObject.SetActive (false);
+			settlerPerceptionTextDel.gameObject.SetActive (false);
+			settlerCharismaTextDel.gameObject.SetActive (false);
 		}
 		else {
 			showMenu = true;
+
+			//Randomizes names when settler info box pops up
+			randomFirstName = UnityEngine.Random.Range (0, 14);
+			randomLastName = UnityEngine.Random.Range (0, 14);
+			firstLastNameDel.gameObject.SetActive (true);
+
+			//Randomizing attributes when settler info box pops up
+			rndHP  = UnityEngine.Random.Range (1, 101);
+			rndStam = UnityEngine.Random.Range (0, 101);
+			rndMor = UnityEngine.Random.Range (0, 101);
+			rndHung = UnityEngine.Random.Range (0, 101);
+			rndThir = UnityEngine.Random.Range (0, 101);
+			rndStr = UnityEngine.Random.Range (0, 11);
+			rndInt = UnityEngine.Random.Range (0, 11);
+			rndAgil = UnityEngine.Random.Range (0, 11);
+			rndPerc = UnityEngine.Random.Range (0, 11);
+			rndChar = UnityEngine.Random.Range (0, 11);
+
 			inventoryTitleDel.gameObject.SetActive (true);
 			rolesTitleDel.gameObject.SetActive (true);
 			attributesTitleDel.gameObject.SetActive (true);
@@ -287,11 +437,23 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			teacherRoleButtonDel.gameObject.SetActive (true);
 			worshipperRoleButtonDel.gameObject.SetActive (true);
 			bartenderRoleButtonDel.gameObject.SetActive (true);
+			exBtnDel.gameObject.SetActive (true);
+			genericProfileIconDel.gameObject.SetActive (true);
+			//Attributes
+			settlerHealthTextDel.gameObject.SetActive (true);
+			settlerStaminaTextDel.gameObject.SetActive (true);
+			settlerMoraleTextDel.gameObject.SetActive (true);
+			settlerHungerTextDel.gameObject.SetActive (true);
+			settlerThirstTextDel.gameObject.SetActive (true);
+			settlerStrengthTextDel.gameObject.SetActive (true);
+			settlerIntelligenceTextDel.gameObject.SetActive (true);
+			settlerAgilityTextDel.gameObject.SetActive (true);
+			settlerPerceptionTextDel.gameObject.SetActive (true);
+			settlerCharismaTextDel.gameObject.SetActive (true);
 		}
     }
 
-	void farmerRoleClicked ()
-	{
+	void farmerRoleClicked () {
 		if ((agentLogic.jobState != AgentLogic_07.jobSubState.Farmer) && farmAvailable) {
 			//Obtain all farm waypoints that the agent should move between when working
 			agentLogic.workWaypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag ("FarmWaypoint"));
@@ -304,8 +466,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		}
 	}
 
-	void waterPurifierRoleClicked ()
-	{
+	void waterPurifierRoleClicked () {
 		if ((agentLogic.jobState != AgentLogic_07.jobSubState.WaterPurifier) && waterstationAvailable) {
 			agentLogic.workWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("WaterWaypoint"));
 			
@@ -317,8 +478,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		}
 	}
 
-	void powerEngineerRoleClicked ()
-	{
+	void powerEngineerRoleClicked () {
 		if ((agentLogic.jobState != AgentLogic_07.jobSubState.PowerWorker) && powerstationAvailable) {
 			//Obtain all farm waypoints that the agent should move between when working
 			agentLogic.workWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("PowerWaypoint"));
@@ -331,13 +491,11 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		}
 	}
 
-//	void storageWorkerRoleClicked ()
-//	{
+//	void storageWorkerRoleClicked () {
 //		//STORAGE WORKER
 //	}
 
-	void medicRoleClicked ()
-	{
+	void medicRoleClicked () {
 		if ((agentLogic.jobState != AgentLogic_07.jobSubState.Medic) && hospitalAvailable) {
 			agentLogic.workWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("HospitalWaypoint"));
 		
@@ -365,27 +523,70 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		}
 	}
 
-//	void teacherRoleClicked ()
-//	{
+//	void teacherRoleClicked () {
 //		//TEACHER
 //	}
 //
-//	void worshipperRoleClicked ()
-//	{
+//	void worshipperRoleClicked () {
 //		//WORSHIPPER
 //	}
 //
-//	void bartenderRoleClicked ()
-//	{
+//	void bartenderRoleClicked () {
 //		//BARTENDER
 //	}
+
+	void exBtnClicked () {
+		showMenu = false;
+		inventoryTitleDel.gameObject.SetActive (false);
+		rolesTitleDel.gameObject.SetActive (false);
+		attributesTitleDel.gameObject.SetActive (false);
+		SettlerInfoDelBg.gameObject.SetActive (false);
+		farmerRoleButtonDel.gameObject.SetActive (false);
+		waterPurifierRoleButtonDel.gameObject.SetActive (false);
+		powerEngineerRoleButtonDel.gameObject.SetActive (false);
+		storageWorkerRoleButtonDel.gameObject.SetActive (false);
+		medicRoleButtonDel.gameObject.SetActive (false);
+		teacherRoleButtonDel.gameObject.SetActive (false);
+		worshipperRoleButtonDel.gameObject.SetActive (false);
+		bartenderRoleButtonDel.gameObject.SetActive (false);
+		exBtnDel.gameObject.SetActive (false);
+		genericProfileIconDel.gameObject.SetActive (false);
+		firstLastNameDel.gameObject.SetActive (false);
+		//Attributes
+		settlerHealthTextDel.gameObject.SetActive (false);
+		settlerStaminaTextDel.gameObject.SetActive (false);
+		settlerMoraleTextDel.gameObject.SetActive (false);
+		settlerHungerTextDel.gameObject.SetActive (false);
+		settlerThirstTextDel.gameObject.SetActive (false);
+		settlerStrengthTextDel.gameObject.SetActive (false);
+		settlerIntelligenceTextDel.gameObject.SetActive (false);
+		settlerAgilityTextDel.gameObject.SetActive (false);
+		settlerPerceptionTextDel.gameObject.SetActive (false);
+		settlerCharismaTextDel.gameObject.SetActive (false);
+	}
 
 	//==================\\
 	//===== Update =====\\
 	//==================\\
 
     void Update() {
-        //Check to see if there are any gameobjects with the appropriate building tag
+		//Re setting random name and attributes
+		firstLastNameDel.text = firstNameArray [randomFirstName] + " " + lastNameArray [randomLastName];
+
+		settlerHealthTextDel.text = "Health: " + rndHP;
+		settlerStaminaTextDel.text = "Stamina: " + rndStam;
+		settlerMoraleTextDel.text = "Morale: " + rndMor;
+		settlerHungerTextDel.text = "Hunger: " + rndHung;
+		settlerThirstTextDel.text = "Thirst: " + rndThir;
+		settlerStrengthTextDel.text = "Strength: " + rndStr;
+		settlerIntelligenceTextDel.text = "Intelligence: " + rndInt;
+		settlerAgilityTextDel.text = "Agility: " + rndAgil;
+		settlerPerceptionTextDel.text = "Perception: " + rndPerc;
+		settlerCharismaTextDel.text = "Charisma: " + rndChar;
+
+		////
+
+		//Check to see if there are any gameobjects with the appropriate building tag
 		if (GameObject.FindWithTag ("Farm"))
 		{
 			farmAvailable = true;

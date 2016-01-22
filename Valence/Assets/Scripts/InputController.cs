@@ -26,6 +26,7 @@ public class InputController : MonoBehaviour {
 	string hoverState;
 
 	public GUIController _GUIController;
+	string buildType;
 
 	void Start(){
 		_tileMap = GetComponent<TileMap> ();
@@ -35,7 +36,7 @@ public class InputController : MonoBehaviour {
 		zoning = true;
 		currentColor = "blue";
 
-		//_GUIController = GameObject.Find ("Canvas").GetComponent<GUIController> ();
+		_GUIController = GameObject.Find ("Canvas").GetComponent<GUIController> ();
 	}
 
 	public void selectedMaterial( string color ){
@@ -167,7 +168,7 @@ public class InputController : MonoBehaviour {
 					AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
 				} 
 			} else if ( !zoning ){
-				if (hoverState == "food" || _GUIController.setBuildingTypeName == "food"){
+				if (hoverState == "food" || buildType == "farm"){
                     if (_gameController.scrap >= 25) {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
                             _gameController.scrap -= 25;
@@ -196,7 +197,7 @@ public class InputController : MonoBehaviour {
                         }
                     }
 				}
-				if (hoverState == "water" || _GUIController.setBuildingTypeName == "water"){
+				if (hoverState == "water" || buildType == "water"){
                     if (_gameController.scrap >= 25){
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))){
                             _gameController.scrap -= 25;
@@ -225,11 +226,11 @@ public class InputController : MonoBehaviour {
                         }
                     }
 				}
-				if (hoverState == "power" || _GUIController.setBuildingTypeName == "power"){
+				if (hoverState == "power" || buildType == "power"){
                     if (_gameController.scrap >= 25){
-                        if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))){
+                        if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag ("prop"))){
                             _gameController.scrap -= 25;
-                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("PowerStation"), new Vector3(currentTile.x, 0, currentTile.y), Quaternion.identity);
+                            GameObject tempObject = (GameObject)Instantiate(Resources.Load ("PowerStation"), new Vector3(currentTile.x, 0, currentTile.y), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
@@ -253,8 +254,10 @@ public class InputController : MonoBehaviour {
                         }
                     }
 				}
-				if (hoverState == "shelter" || _GUIController.setBuildingTypeName == "shelter") {
-                    if (_gameController.scrap >= 25) {
+				if (hoverState == "shelter" || buildType == "shelter") {
+					print ("BUILD TYPE IS: " + buildType);
+
+					if (_gameController.scrap >= 25) {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
                             _gameController.scrap -= 25;
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("Shelter"), new Vector3(currentTile.x, 0, currentTile.y), Quaternion.identity);
@@ -277,7 +280,7 @@ public class InputController : MonoBehaviour {
                         }
                     }
                 }
-				if (hoverState == "tavern"  || _GUIController.setBuildingTypeName == "tavern") {
+				if (hoverState == "tavern"  || buildType == "tavern") {
                     if (_gameController.scrap >= 25) {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
                             _gameController.scrap -= 25;
@@ -313,40 +316,35 @@ public class InputController : MonoBehaviour {
         if (Input.GetKey(KeyCode.Alpha0)) {
             Debug.Log("None");
             zoning = false;
-        } else if (Input.GetKey (KeyCode.Alpha1)) {
-			Debug.Log ("food");
-			if( hoverState != "food" ){
+		} else if (_GUIController.setBuildingTypeName == "farm") {
+			if (hoverState != "food"){
 				Destroy( myHoverObject );
 				myHoverObject = (GameObject) Instantiate (foodBuild, new Vector3 (0, 0, 0), Quaternion.identity);
 				hoverState = "food";
 			}
 			zoning = false;
-		} else if (Input.GetKey (KeyCode.Alpha2)) {
-			Debug.Log ("water");
+		} else if (_GUIController.setBuildingTypeName == "water") {
 			if( hoverState != "water" ){
 				Destroy( myHoverObject );
 				myHoverObject = (GameObject) Instantiate (waterBuild, new Vector3 (0, 0, 0), Quaternion.identity);
 				hoverState = "water";
 			}
 			zoning = false;
-		} else if (Input.GetKey (KeyCode.Alpha3)) {
-			Debug.Log ("power");
+		} else if (_GUIController.setBuildingTypeName == "power") {
 			if( hoverState != "power" ){
 				Destroy( myHoverObject );
 				myHoverObject = (GameObject) Instantiate (powerBuild, new Vector3 (0, 0, 0), Quaternion.identity);
 				hoverState = "power";
 			}
 			zoning = false;
-		} else if (Input.GetKey(KeyCode.Alpha4)) {
-            Debug.Log("shelter");
+		} else if (_GUIController.setBuildingTypeName == "shelter") {
             if (hoverState != "shelter") {
                 Destroy(myHoverObject);
                 myHoverObject = (GameObject)Instantiate(shelterBuild, new Vector3(0, 0, 0), Quaternion.identity);
                 hoverState = "shelter";
             }
             zoning = false;
-        } else if (Input.GetKey(KeyCode.Alpha5)) {
-            Debug.Log("tavern");
+		} else if (_GUIController.setBuildingTypeName == "tavern") {
             if (hoverState != "tavern") {
                 Destroy(myHoverObject);
                 myHoverObject = (GameObject)Instantiate(tavernBuild, new Vector3(0, 0, 0), Quaternion.identity);
@@ -361,8 +359,6 @@ public class InputController : MonoBehaviour {
             zoning = true;
             hoverState = "zone";
         }
-        
-
     }
 
     bool IsOverlapping(GameObject candidate, GameObject[] others)
