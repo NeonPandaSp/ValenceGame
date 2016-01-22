@@ -380,11 +380,10 @@ using System.Collections.Generic;
 		//Population
 		//population = globalAttributes.population;
 		population = 5;
-<<<<<<< HEAD
+
 		populationDelText.text = "Pop: " + aSpawner.popSize;
-=======
+
 		populationDelText.text = "Population: " + aSpawner.popSize + "/" + globalAttributes.popLimit;
->>>>>>> origin/master
 
 		if (aSpawner.popSize < 5)
 			populationDelText.color = new Color (0.4509803921568627f, 0.3529411764705882f, 0.3176470588235294f);
