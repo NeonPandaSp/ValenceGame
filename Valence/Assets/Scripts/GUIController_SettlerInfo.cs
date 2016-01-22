@@ -105,6 +105,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		randomFirstName = UnityEngine.Random.Range (0, 14);
 		randomLastName = UnityEngine.Random.Range (0, 14);
 		
+
 		firstLastNameDel = (Text)Instantiate (firstLastName);
 		firstLastNameDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 
@@ -153,7 +154,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		
 		settlerHealthTextDel.rectTransform.sizeDelta = new Vector2 (300, 100);
 		settlerHealthTextDel.transform.position = new Vector2 (260, 177);
-		settlerHealthTextDel.text = "Health: " + rndHP;
+		settlerHealthTextDel.text = "Health: " + agentLogic.health;
 		settlerHealthTextDel.gameObject.SetActive (false);
 		settlerHealthTextDel.fontSize = 16;
 		
@@ -183,7 +184,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		
 		settlerHungerTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
 		settlerHungerTextDel.transform.position = new Vector2 (260, 57);
-		settlerHungerTextDel.text = "Hunger: " + rndHung;
+		settlerHungerTextDel.text = "Hunger: " + agentLogic.hungerValue;
 		settlerHungerTextDel.gameObject.SetActive (false);
 		settlerHungerTextDel.fontSize = 16;
 
@@ -408,9 +409,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		else {
 			showMenu = true;
 
-			//Randomizes names when settler info box pops up
-			randomFirstName = UnityEngine.Random.Range (0, 14);
-			randomLastName = UnityEngine.Random.Range (0, 14);
+			
 			firstLastNameDel.gameObject.SetActive (true);
 
 			//Randomizing attributes when settler info box pops up
@@ -573,10 +572,10 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		//Re setting random name and attributes
 		firstLastNameDel.text = firstNameArray [randomFirstName] + " " + lastNameArray [randomLastName];
 
-		settlerHealthTextDel.text = "Health: " + rndHP;
+		settlerHealthTextDel.text = "Health: " + agentLogic.health;
 		settlerStaminaTextDel.text = "Stamina: " + rndStam;
 		settlerMoraleTextDel.text = "Morale: " + rndMor;
-		settlerHungerTextDel.text = "Hunger: " + rndHung;
+		settlerHungerTextDel.text = "Hunger: " + agentLogic.hungerValue;
 		settlerThirstTextDel.text = "Thirst: " + rndThir;
 		settlerStrengthTextDel.text = "Strength: " + rndStr;
 		settlerIntelligenceTextDel.text = "Intelligence: " + rndInt;

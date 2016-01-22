@@ -37,9 +37,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
---- !u!127 &3
-LevelGameManager:
-  m_ObjectHideFlags: 0
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -68,6 +65,7 @@ LightmapSettings:
     m_TextureCompression: 1
     m_FinalGather: 0
     m_FinalGatherRayCount: 1024
+    m_ReflectionCompression: 2
   m_LightmapSnapshot: {fileID: 0}
   m_RuntimeCPUUsage: 25
 --- !u!196 &5
@@ -293,7 +291,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e6dffcff49f082e40af317d89e43b621, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &323505698
+--- !u!114 &323505698 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11413624, guid: 586afe5116ba4e4409014324bb083452,
     type: 2}
@@ -507,7 +505,7 @@ MonoBehaviour:
   lastMousePositionX: 0
   lastMousePositionY: 0
   moving: 0
---- !u!4 &762412601
+--- !u!4 &762412601 stripped
 Transform:
   m_PrefabParentObject: {fileID: 403288, guid: 6c41250e6f732204b87d6069c8ab1c39, type: 2}
   m_PrefabInternal: {fileID: 1769481051}
@@ -619,7 +617,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1143935504}
   m_RootOrder: 2
---- !u!20 &947609934
+--- !u!20 &947609934 stripped
 Camera:
   m_PrefabParentObject: {fileID: 2062224, guid: c8f312bb766cb284bbfd89a88b2d6058,
     type: 2}
@@ -666,7 +664,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 369797839c813914195cb438a16807de, type: 2}
   m_IsPrefabParent: 0
---- !u!4 &1035582278
+--- !u!4 &1035582278 stripped
 Transform:
   m_PrefabParentObject: {fileID: 482952, guid: c8f312bb766cb284bbfd89a88b2d6058, type: 2}
   m_PrefabInternal: {fileID: 148993958}
@@ -699,7 +697,7 @@ MonoBehaviour:
   m_Script: {fileID: 1997211142, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowActivationOnStandalone: 0
+  m_ForceModuleActive: 0
 --- !u!114 &1108607860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -716,7 +714,8 @@ MonoBehaviour:
   m_SubmitButton: Submit
   m_CancelButton: Cancel
   m_InputActionsPerSecond: 10
-  m_AllowActivationOnMobileDevice: 0
+  m_RepeatDelay: .5
+  m_ForceModuleActive: 0
 --- !u!114 &1108607861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1171,7 +1170,7 @@ MonoBehaviour:
   m_Script: {fileID: 1997211142, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowActivationOnStandalone: 0
+  m_ForceModuleActive: 0
 --- !u!114 &1509926060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1188,7 +1187,8 @@ MonoBehaviour:
   m_SubmitButton: Submit
   m_CancelButton: Cancel
   m_InputActionsPerSecond: 10
-  m_AllowActivationOnMobileDevice: 0
+  m_RepeatDelay: .5
+  m_ForceModuleActive: 0
 --- !u!114 &1509926061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1338,7 +1338,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1143935504}
   m_RootOrder: 4
---- !u!1 &1766896323
+--- !u!1 &1766896323 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 107912, guid: c3e3742574207e449b1839e600945537, type: 2}
   m_PrefabInternal: {fileID: 455996716}
@@ -1566,7 +1566,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 640879e37b0ae294293f0f247b7ac141, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1911037672
+--- !u!1 &1911037672 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100094, guid: b2404e16499c34346a90c11d78e51b48, type: 3}
   m_PrefabInternal: {fileID: 1542360155}
@@ -1626,7 +1626,7 @@ Transform:
   m_RootOrder: 0
 --- !u!21 &2107555505
 Material:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -1635,6 +1635,7 @@ Material:
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: -1
+  stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:

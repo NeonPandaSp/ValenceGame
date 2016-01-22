@@ -66,7 +66,7 @@ public class generateZone : MonoBehaviour {
 	void OnGUI() {
 
 		//Create a GUI toggle section where the user can select between a serise of building types, assigned variable is passed to Generate function -Zach
-		buildingType = GUI.SelectionGrid(new Rect(Screen.width - 100, 50, 100, 130), buildingType, buildingArray, 1);
+		//buildingType = GUI.SelectionGrid(new Rect(Screen.width - 100, 50, 100, 130), buildingType, buildingArray, 1);
         //As you add more buttons to the selection grid, you will need to increase the height variable of the Rect to accomidate the additional space -Zach
 	}
 
