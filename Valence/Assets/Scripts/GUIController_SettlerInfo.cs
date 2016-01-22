@@ -50,6 +50,9 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	// === Settler Inventory === \\
 	public Text inventoryTitle;
 	Text inventoryTitleDel;
+
+	public Text inventoryFoodText;
+	Text inventoryFoodTextDel;
 	
 	// === Settler Assign Role === \\
 	public Text rolesTitle;
@@ -118,12 +121,6 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		
 		firstLastNameDel.fontSize = 28;
 		firstLastNameDel.gameObject.SetActive (false);
-		
-		//			break;
-		//		case false:
-		//			//LOL
-		//			break;
-		//		}
 
 		//==========================\\
 		//=== Settler Attributes ===\\
@@ -259,13 +256,21 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		inventoryTitleDel = (Text)Instantiate (inventoryTitle);
 		inventoryTitleDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		inventoryTitleDel.transform.Translate (960, Screen.height - 50, 0);
 		inventoryTitleDel.text = "Inventory";
 		
 		inventoryTitleDel.fontSize = 28;
 		inventoryTitleDel.transform.position = new Vector2 (515, 230);
-		inventoryTitleDel.rectTransform.sizeDelta = new Vector2 (200, 50);
+		inventoryTitleDel.rectTransform.sizeDelta = new Vector2 (150, 100);
 		inventoryTitleDel.gameObject.SetActive (false);
+
+		//Inventory Food
+		inventoryFoodTextDel = (Text)Instantiate (inventoryFoodText);
+		inventoryFoodTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		inventoryFoodTextDel.text = "Food: 120";
+		inventoryFoodTextDel.transform.position = new Vector2 (449, 178);
+		inventoryFoodTextDel.rectTransform.sizeDelta = new Vector2 (150, 50);
+		inventoryFoodTextDel.gameObject.SetActive (false);
 		
 		//====================\\
 		//=== Settler Role ===\\
@@ -274,7 +279,6 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		rolesTitleDel = (Text)Instantiate (rolesTitle);
 		rolesTitleDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		rolesTitleDel.transform.Translate (960, Screen.height - 50, 0);
 		rolesTitleDel.text = "Role";
 		
 		rolesTitleDel.fontSize = 28;
@@ -400,6 +404,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			exBtnDel.gameObject.SetActive (false);
 			genericProfileIconDel.gameObject.SetActive (false);
 			firstLastNameDel.gameObject.SetActive (false);
+			inventoryFoodTextDel.gameObject.SetActive (false);
 			//Attributes
 			settlerHealthTextDel.gameObject.SetActive (false);
 			settlerStaminaTextDel.gameObject.SetActive (false);
@@ -444,6 +449,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			bartenderRoleButtonDel.gameObject.SetActive (true);
 			exBtnDel.gameObject.SetActive (true);
 			genericProfileIconDel.gameObject.SetActive (true);
+			inventoryFoodTextDel.gameObject.SetActive (true);
 			//Attributes
 			settlerHealthTextDel.gameObject.SetActive (true);
 			settlerStaminaTextDel.gameObject.SetActive (true);
@@ -558,6 +564,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		exBtnDel.gameObject.SetActive (false);
 		genericProfileIconDel.gameObject.SetActive (false);
 		firstLastNameDel.gameObject.SetActive (false);
+		inventoryFoodTextDel.gameObject.SetActive (false);
 		//Attributes
 		settlerHealthTextDel.gameObject.SetActive (false);
 		settlerStaminaTextDel.gameObject.SetActive (false);

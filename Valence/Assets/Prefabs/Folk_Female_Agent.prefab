@@ -2352,7 +2352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agentLogic: {fileID: 11418052}
-  selectedIcon: {fileID: 115820}
+  selectedIcon: {fileID: 0}
   SettlerInfoBg: {fileID: 11419220, guid: cd9fed07742c23f4198b49b24244ae41, type: 2}
   genericProfileIcon: {fileID: 11443008, guid: 7e887677f3b641144bd754f2e7607419, type: 2}
   firstLastName: {fileID: 11400736, guid: 768032789efbd84408398c022b05ffa1, type: 2}
@@ -2372,6 +2372,7 @@ MonoBehaviour:
   settlerCharismaText: {fileID: 11435666, guid: f3ba5e6cb10d9174088b3378921c8442,
     type: 2}
   inventoryTitle: {fileID: 11479412, guid: bdd929af1f799694d8a2cf5e655dd790, type: 2}
+  inventoryFoodText: {fileID: 11456758, guid: 8ae28e7a463704e48b2e9ee982415d6a, type: 2}
   rolesTitle: {fileID: 11441918, guid: e70e88d985985614b8ab203e7c2776f7, type: 2}
   farmerRoleButton: {fileID: 11426372, guid: 1ffd3ec782d9ba34587f607efcdcb7e3, type: 2}
   waterPurifierRoleButton: {fileID: 11439568, guid: 6b79d5ce3db0dd246a54d46e017384e2,
@@ -2404,6 +2405,7 @@ MonoBehaviour:
   wanderListSize: 10
   foodStored: 0
   hungerValue: 0
+  moraleLevel: 0
   health: 0
   aState: 0
   jobState: 0
