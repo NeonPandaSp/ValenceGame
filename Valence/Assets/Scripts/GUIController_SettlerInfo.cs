@@ -21,8 +21,10 @@ public class GUIController_SettlerInfo : MonoBehaviour {
     bool showError;
 
 	Canvas myCanvas;
-	
-	public Image SettlerInfoBg;
+
+    public SpriteRenderer selectedIcon;
+
+    public Image SettlerInfoBg;
 	Image SettlerInfoDelBg;
 
 	public Image genericProfileIcon;
@@ -75,11 +77,11 @@ public class GUIController_SettlerInfo : MonoBehaviour {
         schoolAvailable = false;
 
         myCanvas = GameObject.Find ("Canvas").GetComponent <Canvas>();
-
-		//===============================\\
-		//=== Settler Info Background ===\\
-		//===============================\\
-		SettlerInfoDelBg = (Image)Instantiate (SettlerInfoBg);
+        selectedIcon = GetComponentInChildren<SpriteRenderer>();
+        //===============================\\
+        //=== Settler Info Background ===\\
+        //===============================\\
+        SettlerInfoDelBg = (Image)Instantiate (SettlerInfoBg);
 		SettlerInfoDelBg.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		SettlerInfoDelBg.rectTransform.sizeDelta = new Vector2 (820, 305);
@@ -381,7 +383,9 @@ public class GUIController_SettlerInfo : MonoBehaviour {
         // When you click, change the variables value
         if (showMenu) {
 			showMenu = false;
-			inventoryTitleDel.gameObject.SetActive (false);
+
+            selectedIcon.enabled = false;
+            inventoryTitleDel.gameObject.SetActive (false);
 			rolesTitleDel.gameObject.SetActive (false);
 			attributesTitleDel.gameObject.SetActive (false);
 			SettlerInfoDelBg.gameObject.SetActive (false);
@@ -411,8 +415,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		else {
 			showMenu = true;
 
-			
-			firstLastNameDel.gameObject.SetActive (true);
+            firstLastNameDel.gameObject.SetActive (true);
 
 			//Randomizing attributes when settler info box pops up
 			rndHP  = UnityEngine.Random.Range (1, 101);
@@ -426,7 +429,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			rndPerc = UnityEngine.Random.Range (0, 11);
 			rndChar = UnityEngine.Random.Range (0, 11);
 
-			inventoryTitleDel.gameObject.SetActive (true);
+            selectedIcon.enabled = true;
+            inventoryTitleDel.gameObject.SetActive (true);
 			rolesTitleDel.gameObject.SetActive (true);
 			attributesTitleDel.gameObject.SetActive (true);
 			SettlerInfoDelBg.gameObject.SetActive (true);
@@ -538,7 +542,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 
 	void exBtnClicked () {
 		showMenu = false;
-		inventoryTitleDel.gameObject.SetActive (false);
+        selectedIcon.enabled = false;
+        inventoryTitleDel.gameObject.SetActive (false);
 		rolesTitleDel.gameObject.SetActive (false);
 		attributesTitleDel.gameObject.SetActive (false);
 		SettlerInfoDelBg.gameObject.SetActive (false);
@@ -571,8 +576,15 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	//==================\\
 
     void Update() {
-		//Re setting random name and attributes
-		firstLastNameDel.text = firstNameArray [randomFirstName] + " " + lastNameArray [randomLastName] + " (" + agentLogic.aState + ")";
+
+
+        if (agentLogic.aState == AgentLogic_07.agentState.Working) {
+            firstLastNameDel.text = firstNameArray[randomFirstName] + " " + lastNameArray[randomLastName] + " the " + agentLogic.jobState + " (" + agentLogic.aState + ")";
+        }
+        else {
+            //Re setting random name and attributes
+            firstLastNameDel.text = firstNameArray[randomFirstName] + " " + lastNameArray[randomLastName] + " (" + agentLogic.aState + ")";
+        }
 
 		settlerHealthTextDel.text = "Health: " + agentLogic.health;
 		settlerStaminaTextDel.text = "Stamina: " + rndStam;
