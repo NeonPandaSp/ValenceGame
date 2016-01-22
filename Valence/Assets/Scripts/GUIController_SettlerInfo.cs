@@ -15,7 +15,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
     public AgentLogic_07 agentLogic;
 
 	//Return true if a gameobject with corresponding tag has been spawned, vise versa for false
-    bool farmAvailable, hospitalAvailable, waterstationAvailable, powerstationAvailable;
+    bool farmAvailable, hospitalAvailable, waterstationAvailable, powerstationAvailable, storageAvailable, schoolAvailable, shrineAvailable, tavernAvailable;
 
     //Return true if error message should be shown
     bool showError;
@@ -71,8 +71,10 @@ public class GUIController_SettlerInfo : MonoBehaviour {
         farmAvailable = false;
         waterstationAvailable = false;
         powerstationAvailable = false;
+        storageAvailable = false;
+        schoolAvailable = false;
 
-		myCanvas = GameObject.Find ("Canvas").GetComponent <Canvas>();
+        myCanvas = GameObject.Find ("Canvas").GetComponent <Canvas>();
 
 		//===============================\\
 		//=== Settler Info Background ===\\
@@ -570,7 +572,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 
     void Update() {
 		//Re setting random name and attributes
-		firstLastNameDel.text = firstNameArray [randomFirstName] + " " + lastNameArray [randomLastName];
+		firstLastNameDel.text = firstNameArray [randomFirstName] + " " + lastNameArray [randomLastName] + " (" + agentLogic.aState + ")";
 
 		settlerHealthTextDel.text = "Health: " + agentLogic.health;
 		settlerStaminaTextDel.text = "Stamina: " + rndStam;
@@ -586,14 +588,14 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		////
 
 		//Check to see if there are any gameobjects with the appropriate building tag
-		if (GameObject.FindWithTag ("Farm"))
+		if (!GameObject.FindWithTag ("Farm"))
 		{
-			farmAvailable = true;
-			farmerRoleButtonDel.interactable = true;
-		}
-		else {
 			farmAvailable = false;
 			farmerRoleButtonDel.interactable = false;
+		}
+		else {
+			farmAvailable = true;
+			farmerRoleButtonDel.interactable = true;
 		}
 		
         if (!GameObject.FindWithTag ("WaterStation"))
@@ -628,45 +630,42 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			medicRoleButtonDel.interactable = true;
 		}
 
-//		if (!GameObject.FindWithTag ("Storage"))
-//		{
-//			storageAvailable = false;
-//			storageWorkerRoleButtonDel.interactable = false;
-//		}
-//		else {
-//			storageAvailable = true;
-//			storageWorkerRoleButtonDel.interactable = true;
-//		}
-//
-//		if (!GameObject.FindWithTag ("School"))
-//		{
-//			schoolAvailable = false;
-//			teacherRoleButtonDel.interactable = false;
-//		}
-//		else {
-//			schoolAvailable = true;
-//			teacherRoleButtonDel.interactable = true;
-//		}
+		if (!GameObject.FindWithTag("Storage")) { 
 
-//		if (!GameObject.FindWithTag ("Shrine"))
-//		{
-//			shrineAvailable = false;
-//			worshipperRoleButtonDel.interactable = false;
-//		}
-//		else {
-//			shrineAvailable = true;
-//			worshipperRoleButtonDel.interactable = true;
-//		}
+		    storageAvailable = false;
+		    storageWorkerRoleButtonDel.interactable = false;
+        }
+        else {
+            storageAvailable = true;
+            storageWorkerRoleButtonDel.interactable = true;
+        }
 
-//		if (!GameObject.FindWithTag ("Tavern"))
-//		{
-//			tavernAvailable = false;
-//			bartenderRoleButtonDel.interactable = false;
-//		}
-//		else {
-//			tavernAvailable = true;
-//			bartenderRoleButtonDel.interactable = true;
-//		}
+        if (!GameObject.FindWithTag ("School")) {
+            schoolAvailable = false;
+            teacherRoleButtonDel.interactable = false;
+        }
+        else {
+            schoolAvailable = true;
+            teacherRoleButtonDel.interactable = true;
+        }
+
+		if (!GameObject.FindWithTag ("Shrine")) {
+            shrineAvailable = false;
+            worshipperRoleButtonDel.interactable = false;
+        }
+        else {
+            shrineAvailable = true;
+            worshipperRoleButtonDel.interactable = true;
+        }
+
+        if (!GameObject.FindWithTag ("Tavern")) {
+            tavernAvailable = false;
+            bartenderRoleButtonDel.interactable = false;
+        }
+        else {
+            tavernAvailable = true;
+            bartenderRoleButtonDel.interactable = true;
+        }
 	}
 
 	IEnumerator MissingBuildingError (float wait, string building) {
