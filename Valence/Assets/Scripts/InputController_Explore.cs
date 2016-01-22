@@ -198,11 +198,18 @@ public class InputController_Explore : MonoBehaviour {
 	}
 
 	public void PickupSelectedUnit(){
-		_GameController.disableAttackBox ();
-		_GameController.selectedUnit.grabPressed = true;
-		_GameController.scrapObj.transform.SetParent( _GameController.selectedUnit.gameObject.transform );
-		_GameController.scrapObj.transform.position = _GameController.selectedUnit.gameObject.transform.position;
-		_GameController.selectedUnit.hasScrap = true;
+		if (!_GameController.selectedUnit.hasScrap) {
+			_GameController.disableAttackBox ();
+			_GameController.selectedUnit.grabPressed = true;
+			_GameController.scrapObj.transform.SetParent (_GameController.selectedUnit.gameObject.transform);
+			_GameController.scrapObj.transform.position = _GameController.selectedUnit.gameObject.transform.position;
+			_GameController.selectedUnit.hasScrap = true;
+		} else {
+			_GameController.disableAttackBox ();
+			_GameController.selectedUnit.grabPressed = true;
+			_GameController.scrapObj.transform.SetParent (null);
+			_GameController.selectedUnit.hasScrap = false;
+		}
 	}
 
 	public void selectUnit(int index){
@@ -248,6 +255,7 @@ public class InputController_Explore : MonoBehaviour {
 	public void attackConfirmed(){
 		Unit attackTarget = _GameController.selectedUnit.AttackTargets [_GameController.selectedUnit.currentAttackTarget];
 		_GameController.selectedUnit.actionPoints--;
+		_GameController.selectedUnit.hasAttacked = true;
 		attackTarget.generateSound (_GameController.selectedUnit.currentPosition, _GameController.selectedUnit.myWeapon.GetComponent<weaponScript> ().soundRange);
 		Vector2 tempFacing = attackTarget.currentPosition - _GameController.selectedUnit.currentPosition;
 		tempFacing.Normalize();

@@ -123,19 +123,19 @@ public class ExploreMode_GameController : MonoBehaviour {
 				}
 			}
 
-			if( selectedUnit.canMove ){
+			if( selectedUnit.canMove && selectedUnit.actionPoints > 0 ){
 				moveButton.interactable = true;
 			} else {
 				moveButton.interactable = false;
 			} 
 
-			if( canAttack(selectedUnit) && !selectedUnit.isMoving && !selectedUnit.hasScrap ) {
+			if( canAttack(selectedUnit) && !selectedUnit.isMoving && !selectedUnit.hasScrap && selectedUnit.actionPoints > 0 && !selectedUnit.hasAttacked) {
 				attackButton.interactable = true;
 			} else {
 				attackButton.interactable = false;
 			}
 
-			if( canPickUp(selectedUnit) && !selectedUnit.isMoving ){
+			if( canPickUp(selectedUnit) && !selectedUnit.isMoving && selectedUnit.actionPoints > 0){
 				pickUpButton.interactable = true;
 			} else {
 				pickUpButton.interactable = false;
