@@ -71,6 +71,7 @@ public class Unit : MonoBehaviour {
 	public float speed = 1;
 
 	public GameObject AlertObject, CautionObject;
+	public GameObject ScrapObject;
 
 	// Use this for initialization
 	void Start () {
@@ -122,6 +123,9 @@ public class Unit : MonoBehaviour {
 		}
 
 		if (!isElite && health <= 0) {
+			if( hasScrap )
+				ScrapObject.transform.SetParent( null );
+
 			_GameController.tiles[(int)currentPosition.x, (int)currentPosition.y ] = 1;
 			//int index = _GameController.folk.IndexOf(this);
 			Destroy ( _GameController.PartyButtons[_GameController.PartyButtons.Count-1].gameObject ) ;
