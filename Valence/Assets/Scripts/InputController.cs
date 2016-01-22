@@ -183,6 +183,9 @@ public class InputController : MonoBehaviour {
 							Destroy(myHoverObject);
 							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
 							hoverState = "zone";
+
+							//Makes the transparency back to default - Vishesh
+							_GUIController.setBuildingTypeName = "empty";
 							
 							//Update agent pathfinding to account for this new obstical -Zach
                             foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
@@ -211,6 +214,8 @@ public class InputController : MonoBehaviour {
 							Destroy(myHoverObject);
 							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
 							hoverState = "zone";
+
+							_GUIController.setBuildingTypeName = "empty";
 							
 							//Update agent pathfinding to account for this new obstical -Zach
 							foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop"))
@@ -243,6 +248,8 @@ public class InputController : MonoBehaviour {
 							Destroy(myHoverObject);
 							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
 							hoverState = "zone";
+
+							_GUIController.setBuildingTypeName = "empty";
 							
 							//Update agent pathfinding to account for this new obstical -Zach
 							foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop"))
@@ -276,6 +283,8 @@ public class InputController : MonoBehaviour {
 							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
 							hoverState = "zone";
 
+							_GUIController.setBuildingTypeName = "empty";
+
 							//Update agent pathfinding to account for this new obstical -Zach
 							foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
                                 AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
@@ -283,10 +292,10 @@ public class InputController : MonoBehaviour {
 
                             foreach (Transform child in tempObject.transform) {
                                 if (child.gameObject.tag == "buildTrans") {
-                                    child.gameObject.SetActive(false);
+                                    child.gameObject.SetActive (false);
                                 }
                                 if (child.gameObject.tag == "buildMesh") {
-                                    child.gameObject.SetActive(true);
+                                    child.gameObject.SetActive (true);
                                 }
                             }
                         }
@@ -303,6 +312,8 @@ public class InputController : MonoBehaviour {
 							Destroy(myHoverObject);
 							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
 							hoverState = "zone";
+
+							_GUIController.setBuildingTypeName = "empty";
 							
 							//Update agent pathfinding to account for this new obstical -Zach
 

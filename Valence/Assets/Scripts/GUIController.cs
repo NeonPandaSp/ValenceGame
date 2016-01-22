@@ -205,7 +205,7 @@ using System.Collections.Generic;
 		
 		scrapDelText.text = "";
 		scrapDelText.fontSize = 28;
-		scrapDelText.transform.position = new Vector2 (122, Screen.height - 50);
+		scrapDelText.transform.position = new Vector2 (83, Screen.height - 42);
 		scrapDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
 		
 		//Population
@@ -214,7 +214,7 @@ using System.Collections.Generic;
 		
 		populationDelText.text = "";
 		populationDelText.fontSize = 20;
-		populationDelText.transform.position = new Vector2 (scrapDelText.transform.position.x + 150, scrapDelText.transform.position.y + 15);
+		populationDelText.transform.position = new Vector2 (scrapDelText.transform.position.x + 160, scrapDelText.transform.position.y + 15);
 		
 		//Morale		
 		moraleDelText = (Text)Instantiate (moraleText);
@@ -222,7 +222,7 @@ using System.Collections.Generic;
 		
 		moraleDelText.text = "";
 		moraleDelText.fontSize = 20;
-		moraleDelText.transform.position = new Vector2 (populationDelText.transform.position.x + 160, scrapDelText.transform.position.y + 15);
+		moraleDelText.transform.position = new Vector2 (populationDelText.transform.position.x + 150, scrapDelText.transform.position.y + 15);
 		
 		//Food
 		foodDelText = (Text)Instantiate (foodText);
@@ -230,7 +230,7 @@ using System.Collections.Generic;
 		
 		foodDelText.text = "";
 		foodDelText.fontSize = 20;
-		foodDelText.transform.position = new Vector2 (moraleDelText.transform.position.x + 160, scrapDelText.transform.position.y + 15);
+		foodDelText.transform.position = new Vector2 (moraleDelText.transform.position.x + 150, scrapDelText.transform.position.y + 15);
 		
 		//Water
 		waterDelText = (Text)Instantiate (waterText);
@@ -246,7 +246,7 @@ using System.Collections.Generic;
 		
 		powerDelText.text = "";
 		powerDelText.fontSize = 20;
-		powerDelText.transform.position = new Vector2 (waterDelText.transform.position.x + 140, scrapDelText.transform.position.y + 15);
+		powerDelText.transform.position = new Vector2 (waterDelText.transform.position.x + 150, scrapDelText.transform.position.y + 15);
 		
 		//Time
 		timeDelText = (Text)Instantiate (timeText);
@@ -283,37 +283,36 @@ using System.Collections.Generic;
 		structureBtnClicked = true;
 		
 		switch (s) {
-		case "shelter":
+			case "shelter":
 			setBuildingTypeName = "shelter";
-			print ("HIIIIIIIIIIII");
-			break;
-		case "farm":
-			setBuildingTypeName = "farm";
-			break;
-		case "water":
-			setBuildingTypeName = "water";
-			break;
-		case "power":
-			setBuildingTypeName = "power";
-			break;
-		case "storage":
-			setBuildingTypeName = "storage";
-			break;
-		case "hospital":
-			setBuildingTypeName = "hospital";
-			break;
-		case "tavern":
-			setBuildingTypeName = "tavern";
-			break;
-		case "school":
-			setBuildingTypeName = "school";
-			break;
-		case "empty":
-			setBuildingTypeName = "Null";
-			break;
-		default:
-			setBuildingTypeName = "Null";
-			break;
+				break;
+			case "farm":
+				setBuildingTypeName = "farm";
+				break;
+			case "water":
+				setBuildingTypeName = "water";
+				break;
+			case "power":
+				setBuildingTypeName = "power";
+				break;
+			case "storage":
+				setBuildingTypeName = "storage";
+				break;
+			case "hospital":
+				setBuildingTypeName = "hospital";
+				break;
+			case "tavern":
+				setBuildingTypeName = "tavern";
+				break;
+			case "school":
+				setBuildingTypeName = "school";
+				break;
+			case "empty":
+				setBuildingTypeName = "Null";
+				break;
+			default:
+				setBuildingTypeName = "Null";
+				break;
 		}
 
 		buildClicked = false;
@@ -339,6 +338,11 @@ using System.Collections.Generic;
 		if (buildClicked == false && structureBtnClicked == false && Input.GetMouseButtonDown (0)) {
 			switchStructure ("empty");
 		}
+
+//		if (structureBtnClicked == false && Input.GetMouseButtonDown (0)) {
+//			switchStructure ("empty");
+//			buildClicked = false;
+//		}
 
 		//Build button clicked
 		switch (buildClicked) {
@@ -368,13 +372,15 @@ using System.Collections.Generic;
 		scrap = globalAttributes.scrap;
 		scrapDelText.text = "Scrap: " + scrap;
 		scrapDelText.color = new Color (244, 244, 244);
-			
+
 		if (scrap < 50)
 			scrapDelText.color = new Color (0.4509803921568627f, 0.3529411764705882f, 0.3176470588235294f);
 		else if (scrap >= 50 || scrap <= 100)
 			scrapDelText.color = new Color (0.0509803921568627f, 0.0509803921568627f, 0.0509803921568627f);
 		else if (scrap > 100) {
 			scrapDelText.color = new Color (0.7372549019607843f, 0.8196078431372549f, 0.7098039215686275f);
+		} else if (scrap > 999) {
+			scrapDelText.fontSize = 18;
 		}
 
 		//Population
@@ -383,7 +389,7 @@ using System.Collections.Generic;
 
 		populationDelText.text = "Pop: " + aSpawner.popSize;
 
-		populationDelText.text = "Population: " + aSpawner.popSize + "/" + globalAttributes.popLimit;
+		populationDelText.text = "Pop: " + aSpawner.popSize + "/" + globalAttributes.popLimit;
 
 		if (aSpawner.popSize < 5)
 			populationDelText.color = new Color (0.4509803921568627f, 0.3529411764705882f, 0.3176470588235294f);
