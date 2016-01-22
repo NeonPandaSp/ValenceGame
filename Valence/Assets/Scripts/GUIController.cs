@@ -355,7 +355,7 @@ using System.Collections.Generic;
 		//Population
 		//population = globalAttributes.population;
 		population = 5;
-		populationDelText.text = "Population: " + aSpawner.popSize;
+		populationDelText.text = "Population: " + aSpawner.popSize + "/" + globalAttributes.popLimit;
 
 		if (aSpawner.popSize < 5)
 			populationDelText.color = new Color (0.4509803921568627f, 0.3529411764705882f, 0.3176470588235294f);

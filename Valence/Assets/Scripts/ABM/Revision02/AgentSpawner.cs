@@ -5,11 +5,12 @@ public class AgentSpawner : MonoBehaviour {
 
     //Reference agent for spawner, user must assign this in the Inspector
     public GameObject Agent;
-
+    GameController _gameController;
     //Current number of agents alive;
     public int popSize;
 
     void Start() {
+        _gameController = GameObject.Find("GameController").GetComponent<GameController>();
         SpawnAgent();
     }
 
@@ -24,8 +25,11 @@ public class AgentSpawner : MonoBehaviour {
     }
 
     void OnGUI() {
-        if (GUI.Button(new Rect(Screen.width-100, 10, 100, 20),"Create Agent")) {
-            SpawnAgent();
+
+        if (popSize < _gameController.popLimit) {
+            if (GUI.Button(new Rect(Screen.width - 100, 10, 100, 20), "Create Agent")) {
+                SpawnAgent();
+            }
         }
     }
 }
