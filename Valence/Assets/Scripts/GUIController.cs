@@ -47,8 +47,8 @@ using System.Collections.Generic;
 	//public Button destroyBtn;
 	//Button destroyBtnDel;
 
-	public Button shelterBtn, farmBtn, waterStationBtn, powerStationBtn, storageBtn, shrineBtn, tavernBtn, hospitalBtn, schoolBtn;
-	Button shelterDelBtn, farmDelBtn, waterStationDelBtn, powerStationDelBtn, storageDelBtn, shrineDelBtn, tavernDelBtn, hospitalDelBtn, schoolDelBtn;
+	public Button shelterBtn, farmBtn, waterStationBtn, powerStationBtn, storageBtn, hospitalBtn, trainingGroundBtn;
+	Button shelterDelBtn, farmDelBtn, waterStationDelBtn, powerStationDelBtn, storageDelBtn, hospitalDelBtn, trainingGroundDelBtn;
 
 	public Button switchModeBtn;
 	Button switchModeDelBtn;
@@ -94,6 +94,7 @@ using System.Collections.Generic;
 		buildBtnDel.transform.position = new Vector2 (40, 630);
 		buildBtnDel.image.rectTransform.sizeDelta = new Vector2 (75, 75);
 		buildBtnDel.onClick.AddListener (() => buildBtnClicked ());
+		buildBtnDel.gameObject.SetActive (true);
 
 		buildClicked = false;
 		
@@ -157,16 +158,6 @@ using System.Collections.Generic;
 		storageDelBtn.onClick.AddListener (() => switchStructure ("storage"));
 		storageDelBtn.gameObject.SetActive (false);
 
-		//Tavern Button
-		tavernDelBtn = (Button)Instantiate (tavernBtn);
-		tavernDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		
-		tavernDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		tavernDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 137.5f, buildBtnDel.transform.position.y - 32.5f);
-		tavernDelBtn.GetComponentInChildren<Text> ().text = "Tavern";
-		tavernDelBtn.onClick.AddListener (() => switchStructure ("tavern"));
-		tavernDelBtn.gameObject.SetActive (false);
-		
 		//Hospital Button
 		hospitalDelBtn = (Button)Instantiate (hospitalBtn);
 		hospitalDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
@@ -177,15 +168,15 @@ using System.Collections.Generic;
 		hospitalDelBtn.onClick.AddListener (() => switchStructure ("hospital"));
 		hospitalDelBtn.gameObject.SetActive (false);
 		
-		//School Button
-		schoolDelBtn = (Button)Instantiate (schoolBtn);
-		schoolDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		//Training Ground Button
+		trainingGroundDelBtn = (Button)Instantiate (trainingGroundBtn);
+		trainingGroundDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		schoolDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		schoolDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 137.5f, buildBtnDel.transform.position.y - 97.5f);
-		schoolDelBtn.GetComponentInChildren<Text> ().text = "School";
-		schoolDelBtn.onClick.AddListener (() => switchStructure ("school"));
-		schoolDelBtn.gameObject.SetActive (false);
+		trainingGroundDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		trainingGroundDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 137.5f, buildBtnDel.transform.position.y - 97.5f);
+		trainingGroundDelBtn.GetComponentInChildren<Text> ().text = "Training Ground";
+		trainingGroundDelBtn.onClick.AddListener (() => switchStructure ("Training Ground"));
+		trainingGroundDelBtn.gameObject.SetActive (false);
 
 		//Switch Modes
 		switchModeDelBtn = (Button)Instantiate (switchModeBtn);
@@ -270,7 +261,7 @@ using System.Collections.Generic;
 	//=================\\
 	void buildBtnClicked () {
 		Debug.Log ("Build button clicked");
-		buildClicked = true;
+		buildClicked = !buildClicked;
 		structureBtnClicked = false;
 	}
 
@@ -301,11 +292,8 @@ using System.Collections.Generic;
 			case "hospital":
 				setBuildingTypeName = "hospital";
 				break;
-			case "tavern":
-				setBuildingTypeName = "tavern";
-				break;
-			case "school":
-				setBuildingTypeName = "school";
+			case "training ground":
+				setBuildingTypeName = "training ground";
 				break;
 			case "empty":
 				setBuildingTypeName = "Null";
@@ -315,8 +303,11 @@ using System.Collections.Generic;
 				break;
 		}
 
-		buildClicked = false;
+		if (Input.GetMouseButtonUp(0)) {
+			buildClicked = !buildClicked;
+		}
 	}
+
 	void switchMode ()
 	{
 		Debug.Log ("Switch Mode button clicked");
@@ -339,11 +330,6 @@ using System.Collections.Generic;
 			switchStructure ("empty");
 		}
 
-//		if (structureBtnClicked == false && Input.GetMouseButtonDown (0)) {
-//			switchStructure ("empty");
-//			buildClicked = false;
-//		}
-
 		//Build button clicked
 		switch (buildClicked) {
 		case true:
@@ -352,8 +338,7 @@ using System.Collections.Generic;
 			waterStationDelBtn.gameObject.SetActive (true);
 			powerStationDelBtn.gameObject.SetActive (true);
 			storageDelBtn.gameObject.SetActive (true);
-			schoolDelBtn.gameObject.SetActive (true);
-			tavernDelBtn.gameObject.SetActive (true);
+			trainingGroundDelBtn.gameObject.SetActive (true);
 			hospitalDelBtn.gameObject.SetActive (true);
 			break;
 		case false:
@@ -362,8 +347,7 @@ using System.Collections.Generic;
 			waterStationDelBtn.gameObject.SetActive (false);
 			powerStationDelBtn.gameObject.SetActive (false);
 			storageDelBtn.gameObject.SetActive (false);
-			schoolDelBtn.gameObject.SetActive (false);
-			tavernDelBtn.gameObject.SetActive (false);
+			trainingGroundDelBtn.gameObject.SetActive (false);
 			hospitalDelBtn.gameObject.SetActive (false);
 			break;
 		}
@@ -472,16 +456,5 @@ using System.Collections.Generic;
 		}
 
 		//String whatButtonIsIt = EventSystem.current.currentSelectedGameObject.name.ToString ();		// Checks what the current pointer is hovering over
-	}
-
-	//==================\\
-	//===== ON GUI =====\\
-	//==================\\
-
-	void OnGUI() {
-		//FPS
-		GUI.BeginGroup (new Rect (Screen.width - 75, 0, 200, 200));
-		GUILayout.Label ("FPS: " + fps.ToString ("f2"));
-		GUI.EndGroup ();
 	}
 }
