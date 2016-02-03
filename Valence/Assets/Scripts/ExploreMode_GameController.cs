@@ -69,15 +69,20 @@ public class ExploreMode_GameController : MonoBehaviour {
 				int rand = (int) Random.Range( 0, 100 );
 				if( rand < 100 ){
 					tiles[x,y] = 1;
-					//Instantiate ( tileTypes[0].visualPrefab,new Vector3( x+0.5f, 0, y+0.5f ), Quaternion.identity );
 				} else{
 					tiles[x,y] = 2;
-					Instantiate ( tileTypes[2].visualPrefab,new Vector3( x+0.5f, 0, y+0.5f ), Quaternion.identity );
 				}
 			}
 		}
 
 		GameState = 0;
+
+		PlayerData dataCopy = PlayerDataManager.playerDataManager.loadSaveData();
+
+		foreach (GameObject g in dataCopy.myParty) {
+
+		}
+
 
 		selectedUnit = folk [0];
 		selectedIndex = 0;
