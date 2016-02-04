@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class InputController : MonoBehaviour {
 
@@ -12,6 +13,8 @@ public class InputController : MonoBehaviour {
 	Vector2 rootMousePos;
 
 	GameObject myHoverObject;
+
+    public List<GameObject> BuildingDatabase;
 
 	public Material redMat, blueMat, yellowMat, greenMat;
 
@@ -34,6 +37,8 @@ public class InputController : MonoBehaviour {
 		generate = false;
 		zoning = true;
 		currentColor = "blue";
+
+        BuildingDatabase = new List<GameObject>();
 
 		_GUIController = GameObject.Find ("Canvas").GetComponent<GUIController> ();
 	}
@@ -177,7 +182,10 @@ public class InputController : MonoBehaviour {
 
                             //Increase the list of current farms placed
                             _gameController.farmBuildingList.Add(tempObject);
-                            
+
+                            //Add the newly placed building to building database
+                            BuildingDatabase.Add(tempObject);
+
                             //Debug.Log ( tempObject.GetComponent<BuildingScript>().initProduction );
 
 							Destroy(myHoverObject);
@@ -211,7 +219,10 @@ public class InputController : MonoBehaviour {
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
-							Destroy(myHoverObject);
+                            //Add the newly placed building to building database
+                            BuildingDatabase.Add(tempObject);
+
+                            Destroy(myHoverObject);
 							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
 							hoverState = "zone";
 
@@ -245,7 +256,10 @@ public class InputController : MonoBehaviour {
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
-							Destroy(myHoverObject);
+                            //Add the newly placed building to building database
+                            BuildingDatabase.Add(tempObject);
+
+                            Destroy(myHoverObject);
 							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
 							hoverState = "zone";
 
@@ -279,7 +293,10 @@ public class InputController : MonoBehaviour {
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
-							Destroy(myHoverObject);
+                            //Add the newly placed building to building database
+                            BuildingDatabase.Add(tempObject);
+
+                            Destroy(myHoverObject);
 							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
 							hoverState = "zone";
 
@@ -309,7 +326,10 @@ public class InputController : MonoBehaviour {
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
-							Destroy(myHoverObject);
+                            //Add the newly placed building to building database
+                            BuildingDatabase.Add(tempObject);
+
+                            Destroy(myHoverObject);
 							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
 							hoverState = "zone";
 

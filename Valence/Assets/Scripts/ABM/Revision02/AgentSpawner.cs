@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class AgentSpawner : MonoBehaviour {
 
@@ -9,19 +10,31 @@ public class AgentSpawner : MonoBehaviour {
     //Current number of agents alive;
     public int popSize;
 
+    public List<GameObject> AgentPopulation;
+
     void Start() {
         _gameController = GameObject.Find("GameController").GetComponent<GameController>();
+
+        AgentPopulation = new List<GameObject>();
+
         SpawnAgent();
     }
 
     //On call, spawn a new agent from 05_Revision prefab folder
     void SpawnAgent() {
-
+    
+        //Spawn a new agent prefab at origin
         GameObject newAgent = (GameObject)Instantiate(Agent, new Vector3(0, 0.51f, 0), Quaternion.identity);
 
+        //Add the agent to the population database
+        AgentPopulation.Add(newAgent);
+
+        //Provide the agent with a new name
         newAgent.name = "Agent" + newAgent.GetInstanceID();
 
+        //Increase the population UI text by 1
         popSize += 1;
+
     }
 
     void OnGUI() {
