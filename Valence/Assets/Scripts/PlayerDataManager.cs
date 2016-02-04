@@ -38,7 +38,7 @@ public class PlayerDataManager : MonoBehaviour {
 	void Update () {
 		if (dataExists && isLive) {
 			dataExists = false;
-			Application.LoadLevel (1);
+			Application.LoadLevelAsync (1);
 		}
 	}
 	
