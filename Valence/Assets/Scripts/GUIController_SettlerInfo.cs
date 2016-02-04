@@ -15,7 +15,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
     public AgentLogic_07 agentLogic;
 
 	//Return true if a gameobject with corresponding tag has been spawned, vise versa for false
-    bool farmAvailable, hospitalAvailable, waterstationAvailable, powerstationAvailable, storageAvailable, schoolAvailable, shrineAvailable, tavernAvailable;
+	bool farmAvailable, hospitalAvailable, waterstationAvailable, powerstationAvailable, storageAvailable, traininggroundAvailable, shrineAvailable;
 
     //Return true if error message should be shown
     bool showError;
@@ -58,8 +58,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	public Text rolesTitle;
 	Text rolesTitleDel;
 	
-	public Button farmerRoleButton, waterPurifierRoleButton, powerEngineerRoleButton, storageWorkerRoleButton, medicRoleButton, teacherRoleButton, worshipperRoleButton, bartenderRoleButton;
-	Button farmerRoleButtonDel, waterPurifierRoleButtonDel, powerEngineerRoleButtonDel, storageWorkerRoleButtonDel, medicRoleButtonDel, teacherRoleButtonDel, worshipperRoleButtonDel, bartenderRoleButtonDel;
+	public Button farmerRoleButton, waterPurifierRoleButton, powerEngineerRoleButton, storageWorkerRoleButton, medicRoleButton, traineeRoleButton, worshipperRoleButton;
+	Button farmerRoleButtonDel, waterPurifierRoleButtonDel, powerEngineerRoleButtonDel, storageWorkerRoleButtonDel, medicRoleButtonDel, traineeRoleButtonDel, worshipperRoleButtonDel;
 
 	// === Close Window Button === \\
 	public Button exBtn;
@@ -77,10 +77,11 @@ public class GUIController_SettlerInfo : MonoBehaviour {
         waterstationAvailable = false;
         powerstationAvailable = false;
         storageAvailable = false;
-        schoolAvailable = false;
+		traininggroundAvailable = false;
 
         myCanvas = GameObject.Find ("Canvas").GetComponent <Canvas>();
         selectedIcon = GetComponentInChildren<SpriteRenderer>();
+
         //===============================\\
         //=== Settler Info Background ===\\
         //===============================\\
@@ -336,15 +337,15 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		medicRoleButtonDel.onClick.AddListener (() => medicRoleClicked());
 		medicRoleButtonDel.gameObject.SetActive (false);
 
-		//Teacher Role Button
-		teacherRoleButtonDel = (Button)Instantiate (teacherRoleButton);
-		teacherRoleButtonDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		//Trainee Role Button
+		traineeRoleButtonDel = (Button)Instantiate (traineeRoleButton);
+		traineeRoleButtonDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		teacherRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (100, 50);
-		teacherRoleButtonDel.transform.Translate (766, 125, 0);
-		teacherRoleButtonDel.GetComponentInChildren<Text> ().text = "Teacher";
-		//teacherRoleButtonDel.onClick.AddListener (() => teacherRoleClicked());
-		teacherRoleButtonDel.gameObject.SetActive (false);
+		traineeRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (100, 50);
+		traineeRoleButtonDel.transform.Translate (766, 125, 0);
+		traineeRoleButtonDel.GetComponentInChildren<Text> ().text = "Trainee";
+		//traineeRoleButtonDel.onClick.AddListener (() => traineeRoleClicked());
+		traineeRoleButtonDel.gameObject.SetActive (false);
 
 		//Worshipper Role Button
 		worshipperRoleButtonDel = (Button)Instantiate (worshipperRoleButton);
@@ -355,16 +356,6 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		worshipperRoleButtonDel.GetComponentInChildren<Text> ().text = "Worshipper";
 		//worshipperRoleButtonDel.onClick.AddListener (() => worshipperRoleClicked());
 		worshipperRoleButtonDel.gameObject.SetActive (false);
-
-		//Bartender Role Button
-		bartenderRoleButtonDel = (Button)Instantiate (bartenderRoleButton);
-		bartenderRoleButtonDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		
-		bartenderRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (100, 50);
-		bartenderRoleButtonDel.transform.Translate (766, 25, 0);
-		bartenderRoleButtonDel.GetComponentInChildren<Text> ().text = "Bartender";
-		//bartenderRoleButtonDel.onClick.AddListener (() => bartenderRoleClicked());
-		bartenderRoleButtonDel.gameObject.SetActive (false);
 
 		//Close Button
 		exBtnDel = (Button)Instantiate (exBtn);
@@ -398,9 +389,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			powerEngineerRoleButtonDel.gameObject.SetActive (false);
 			storageWorkerRoleButtonDel.gameObject.SetActive (false);
 			medicRoleButtonDel.gameObject.SetActive (false);
-			teacherRoleButtonDel.gameObject.SetActive (false);
+			traineeRoleButtonDel.gameObject.SetActive (false);
 			worshipperRoleButtonDel.gameObject.SetActive (false);
-			bartenderRoleButtonDel.gameObject.SetActive (false);
 			exBtnDel.gameObject.SetActive (false);
 			genericProfileIconDel.gameObject.SetActive (false);
 			firstLastNameDel.gameObject.SetActive (false);
@@ -444,9 +434,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			powerEngineerRoleButtonDel.gameObject.SetActive (true);
 			storageWorkerRoleButtonDel.gameObject.SetActive (true);
 			medicRoleButtonDel.gameObject.SetActive (true);
-			teacherRoleButtonDel.gameObject.SetActive (true);
+			traineeRoleButtonDel.gameObject.SetActive (true);
 			worshipperRoleButtonDel.gameObject.SetActive (true);
-			bartenderRoleButtonDel.gameObject.SetActive (true);
 			exBtnDel.gameObject.SetActive (true);
 			genericProfileIconDel.gameObject.SetActive (true);
 			inventoryFoodTextDel.gameObject.SetActive (true);
@@ -534,8 +523,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		}
 	}
 
-//	void teacherRoleClicked () {
-//		//TEACHER
+//	void traineeRoleClicked () {
+//		//TRAINEE
 //	}
 //
 //	void worshipperRoleClicked () {
@@ -558,9 +547,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		powerEngineerRoleButtonDel.gameObject.SetActive (false);
 		storageWorkerRoleButtonDel.gameObject.SetActive (false);
 		medicRoleButtonDel.gameObject.SetActive (false);
-		teacherRoleButtonDel.gameObject.SetActive (false);
+		traineeRoleButtonDel.gameObject.SetActive (false);
 		worshipperRoleButtonDel.gameObject.SetActive (false);
-		bartenderRoleButtonDel.gameObject.SetActive (false);
 		exBtnDel.gameObject.SetActive (false);
 		genericProfileIconDel.gameObject.SetActive (false);
 		firstLastNameDel.gameObject.SetActive (false);
@@ -659,32 +647,23 @@ public class GUIController_SettlerInfo : MonoBehaviour {
             storageWorkerRoleButtonDel.interactable = true;
         }
 
-        if (!GameObject.FindWithTag ("School")) {
-            schoolAvailable = false;
-            teacherRoleButtonDel.interactable = false;
-        }
-        else {
-            schoolAvailable = true;
-            teacherRoleButtonDel.interactable = true;
-        }
+//        if (!GameObject.FindWithTag ("TrainingGround")) {
+//            traininggroundAvailable = false;
+//            traineeRoleButtonDel.interactable = false;
+//        }
+//        else {
+//			traininggroundAvailable = true;
+//			traineeRoleButtonDel.interactable = true;
+//        }
 
-		if (!GameObject.FindWithTag ("Shrine")) {
-            shrineAvailable = false;
-            worshipperRoleButtonDel.interactable = false;
-        }
-        else {
-            shrineAvailable = true;
-            worshipperRoleButtonDel.interactable = true;
-        }
-
-        if (!GameObject.FindWithTag ("Tavern")) {
-            tavernAvailable = false;
-            bartenderRoleButtonDel.interactable = false;
-        }
-        else {
-            tavernAvailable = true;
-            bartenderRoleButtonDel.interactable = true;
-        }
+//		if (!GameObject.FindWithTag ("Shrine")) {
+//            shrineAvailable = false;
+//            worshipperRoleButtonDel.interactable = false;
+//        }
+//        else {
+//            shrineAvailable = true;
+//            worshipperRoleButtonDel.interactable = true;
+//        }
 	}
 
 	IEnumerator MissingBuildingError (float wait, string building) {
