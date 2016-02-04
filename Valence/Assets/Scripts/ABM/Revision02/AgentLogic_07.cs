@@ -36,6 +36,9 @@ public class AgentLogic_07 : MonoBehaviour {
     //Check if the agent is hungry, if true the go to a known foodsource
     bool isHungry;
 
+    //Check if the agent has died
+    bool isDead;
+
     //Agent stores 5% of food found in storage facility
     public float foodStored;
 
@@ -47,6 +50,9 @@ public class AgentLogic_07 : MonoBehaviour {
 
     //0-100 int which holds the agent's current health. 0%= dead, 100% = perfectly healthy
     public int health;
+
+    //Agent animator component
+    Animator agentAnim;
 
     int amount = 0;
 
@@ -97,6 +103,9 @@ public class AgentLogic_07 : MonoBehaviour {
         //Get all storage waypoints when the agent is spawned, agent should know a known food source at spawn
         storageWaypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("StorageWaypoint"));
 
+        //Get the animator attached to the agent
+        agentAnim = GetComponent<Animator>();
+
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
         //init all waypoint index's to 0 and set the storage waypoint indext to a random value within the scope of the storage list
@@ -110,6 +119,9 @@ public class AgentLogic_07 : MonoBehaviour {
         //Agent should not have populated any worker lists
         populateList = false;
 
+        //Agent should not be dead when spawned (duh..)
+        isDead = false;
+
         //When an agent spawns, he should start by wandering
         aState = agentState.Wandering;
 
@@ -119,8 +131,20 @@ public class AgentLogic_07 : MonoBehaviour {
 
 	void Update() {
 
-        if (health <= 0) {
-            Destroy(this.gameObject);
+        //Check if the agent has run out of health
+        if (health <= 0 && isDead == false) {
+
+            //Stop the agent from moving
+            aiFollow.Stop();
+
+
+
+            //Play a death animation
+            agentAnim.SetTrigger("Dead");
+
+            //Ensure the agent only triggers this logic once
+            isDead = true;
+            //Destroy(this.gameObject);
         }
 
         switch (aState) {
