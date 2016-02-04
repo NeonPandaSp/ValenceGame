@@ -46,7 +46,17 @@ public class PlayerDataManager : MonoBehaviour {
 		else
 			return false;
 	}
-	
+
+	public void writeToPlayerData(PlayerData newSaveData){
+		BinaryFormatter bf = new BinaryFormatter ();
+		if (File.Exists (Application.persistentDataPath + "/playerInfo.dat")) {
+			FileStream file = File.Open (Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+			bf.Serialize (file, newSaveData);
+		} else {
+			Debug.Log ("NO SAVE FILE EXISTS: did you delete the save data during play?");
+		}
+	}
+
 	public PlayerData loadSaveData(){
 		BinaryFormatter bf = new BinaryFormatter ();
 		FileStream file = File.Open (Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
@@ -66,6 +76,8 @@ public class PlayerDataManager : MonoBehaviour {
 		data.myBuildings = new List<GameObject> ();
 		data.myParty = new List<GameObject> ();
 
+		bf.Serialize (file, data);
+
 		dataExists = true;
 	}
 }
@@ -77,6 +89,5 @@ public class PlayerData{
 	public List<GameObject> myBuildings;
 
 	public List<GameObject> myParty;
-
 	
 }

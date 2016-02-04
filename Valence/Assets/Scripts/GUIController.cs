@@ -311,6 +311,7 @@ using System.Collections.Generic;
 	void switchMode ()
 	{
 		Debug.Log ("Switch Mode button clicked");
+		/// create new save data
 		Application.LoadLevel (3);
 		globalAttributes.scrap = scrap + UnityEngine.Random.Range (10, 101);
 		print ("Scrap is now: " + scrap);
