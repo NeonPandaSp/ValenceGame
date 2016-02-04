@@ -9,8 +9,10 @@ using System.Collections.Generic;
 
 	//HUD Variables
 	//GameObject globalAttributes;
-	public Text scrapText, populationText, moraleText, foodText, waterText, powerText, timeText;
-	Text scrapDelText, populationDelText, moraleDelText, foodDelText, waterDelText, powerDelText, timeDelText;
+	public Text scrapText, populationText, foodText, waterText, powerText, timeText;
+	Text scrapDelText, populationDelText, foodDelText, waterDelText, powerDelText, timeDelText;
+	public Image scrapIcon, populationIcon, foodIcon, waterIcon, powerIcon;
+	Image scrapIconDel, populationIconDel, foodIconDel, waterIconDel, powerIconDel;
 
     AgentSpawner aSpawner;
 
@@ -18,21 +20,15 @@ using System.Collections.Generic;
 	public string setBuildingTypeName;
 
 	int scrap, population;
-	float morale, food, water, power;
+	float food, water, power;
 
-	//Time variables
-	int hour;
-	int minute;
-	int second;
-	String hourText;
-	String minText;
-	String secText;
-
-	//FPS variables
-	private float updateInterval = 0.5F;
-	private double lastInterval;
-	private int frames = 0;
-	private float fps;
+//	//Time variables
+//	int hour;
+//	int minute;
+//	int second;
+//	String hourText;
+//	String minText;
+//	String secText;
 	
 	public Canvas myCanvas;
 
@@ -71,10 +67,103 @@ using System.Collections.Generic;
 		HUDDelBg = (Image)Instantiate (HUDBg);
 		HUDDelBg.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		HUDDelBg.rectTransform.sizeDelta = new Vector2 (1920, 100);
-		HUDDelBg.transform.Translate (960, Screen.height - 50, 0);
-		HUDDelBg.CrossFadeAlpha (0.5f, 0, false);
+		HUDDelBg.rectTransform.sizeDelta = new Vector2 (770, 100);
+		HUDDelBg.transform.Translate (385, Screen.height - 50, 0);
+//		HUDDelBg.CrossFadeAlpha (0.5f, 0, false);
 		
+		//===========================\\
+		// === GLOBAL ATTRIBUTES === \\
+		//===========================\\
+		//Scrap
+		scrapIconDel = (Image)Instantiate (scrapIcon);
+		scrapIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+
+		scrapIconDel.rectTransform.sizeDelta = new Vector2 (50, 50);
+		scrapIconDel.transform.Translate (50, Screen.height - 50, 0);
+
+			//Text
+			scrapDelText = (Text)Instantiate (scrapText);
+			scrapDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+			
+			scrapDelText.text = "";
+			scrapDelText.fontSize = 20;
+			scrapDelText.transform.position = new Vector2 (125, Screen.height - 50);
+			scrapDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
+
+		//Population
+		populationIconDel = (Image)Instantiate (populationIcon);
+		populationIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		populationIconDel.rectTransform.sizeDelta = new Vector2 (50, 50);
+		populationIconDel.transform.Translate (scrapIconDel.transform.position.x + 150, Screen.height - 50, 0);
+
+			//Text
+			populationDelText = (Text)Instantiate (populationText);
+			populationDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+			
+			populationDelText.text = "";
+			populationDelText.fontSize = 20;
+			populationDelText.transform.position = new Vector2 (scrapDelText.transform.position.x + 150, scrapDelText.transform.position.y);
+		
+		//Food
+		foodIconDel = (Image)Instantiate (foodIcon);
+		foodIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		foodIconDel.rectTransform.sizeDelta = new Vector2 (50, 50);
+		foodIconDel.transform.Translate (populationIconDel.transform.position.x + 150, Screen.height - 50, 0);
+
+			//Text
+			foodDelText = (Text)Instantiate (foodText);
+			foodDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+			
+			foodDelText.text = "";
+			foodDelText.fontSize = 20;
+			foodDelText.transform.position = new Vector2 (populationDelText.transform.position.x + 150, scrapDelText.transform.position.y);
+		
+		//Water
+		waterIconDel = (Image)Instantiate (waterIcon);
+		waterIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		waterIconDel.rectTransform.sizeDelta = new Vector2 (50, 50);
+		waterIconDel.transform.Translate (foodIconDel.transform.position.x + 150, Screen.height - 50, 0);
+
+			//Text
+			waterDelText = (Text)Instantiate (waterText);
+			waterDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+			
+			waterDelText.text = "";
+			waterDelText.fontSize = 20;
+			waterDelText.transform.position = new Vector2 (foodDelText.transform.position.x + 150, scrapDelText.transform.position.y);
+		
+		//Power
+		powerIconDel = (Image)Instantiate (powerIcon);
+		powerIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		powerIconDel.rectTransform.sizeDelta = new Vector2 (50, 50);
+		powerIconDel.transform.Translate (waterIconDel.transform.position.x + 150, Screen.height - 50, 0);
+
+			//Text
+			powerDelText = (Text)Instantiate (powerText);
+			powerDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+			
+			powerDelText.text = "";
+			powerDelText.fontSize = 20;
+			powerDelText.transform.position = new Vector2 (waterDelText.transform.position.x + 150, scrapDelText.transform.position.y);
+		
+		//		//Time
+		//		timeDelText = (Text)Instantiate (timeText);
+		//		timeDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		//		
+		//		timeDelText.text = "";
+		//		timeDelText.fontSize = 20;
+		//		timeDelText.transform.position = new Vector2 (scrapDelText.transform.position.x + 1770, scrapDelText.transform.position.y);
+		//		timeDelText.color = new Color (0.0509803921568627f, 0.0509803921568627f, 0.0509803921568627f);
+		
+		//		//Time
+		//		hour = 0;
+		//		minute = 0;
+		//		second = 0;
+
 		//===============\\
 		//=== BUTTONS ===\\
 		//===============\\
@@ -187,74 +276,6 @@ using System.Collections.Generic;
 		switchModeDelBtn.transform.Translate (Screen.width - 32.5f, 32.5f, 0);
 		switchModeDelBtn.GetComponentInChildren<Text> ().text = "";
 		switchModeDelBtn.onClick.AddListener (() => switchMode ());
-
-		//===========================\\
-		// === GLOBAL ATTRIBUTES === \\
-		//===========================\\
-		//Scrap
-		scrapDelText = (Text)Instantiate (scrapText);
-		scrapDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		
-		scrapDelText.text = "";
-		scrapDelText.fontSize = 28;
-		scrapDelText.transform.position = new Vector2 (83, Screen.height - 42);
-		scrapDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
-		
-		//Population
-		populationDelText = (Text)Instantiate (populationText);
-		populationDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		
-		populationDelText.text = "";
-		populationDelText.fontSize = 20;
-		populationDelText.transform.position = new Vector2 (scrapDelText.transform.position.x + 160, scrapDelText.transform.position.y + 15);
-		
-		//Morale		
-		moraleDelText = (Text)Instantiate (moraleText);
-		moraleDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		
-		moraleDelText.text = "";
-		moraleDelText.fontSize = 20;
-		moraleDelText.transform.position = new Vector2 (populationDelText.transform.position.x + 150, scrapDelText.transform.position.y + 15);
-		
-		//Food
-		foodDelText = (Text)Instantiate (foodText);
-		foodDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		
-		foodDelText.text = "";
-		foodDelText.fontSize = 20;
-		foodDelText.transform.position = new Vector2 (moraleDelText.transform.position.x + 150, scrapDelText.transform.position.y + 15);
-		
-		//Water
-		waterDelText = (Text)Instantiate (waterText);
-		waterDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		
-		waterDelText.text = "";
-		waterDelText.fontSize = 20;
-		waterDelText.transform.position = new Vector2 (foodDelText.transform.position.x + 150, scrapDelText.transform.position.y + 15);
-		
-		//Power
-		powerDelText = (Text)Instantiate (powerText);
-		powerDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		
-		powerDelText.text = "";
-		powerDelText.fontSize = 20;
-		powerDelText.transform.position = new Vector2 (waterDelText.transform.position.x + 150, scrapDelText.transform.position.y + 15);
-		
-		//Time
-		timeDelText = (Text)Instantiate (timeText);
-		timeDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		
-		timeDelText.text = "";
-		timeDelText.fontSize = 20;
-		timeDelText.transform.position = new Vector2 (scrapDelText.transform.position.x + 1770, scrapDelText.transform.position.y + 15);
-		timeDelText.color = new Color (0.0509803921568627f, 0.0509803921568627f, 0.0509803921568627f);
-
-		//Time
-		lastInterval = Time.realtimeSinceStartup;
-		frames = 0;
-		hour = 0;
-		minute = 0;
-		second = 0;
 	}
 
 	//=================\\
@@ -359,7 +380,7 @@ using System.Collections.Generic;
 
 		//Scrap
 		scrap = globalAttributes.scrap;
-		scrapDelText.text = "Scrap: " + scrap;
+		scrapDelText.text = scrap.ToString ();
 		scrapDelText.color = new Color (244, 244, 244);
 
 		if (scrap < 50)
@@ -376,9 +397,7 @@ using System.Collections.Generic;
 		//population = globalAttributes.population;
 		population = 5;
 
-		populationDelText.text = "Pop: " + aSpawner.popSize;
-
-		populationDelText.text = "Pop: " + aSpawner.popSize + "/" + globalAttributes.popLimit;
+		populationDelText.text = aSpawner.popSize + "/" + globalAttributes.popLimit;
 
 		if (aSpawner.popSize < 5)
 			populationDelText.color = new Color (255, 47, 37);
@@ -387,21 +406,9 @@ using System.Collections.Generic;
 		else if (aSpawner.popSize > 30)
 			populationDelText.color = new Color (0, 115, 42);
 
-		//Morale
-		//morale = globalAttributes.morale;
-		morale = 0;
-		moraleDelText.text = "Morale: " + morale;
-
-		if (morale < 50)
-			moraleDelText.color = new Color (255, 47, 37);
-		else if (morale >= 50 || morale < 80)
-			moraleDelText.color = new Color (244, 244, 244);
-		else if (morale >= 80)
-			moraleDelText.color = new Color (0, 115, 42);
-
 		//Food
 		food = globalAttributes.food;
-		foodDelText.text = "Food: " + food;
+		foodDelText.text = food.ToString ();
 		if (food <= 30)
 			foodDelText.color = new Color (255, 47, 37);
 		else if (food > 30 || food < 300)
@@ -411,7 +418,7 @@ using System.Collections.Generic;
 
 		//Water
 		water = globalAttributes.water;
-		waterDelText.text = "Water: " + water.ToString ();
+		waterDelText.text = water.ToString ();
 		if (water <= 30)
 			waterDelText.color = new Color (255, 47, 37);
 		else if (water > 30 || water < 300)
@@ -421,7 +428,7 @@ using System.Collections.Generic;
 
 		//Power
 		power = globalAttributes.power;
-		powerDelText.text = "Power: " + power.ToString ();
+		powerDelText.text = power.ToString ();
 		if (power <= 30)
 			powerDelText.color = new Color (255, 47, 37);
 		else if (power > 30 || power < 300)
@@ -429,36 +436,27 @@ using System.Collections.Generic;
 		else if (power >= 300)
 			powerDelText.color = new Color (0, 115, 42);
 
-		//Time
-		hour = Mathf.FloorToInt (Time.realtimeSinceStartup / (60 * 60));
-		minute = Mathf.FloorToInt (Time.realtimeSinceStartup / 60) - (hour * 60);
-		second = (int) Time.realtimeSinceStartup - (minute * 60);
-		
-		if (hour < 10) {
-			hourText = "0" + hour.ToString ();
-		} else
-			hourText = hour.ToString ();
-		
-		if (minute < 10) {
-			minText = "0" + minute.ToString ();
-		} else
-			minText = minute.ToString ();
-		
-		if (second < 10) {
-			secText = "0" + second.ToString ();
-		} else
-			secText = second.ToString ();
-
-		timeDelText.text = hourText + ":" + minText + ":" + secText;
-
-		//Frames
-		++frames;
-		float timeNow = Time.realtimeSinceStartup;
-		if (timeNow > lastInterval + updateInterval) {
-			fps = (float) (frames / (timeNow - lastInterval));
-			frames = 0;
-			lastInterval = timeNow;
-		}
+//		//Time
+//		hour = Mathf.FloorToInt (Time.realtimeSinceStartup / (60 * 60));
+//		minute = Mathf.FloorToInt (Time.realtimeSinceStartup / 60) - (hour * 60);
+//		second = (int) Time.realtimeSinceStartup - (minute * 60);
+//		
+//		if (hour < 10) {
+//			hourText = "0" + hour.ToString ();
+//		} else
+//			hourText = hour.ToString ();
+//		
+//		if (minute < 10) {
+//			minText = "0" + minute.ToString ();
+//		} else
+//			minText = minute.ToString ();
+//		
+//		if (second < 10) {
+//			secText = "0" + second.ToString ();
+//		} else
+//			secText = second.ToString ();
+//
+//		timeDelText.text = hourText + ":" + minText + ":" + secText;
 
 		//String whatButtonIsIt = EventSystem.current.currentSelectedGameObject.name.ToString ();		// Checks what the current pointer is hovering over
 	}
