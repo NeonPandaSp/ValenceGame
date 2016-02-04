@@ -36,6 +36,10 @@ public class AgentLogic_07 : MonoBehaviour {
     //Check if the agent is hungry, if true the go to a known foodsource
     bool isHungry;
 
+    //Check if the agent has died
+    bool isDead;
+
+
     //Agent stores 5% of food found in storage facility
     public float foodStored;
 
@@ -48,10 +52,13 @@ public class AgentLogic_07 : MonoBehaviour {
     //0-100 int which holds the agent's current health. 0%= dead, 100% = perfectly healthy
     public int health;
 
+
+
     int amount = 0;
 
     AIFollow_07 aiFollow;
     GameController gameController;
+    //Agent animator component
     Animator agentAnim;
 
     public enum agentState
@@ -124,8 +131,21 @@ public class AgentLogic_07 : MonoBehaviour {
 
 	void Update() {
 
-        if (health <= 0) {
-            Destroy(this.gameObject);
+        //Check if the agent has run out of health
+        if (health <= 0 && isDead == false)
+        {
+
+            //Stop the agent from moving
+            aiFollow.Stop();
+
+
+
+            //Play a death animation
+            agentAnim.SetTrigger("Dead");
+
+            //Ensure the agent only triggers this logic once
+            isDead = true;
+            //Destroy(this.gameObject);
         }
 
         switch (aState) {
@@ -363,8 +383,10 @@ public class AgentLogic_07 : MonoBehaviour {
         aiFollow.Stop();
 
         yield return new WaitForSeconds(agentAnim.GetComponent<Animation>().clip.length);
+        agentAnim.SetBool("Working", false);
         workWaypointIndex = Random.Range(0, workWaypoints.Count);
-        //aiFollow.target = waypoint.position;
+
+        aiFollow.target = waypoint.position;
         
     }
 
@@ -380,7 +402,7 @@ public class AgentLogic_07 : MonoBehaviour {
 
             //workWaypointIndex = Random.Range(0, workWaypoints.Count);
             StartCoroutine(DelayNewWorkTarget(workWaypoints[workWaypointIndex].transform));
-            aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
+            //aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
 
         }   else if (aState == agentState.Hungry){
 
