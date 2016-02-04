@@ -90,21 +90,7 @@ public class GameController : MonoBehaviour {
 		popLimit = loadedData.popLimit;
 		morale = loadedData.morale;
 
-		foreach (serialAgent agent in loadedData.population) {
-			GameObject temp = (GameObject) Instantiate( agentPrefab, new Vector3( agent.xPos, agent.yPos, agent.zPos), Quaternion.identity);
-			temp.GetComponent<AgentLogic_07>().name = agent.name;
-			temp.GetComponent<AgentLogic_07>().health = agent.health;
-			temp.GetComponent<AgentLogic_07>().hungerValue = agent.hunger;
-			temp.GetComponent<AgentLogic_07>().aState = agent.state;
-			temp.GetComponent<AgentLogic_07>().jobState = agent.job;
 
-			population.Add(temp);
-			if( temp.GetComponent<AgentLogic_07>().jobState == AgentLogic_07.jobSubState.Farmer){
-				farmerList.Add(temp);
-			} else if ( temp.GetComponent<AgentLogic_07>().jobState == AgentLogic_07.jobSubState.PowerWorker){
-				powerWorkerList.Add (temp);
-			}
-		}
 
 		foreach (serialBuilding bld in loadedData.buildingDatabase) {
 			GameObject tempBld = (GameObject) Instantiate( Resources.Load(bld.bType), new Vector3( bld.xPos, bld.yPos, bld.zPos), Quaternion.identity);
@@ -117,6 +103,25 @@ public class GameController : MonoBehaviour {
 			} else if ( tempBld.GetComponent<BuildingScript>().myType == "PowerStation" ){
 				powerBuildingList.Add ( tempBld );
 			}
+		}
+
+		foreach (serialAgent agent in loadedData.population) {
+			GameObject temp = (GameObject) Instantiate( agentPrefab, new Vector3( agent.xPos, agent.yPos, agent.zPos), Quaternion.identity);
+			temp.GetComponent<AgentLogic_07>().name = agent.name;
+			temp.GetComponent<AgentLogic_07>().health = agent.health;
+			temp.GetComponent<AgentLogic_07>().hungerValue = agent.hunger;
+			temp.GetComponent<AgentLogic_07>().aState = agent.state;
+			temp.GetComponent<AgentLogic_07>().jobState = agent.job;
+			
+			
+			if( temp.GetComponent<AgentLogic_07>().jobState == AgentLogic_07.jobSubState.Farmer){
+				temp.GetComponent<AgentLogic_07>().workWaypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag ("FarmWaypoint"));
+				farmerList.Add(temp);
+			} else if ( temp.GetComponent<AgentLogic_07>().jobState == AgentLogic_07.jobSubState.PowerWorker){
+				temp.GetComponent<AgentLogic_07>().workWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("PowerWaypoint"));
+				powerWorkerList.Add (temp);
+			}
+			population.Add(temp);
 		}
 	}
 
