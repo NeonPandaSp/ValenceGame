@@ -356,7 +356,10 @@ public class AgentLogic_07 : MonoBehaviour {
 
     IEnumerator DelayNewWorkTarget(Transform waypoint) {
         //Wait for how ever long it takes to play the work animation
-        yield return new WaitForSeconds(3.0f);
+        agentAnim.SetBool("Working", true);
+        aiFollow.Stop();
+
+        yield return new WaitForSeconds(agentAnim.GetComponent<Animation>().clip.length);
         workWaypointIndex = Random.Range(0, workWaypoints.Count);
         //aiFollow.target = waypoint.position;
         
@@ -403,7 +406,7 @@ public class AgentLogic_07 : MonoBehaviour {
             //ADD HERE
 
 
-
+             
             //Go back to previous task
             aState = currentState;
             
