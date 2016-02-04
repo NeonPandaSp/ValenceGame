@@ -9,6 +9,8 @@ public class PlayerDataManager : MonoBehaviour {
 	public static PlayerDataManager playerDataManager;
 
 	bool dataExists;
+	public bool isLive;
+
 	void Awake(){
 		if (playerDataManager == null) {
 			DontDestroyOnLoad (gameObject);
@@ -34,7 +36,7 @@ public class PlayerDataManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (dataExists) {
+		if (dataExists && isLive) {
 			dataExists = false;
 			Application.LoadLevel (1);
 		}
