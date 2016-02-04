@@ -79,39 +79,41 @@ public class AgentLogic_07 : MonoBehaviour {
 
     void Start(){
 
-        //Init the agent's hunger value to 0 when spawned (they shouldnt be hungry at start)
-        hungerValue = 0;
-        //Init the agent's health to 100 when spawned (they should be perfectly healthy)
-        health = 100;
-        //Init the agent's happyness to 100 when spawned (they should be perfectly happy)
-        moraleLevel = 100;
+		//Init the agent's hunger value to 0 when spawned (they shouldnt be hungry at start)
+		hungerValue = 0;
+		//Init the agent's health to 100 when spawned (they should be perfectly healthy)
+		health = 100;
+		//Init the agent's happyness to 100 when spawned (they should be perfectly happy)
+		moraleLevel = 100;
 
-        aiFollow = GetComponent<AIFollow_07>();
-        wanderWaypoints = new List<Vector3>();
+		aiFollow = GetComponent<AIFollow_07> ();
+		wanderWaypoints = new List<Vector3> ();
 
-        //Populate the following waypoints when an agent is spawned
-        while (wanderWaypoints.Count < wanderListSize) {
-            wanderWaypoints.Add(new Vector3(Random.Range(0, 160), 0, Random.Range(0, 120)));
-        }
+		//Populate the following waypoints when an agent is spawned
+		while (wanderWaypoints.Count < wanderListSize) {
+			wanderWaypoints.Add (new Vector3 (Random.Range (0, 160), 0, Random.Range (0, 120)));
+		}
 
-        //Get all storage waypoints when the agent is spawned, agent should know a known food source at spawn
-        storageWaypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("StorageWaypoint"));
+		//Get all storage waypoints when the agent is spawned, agent should know a known food source at spawn
+		storageWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("StorageWaypoint"));
 
-        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+		gameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 
-        //init all waypoint index's to 0 and set the storage waypoint indext to a random value within the scope of the storage list
-        workWaypointIndex = 0;
-        wanderWaypointIndex = 0;
-        storageWaypointIndex = Random.Range(0, storageWaypoints.Count);
+		//init all waypoint index's to 0 and set the storage waypoint indext to a random value within the scope of the storage list
+		workWaypointIndex = 0;
+		wanderWaypointIndex = 0;
+		storageWaypointIndex = Random.Range (0, storageWaypoints.Count);
         
-        //Agent should  have no current assigned target
-        assignedTarget = false;
+		//Agent should  have no current assigned target
+		assignedTarget = false;
 
-        //Agent should not have populated any worker lists
-        populateList = false;
+		//Agent should not have populated any worker lists
+		populateList = false;
 
-        //When an agent spawns, he should start by wandering
-        aState = agentState.Wandering;
+		if (aState == null){
+	        //When an agent spawns, he should start by wandering
+			aState = agentState.Wandering;
+		}
 
         //Once everything has been set, begin consuming resources
         BeginFeeding();

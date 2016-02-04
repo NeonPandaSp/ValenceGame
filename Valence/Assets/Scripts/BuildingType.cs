@@ -31,13 +31,13 @@ public class BuildingType  {
         cRate = getConsumptionRate(area);
 	}
 	public int getBuildingCost(){
-		if (typeName == "shelter") {
+		if (typeName == "Shelter") {
 			return 50;
-		} else if (typeName == "food") {
+		} else if (typeName == "Farm") {
 			return 25;
-		} else if (typeName == "power") {
+		} else if (typeName == "PowerStation") {
 			return 25;
-		} else if (typeName == "water") {
+		} else if (typeName == "WaterStation") {
 			return 25;
 		} else {
 			Debug.Log ( "Building Cost Error");
@@ -46,14 +46,14 @@ public class BuildingType  {
 	}
 
 	public float getProductionRate(int a){
-		if (typeName == "shelter") {
+		if (typeName == "Shelter") {
 			return 10.0f;
-		} else if (typeName == "food") {
+		} else if (typeName == "Farm") {
             return 1.0f * a;
-        } else if (typeName == "power") {
+        } else if (typeName == "PowerStation") {
             //Each power station should produce 100 power
             return 100;
-		} else if (typeName == "water") {
+		} else if (typeName == "WaterStation") {
 			return 1.0f * a;
 		} else {
 			Debug.Log ( "Production Type Error");
@@ -63,16 +63,16 @@ public class BuildingType  {
 
     //Currently buildings consume 1 power per tile they consume, 80 tiles = 80 power -Zach
     public float getConsumptionRate(int a) {
-        if (typeName == "shelter") {
+		if (typeName == "Shelter") {
             return 0.0f * a;
         }
-        else if (typeName == "food") {
+        else if (typeName == "Farm") {
             return 1.0f * a;
         }
-        else if (typeName == "power") {
+        else if (typeName == "PowerStation") {
             return 1.0f * a;
         }
-        else if (typeName == "water") {
+        else if (typeName == "WaterStation") {
             return 1.0f * a;
         }
         else {
@@ -82,13 +82,13 @@ public class BuildingType  {
     }
 
     public float getProductionTime(){
-		if (typeName == "shelter") {
+		if (typeName == "Shelter") {
 			return 0.0f;
-		} else if (typeName == "food") {
+		} else if (typeName == "Farm") {
 			return 5.0f;
-		} else if (typeName == "power") {
+		} else if (typeName == "PowerStation") {
 			return 5.0f;
-		} else if (typeName == "water") {
+		} else if (typeName == "WaterStation") {
 			return 5.0f;
 		} else {
 			Debug.Log ( "Production Type Error");

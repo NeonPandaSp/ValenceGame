@@ -77,13 +77,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 		GameState = 0;
 
-		PlayerData dataCopy = PlayerDataManager.playerDataManager.loadSaveData();
-
-		foreach (GameObject g in dataCopy.myParty) {
-
-		}
-
-
+		PlayerData dataCopy = PlayerDataManager.playerDataManager.loadSaveData ();
+		
 		selectedUnit = folk [0];
 		selectedIndex = 0;
 

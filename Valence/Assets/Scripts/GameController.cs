@@ -1,11 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 public class GameController : MonoBehaviour {
 	static int mapSize = 50;
 	public int[,] tiles = new int[mapSize,mapSize];
+
+	public GameObject agentPrefab;
+
 	public Vector3 rootMousePos;
 	public bool rootSet = false;
+
+	public List<GameObject> population = new List<GameObject>();
+	public List<GameObject> buildingDatabase = new List<GameObject> ();
 
     public List<GameObject> farmerList = new List<GameObject>();
     public List<GameObject> farmBuildingList = new List<GameObject>();
@@ -15,9 +22,17 @@ public class GameController : MonoBehaviour {
 
     public int scrap;
 	public float food, power, water, popLimit, morale;
+
+	public bool firstLoad;
 	
 	// Use this for initialization
 	void Start () {
+
+		population = new List<GameObject> ();
+
+		buildingDatabase = new List<GameObject> ();
+
+		loadLastSave ();
 
         farmerList = new List<GameObject>();
         farmBuildingList = new List<GameObject>();
@@ -25,11 +40,15 @@ public class GameController : MonoBehaviour {
         powerWorkerList = new List<GameObject>();
         powerBuildingList = new List<GameObject>();
 
-        //Start the game with 100 power
-        power = 100;
-
-        //Start population with a 10 person cap
-        popLimit = 10;
+		if (firstLoad) {
+			//
+			scrap += 1000;
+			//Start the game with 100 power
+			power += 100;
+			
+			//Start population with a 10 person cap
+			popLimit = 10;
+		}
 
         for ( int x = 0; x < mapSize; x++){
 			for( int y = 0; y < mapSize; y++){
@@ -59,4 +78,116 @@ public class GameController : MonoBehaviour {
         //yield return new WaitForSeconds(wait);
     }
 
+	void loadLastSave(){
+		PlayerData loadedData = PlayerDataManager.playerDataManager.loadSaveData ();
+
+		firstLoad = loadedData.firstLoad;
+
+		scrap = loadedData.scrap;
+		food = loadedData.food;
+		power = loadedData.power;
+		water = loadedData.water;
+		popLimit = loadedData.popLimit;
+		morale = loadedData.morale;
+
+		foreach (serialAgent agent in loadedData.population) {
+			GameObject temp = (GameObject) Instantiate( agentPrefab, new Vector3( agent.xPos, agent.yPos, agent.zPos), Quaternion.identity);
+			temp.GetComponent<AgentLogic_07>().name = agent.name;
+			temp.GetComponent<AgentLogic_07>().health = agent.health;
+			temp.GetComponent<AgentLogic_07>().hungerValue = agent.hunger;
+			temp.GetComponent<AgentLogic_07>().aState = agent.state;
+			temp.GetComponent<AgentLogic_07>().jobState = agent.job;
+
+			population.Add(temp);
+			if( temp.GetComponent<AgentLogic_07>().jobState == AgentLogic_07.jobSubState.Farmer){
+				farmerList.Add(temp);
+			} else if ( temp.GetComponent<AgentLogic_07>().jobState == AgentLogic_07.jobSubState.PowerWorker){
+				powerWorkerList.Add (temp);
+			}
+		}
+
+		foreach (serialBuilding bld in loadedData.buildingDatabase) {
+			GameObject tempBld = (GameObject) Instantiate( Resources.Load(bld.bType), new Vector3( bld.xPos, bld.yPos, bld.zPos), Quaternion.identity);
+			tempBld.GetComponent<BuildingScript>().initBuildingType();
+			tempBld.GetComponent<BuildingScript>().beginProduction();
+
+			buildingDatabase.Add(tempBld);
+			if( tempBld.GetComponent<BuildingScript>().myType == "Farm" ){
+				farmBuildingList.Add ( tempBld );
+			} else if ( tempBld.GetComponent<BuildingScript>().myType == "PowerStation" ){
+				powerBuildingList.Add ( tempBld );
+			}
+		}
+	}
+
+	public void saveCurrentSettlement(){
+		Debug.Log ("Saving");
+		PlayerData newData = new PlayerData ();
+
+		newData.scrap = scrap;
+		newData.food = food;
+		newData.power = power;
+		newData.water = water;
+		newData.popLimit = popLimit;
+		newData.morale = morale;
+
+		//newData.population = population;
+		List<serialAgent> serialPopulation = new List<serialAgent>();
+
+		foreach (GameObject agent in population) {
+			serialAgent tempAgent = new serialAgent();
+
+			tempAgent.name = agent.GetComponent<AgentLogic_07>().name;
+			tempAgent.xPos = agent.transform.position.x;
+			tempAgent.yPos = agent.transform.position.y;
+			tempAgent.zPos = agent.transform.position.z;
+			tempAgent.health = agent.GetComponent<AgentLogic_07>().health;
+			tempAgent.hunger = agent.GetComponent<AgentLogic_07>().hungerValue;
+			tempAgent.state = agent.GetComponent<AgentLogic_07>().aState;
+			tempAgent.job = agent.GetComponent<AgentLogic_07>().jobState;
+
+			serialPopulation.Add (tempAgent);
+
+		}
+
+		List<serialBuilding> serialBuildingDatabase = new List<serialBuilding>();
+
+		foreach (GameObject building in buildingDatabase) {
+			serialBuilding tempBuilding = new serialBuilding();
+
+			tempBuilding.bType = building.GetComponent<BuildingScript>().myType;
+			Debug.Log (building.name);
+			tempBuilding.xPos = building.transform.position.x;
+			tempBuilding.yPos = building.transform.position.y;
+			tempBuilding.zPos = building.transform.position.z;
+
+			serialBuildingDatabase.Add(tempBuilding);
+		}
+
+		newData.population = serialPopulation;
+		newData.buildingDatabase = serialBuildingDatabase;
+
+		PlayerDataManager.playerDataManager.writePlayerData (newData);
+		Debug.Log ("SAVED");
+	}
+
+}
+[Serializable]
+public class serialAgent{
+	public string name;
+	public float xPos;
+	public float yPos;
+	public float zPos;
+	public int health;
+	public int hunger;
+	public AgentLogic_07.agentState state;
+	public AgentLogic_07.jobSubState job;
+}
+
+[Serializable]
+public class serialBuilding{
+	public string bType;
+	public float xPos;
+	public float yPos;
+	public float zPos;
 }

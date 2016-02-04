@@ -47,7 +47,7 @@ public class PlayerDataManager : MonoBehaviour {
 			return false;
 	}
 
-	public void writeToPlayerData(PlayerData newSaveData){
+	public void writePlayerData(PlayerData newSaveData){
 		BinaryFormatter bf = new BinaryFormatter ();
 		if (File.Exists (Application.persistentDataPath + "/playerInfo.dat")) {
 			FileStream file = File.Open (Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
@@ -71,11 +71,10 @@ public class PlayerDataManager : MonoBehaviour {
 		FileStream file = File.Create (Application.persistentDataPath + "/playerInfo.dat");
 		PlayerData data = new PlayerData ();
 
-		data.populationCount = 0;
-		data.population = new List<GameObject> ();
-		data.myBuildings = new List<GameObject> ();
-		data.myParty = new List<GameObject> ();
-
+		data.firstLoad = true;
+		data.populationCount = 1;
+		data.population = new List<serialAgent> ();
+		data.buildingDatabase = new List<serialBuilding> ();
 		bf.Serialize (file, data);
 
 		dataExists = true;
@@ -85,9 +84,9 @@ public class PlayerDataManager : MonoBehaviour {
 [Serializable]
 public class PlayerData{
 	public int populationCount;
-	public List<GameObject> population;
-	public List<GameObject> myBuildings;
-
-	public List<GameObject> myParty;
-	
+	public List<serialAgent> population;
+	public List<serialBuilding> buildingDatabase;
+	public bool firstLoad = false;
+	public int scrap;
+	public float food, power, water, popLimit, morale;
 }

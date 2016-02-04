@@ -47,19 +47,19 @@ public class BuildingScript : MonoBehaviour {
         //	Debug.Log ("GENERATING!");
         //First check that we have enough power to generate resources
         if (_myGameController.power > 0) {
-            if (bType.typeName == "shelter") {
+            if (bType.typeName == "Shelter") {
                 _myGameController.popLimit += bType.pRate;
             }
-            else if (bType.typeName == "food") {
+            else if (bType.typeName == "Farm") {
                 //We should look into updating the generation algorithm to be affected by the number of agents assigned,ie. more farmers working = increased production rate -Zach
                 Debug.Log("bType.pRate: " + bType.pRate);
 
                 _myGameController.food += bType.pRate * _myGameController.farmerList.Count / _myGameController.farmBuildingList.Count;
             }
-            else if (bType.typeName == "water") {
+            else if (bType.typeName == "WaterStation") {
                 _myGameController.water += bType.pRate;
             }
-            else if (bType.typeName == "tavern") {
+            else if (bType.typeName == "Tavern") {
                 //Maybe add a moral increase rate?
             }
             else {
@@ -72,28 +72,28 @@ public class BuildingScript : MonoBehaviour {
         }
 
         //Since power stations do not consume power, they are not restricted by no power
-        if (bType.typeName == "power") {
+        if (bType.typeName == "PowerStation") {
             _myGameController.power += bType.pRate;
         }
     }
 
     void ConsumeResource() {
         //	Debug.Log ("GENERATING!");
-        if (bType.typeName == "shelter") {
+        if (bType.typeName == "Shelter") {
             // nada 
         }
-        else if (bType.typeName == "food") {
+        else if (bType.typeName == "Farm") {
             Debug.Log("Power consumed by farm: " + bType.cRate);
             _myGameController.power -= bType.cRate;
         }
         //Remove power building consuming power
-        else if (bType.typeName == "power") {
+        else if (bType.typeName == "PowerStation") {
             //_myGameController.power += bType.cRate;
         }
-        else if (bType.typeName == "water") {
+        else if (bType.typeName == "WaterStation") {
             _myGameController.power -= bType.cRate;
         }
-        else if (bType.typeName == "tavern") {
+        else if (bType.typeName == "Tavern") {
             _myGameController.power -= bType.cRate;
         }
         else {

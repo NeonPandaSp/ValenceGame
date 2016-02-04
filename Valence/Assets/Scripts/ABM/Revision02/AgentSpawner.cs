@@ -15,9 +15,7 @@ public class AgentSpawner : MonoBehaviour {
     void Start() {
         _gameController = GameObject.Find("GameController").GetComponent<GameController>();
 
-        AgentPopulation = new List<GameObject>();
-
-        SpawnAgent();
+        //SpawnAgent();
     }
 
     //On call, spawn a new agent from 05_Revision prefab folder
@@ -27,7 +25,7 @@ public class AgentSpawner : MonoBehaviour {
         GameObject newAgent = (GameObject)Instantiate(Agent, new Vector3(0, 0.51f, 0), Quaternion.identity);
 
         //Add the agent to the population database
-        AgentPopulation.Add(newAgent);
+        _gameController.population.Add(newAgent);
 
         //Provide the agent with a new name
         newAgent.name = "Agent" + newAgent.GetInstanceID();
