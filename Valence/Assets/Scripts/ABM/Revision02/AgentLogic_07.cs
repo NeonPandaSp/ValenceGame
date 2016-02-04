@@ -52,8 +52,9 @@ public class AgentLogic_07 : MonoBehaviour {
 
     AIFollow_07 aiFollow;
     GameController gameController;
+    Animator agentAnim;
 
-	public enum agentState
+    public enum agentState
 	{
 		Wandering,
 		Hungry,
@@ -96,6 +97,8 @@ public class AgentLogic_07 : MonoBehaviour {
 
 		//Get all storage waypoints when the agent is spawned, agent should know a known food source at spawn
 		storageWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("StorageWaypoint"));
+
+        agentAnim = GetComponent<Animator>();
 
 		gameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 
