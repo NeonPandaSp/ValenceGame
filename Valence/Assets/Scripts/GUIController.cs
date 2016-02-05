@@ -37,6 +37,7 @@ using System.Collections.Generic;
 
 	// === BUTTONS === \\
 	//public Button[] buildBtnArray = new Button[1];
+
 	public Button buildBtn;
 	Button buildBtnDel;
 
@@ -86,8 +87,7 @@ using System.Collections.Generic;
 			scrapDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 			
 			scrapDelText.text = "";
-			scrapDelText.fontSize = 20;
-			scrapDelText.transform.position = new Vector2 (125, Screen.height - 50);
+			scrapDelText.transform.position = new Vector2 (115, Screen.height - 50);
 			scrapDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
 
 		//Population
@@ -117,8 +117,8 @@ using System.Collections.Generic;
 			foodDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 			
 			foodDelText.text = "";
-			foodDelText.fontSize = 20;
 			foodDelText.transform.position = new Vector2 (populationDelText.transform.position.x + 150, scrapDelText.transform.position.y);
+			foodDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
 		
 		//Water
 		waterIconDel = (Image)Instantiate (waterIcon);
@@ -132,8 +132,8 @@ using System.Collections.Generic;
 			waterDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 			
 			waterDelText.text = "";
-			waterDelText.fontSize = 20;
 			waterDelText.transform.position = new Vector2 (foodDelText.transform.position.x + 150, scrapDelText.transform.position.y);
+			waterDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
 		
 		//Power
 		powerIconDel = (Image)Instantiate (powerIcon);
@@ -147,8 +147,8 @@ using System.Collections.Generic;
 			powerDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 			
 			powerDelText.text = "";
-			powerDelText.fontSize = 20;
 			powerDelText.transform.position = new Vector2 (waterDelText.transform.position.x + 150, scrapDelText.transform.position.y);
+			powerDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
 		
 		//		//Time
 		//		timeDelText = (Text)Instantiate (timeText);
@@ -338,7 +338,6 @@ using System.Collections.Generic;
 		globalAttributes.saveCurrentSettlement ();
 		Application.LoadLevel (3);
 		globalAttributes.scrap = scrap + UnityEngine.Random.Range (10, 101);
-		print ("Scrap is now: " + scrap);
 	}
 	 
 	//==================\\
@@ -381,60 +380,86 @@ using System.Collections.Generic;
 		//Scrap
 		scrap = globalAttributes.scrap;
 		scrapDelText.text = scrap.ToString ();
-		scrapDelText.color = new Color (244, 244, 244);
 
-		if (scrap < 50)
-			scrapDelText.color = new Color (255, 47, 37);
-		else if (scrap >= 50 || scrap <= 100)
-			scrapDelText.color = new Color (244, 244, 244);
-		else if (scrap > 100) {
-			scrapDelText.color = new Color (0, 115, 42);
+		if (scrap < 50) {
+			scrapDelText.color = new Color (1, 0.2745098039215686f, 0.3215686274509804f);
+			scrapDelText.fontSize = 20;
+		} else if (scrap >= 50 || scrap <= 99) {
+			scrapDelText.color = new Color (0.9568627450980392f, 0.9568627450980392f, 0.9568627450980392f);
+			scrapDelText.fontSize = 20;
+		} else if (scrap > 99) {
+			scrapDelText.color = new Color (0.4509803921568627f, 1, 0.5843137254901961f);
+			scrapDelText.fontSize = 16;
 		} else if (scrap > 999) {
-			scrapDelText.fontSize = 18;
+			scrapDelText.fontSize = 14;
 		}
 
 		//Population
-		//population = globalAttributes.population;
 		population = 5;
-
 		populationDelText.text = aSpawner.popSize + "/" + globalAttributes.popLimit;
 
-		if (aSpawner.popSize < 5)
-			populationDelText.color = new Color (255, 47, 37);
-		else if (aSpawner.popSize > 5 || population < 30)
-			populationDelText.color = new Color (244, 244, 244);
-		else if (aSpawner.popSize > 30)
-			populationDelText.color = new Color (0, 115, 42);
+		if (aSpawner.popSize < 5) {
+			populationDelText.color = new Color (1, 0.2745098039215686f, 0.3215686274509804f);
+			populationDelText.fontSize = 20;
+		} else if (aSpawner.popSize > 5 || population < 30) {
+			populationDelText.color = new Color (0.9568627450980392f, 0.9568627450980392f, 0.9568627450980392f);
+			populationDelText.fontSize = 20;
+		} else if (aSpawner.popSize > 30) {
+			populationDelText.color = new Color (0.4509803921568627f, 1, 0.5843137254901961f);
+		} else if (aSpawner.popSize > 99) {
+			populationDelText.fontSize = 16;
+		}
 
 		//Food
 		food = globalAttributes.food;
 		foodDelText.text = food.ToString ();
-		if (food <= 30)
-			foodDelText.color = new Color (255, 47, 37);
-		else if (food > 30 || food < 300)
-			foodDelText.color = new Color (244, 244, 244);
-		else if (food >= 300)
-			foodDelText.color = new Color (0, 115, 42);
+
+		if (food <= 30) {
+			foodDelText.color = new Color (1, 0.2745098039215686f, 0.3215686274509804f);
+			foodDelText.fontSize = 20;
+		} else if (food >= 50 || food <= 99) {
+			foodDelText.color = new Color (0.9568627450980392f, 0.9568627450980392f, 0.9568627450980392f);
+			foodDelText.fontSize = 20;
+		} else if (food > 99) {
+			foodDelText.fontSize = 16;
+		} else if (food > 999) {
+			foodDelText.color = new Color (0.4509803921568627f, 1, 0.5843137254901961f);
+			foodDelText.fontSize = 14;
+		}
 
 		//Water
 		water = globalAttributes.water;
 		waterDelText.text = water.ToString ();
-		if (water <= 30)
-			waterDelText.color = new Color (255, 47, 37);
-		else if (water > 30 || water < 300)
-			waterDelText.color = new Color (244, 244, 244);
-		else if (water >= 300)
-			waterDelText.color = new Color (0, 115, 42);
+
+		if (water <= 30) {
+			waterDelText.color = new Color (1, 0.2745098039215686f, 0.3215686274509804f);
+			waterDelText.fontSize = 20;
+		} else if (water >= 50 || water <= 99) {
+			waterDelText.color = new Color (0.9568627450980392f, 0.9568627450980392f, 0.9568627450980392f);
+			waterDelText.fontSize = 20;
+		} else if (water > 99) {
+			waterDelText.fontSize = 16;
+		} else if (water > 999) {
+			waterDelText.color = new Color (0.4509803921568627f, 1, 0.5843137254901961f);
+			waterDelText.fontSize = 14;
+		}
 
 		//Power
 		power = globalAttributes.power;
 		powerDelText.text = power.ToString ();
-		if (power <= 30)
-			powerDelText.color = new Color (255, 47, 37);
-		else if (power > 30 || power < 300)
-			powerDelText.color = new Color (244, 244, 244);
-		else if (power >= 300)
-			powerDelText.color = new Color (0, 115, 42);
+
+		if (power <= 30) {
+			powerDelText.color = new Color (1, 0.2745098039215686f, 0.3215686274509804f);
+			powerDelText.fontSize = 20;
+		} else if (power >= 50 || power <= 99) {
+			powerDelText.color = new Color (0.9568627450980392f, 0.9568627450980392f, 0.9568627450980392f);
+			powerDelText.fontSize = 20;
+		} else if (power > 99) {
+			powerDelText.fontSize = 16;
+		} else if (power > 999) {
+			powerDelText.color = new Color (0.4509803921568627f, 1, 0.5843137254901961f);
+			powerDelText.fontSize = 14;
+		}
 
 //		//Time
 //		hour = Mathf.FloorToInt (Time.realtimeSinceStartup / (60 * 60));

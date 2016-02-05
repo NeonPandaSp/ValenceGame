@@ -30,11 +30,6 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	public Image genericProfileIcon;
 	Image genericProfileIconDel;
 
-	int randomFirstName;
-	int randomLastName;
-	String[] firstNameArray;
-	String[] lastNameArray;
-
 	public Text firstLastName;
 	Text firstLastNameDel;
 	
@@ -70,7 +65,6 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	//=================\\
 
     void Start() {
-
         showError = false;
         hospitalAvailable = false;
         farmAvailable = false;
@@ -105,15 +99,6 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		//====================\\
 		//=== Settler Name ===\\
 		//====================\\
-		//		switch (namesList) {
-		//		case true:
-		firstNameArray = new String[14] {"Jimmy", "T.D.", "Very", "Jackery", "Fontana", "Freya", "Iris", "Dean", "Reed", "Tate", "Seth", "Larry", "Leaf", "Marco"};
-		lastNameArray = new string[14] {"Hawthorne", "Hazlewood", "Beckett", "Polo", "Mordecai", "McKnight", "Kerrigan", "Kellerman", "Stone", "Drake", "Richards", "Fontana", "Bob", "Steele"};
-		
-		randomFirstName = UnityEngine.Random.Range (0, 14);
-		randomLastName = UnityEngine.Random.Range (0, 14);
-		
-
 		firstLastNameDel = (Text)Instantiate (firstLastName);
 		firstLastNameDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 
@@ -531,10 +516,6 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 //		//WORSHIPPER
 //	}
 //
-//	void bartenderRoleClicked () {
-//		//BARTENDER
-//	}
-
 	void exBtnClicked () {
 		showMenu = false;
         selectedIcon.enabled = false;
@@ -571,28 +552,17 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	//==================\\
 
     void Update() {
-
-
-        if (agentLogic.aState == AgentLogic_07.agentState.Working) {
-            firstLastNameDel.text = firstNameArray[randomFirstName] + " " + lastNameArray[randomLastName] + " the " + agentLogic.jobState + " (" + agentLogic.aState + ")";
-        }
-        else {
-            //Re setting random name and attributes
-            firstLastNameDel.text = firstNameArray[randomFirstName] + " " + lastNameArray[randomLastName] + " (" + agentLogic.aState + ")";
-        }
-
-		settlerHealthTextDel.text = "Health: " + agentLogic.health;
-		settlerStaminaTextDel.text = "Stamina: " + rndStam;
-		settlerMoraleTextDel.text = "Morale: " + rndMor;
-		settlerHungerTextDel.text = "Hunger: " + agentLogic.hungerValue;
-		settlerThirstTextDel.text = "Thirst: " + rndThir;
-		settlerStrengthTextDel.text = "Strength: " + rndStr;
-		settlerIntelligenceTextDel.text = "Intelligence: " + rndInt;
-		settlerAgilityTextDel.text = "Agility: " + rndAgil;
-		settlerPerceptionTextDel.text = "Perception: " + rndPerc;
-		settlerCharismaTextDel.text = "Charisma: " + rndChar;
-
-		////
+		firstLastNameDel.text = agentLogic.settlerNameAndRole;					//Name
+																				//Picture
+		settlerHealthTextDel.text = "Health: " + agentLogic.health;				//Health
+		settlerStaminaTextDel.text = "Stamina: " + rndStam;						//Stamina
+		settlerHungerTextDel.text = "Hunger: " + agentLogic.hungerValue;		//Hunger
+		settlerThirstTextDel.text = "Thirst: " + rndThir;						//Thirst
+		settlerStrengthTextDel.text = "Strength: " + rndStr;					//Strength
+		settlerIntelligenceTextDel.text = "Intelligence: " + rndInt;			//Intelligence
+		settlerAgilityTextDel.text = "Agility: " + rndAgil;						//Agility
+		settlerPerceptionTextDel.text = "Perception: " + rndPerc;				//Perception
+		settlerCharismaTextDel.text = "Charisma: " + rndChar;					//Charisma
 
 		//Check to see if there are any gameobjects with the appropriate building tag
 		if (!GameObject.FindWithTag ("Farm"))

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
+using UnityEngine.UI;
 
 public class AgentLogic_07 : MonoBehaviour {
 
@@ -38,21 +39,31 @@ public class AgentLogic_07 : MonoBehaviour {
 
     //Check if the agent has died
     bool isDead;
-
-
+	
     //Agent stores 5% of food found in storage facility
     public float foodStored;
 
     //0-100 int which holds the agent's current hunger level. 0% = full, 100% = starving 
     public int hungerValue;
 
-    //0-100 int which holds the agent's current happyness level. 0% = depressed, 100% = happy 
+    //0-100 int which holds the agent's current happiness level. 0% = depressed, 100% = happy 
     public int moraleLevel;
 
     //0-100 int which holds the agent's current health. 0%= dead, 100% = perfectly healthy
     public int health;
 
+	//Settler Name
+	public AgentLogic_07 agentLogic;
+	public string firstLastName;
+	public string settlerNameAndRole;
 
+	int randomFirstName;
+	int randomLastName;
+	string[] firstNameArray;
+	string[] lastNameArray;
+
+//	public GUIController_SettlerInfo _GUIController_SettlerInfo;
+//	public Text hiTHERE;
 
     int amount = 0;
 
@@ -86,7 +97,14 @@ public class AgentLogic_07 : MonoBehaviour {
     public agentState currentState;
 
     void Start(){
-
+		//_GUIController_SettlerInfo = GameObject.Find ("Folk_Female_Agent").GetComponent<GUIController_SettlerInfo> ();
+		//Name
+		firstNameArray = new string[14] {"Jimmy", "T.D.", "Very", "Jackery", "Fontana", "Freya", "Iris", "Dean", "Reed", "Tate", "Seth", "Larry", "Leaf", "Marco"};
+		lastNameArray = new string[14] {"Hawthorne", "Hazlewood", "Beckett", "Polo", "Mordecai", "McKnight", "Kerrigan", "Kellerman", "Stone", "Drake", "Richards", "Fontana", "Bob", "Steele"};
+		
+		randomFirstName = UnityEngine.Random.Range (0, 14);
+		randomLastName = UnityEngine.Random.Range (0, 14);
+	
 		//Init the agent's hunger value to 0 when spawned (they shouldnt be hungry at start)
 		hungerValue = 0;
 		//Init the agent's health to 100 when spawned (they should be perfectly healthy)
@@ -130,17 +148,23 @@ public class AgentLogic_07 : MonoBehaviour {
     }
 
 	void Update() {
+		//Name - variable firstLastName outputs first and last name. variable settlerNameAndRole outputs name, what settler is currently doing, and their assigned role
+		firstLastName =  (firstNameArray[randomFirstName] + " " + lastNameArray[randomLastName]);
+		if (aState == agentState.Working) {
+			settlerNameAndRole = firstNameArray[randomFirstName] + " " + lastNameArray[randomLastName] + " the " + jobState + " (" + aState + ")";
+		}
+		else {
+			//Resetting random name and attributes
+			settlerNameAndRole = firstNameArray[randomFirstName] + " " + lastNameArray[randomLastName] + " (" + aState + ")";
+		}
 
         //Check if the agent has run out of health
         if (health <= 0 && isDead == false)
         {
-
             //Stop the agent from moving
             aiFollow.Stop();
 
-
-
-            //Play a death animation
+			//Play a death animation
             agentAnim.SetTrigger("Dead");
 
             //Ensure the agent only triggers this logic once
@@ -215,9 +239,7 @@ public class AgentLogic_07 : MonoBehaviour {
                         print("Default reached in Working SubState in AgentLogic_07 Update");
 
                         break;
-
-                }
-                    
+                } 
 
 			    break;
 
@@ -229,8 +251,6 @@ public class AgentLogic_07 : MonoBehaviour {
 
         }
 	}
-
-
 
     //When called, the agent will begin consuming resources needed to live (food, water)
     public void BeginFeeding() {
@@ -334,15 +354,11 @@ public class AgentLogic_07 : MonoBehaviour {
                 Debug.Log("Default reached in AgentLogic_07 - ConsumeResource function");
             break;
         }
-
-       
-
     }
 
     IEnumerator CheckFoodSource() {
         yield return new WaitForSeconds(10.0f);
         isHungry = true;
-       
     }
 
     bool Choose(int probability) {
@@ -366,9 +382,7 @@ public class AgentLogic_07 : MonoBehaviour {
         else {
             Debug.Log("False");
             return false;
-
         }
-
     }
 
 	bool PointInsideSphere(Vector3 point, Vector3 center, float radius) {
@@ -387,12 +401,9 @@ public class AgentLogic_07 : MonoBehaviour {
         workWaypointIndex = Random.Range(0, workWaypoints.Count);
 
         aiFollow.target = waypoint.position;
-        
     }
 
 	public void TargetReached(){
-
-
         if (aState == agentState.Wandering){
 
             wanderWaypointIndex = Random.Range(0, wanderWaypoints.Count);
@@ -436,10 +447,7 @@ public class AgentLogic_07 : MonoBehaviour {
             aState = currentState;
             
             //Need to Update the wait length to take into account the % of hunger missing (Higher hunger missing = longer wait time)
-
         }
-
-
 
         /*
 		 * if State1 
