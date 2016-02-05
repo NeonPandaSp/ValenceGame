@@ -107,7 +107,7 @@ public class GameController : MonoBehaviour {
 
 		foreach (serialAgent agent in loadedData.population) {
 			GameObject temp = (GameObject) Instantiate( agentPrefab, new Vector3( agent.xPos, agent.yPos, agent.zPos), Quaternion.identity);
-			temp.GetComponent<AgentLogic_07>().name = agent.name;
+			temp.GetComponent<AgentLogic_07>().name = agent.agentName;
 			temp.GetComponent<AgentLogic_07>().health = agent.health;
 			temp.GetComponent<AgentLogic_07>().hungerValue = agent.hunger;
 			temp.GetComponent<AgentLogic_07>().aState = agent.state;
@@ -142,7 +142,7 @@ public class GameController : MonoBehaviour {
 		foreach (GameObject agent in population) {
 			serialAgent tempAgent = new serialAgent();
 
-			tempAgent.name = agent.GetComponent<AgentLogic_07>().name;
+			tempAgent.agentName = agent.GetComponent<AgentLogic_07>().name;
 			tempAgent.xPos = agent.transform.position.x;
 			tempAgent.yPos = agent.transform.position.y;
 			tempAgent.zPos = agent.transform.position.z;
@@ -179,7 +179,7 @@ public class GameController : MonoBehaviour {
 }
 [Serializable]
 public class serialAgent{
-	public string name;
+	public string agentName;
 	public float xPos;
 	public float yPos;
 	public float zPos;

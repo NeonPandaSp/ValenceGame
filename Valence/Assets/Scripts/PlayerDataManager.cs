@@ -11,6 +11,8 @@ public class PlayerDataManager : MonoBehaviour {
 	bool dataExists;
 	public bool isLive;
 
+	public string currentVersion;
+
 	void Awake(){
 		if (playerDataManager == null) {
 			DontDestroyOnLoad (gameObject);
@@ -25,7 +27,15 @@ public class PlayerDataManager : MonoBehaviour {
 			dataExists = false;
 		} else {
 			Debug.Log ("Found Data");
-			dataExists = true;
+			PlayerData loadedData = loadSaveData();
+			Debug.Log ("Version: " + loadedData.versionId);
+			if( !isLive || loadedData.versionId == currentVersion ){
+				Debug.Log ("Matches current version");
+				dataExists = true;
+			} else{
+				Debug.Log ("Does not match current version");
+				dataExists = false;
+			}
 		}
 	}
 	
@@ -53,6 +63,7 @@ public class PlayerDataManager : MonoBehaviour {
 		BinaryFormatter bf = new BinaryFormatter ();
 		if (File.Exists (Application.persistentDataPath + "/playerInfo.dat")) {
 			FileStream file = File.Open (Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+			newSaveData.versionId = currentVersion;
 			bf.Serialize (file, newSaveData);
 		} else {
 			Debug.Log ("NO SAVE FILE EXISTS: did you delete the save data during play?");
@@ -74,6 +85,7 @@ public class PlayerDataManager : MonoBehaviour {
 		PlayerData data = new PlayerData ();
 
 		data.firstLoad = true;
+		data.versionId = currentVersion;
 		data.populationCount = 1;
 		data.population = new List<serialAgent> ();
 		data.buildingDatabase = new List<serialBuilding> ();
@@ -85,6 +97,8 @@ public class PlayerDataManager : MonoBehaviour {
 
 [Serializable]
 public class PlayerData{
+	public string versionId;
+
 	public int populationCount;
 	public List<serialAgent> population;
 	public List<serialBuilding> buildingDatabase;
