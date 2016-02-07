@@ -104,9 +104,11 @@ public class AgentLogic_07 : MonoBehaviour {
 		
 		randomFirstName = UnityEngine.Random.Range (0, 14);
 		randomLastName = UnityEngine.Random.Range (0, 14);
-	
-		//Init the agent's hunger value to 0 when spawned (they shouldnt be hungry at start)
-		hungerValue = 0;
+        //Name - variable firstLastName outputs first and last name. variable settlerNameAndRole outputs name, what settler is currently doing, and their assigned role
+        firstLastName = (firstNameArray[randomFirstName] + " " + lastNameArray[randomLastName]);
+
+        //Init the agent's hunger value to 0 when spawned (they shouldnt be hungry at start)
+        hungerValue = 0;
 		//Init the agent's health to 100 when spawned (they should be perfectly healthy)
 		health = 100;
 		//Init the agent's happyness to 100 when spawned (they should be perfectly happy)
@@ -148,9 +150,9 @@ public class AgentLogic_07 : MonoBehaviour {
     }
 
 	void Update() {
-		//Name - variable firstLastName outputs first and last name. variable settlerNameAndRole outputs name, what settler is currently doing, and their assigned role
-		firstLastName =  (firstNameArray[randomFirstName] + " " + lastNameArray[randomLastName]);
-		if (aState == agentState.Working) {
+		
+
+        if (aState == agentState.Working) {
 			settlerNameAndRole = firstNameArray[randomFirstName] + " " + lastNameArray[randomLastName] + " the " + jobState + " (" + aState + ")";
 		}
 		else {
@@ -393,17 +395,29 @@ public class AgentLogic_07 : MonoBehaviour {
 
     IEnumerator DelayNewWorkTarget(Transform waypoint) {
         //Wait for how ever long it takes to play the work animation
+
+        Vector3 targetPostition = new Vector3(workWaypoints[workWaypointIndex].transform.parent.gameObject.transform.position.x,
+                                       this.transform.position.y,
+                                       workWaypoints[workWaypointIndex].transform.parent.gameObject.transform.position.z);
+        this.transform.LookAt(targetPostition);
+
+        //transform.LookAt(workWaypoints[workWaypointIndex].transform.parent.gameObject.transform);
         agentAnim.SetBool("Working", true);
         aiFollow.Stop();
 
-        yield return new WaitForSeconds(agentAnim.GetComponent<Animation>().clip.length);
+        //Wait for animation to finish playing
+        //yield return new WaitForSeconds(agentAnim.GetComponent<Animation>().clip.length);
+        
+        //Wait for exact animation time before exit
+        yield return new WaitForSeconds(5.33f);
+
         agentAnim.SetBool("Working", false);
         workWaypointIndex = Random.Range(0, workWaypoints.Count);
-
-        aiFollow.target = waypoint.position;
+        aiFollow.Resume();
+        //aiFollow.target = waypoint.position;
     }
 
-	public void TargetReached(){
+    public void TargetReached(){
         if (aState == agentState.Wandering){
 
             wanderWaypointIndex = Random.Range(0, wanderWaypoints.Count);
@@ -413,7 +427,7 @@ public class AgentLogic_07 : MonoBehaviour {
 
             //workWaypointIndex = Random.Range(0, workWaypoints.Count);
             StartCoroutine(DelayNewWorkTarget(workWaypoints[workWaypointIndex].transform));
-            //aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
+            aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
 
         }   else if (aState == agentState.Hungry){
 
