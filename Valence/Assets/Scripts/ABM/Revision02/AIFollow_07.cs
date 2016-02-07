@@ -61,13 +61,19 @@ public class AIFollow_07 : MonoBehaviour {
 
 	public AgentLogic_07 agentLogic;
 
-	/** Use this for initialization */
-	public void Start () {
+    //Agent animator component
+    Animator agentAnim;
+
+    /** Use this for initialization */
+    public void Start () {
 		seeker = GetComponent<Seeker>();
 		controller = GetComponent<CharacterController>();
 		navmeshController = GetComponent<NavmeshController>();
-		
-		tr = transform;
+
+        agentAnim = GetComponent<Animator>();
+
+
+        tr = transform;
 		Repath ();
 	}
 	

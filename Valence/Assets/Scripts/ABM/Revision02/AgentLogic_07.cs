@@ -322,20 +322,30 @@ public class AgentLogic_07 : MonoBehaviour {
                     //Throw a series of dice at each milestone 25,50,75% hunger, if any dice roll true, then move to the food source
                     switch (hungerValue) {
                         case 25:
+                            //Play hunger animation
+                            //Pause the ai pathfinding to play an animation, pass anim state name 
+                            StartCoroutine(PlayAnimPauseAI("Hungry"));
+                            
 
                             //if the agent reaches 25% hunger throw a dice with 10% probability of success
                             isHungry = Choose(10);
                         break;
 
                         case 50:
+                            //Play hunger animation
+                            //Pause the ai pathfinding to play an animation, pass anim state name 
+                            StartCoroutine(PlayAnimPauseAI("Hungry"));
                             for (amount = 0; amount < 3; amount++)
-                                if (!isHungry) {
-                                    //if the agent reaches 50% hunger throw a dice with 35% probability of success
-                                    isHungry = Choose(10);
-                                }
+                            if (!isHungry) {
+                                //if the agent reaches 50% hunger throw a dice with 35% probability of success
+                                isHungry = Choose(10);
+                            }
                         break;
 
                         case 75:
+                            //Play hunger animation
+                            //Pause the ai pathfinding to play an animation, pass anim state name 
+                            StartCoroutine(PlayAnimPauseAI("Hungry"));
                             for (amount = 0; amount < 6; amount++)
                                 if (!isHungry) {
                                     //if the agent reaches 75% hunger throw a dice with 65% probability of success
@@ -358,8 +368,22 @@ public class AgentLogic_07 : MonoBehaviour {
         }
     }
 
+    IEnumerator PlayAnimPauseAI(string animation) {
+        agentAnim.SetTrigger(animation);
+        aiFollow.Stop();
+        AnimationState animState;
+        animState = GetComponent<AnimationState>();
+        //Wait for animation to finish playing
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(animState.clip.length);
+        aiFollow.Resume();
+    }
+
     IEnumerator CheckFoodSource() {
         yield return new WaitForSeconds(10.0f);
+        //Play hunger animation
+        //Pause the ai pathfinding to play an animation, pass anim state name 
+        StartCoroutine(PlayAnimPauseAI("Hungry"));
         isHungry = true;
     }
 
@@ -406,10 +430,10 @@ public class AgentLogic_07 : MonoBehaviour {
         aiFollow.Stop();
 
         //Wait for animation to finish playing
-        //yield return new WaitForSeconds(agentAnim.GetComponent<Animation>().clip.length);
+        yield return new WaitForSeconds(agentAnim.GetCurrentAnimatorStateInfo(0).length);
         
         //Wait for exact animation time before exit
-        yield return new WaitForSeconds(5.33f);
+        //yield return new WaitForSeconds(5.33f);
 
         agentAnim.SetBool("Working", false);
         workWaypointIndex = Random.Range(0, workWaypoints.Count);
