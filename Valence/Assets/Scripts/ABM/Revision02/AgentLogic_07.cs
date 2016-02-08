@@ -80,6 +80,7 @@ public class AgentLogic_07 : MonoBehaviour {
 		Wandering,
 		Hungry,
 		Working,
+        Dead,
 		Default
 	}
 
@@ -183,7 +184,7 @@ public class AgentLogic_07 : MonoBehaviour {
         BeginFeeding();
     }
 
-	void Update() {
+	void LateUpdate() {
 		
 
         if (aState == agentState.Working) {
@@ -199,8 +200,8 @@ public class AgentLogic_07 : MonoBehaviour {
         {
             //Stop the agent from moving
             aiFollow.Stop();
-
-			//Play a death animation
+            aState = agentState.Dead;
+            //Play a death animation
             agentAnim.SetTrigger("Dead");
 
             //Ensure the agent only triggers this logic once
@@ -208,7 +209,8 @@ public class AgentLogic_07 : MonoBehaviour {
             //Destroy(this.gameObject);
         }
 
-        switch (aState) {
+        switch (aState)
+        {
 
             case agentState.Wandering:
                 //Save the current state
@@ -221,8 +223,8 @@ public class AgentLogic_07 : MonoBehaviour {
                 gameController.farmerList.Remove(this.gameObject);
 
                 break;
-		    case agentState.Hungry:
-                
+            case agentState.Hungry:
+
                 aiFollow.target = storageWaypoints[storageWaypointIndex].transform.position;
 
                 //remove this agent from all worker lists
@@ -230,11 +232,16 @@ public class AgentLogic_07 : MonoBehaviour {
                 gameController.farmerList.Remove(this.gameObject);
                 populateList = false;
                 break;
-			
-		    case agentState.Working:
+
+            case agentState.Dead:
+                aiFollow.Reset();
+                break;
+
+            case agentState.Working:
                 currentState = aState;
                 //Agent can be assigned various jobs each with their own behaviour
-                switch (jobState) {
+                switch (jobState)
+                {
                     case jobSubState.Farmer:
 
                         //Set the agent to move towards the farm waypoints
@@ -264,7 +271,8 @@ public class AgentLogic_07 : MonoBehaviour {
 
                         aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
 
-                        if (!populateList) {
+                        if (!populateList)
+                        {
                             gameController.powerWorkerList.Add(this.gameObject);
                             populateList = true;
                         }
@@ -275,9 +283,9 @@ public class AgentLogic_07 : MonoBehaviour {
                         print("Default reached in Working SubState in AgentLogic_07 Update");
 
                         break;
-                } 
+                }
 
-			    break;
+                break;
 
             case agentState.Default:
 
@@ -286,6 +294,7 @@ public class AgentLogic_07 : MonoBehaviour {
                 break;
 
         }
+        
 	}
 
     //When called, the agent will begin consuming resources needed to live (food, water)
@@ -356,39 +365,54 @@ public class AgentLogic_07 : MonoBehaviour {
                     //Throw a series of dice at each milestone 25,50,75% hunger, if any dice roll true, then move to the food source
                     switch (hungerValue) {
                         case 25:
-                            //Play hunger animation
-                            //Pause the ai pathfinding to play an animation, pass anim state name 
-                            StartCoroutine(PlayAnimPauseAI("Hungry"));
-                            
 
-                            //if the agent reaches 25% hunger throw a dice with 10% probability of success
-                            isHungry = Choose(10);
-                        break;
+                            if (!isDead)
+                            {
+                                //Play hunger animation
+                                //Pause the ai pathfinding to play an animation, pass anim state name 
+                                StartCoroutine(PlayAnimPauseAI("Hungry"));
 
-                        case 50:
-                            //Play hunger animation
-                            //Pause the ai pathfinding to play an animation, pass anim state name 
-                            StartCoroutine(PlayAnimPauseAI("Hungry"));
-                            for (amount = 0; amount < 3; amount++)
-                            if (!isHungry) {
-                                //if the agent reaches 50% hunger throw a dice with 35% probability of success
+
+                                //if the agent reaches 25% hunger throw a dice with 10% probability of success
                                 isHungry = Choose(10);
                             }
                         break;
 
+                        case 50:
+                            if (!isDead)
+                            {
+                                //Play hunger animation
+                                //Pause the ai pathfinding to play an animation, pass anim state name 
+                                StartCoroutine(PlayAnimPauseAI("Hungry"));
+                                for (amount = 0; amount < 3; amount++)
+                                    if (!isHungry)
+                                    {
+                                        //if the agent reaches 50% hunger throw a dice with 35% probability of success
+                                        isHungry = Choose(10);
+                                    }
+                            }
+                        break;
+
                         case 75:
-                            //Play hunger animation
-                            //Pause the ai pathfinding to play an animation, pass anim state name 
-                            StartCoroutine(PlayAnimPauseAI("Hungry"));
-                            for (amount = 0; amount < 6; amount++)
-                                if (!isHungry) {
-                                    //if the agent reaches 75% hunger throw a dice with 65% probability of success
-                                    isHungry = Choose(10);
-                                }
+                            if (!isDead)
+                            {
+                                //Play hunger animation
+                                //Pause the ai pathfinding to play an animation, pass anim state name 
+                                StartCoroutine(PlayAnimPauseAI("Hungry"));
+                                for (amount = 0; amount < 6; amount++)
+                                    if (!isHungry)
+                                    {
+                                        //if the agent reaches 75% hunger throw a dice with 65% probability of success
+                                        isHungry = Choose(10);
+                                    }
+                            }
                         break;
 
                         case 100:
-                            StartCoroutine(CheckFoodSource());
+                            if (!isDead)
+                            {
+                                StartCoroutine(CheckFoodSource());
+                            }
                            // isHungry = Choose(101);
                         break;
                     }
@@ -405,11 +429,11 @@ public class AgentLogic_07 : MonoBehaviour {
     IEnumerator PlayAnimPauseAI(string animation) {
         agentAnim.SetTrigger(animation);
         aiFollow.Stop();
-        AnimationState animState;
-        animState = GetComponent<AnimationState>();
+        //AnimationState animState;
+        //animState = GetComponent<AnimationState>();
         //Wait for animation to finish playing
         yield return new WaitForEndOfFrame();
-        yield return new WaitForSeconds(animState.clip.length);
+        yield return new WaitForSeconds(agentAnim.GetCurrentAnimatorClipInfo(0).Length);
         aiFollow.Resume();
     }
 
@@ -418,7 +442,10 @@ public class AgentLogic_07 : MonoBehaviour {
         //Play hunger animation
         //Pause the ai pathfinding to play an animation, pass anim state name 
         StartCoroutine(PlayAnimPauseAI("Hungry"));
-        isHungry = true;
+        if (!isDead)
+            isHungry = true;
+        else
+            isHungry = false;
     }
 
     bool Choose(int probability) {
