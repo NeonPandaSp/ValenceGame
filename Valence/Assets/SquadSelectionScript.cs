@@ -12,6 +12,21 @@ public class SquadSelectionScript : MonoBehaviour {
 
 	public List<Button> buttons;
 
+	public serialAgent[] myParty = new serialAgent[4];
+
+	public Image[] myPartyImageIcons = new Image[4];
+
+	public Text[] myPartyNames = new Text[4];
+
+	public Text[] myParty_STR_Stats = new Text[4];
+	public Text[] myParty_PER_Stats = new Text[4];
+	public Text[] myParty_AGL_Stats = new Text[4];
+
+	public Image[] myPartyWeapon = new Image[4];
+
+	public int selectedPartyIndex;
+	public bool noneSelected;
+
 	public int rowIndex = 0;
 
 	// Use this for initialization
@@ -20,6 +35,7 @@ public class SquadSelectionScript : MonoBehaviour {
 		int index = 0;
 		PlayerData loadedData = PlayerDataManager.playerDataManager.loadSaveData ();
 		population = loadedData.population;
+		noneSelected = true;
 		for(int i = index; i < index + buttons.Count; i++) {
 			if( i < population.Count-1)
 				buttons[i].GetComponentInChildren<Text>().text = population[i].agentName;
@@ -59,6 +75,24 @@ public class SquadSelectionScript : MonoBehaviour {
 			else
 				buttons[butDex].GetComponentInChildren<Text>().text = "NA";
 			butDex++;
+		}
+	}
+
+	public void setSelectedPartyIndex(int index){
+		selectedPartyIndex = index;
+		noneSelected = false;
+	}
+
+	public void setPartyMember(int index){
+		if (!noneSelected) {
+			//Set Party UI Assets to selected Agent from population
+			myParty [selectedPartyIndex] = population [(rowIndex * buttons.Count) + index];
+			myPartyNames [selectedPartyIndex].text = population [(rowIndex * buttons.Count) + index].agentName;
+			myParty_AGL_Stats[selectedPartyIndex].text = "" + population[(rowIndex*buttons.Count)+index].agility;
+
+			//Reset Selection Variables
+			selectedPartyIndex = -1;
+			noneSelected = true;
 		}
 	}
 }

@@ -110,6 +110,8 @@ public class GameController : MonoBehaviour {
 			temp.GetComponent<AgentLogic_07>().firstLastName = agent.agentName;
 			temp.GetComponent<AgentLogic_07>().health = agent.health;
 			temp.GetComponent<AgentLogic_07>().hungerValue = agent.hunger;
+			temp.GetComponent<AgentAttributes>().agentAgility = agent.agility;
+
 			temp.GetComponent<AgentLogic_07>().aState = agent.state;
 			temp.GetComponent<AgentLogic_07>().jobState = agent.job;
 			temp.GetComponent<AgentLogic_07>().newAgent = false;
@@ -147,6 +149,8 @@ public class GameController : MonoBehaviour {
 			tempAgent.zPos = agent.transform.position.z;
 			tempAgent.health = agent.GetComponent<AgentLogic_07>().health;
 			tempAgent.hunger = agent.GetComponent<AgentLogic_07>().hungerValue;
+			tempAgent.agility = (int) agent.GetComponent<AgentAttributes>().agentAgility;
+
 			tempAgent.state = agent.GetComponent<AgentLogic_07>().aState;
 			tempAgent.job = agent.GetComponent<AgentLogic_07>().jobState;
 
@@ -182,8 +186,14 @@ public class serialAgent{
 	public float xPos;
 	public float yPos;
 	public float zPos;
+
 	public int health;
 	public int hunger;
+
+	public int strength;
+	public int perception;
+	public int agility;
+
 	public AgentLogic_07.agentState state;
 	public AgentLogic_07.jobSubState job;
 }
