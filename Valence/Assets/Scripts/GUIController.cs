@@ -76,7 +76,7 @@ using System.Collections.Generic;
 		HUDDelBg.transform.Translate (385, Screen.height - 50, 0);
 //		HUDDelBg.CrossFadeAlpha (0.5f, 0, false);
 
-		cursorTexture_default.Resize (9, 11);
+		//cursorTexture_default.Resize (9, 11);
 		Cursor.SetCursor(cursorTexture_default, hotSpot, CursorMode.Auto);
 
 		//===========================\\
@@ -245,22 +245,22 @@ using System.Collections.Generic;
 		powerStationDelBtn.onClick.AddListener (() => switchStructure ("power"));
 		powerStationDelBtn.gameObject.SetActive (false);
 		
-		//Storage Button
-		storageDelBtn = (Button)Instantiate (storageBtn);
-		storageDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		
-		storageDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		storageDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 72.5f, buildBtnDel.transform.position.y - 32.5f);
-		storageDelBtn.GetComponentInChildren<Text> ().text = "Storage";
-		storageDelBtn.onClick.AddListener (() => switchStructure ("storage"));
-		storageDelBtn.gameObject.SetActive (false);
+//		//Storage Button
+//		storageDelBtn = (Button)Instantiate (storageBtn);
+//		storageDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+//		
+//		storageDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
+//		storageDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 72.5f, buildBtnDel.transform.position.y - 32.5f);
+//		storageDelBtn.GetComponentInChildren<Text> ().text = "Storage";
+//		storageDelBtn.onClick.AddListener (() => switchStructure ("storage"));
+//		storageDelBtn.gameObject.SetActive (false);
 
 		//Hospital Button
 		hospitalDelBtn = (Button)Instantiate (hospitalBtn);
 		hospitalDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		hospitalDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		hospitalDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 72.5f, buildBtnDel.transform.position.y - 97.5f);
+		hospitalDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 72.5f, buildBtnDel.transform.position.y - 32.5f);
 		hospitalDelBtn.GetComponentInChildren<Text> ().text = "Hospital";
 		hospitalDelBtn.onClick.AddListener (() => switchStructure ("hospital"));
 		hospitalDelBtn.gameObject.SetActive (false);
@@ -270,7 +270,7 @@ using System.Collections.Generic;
 		trainingGroundDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		trainingGroundDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		trainingGroundDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 137.5f, buildBtnDel.transform.position.y - 97.5f);
+		trainingGroundDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 137.5f, buildBtnDel.transform.position.y - 32.5f);
 		trainingGroundDelBtn.GetComponentInChildren<Text> ().text = "Training Ground";
 		trainingGroundDelBtn.onClick.AddListener (() => switchStructure ("Training Ground"));
 		trainingGroundDelBtn.gameObject.SetActive (false);
@@ -315,9 +315,9 @@ using System.Collections.Generic;
 			case "power":
 				setBuildingTypeName = "power";
 				break;
-			case "storage":
-				setBuildingTypeName = "storage";
-				break;
+//			case "storage":
+//				setBuildingTypeName = "storage";
+//				break;
 			case "hospital":
 				setBuildingTypeName = "hospital";
 				break;
@@ -369,7 +369,7 @@ using System.Collections.Generic;
 			farmDelBtn.gameObject.SetActive (true);
 			waterStationDelBtn.gameObject.SetActive (true);
 			powerStationDelBtn.gameObject.SetActive (true);
-			storageDelBtn.gameObject.SetActive (true);
+//			storageDelBtn.gameObject.SetActive (true);
 			trainingGroundDelBtn.gameObject.SetActive (true);
 			hospitalDelBtn.gameObject.SetActive (true);
 			break;
@@ -378,7 +378,7 @@ using System.Collections.Generic;
 			farmDelBtn.gameObject.SetActive (false);
 			waterStationDelBtn.gameObject.SetActive (false);
 			powerStationDelBtn.gameObject.SetActive (false);
-			storageDelBtn.gameObject.SetActive (false);
+//			storageDelBtn.gameObject.SetActive (false);
 			trainingGroundDelBtn.gameObject.SetActive (false);
 			hospitalDelBtn.gameObject.SetActive (false);
 			break;
