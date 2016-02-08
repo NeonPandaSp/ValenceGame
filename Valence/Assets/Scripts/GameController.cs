@@ -194,6 +194,8 @@ public class serialAgent{
 	public int perception;
 	public int agility;
 
+	public serialWeapon myWeapon;
+
 	public AgentLogic_07.agentState state;
 	public AgentLogic_07.jobSubState job;
 }
@@ -204,4 +206,9 @@ public class serialBuilding{
 	public float xPos;
 	public float yPos;
 	public float zPos;
+}
+
+[Serializable]
+public class serialWeapon{
+	public string weaponName;
 }

@@ -106,4 +106,6 @@ public class PlayerData{
 	public string fLname;
 	public int scrap;
 	public float food, power, water, popLimit, morale;
+
+	public List<serialAgent> currentParty;
 }
