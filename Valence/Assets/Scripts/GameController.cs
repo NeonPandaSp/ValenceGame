@@ -107,13 +107,12 @@ public class GameController : MonoBehaviour {
 
 		foreach (serialAgent agent in loadedData.population) {
 			GameObject temp = (GameObject) Instantiate( agentPrefab, new Vector3( agent.xPos, agent.yPos, agent.zPos), Quaternion.identity);
-			temp.GetComponent<AgentLogic_07>().name = agent.agentName;
+			temp.GetComponent<AgentLogic_07>().firstLastName = agent.agentName;
 			temp.GetComponent<AgentLogic_07>().health = agent.health;
 			temp.GetComponent<AgentLogic_07>().hungerValue = agent.hunger;
 			temp.GetComponent<AgentLogic_07>().aState = agent.state;
 			temp.GetComponent<AgentLogic_07>().jobState = agent.job;
-			
-			
+			temp.GetComponent<AgentLogic_07>().newAgent = false;
 			if( temp.GetComponent<AgentLogic_07>().jobState == AgentLogic_07.jobSubState.Farmer){
 				temp.GetComponent<AgentLogic_07>().workWaypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag ("FarmWaypoint"));
 				farmerList.Add(temp);
@@ -142,7 +141,7 @@ public class GameController : MonoBehaviour {
 		foreach (GameObject agent in population) {
 			serialAgent tempAgent = new serialAgent();
 
-			tempAgent.agentName = agent.GetComponent<AgentLogic_07>().name;
+			tempAgent.agentName = agent.GetComponent<AgentLogic_07>().firstLastName;
 			tempAgent.xPos = agent.transform.position.x;
 			tempAgent.yPos = agent.transform.position.y;
 			tempAgent.zPos = agent.transform.position.z;

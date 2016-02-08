@@ -25,6 +25,9 @@ public class AgentLogic_07 : MonoBehaviour {
     //Counter associated to workWaypoints & wanderWaypoints list index
     int workWaypointIndex, wanderWaypointIndex, storageWaypointIndex;
 
+	//Check if this agent is newly created or is a copy of an older agent
+	public bool newAgent = true;
+
     //Check if a target has been assigned, if yes wait, otherwise assign a new target
     bool assignedTarget;
 
@@ -98,22 +101,53 @@ public class AgentLogic_07 : MonoBehaviour {
 
     void Start(){
 		//_GUIController_SettlerInfo = GameObject.Find ("Folk_Female_Agent").GetComponent<GUIController_SettlerInfo> ();
-		//Name
-		firstNameArray = new string[14] {"Jimmy", "T.D.", "Very", "Jackery", "Fontana", "Freya", "Iris", "Dean", "Reed", "Tate", "Seth", "Larry", "Leaf", "Marco"};
-		lastNameArray = new string[14] {"Hawthorne", "Hazlewood", "Beckett", "Polo", "Mordecai", "McKnight", "Kerrigan", "Kellerman", "Stone", "Drake", "Richards", "Fontana", "Bob", "Steele"};
+		if (newAgent) {
+			//Name
+			firstNameArray = new string[14] {
+				"Jimmy",
+				"T.D.",
+				"Very",
+				"Jackery",
+				"Fontana",
+				"Freya",
+				"Iris",
+				"Dean",
+				"Reed",
+				"Tate",
+				"Seth",
+				"Larry",
+				"Leaf",
+				"Marco"
+			};
+			lastNameArray = new string[14] {
+				"Hawthorne",
+				"Hazlewood",
+				"Beckett",
+				"Polo",
+				"Mordecai",
+				"McKnight",
+				"Kerrigan",
+				"Kellerman",
+				"Stone",
+				"Drake",
+				"Richards",
+				"Fontana",
+				"Bob",
+				"Steele"
+			};
 		
-		randomFirstName = UnityEngine.Random.Range (0, 14);
-		randomLastName = UnityEngine.Random.Range (0, 14);
-        //Name - variable firstLastName outputs first and last name. variable settlerNameAndRole outputs name, what settler is currently doing, and their assigned role
-        firstLastName = (firstNameArray[randomFirstName] + " " + lastNameArray[randomLastName]);
+			randomFirstName = UnityEngine.Random.Range (0, 14);
+			randomLastName = UnityEngine.Random.Range (0, 14);
+			//Name - variable firstLastName outputs first and last name. variable settlerNameAndRole outputs name, what settler is currently doing, and their assigned role
+			firstLastName = (firstNameArray [randomFirstName] + " " + lastNameArray [randomLastName]);
 
-        //Init the agent's hunger value to 0 when spawned (they shouldnt be hungry at start)
-        hungerValue = 0;
-		//Init the agent's health to 100 when spawned (they should be perfectly healthy)
-		health = 100;
-		//Init the agent's happyness to 100 when spawned (they should be perfectly happy)
-		moraleLevel = 100;
-
+			//Init the agent's hunger value to 0 when spawned (they shouldnt be hungry at start)
+			hungerValue = 0;
+			//Init the agent's health to 100 when spawned (they should be perfectly healthy)
+			health = 100;
+			//Init the agent's happyness to 100 when spawned (they should be perfectly happy)
+			moraleLevel = 100;
+		}
 		aiFollow = GetComponent<AIFollow_07> ();
 		wanderWaypoints = new List<Vector3> ();
 
@@ -153,11 +187,11 @@ public class AgentLogic_07 : MonoBehaviour {
 		
 
         if (aState == agentState.Working) {
-			settlerNameAndRole = firstNameArray[randomFirstName] + " " + lastNameArray[randomLastName] + " the " + jobState + " (" + aState + ")";
+			settlerNameAndRole = firstLastName + " the " + jobState + " (" + aState + ")";
 		}
 		else {
 			//Resetting random name and attributes
-			settlerNameAndRole = firstNameArray[randomFirstName] + " " + lastNameArray[randomLastName] + " (" + aState + ")";
+			settlerNameAndRole = firstLastName + " (" + aState + ")";
 		}
 
         //Check if the agent has run out of health
