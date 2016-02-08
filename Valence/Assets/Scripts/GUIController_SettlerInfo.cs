@@ -34,8 +34,15 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	Text firstLastNameDel;
 	
 	// === Settler Attributes === \\
+	public Image settlerHealthImage, settlerStaminaImage, settlerMoraleImage, settlerHungerImage, settlerThirstImage;
+	Image settlerHealthImageDel, settlerStaminaImageDel, settlerMoraleImageDel, settlerHungerImageDel, settlerThirstImageDel;
+
 	public Text attributesTitle, settlerHealthText, settlerStaminaText, settlerMoraleText, settlerHungerText, settlerThirstText;
 	Text attributesTitleDel, settlerHealthTextDel, settlerStaminaTextDel, settlerMoraleTextDel, settlerHungerTextDel, settlerThirstTextDel;
+
+	// === Settler Traits === \\
+	public Image settlerStrengthImage, settlerIntelligenceImage, settlerAgilityImage, settlerPerceptionImage, settlerCharismaImage;
+	Image settlerStrengthImageDel, settlerIntelligenceImageDel, settlerAgilityImageDel, settlerPerceptionImageDel, settlerCharismaImageDel;
 	
 	public Text settlerStrengthText, settlerIntelligenceText, settlerAgilityText, settlerPerceptionText, settlerCharismaText;
 	Text settlerStrengthTextDel, settlerIntelligenceTextDel, settlerAgilityTextDel, settlerPerceptionTextDel, settlerCharismaTextDel;
@@ -52,6 +59,9 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	// === Settler Assign Role === \\
 	public Text rolesTitle;
 	Text rolesTitleDel;
+
+	//Font
+	public Font font_hero;
 	
 	public Button farmerRoleButton, waterPurifierRoleButton, powerEngineerRoleButton, storageWorkerRoleButton, medicRoleButton, traineeRoleButton, worshipperRoleButton;
 	Button farmerRoleButtonDel, waterPurifierRoleButtonDel, powerEngineerRoleButtonDel, storageWorkerRoleButtonDel, medicRoleButtonDel, traineeRoleButtonDel, worshipperRoleButtonDel;
@@ -82,7 +92,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
         SettlerInfoDelBg = (Image)Instantiate (SettlerInfoBg);
 		SettlerInfoDelBg.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		SettlerInfoDelBg.rectTransform.sizeDelta = new Vector2 (820, 305);
+		SettlerInfoDelBg.rectTransform.sizeDelta = new Vector2 (821, 306);
 		SettlerInfoDelBg.transform.Translate (410, 152.5f, 0);
 		SettlerInfoDelBg.gameObject.SetActive (false);
 
@@ -136,104 +146,176 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		attributesTitleDel.gameObject.SetActive (false);
 		
 		//Health
-		settlerHealthTextDel = (Text)Instantiate (settlerHealthText);
-		settlerHealthTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		settlerHealthImageDel = (Image)Instantiate (settlerHealthImage);
+		settlerHealthImageDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		settlerHealthTextDel.rectTransform.sizeDelta = new Vector2 (300, 100);
-		settlerHealthTextDel.transform.position = new Vector2 (260, 177);
-		settlerHealthTextDel.text = "Health: " + agentLogic.health;
-		settlerHealthTextDel.gameObject.SetActive (false);
-		settlerHealthTextDel.fontSize = 16;
+		settlerHealthImageDel.rectTransform.sizeDelta = new Vector2 (30, 30);
+		settlerHealthImageDel.transform.Translate (240, 177, 0);
+		settlerHealthImageDel.gameObject.SetActive (false);
+
+			//Text
+			settlerHealthTextDel = (Text)Instantiate (settlerHealthText);
+			settlerHealthTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+			
+			settlerHealthTextDel.rectTransform.sizeDelta = new Vector2 (300, 100);
+			settlerHealthTextDel.transform.position = new Vector2 (settlerHealthImageDel.rectTransform.position.x + 45, settlerHealthImageDel.rectTransform.position.y);
+			settlerHealthTextDel.gameObject.SetActive (false);
+			settlerHealthTextDel.fontSize = 18;
 		
 		//Stamina
-		settlerStaminaTextDel = (Text)Instantiate (settlerStaminaText);
-		settlerStaminaTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		settlerStaminaImageDel = (Image)Instantiate (settlerStaminaImage);
+		settlerStaminaImageDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		settlerStaminaTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
-		settlerStaminaTextDel.transform.position = new Vector2 (260, 137);
-		settlerStaminaTextDel.text = "Stamina: " + rndStam;
-		settlerStaminaTextDel.gameObject.SetActive (false);
-		settlerStaminaTextDel.fontSize = 16;
+		settlerStaminaImageDel.rectTransform.sizeDelta = new Vector2 (30, 30);
+		settlerStaminaImageDel.transform.Translate (settlerHealthImageDel.rectTransform.position.x, settlerHealthImageDel.rectTransform.position.y - 50, 0);
+		settlerStaminaImageDel.gameObject.SetActive (false);
+		
+			//Text
+			settlerStaminaTextDel = (Text)Instantiate (settlerStaminaText);
+			settlerStaminaTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+			
+			settlerStaminaTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
+			settlerStaminaTextDel.transform.position = new Vector2 (settlerStaminaImageDel.rectTransform.position.x + 45, settlerStaminaImageDel.rectTransform.position.y);
+			settlerStaminaTextDel.gameObject.SetActive (false);
+			settlerStaminaTextDel.fontSize = 18;
 
-		//Morale
-		settlerMoraleTextDel = (Text)Instantiate (settlerMoraleText);
-		settlerMoraleTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		
-		settlerMoraleTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
-		settlerMoraleTextDel.transform.position = new Vector2 (260, 97);
-		settlerMoraleTextDel.text = "Morale: " + rndMor;
-		settlerMoraleTextDel.gameObject.SetActive (false);
-		settlerMoraleTextDel.fontSize = 16;
+//		//Morale
+//		settlerMoraleImageDel = (Image)Instantiate (settlerMoraleImage);
+//		settlerMoraleImageDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+//		
+//		settlerMoraleImageDel.rectTransform.sizeDelta = new Vector2 (30, 30);
+//		settlerMoraleImageDel.transform.Translate (attributesTitleDel.transform.position.x + 150, 230, 0);
+//		
+//			//Text
+//			settlerMoraleTextDel = (Text)Instantiate (settlerMoraleText);
+//			settlerMoraleTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+//			
+//			settlerMoraleTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
+//			settlerMoraleTextDel.transform.position = new Vector2 (260, 97);
+//			settlerMoraleTextDel.gameObject.SetActive (false);
+//			settlerMoraleTextDel.fontSize = 18;
 
 		//Hunger
-		settlerHungerTextDel = (Text)Instantiate (settlerHungerText);
-		settlerHungerTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		settlerHungerImageDel = (Image)Instantiate (settlerHungerImage);
+		settlerHungerImageDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		settlerHungerTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
-		settlerHungerTextDel.transform.position = new Vector2 (260, 57);
-		settlerHungerTextDel.text = "Hunger: " + agentLogic.hungerValue;
-		settlerHungerTextDel.gameObject.SetActive (false);
-		settlerHungerTextDel.fontSize = 16;
+		settlerHungerImageDel.rectTransform.sizeDelta = new Vector2 (30, 30);
+		settlerHungerImageDel.transform.Translate (settlerHealthImageDel.rectTransform.position.x, settlerStaminaImageDel.rectTransform.position.y - 50, 0);
+		settlerHungerImageDel.gameObject.SetActive (false);
+		
+			//Text
+			settlerHungerTextDel = (Text)Instantiate (settlerHungerText);
+			settlerHungerTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+			
+			settlerHungerTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
+			settlerHungerTextDel.transform.position = new Vector2 (settlerHungerImageDel.rectTransform.position.x + 45, settlerHungerImageDel.rectTransform.position.y);
+			settlerHungerTextDel.gameObject.SetActive (false);
+			settlerHungerTextDel.fontSize = 18;
 
 		//Thirst
-		settlerThirstTextDel = (Text)Instantiate (settlerThirstText);
-		settlerThirstTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		settlerThirstImageDel = (Image)Instantiate (settlerThirstImage);
+		settlerThirstImageDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		settlerThirstTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
-		settlerThirstTextDel.transform.position = new Vector2 (260, 17);
-		settlerThirstTextDel.text = "Thirst: " + rndThir;
-		settlerThirstTextDel.gameObject.SetActive (false);
-		settlerThirstTextDel.fontSize = 16;
+		settlerThirstImageDel.rectTransform.sizeDelta = new Vector2 (30, 30);
+		settlerThirstImageDel.transform.Translate (settlerHealthImageDel.rectTransform.position.x, settlerHungerImageDel.rectTransform.position.y - 50, 0);
+		settlerThirstImageDel.gameObject.SetActive (false);
+		
+			//Text
+			settlerThirstTextDel = (Text)Instantiate (settlerThirstText);
+			settlerThirstTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+			
+			settlerThirstTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
+			settlerThirstTextDel.transform.position = new Vector2 (settlerThirstImageDel.rectTransform.position.x + 45, settlerThirstImageDel.rectTransform.position.y);
+			settlerThirstTextDel.gameObject.SetActive (false);
+			settlerThirstTextDel.fontSize = 18;
 
+		//======================\\
+		//=== Settler Traits ===\\
+		//======================\\
 		//Strength
-		settlerStrengthTextDel = (Text)Instantiate (settlerStrengthText);
-		settlerStrengthTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		settlerStrengthImageDel = (Image)Instantiate (settlerStrengthImage);
+		settlerStrengthImageDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		settlerStrengthTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
-		settlerStrengthTextDel.transform.position = new Vector2 (360, 177);
-		settlerStrengthTextDel.text = "Strength: " + rndStr;
-		settlerStrengthTextDel.gameObject.SetActive (false);
-		settlerStrengthTextDel.fontSize = 16;
+		settlerStrengthImageDel.rectTransform.sizeDelta = new Vector2 (30, 30);
+		settlerStrengthImageDel.transform.Translate (settlerHealthImageDel.transform.position.x + 115, settlerHealthImageDel.rectTransform.position.y, 0);
+		settlerStrengthImageDel.gameObject.SetActive (false);
+		
+			//Text
+			settlerStrengthTextDel = (Text)Instantiate (settlerStrengthText);
+			settlerStrengthTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+			
+			settlerStrengthTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
+			settlerStrengthTextDel.transform.position = new Vector2 (settlerStrengthImageDel.rectTransform.position.x + 45, settlerStrengthImageDel.rectTransform.position.y);
+			settlerStrengthTextDel.gameObject.SetActive (false);
+			settlerStrengthTextDel.fontSize = 18;
 
 		//Intelligence
-		settlerIntelligenceTextDel = (Text)Instantiate (settlerIntelligenceText);
-		settlerIntelligenceTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		settlerIntelligenceImageDel = (Image)Instantiate (settlerIntelligenceImage);
+		settlerIntelligenceImageDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		settlerIntelligenceTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
-		settlerIntelligenceTextDel.transform.position = new Vector2 (360, 137);
-		settlerIntelligenceTextDel.text = "Intelligence: " + rndInt;
-		settlerIntelligenceTextDel.gameObject.SetActive (false);
-		settlerIntelligenceTextDel.fontSize = 16;
+		settlerIntelligenceImageDel.rectTransform.sizeDelta = new Vector2 (30, 30);
+		settlerIntelligenceImageDel.transform.Translate (settlerStrengthImageDel.rectTransform.position.x, settlerStrengthImageDel.rectTransform.position.y - 37.5f, 0);
+		settlerIntelligenceImageDel.gameObject.SetActive (false);
+		
+			//Text
+			settlerIntelligenceTextDel = (Text)Instantiate (settlerIntelligenceText);
+			settlerIntelligenceTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+			
+			settlerIntelligenceTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
+			settlerIntelligenceTextDel.transform.position = new Vector2 (settlerIntelligenceImageDel.rectTransform.position.x + 45, settlerIntelligenceImageDel.rectTransform.position.y);
+			settlerIntelligenceTextDel.gameObject.SetActive (false);
+			settlerIntelligenceTextDel.fontSize = 18;
 
 		//Agility
-		settlerAgilityTextDel = (Text)Instantiate (settlerAgilityText);
-		settlerAgilityTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		settlerAgilityImageDel = (Image)Instantiate (settlerAgilityImage);
+		settlerAgilityImageDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		settlerAgilityTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
-		settlerAgilityTextDel.transform.position = new Vector2 (360, 97);
-		settlerAgilityTextDel.text = "Agility: " + rndAgil;
-		settlerAgilityTextDel.gameObject.SetActive (false);
-		settlerAgilityTextDel.fontSize = 16;
+		settlerAgilityImageDel.rectTransform.sizeDelta = new Vector2 (30, 30);
+		settlerAgilityImageDel.transform.Translate (settlerStrengthImageDel.rectTransform.position.x, settlerIntelligenceImageDel.rectTransform.position.y - 37.5f, 0);
+		settlerAgilityImageDel.gameObject.SetActive (false);
+		
+			//Text
+			settlerAgilityTextDel = (Text)Instantiate (settlerAgilityText);
+			settlerAgilityTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+			
+			settlerAgilityTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
+			settlerAgilityTextDel.transform.position = new Vector2 (settlerAgilityImageDel.rectTransform.position.x + 45, settlerAgilityImageDel.rectTransform.position.y);
+			settlerAgilityTextDel.gameObject.SetActive (false);
+			settlerAgilityTextDel.fontSize = 18;
 
 		//Perception
-		settlerPerceptionTextDel = (Text)Instantiate (settlerPerceptionText);
-		settlerPerceptionTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		settlerPerceptionImageDel = (Image)Instantiate (settlerPerceptionImage);
+		settlerPerceptionImageDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		settlerPerceptionTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
-		settlerPerceptionTextDel.transform.position = new Vector2 (360, 57);
-		settlerPerceptionTextDel.text = "Perception: " + rndPerc;
-		settlerPerceptionTextDel.gameObject.SetActive (false);
-		settlerPerceptionTextDel.fontSize = 16;
+		settlerPerceptionImageDel.rectTransform.sizeDelta = new Vector2 (30, 30);
+		settlerPerceptionImageDel.transform.Translate (settlerStrengthImageDel.rectTransform.position.x, settlerAgilityImageDel.rectTransform.position.y - 37.5f, 0);
+		settlerPerceptionImageDel.gameObject.SetActive (false);
+		
+			//Text
+			settlerPerceptionTextDel = (Text)Instantiate (settlerPerceptionText);
+			settlerPerceptionTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+			
+			settlerPerceptionTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
+			settlerPerceptionTextDel.transform.position = new Vector2 (settlerPerceptionImageDel.rectTransform.position.x + 45, settlerPerceptionImageDel.rectTransform.position.y);
+			settlerPerceptionTextDel.gameObject.SetActive (false);
+			settlerPerceptionTextDel.fontSize = 18;
 
 		//Charisma
-		settlerCharismaTextDel = (Text)Instantiate (settlerCharismaText);
-		settlerCharismaTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		settlerCharismaImageDel = (Image)Instantiate (settlerCharismaImage);
+		settlerCharismaImageDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		settlerCharismaTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
-		settlerCharismaTextDel.transform.position = new Vector2 (360, 17);
-		settlerCharismaTextDel.text = "Charisma: " + rndChar;
-		settlerCharismaTextDel.gameObject.SetActive (false);
-		settlerCharismaTextDel.fontSize = 16;
+		settlerCharismaImageDel.rectTransform.sizeDelta = new Vector2 (30, 30);
+		settlerCharismaImageDel.transform.Translate (settlerStrengthImageDel.rectTransform.position.x, settlerPerceptionImageDel.rectTransform.position.y - 37.5f, 0);
+		settlerCharismaImageDel.gameObject.SetActive (false);
+		
+			//Text
+			settlerCharismaTextDel = (Text)Instantiate (settlerCharismaText);
+			settlerCharismaTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+			
+			settlerCharismaTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
+			settlerCharismaTextDel.transform.position = new Vector2 (settlerCharismaImageDel.rectTransform.position.x + 45, settlerCharismaImageDel.rectTransform.position.y);
+			settlerCharismaTextDel.gameObject.SetActive (false);
+			settlerCharismaTextDel.fontSize = 18;
 		
 		//=========================\\
 		//=== Settler Inventory ===\\
@@ -254,9 +336,10 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		inventoryFoodTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		inventoryFoodTextDel.text = "Food: 120";
-		inventoryFoodTextDel.transform.position = new Vector2 (449, 178);
+		inventoryFoodTextDel.transform.position = new Vector2 (settlerHealthTextDel.rectTransform.position.x + 220, settlerHealthTextDel.rectTransform.position.y);
 		inventoryFoodTextDel.rectTransform.sizeDelta = new Vector2 (150, 50);
 		inventoryFoodTextDel.gameObject.SetActive (false);
+		inventoryFoodTextDel.fontSize = 18;
 		
 		//====================\\
 		//=== Settler Role ===\\
@@ -271,24 +354,26 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		rolesTitleDel.transform.position = new Vector2 (715, 230);
 		rolesTitleDel.rectTransform.sizeDelta = new Vector2 (200, 50);
 		rolesTitleDel.gameObject.SetActive (false);
-		
+
 		//Farmer Role Button
 		farmerRoleButtonDel = (Button)Instantiate (farmerRoleButton);
 		farmerRoleButtonDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		farmerRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (100, 50);
-		farmerRoleButtonDel.transform.Translate (669, 175, 0);
+		farmerRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (200, 25);
+		farmerRoleButtonDel.transform.Translate (settlerHealthImageDel.rectTransform.position.x + 475, settlerHealthImageDel.rectTransform.position.y, 0);
 		farmerRoleButtonDel.GetComponentInChildren<Text> ().text = "Farmer";
+		farmerRoleButtonDel.GetComponentInChildren<Text> ().font = font_hero;
 		farmerRoleButtonDel.onClick.AddListener (() => farmerRoleClicked());
 		farmerRoleButtonDel.gameObject.SetActive (false);
 		
-		//Water Purifier Role Button
+		//Hydrologist Role Button
 		waterPurifierRoleButtonDel = (Button)Instantiate (waterPurifierRoleButton);
 		waterPurifierRoleButtonDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		waterPurifierRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (100, 50);
-		waterPurifierRoleButtonDel.transform.Translate (669, 125, 0);
-		waterPurifierRoleButtonDel.GetComponentInChildren<Text> ().text = "Water Purifier";
+		waterPurifierRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (200, 25);
+		waterPurifierRoleButtonDel.transform.Translate (farmerRoleButtonDel.image.rectTransform.position.x, farmerRoleButtonDel.image.rectTransform.position.y - 25, 0);
+		waterPurifierRoleButtonDel.GetComponentInChildren<Text> ().text = "Hydrologist";
+		waterPurifierRoleButtonDel.GetComponentInChildren<Text> ().font = font_hero;
 		waterPurifierRoleButtonDel.onClick.AddListener (() => waterPurifierRoleClicked());
 		waterPurifierRoleButtonDel.gameObject.SetActive (false);
 
@@ -296,9 +381,10 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		powerEngineerRoleButtonDel = (Button)Instantiate (powerEngineerRoleButton);
 		powerEngineerRoleButtonDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		powerEngineerRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (100, 50);
-		powerEngineerRoleButtonDel.transform.Translate (669, 75, 0);
+		powerEngineerRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (200, 25);
+		powerEngineerRoleButtonDel.transform.Translate (farmerRoleButtonDel.image.rectTransform.position.x, waterPurifierRoleButtonDel.image.rectTransform.position.y - 25, 0);
 		powerEngineerRoleButtonDel.GetComponentInChildren<Text> ().text = "Power Engineer";
+		powerEngineerRoleButtonDel.GetComponentInChildren<Text> ().font = font_hero;
 		powerEngineerRoleButtonDel.onClick.AddListener (() => powerEngineerRoleClicked());
 		powerEngineerRoleButtonDel.gameObject.SetActive (false);
 
@@ -306,9 +392,10 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		storageWorkerRoleButtonDel = (Button)Instantiate (storageWorkerRoleButton);
 		storageWorkerRoleButtonDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		storageWorkerRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (100, 50);
-		storageWorkerRoleButtonDel.transform.Translate (669, 25, 0);
+		storageWorkerRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (200, 25);
+		storageWorkerRoleButtonDel.transform.Translate (farmerRoleButtonDel.image.rectTransform.position.x, powerEngineerRoleButtonDel.image.rectTransform.position.y - 25, 0);
 		storageWorkerRoleButtonDel.GetComponentInChildren<Text> ().text = "Storage Worker";
+		storageWorkerRoleButtonDel.GetComponentInChildren<Text> ().font = font_hero;
 		//storageWorkerRoleButtonDel.onClick.AddListener (() => storageWorkerRoleClicked());
 		storageWorkerRoleButtonDel.gameObject.SetActive (false);
 
@@ -316,9 +403,10 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		medicRoleButtonDel = (Button)Instantiate (medicRoleButton);
 		medicRoleButtonDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		medicRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (100, 50);
-		medicRoleButtonDel.transform.Translate (766, 175, 0);
+		medicRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (200, 25);
+		medicRoleButtonDel.transform.Translate (farmerRoleButtonDel.image.rectTransform.position.x, storageWorkerRoleButtonDel.image.rectTransform.position.y - 25, 0);
 		medicRoleButtonDel.GetComponentInChildren<Text> ().text = "Medic";
+		medicRoleButtonDel.GetComponentInChildren<Text> ().font = font_hero;
 		medicRoleButtonDel.onClick.AddListener (() => medicRoleClicked());
 		medicRoleButtonDel.gameObject.SetActive (false);
 
@@ -326,9 +414,10 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		traineeRoleButtonDel = (Button)Instantiate (traineeRoleButton);
 		traineeRoleButtonDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		traineeRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (100, 50);
-		traineeRoleButtonDel.transform.Translate (766, 125, 0);
+		traineeRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (200, 25);
+		traineeRoleButtonDel.transform.Translate (farmerRoleButtonDel.image.rectTransform.position.x, medicRoleButtonDel.image.rectTransform.position.y - 25, 0);
 		traineeRoleButtonDel.GetComponentInChildren<Text> ().text = "Trainee";
+		traineeRoleButtonDel.GetComponentInChildren<Text> ().font = font_hero;
 		//traineeRoleButtonDel.onClick.AddListener (() => traineeRoleClicked());
 		traineeRoleButtonDel.gameObject.SetActive (false);
 
@@ -336,9 +425,10 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		worshipperRoleButtonDel = (Button)Instantiate (worshipperRoleButton);
 		worshipperRoleButtonDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		worshipperRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (100, 50);
-		worshipperRoleButtonDel.transform.Translate (766, 75, 0);
+		worshipperRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (200, 25);
+		worshipperRoleButtonDel.transform.Translate (farmerRoleButtonDel.image.rectTransform.position.x, traineeRoleButtonDel.image.rectTransform.position.y - 25, 0);
 		worshipperRoleButtonDel.GetComponentInChildren<Text> ().text = "Worshipper";
+		worshipperRoleButtonDel.GetComponentInChildren<Text> ().font = font_hero;
 		//worshipperRoleButtonDel.onClick.AddListener (() => worshipperRoleClicked());
 		worshipperRoleButtonDel.gameObject.SetActive (false);
 
@@ -347,8 +437,6 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		exBtnDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		exBtnDel.image.rectTransform.sizeDelta = new Vector2 (20, 20);
-
-
 		exBtnDel.transform.Translate (795, 286, 0);
 		exBtnDel.GetComponentInChildren<Text> ().text = "";
 		exBtnDel.gameObject.SetActive (false);
@@ -380,12 +468,27 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			genericProfileIconDel.gameObject.SetActive (false);
 			firstLastNameDel.gameObject.SetActive (false);
 			inventoryFoodTextDel.gameObject.SetActive (false);
+
 			//Attributes
+			settlerHealthImageDel.gameObject.SetActive (false);
+			settlerStaminaImageDel.gameObject.SetActive (false);
+			//settlerMoraleImageDel.gameObject.SetActive (false);
+			settlerHungerImageDel.gameObject.SetActive (false);
+			settlerThirstImageDel.gameObject.SetActive (false);
+			
 			settlerHealthTextDel.gameObject.SetActive (false);
 			settlerStaminaTextDel.gameObject.SetActive (false);
-			settlerMoraleTextDel.gameObject.SetActive (false);
+			//settlerMoraleTextDel.gameObject.SetActive (false);
 			settlerHungerTextDel.gameObject.SetActive (false);
 			settlerThirstTextDel.gameObject.SetActive (false);
+			
+			//Traits
+			settlerStrengthImageDel.gameObject.SetActive (false);
+			settlerIntelligenceImageDel.gameObject.SetActive (false);
+			settlerAgilityImageDel.gameObject.SetActive (false);
+			settlerPerceptionImageDel.gameObject.SetActive (false);
+			settlerCharismaImageDel.gameObject.SetActive (false);
+			
 			settlerStrengthTextDel.gameObject.SetActive (false);
 			settlerIntelligenceTextDel.gameObject.SetActive (false);
 			settlerAgilityTextDel.gameObject.SetActive (false);
@@ -424,12 +527,27 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			exBtnDel.gameObject.SetActive (true);
 			genericProfileIconDel.gameObject.SetActive (true);
 			inventoryFoodTextDel.gameObject.SetActive (true);
+
 			//Attributes
+			settlerHealthImageDel.gameObject.SetActive (true);
+			settlerStaminaImageDel.gameObject.SetActive (true);
+			//settlerMoraleImageDel.gameObject.SetActive (true);
+			settlerHungerImageDel.gameObject.SetActive (true);
+			settlerThirstImageDel.gameObject.SetActive (true);
+			
 			settlerHealthTextDel.gameObject.SetActive (true);
 			settlerStaminaTextDel.gameObject.SetActive (true);
-			settlerMoraleTextDel.gameObject.SetActive (true);
+			//settlerMoraleTextDel.gameObject.SetActive (true);
 			settlerHungerTextDel.gameObject.SetActive (true);
 			settlerThirstTextDel.gameObject.SetActive (true);
+			
+			//Traits
+			settlerStrengthImageDel.gameObject.SetActive (true);
+			settlerIntelligenceImageDel.gameObject.SetActive (true);
+			settlerAgilityImageDel.gameObject.SetActive (true);
+			settlerPerceptionImageDel.gameObject.SetActive (true);
+			settlerCharismaImageDel.gameObject.SetActive (true);
+			
 			settlerStrengthTextDel.gameObject.SetActive (true);
 			settlerIntelligenceTextDel.gameObject.SetActive (true);
 			settlerAgilityTextDel.gameObject.SetActive (true);
@@ -534,12 +652,27 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		genericProfileIconDel.gameObject.SetActive (false);
 		firstLastNameDel.gameObject.SetActive (false);
 		inventoryFoodTextDel.gameObject.SetActive (false);
+
 		//Attributes
+		settlerHealthImageDel.gameObject.SetActive (false);
+		settlerStaminaImageDel.gameObject.SetActive (false);
+		//settlerMoraleImageDel.gameObject.SetActive (false);
+		settlerHungerImageDel.gameObject.SetActive (false);
+		settlerThirstImageDel.gameObject.SetActive (false);
+
 		settlerHealthTextDel.gameObject.SetActive (false);
 		settlerStaminaTextDel.gameObject.SetActive (false);
-		settlerMoraleTextDel.gameObject.SetActive (false);
+		//settlerMoraleTextDel.gameObject.SetActive (false);
 		settlerHungerTextDel.gameObject.SetActive (false);
 		settlerThirstTextDel.gameObject.SetActive (false);
+
+		//Traits
+		settlerStrengthImageDel.gameObject.SetActive (false);
+		settlerIntelligenceImageDel.gameObject.SetActive (false);
+		settlerAgilityImageDel.gameObject.SetActive (false);
+		settlerPerceptionImageDel.gameObject.SetActive (false);
+		settlerCharismaImageDel.gameObject.SetActive (false);
+
 		settlerStrengthTextDel.gameObject.SetActive (false);
 		settlerIntelligenceTextDel.gameObject.SetActive (false);
 		settlerAgilityTextDel.gameObject.SetActive (false);
@@ -552,17 +685,17 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	//==================\\
 
     void Update() {
-		firstLastNameDel.text = agentLogic.settlerNameAndRole;					//Name
-																				//Picture
-		settlerHealthTextDel.text = "Health: " + agentLogic.health;				//Health
-		settlerStaminaTextDel.text = "Stamina: " + rndStam;						//Stamina
-		settlerHungerTextDel.text = "Hunger: " + agentLogic.hungerValue;		//Hunger
-		settlerThirstTextDel.text = "Thirst: " + rndThir;						//Thirst
-		settlerStrengthTextDel.text = "Strength: " + rndStr;					//Strength
-		settlerIntelligenceTextDel.text = "Intelligence: " + rndInt;			//Intelligence
-		settlerAgilityTextDel.text = "Agility: " + rndAgil;						//Agility
-		settlerPerceptionTextDel.text = "Perception: " + rndPerc;				//Perception
-		settlerCharismaTextDel.text = "Charisma: " + rndChar;					//Charisma
+		firstLastNameDel.text = agentLogic.settlerNameAndRole;	//Name
+																//Picture
+		settlerHealthTextDel.text = agentLogic.health.ToString();			//Health
+		settlerStaminaTextDel.text = rndStam.ToString();					//Stamina
+		settlerHungerTextDel.text = agentLogic.hungerValue.ToString();		//Hunger
+		settlerThirstTextDel.text = rndThir.ToString();					//Thirst
+		settlerStrengthTextDel.text = rndStr.ToString();					//Strength
+		settlerIntelligenceTextDel.text = rndInt.ToString();				//Intelligence
+		settlerAgilityTextDel.text = rndAgil.ToString();					//Agility
+		settlerPerceptionTextDel.text = rndPerc.ToString();				//Perception
+		settlerCharismaTextDel.text = rndChar.ToString();					//Charisma
 
 		//Check to see if there are any gameobjects with the appropriate building tag
 		if (!GameObject.FindWithTag ("Farm"))

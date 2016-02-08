@@ -103,6 +103,7 @@ public class PlayerData{
 	public List<serialAgent> population;
 	public List<serialBuilding> buildingDatabase;
 	public bool firstLoad = false;
+	public string fLname;
 	public int scrap;
 	public float food, power, water, popLimit, morale;
 }
