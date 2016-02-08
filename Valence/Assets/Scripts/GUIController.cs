@@ -32,6 +32,10 @@ using System.Collections.Generic;
 	
 	public Canvas myCanvas;
 
+	public Texture2D cursorTexture_default;
+	public CursorMode cursorMode = CursorMode.Auto;
+	public Vector2 hotSpot = Vector2.zero;
+
 	public Image HUDBg;
 	Image HUDDelBg;
 
@@ -71,7 +75,10 @@ using System.Collections.Generic;
 		HUDDelBg.rectTransform.sizeDelta = new Vector2 (770, 100);
 		HUDDelBg.transform.Translate (385, Screen.height - 50, 0);
 //		HUDDelBg.CrossFadeAlpha (0.5f, 0, false);
-		
+
+		cursorTexture_default.Resize (9, 11);
+		Cursor.SetCursor(cursorTexture_default, hotSpot, CursorMode.Auto);
+
 		//===========================\\
 		// === GLOBAL ATTRIBUTES === \\
 		//===========================\\
