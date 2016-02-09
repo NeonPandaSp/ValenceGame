@@ -123,7 +123,7 @@ public class InputController_Explore : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown (KeyCode.Escape)) {
-			Application.LoadLevel(0);
+			Application.LoadLevel(2);
 		}
 
 		if (Input.GetKeyDown (KeyCode.H)) {

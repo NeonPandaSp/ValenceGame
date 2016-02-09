@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class Unit : MonoBehaviour {
 
+	public string unitName;
+
 	public Vector2 currentPosition, lastPosition;
 	public ExploreMode_GameController _GameController;
 	public GameObject _tile;

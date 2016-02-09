@@ -111,6 +111,8 @@ public class GameController : MonoBehaviour {
 			temp.GetComponent<AgentLogic_07>().health = agent.health;
 			temp.GetComponent<AgentLogic_07>().hungerValue = agent.hunger;
 			temp.GetComponent<AgentAttributes>().agentAgility = agent.agility;
+			temp.GetComponent<AgentAttributes>().agentPerception = agent.perception;
+			temp.GetComponent<AgentAttributes>().agentStrength = agent.strength;
 
 			temp.GetComponent<AgentLogic_07>().aState = agent.state;
 			temp.GetComponent<AgentLogic_07>().jobState = agent.job;
@@ -150,6 +152,8 @@ public class GameController : MonoBehaviour {
 			tempAgent.health = agent.GetComponent<AgentLogic_07>().health;
 			tempAgent.hunger = agent.GetComponent<AgentLogic_07>().hungerValue;
 			tempAgent.agility = (int) agent.GetComponent<AgentAttributes>().agentAgility;
+			tempAgent.perception = (int) agent.GetComponent<AgentAttributes>().agentPerception;
+			tempAgent.strength = (int) agent.GetComponent<AgentAttributes>().agentStrength;
 
 			tempAgent.state = agent.GetComponent<AgentLogic_07>().aState;
 			tempAgent.job = agent.GetComponent<AgentLogic_07>().jobState;

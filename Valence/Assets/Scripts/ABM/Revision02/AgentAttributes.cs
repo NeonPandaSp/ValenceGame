@@ -6,16 +6,22 @@ public class AgentAttributes : MonoBehaviour {
 	public AIFollow_07 aiFollow;
 
 	public float agentAgility;
+	public float agentPerception;
+	public float agentStrength;
 
 	// Use this for initialization
 	void Start () {
+		if( GetComponent<AgentLogic_07>().newAgent )
+			initAttributes ();
+		//Apply the attribute values to corresponding agent ability
+		SetAgility();
+	}
 
+	void initAttributes(){
 		//Init all attributes with a random value
 		agentAgility = AttributeInit ();
-
-        //Apply the attribute values to corresponding agent ability
-        SetAgility();
-
+		agentPerception = AttributeInit ();
+		agentStrength = AttributeInit ();
 	}
 
 	//When called Initialize return a random value between range 1 ~ 10

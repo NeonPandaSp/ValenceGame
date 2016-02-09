@@ -89,7 +89,8 @@ public class SquadSelectionScript : MonoBehaviour {
 			myParty [selectedPartyIndex] = population [(rowIndex * buttons.Count) + index];
 			myPartyNames [selectedPartyIndex].text = population [(rowIndex * buttons.Count) + index].agentName;
 			myParty_AGL_Stats[selectedPartyIndex].text = "" + population[(rowIndex*buttons.Count)+index].agility;
-
+			myParty_PER_Stats[selectedPartyIndex].text = "" + population[(rowIndex*buttons.Count)+index].perception;
+			myParty_STR_Stats[selectedPartyIndex].text = "" + population[(rowIndex*buttons.Count)+index].strength;
 			//Reset Selection Variables
 			selectedPartyIndex = -1;
 			noneSelected = true;
