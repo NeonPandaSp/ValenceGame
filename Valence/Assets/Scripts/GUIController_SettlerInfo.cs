@@ -13,6 +13,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 
     //Assign agent fsm to this GUI
     public AgentLogic_07 agentLogic;
+	public AgentAttributes agentAttributes;
 
 	//Return true if a gameobject with corresponding tag has been spawned, vise versa for false
 	bool farmAvailable, hospitalAvailable, waterstationAvailable, powerstationAvailable, storageAvailable, traininggroundAvailable, shrineAvailable;
@@ -441,6 +442,9 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		exBtnDel.GetComponentInChildren<Text> ().text = "";
 		exBtnDel.gameObject.SetActive (false);
 		exBtnDel.onClick.AddListener (() => exBtnClicked());
+
+
+		agentAttributes = GetComponent<AgentAttributes> ();
     }
 
 	//=================\\
@@ -687,15 +691,21 @@ public class GUIController_SettlerInfo : MonoBehaviour {
     void Update() {
 		firstLastNameDel.text = agentLogic.settlerNameAndRole;	//Name
 																//Picture
-		settlerHealthTextDel.text = agentLogic.health.ToString();			//Health
-		settlerStaminaTextDel.text = rndStam.ToString();					//Stamina
-		settlerHungerTextDel.text = agentLogic.hungerValue.ToString();		//Hunger
-		settlerThirstTextDel.text = rndThir.ToString();					//Thirst
-		settlerStrengthTextDel.text = rndStr.ToString();					//Strength
-		settlerIntelligenceTextDel.text = rndInt.ToString();				//Intelligence
-		settlerAgilityTextDel.text = rndAgil.ToString();					//Agility
-		settlerPerceptionTextDel.text = rndPerc.ToString();				//Perception
-		settlerCharismaTextDel.text = rndChar.ToString();					//Charisma
+		//Attributes
+		settlerHealthTextDel.text = agentLogic.health.ToString ();						//Health
+		settlerStaminaTextDel.text = rndStam.ToString ();								//Stamina
+		settlerHungerTextDel.text = agentLogic.hungerValue.ToString ();					//Hunger
+		settlerThirstTextDel.text = rndThir.ToString ();									//Thirst
+
+		//Traits
+		settlerStrengthTextDel.text = agentAttributes.agentStrength.ToString ();		//Strength
+		//settlerStrengthTextDel.text = rndStr.ToString ();
+		settlerIntelligenceTextDel.text = rndInt.ToString ();							//Intelligence
+		settlerAgilityTextDel.text = agentAttributes.agentAgility.ToString ();			//Agility
+		//settlerAgilityTextDel.text = rndAgil.ToString ();
+		settlerPerceptionTextDel.text = agentAttributes.agentPerception.ToString ();	//Perception
+		//settlerPerceptionTextDel.text = rndPerc.ToString ();
+		settlerCharismaTextDel.text = rndChar.ToString ();								//Charisma
 
 		//Check to see if there are any gameobjects with the appropriate building tag
 		if (!GameObject.FindWithTag ("Farm"))

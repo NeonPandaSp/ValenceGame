@@ -185,8 +185,6 @@ public class AgentLogic_07 : MonoBehaviour {
     }
 
 	void LateUpdate() {
-		
-
         if (aState == agentState.Working) {
 			settlerNameAndRole = firstLastName + " the " + jobState + " (" + aState + ")";
 		}
@@ -211,7 +209,6 @@ public class AgentLogic_07 : MonoBehaviour {
 
         switch (aState)
         {
-
             case agentState.Wandering:
                 //Save the current state
                 currentState = aState;
@@ -292,7 +289,6 @@ public class AgentLogic_07 : MonoBehaviour {
                 print("Default reached in AgentLogic_07 Update");
 
                 break;
-
         }
         
 	}
@@ -357,11 +353,9 @@ public class AgentLogic_07 : MonoBehaviour {
 
                     aState = agentState.Hungry;
                 }
-                else {
-                    
+                else {                    
                     //Todo: need to incorporate a probability factor that is affected by the current hunger value %, higher % = higher probablility to change Astate to hungry
                     
-
                     //Throw a series of dice at each milestone 25,50,75% hunger, if any dice roll true, then move to the food source
                     switch (hungerValue) {
                         case 25:
@@ -539,8 +533,6 @@ public class AgentLogic_07 : MonoBehaviour {
 
             //Todo need to check if there is actually food available for the agent to feed on
             //ADD HERE
-
-
              
             //Go back to previous task
             aState = currentState;
