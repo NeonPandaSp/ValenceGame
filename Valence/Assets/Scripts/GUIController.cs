@@ -45,8 +45,8 @@ using System.Collections.Generic;
 	public Button buildBtn;
 	Button buildBtnDel;
 
-	//public Button destroyBtn;
-	//Button destroyBtnDel;
+	public Button destroyBtn;
+	Button destroyBtnDel;
 
 	public Button shelterBtn, farmBtn, waterStationBtn, powerStationBtn, storageBtn, hospitalBtn, trainingGroundBtn;
 	Button shelterDelBtn, farmDelBtn, waterStationDelBtn, powerStationDelBtn, storageDelBtn, hospitalDelBtn, trainingGroundDelBtn;
@@ -73,8 +73,8 @@ using System.Collections.Generic;
 		HUDDelBg.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		HUDDelBg.rectTransform.sizeDelta = new Vector2 (770, 100);
-		HUDDelBg.transform.Translate (385, Screen.height - 50, 0);
-//		HUDDelBg.CrossFadeAlpha (0.5f, 0, false);
+		HUDDelBg.transform.Translate (Screen.width / 2, Screen.height - 50, 0);
+		HUDDelBg.CrossFadeAlpha (0.9f, 0, false);
 
 		//cursorTexture_default.Resize (9, 11);
 		Cursor.SetCursor(cursorTexture_default, hotSpot, CursorMode.Auto);
@@ -87,14 +87,14 @@ using System.Collections.Generic;
 		scrapIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 
 		scrapIconDel.rectTransform.sizeDelta = new Vector2 (50, 50);
-		scrapIconDel.transform.Translate (50, Screen.height - 50, 0);
+		scrapIconDel.transform.Translate (((HUDDelBg.gameObject.transform.position.x) - 30), Screen.height - 42.5f, 0);
 
 			//Text
 			scrapDelText = (Text)Instantiate (scrapText);
 			scrapDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 			
 			scrapDelText.text = "";
-			scrapDelText.transform.position = new Vector2 (115, Screen.height - 50);
+			scrapDelText.transform.position = new Vector2 (scrapIconDel.rectTransform.position.x + 62.5f,  scrapIconDel.rectTransform.position.y);
 			scrapDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
 
 		//Population
@@ -102,7 +102,7 @@ using System.Collections.Generic;
 		populationIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		populationIconDel.rectTransform.sizeDelta = new Vector2 (50, 50);
-		populationIconDel.transform.Translate (scrapIconDel.transform.position.x + 150, Screen.height - 50, 0);
+		populationIconDel.transform.Translate (scrapIconDel.transform.position.x - 300, scrapIconDel.rectTransform.position.y - 18.5f, 0);
 
 			//Text
 			populationDelText = (Text)Instantiate (populationText);
@@ -110,21 +110,21 @@ using System.Collections.Generic;
 			
 			populationDelText.text = "";
 			populationDelText.fontSize = 20;
-			populationDelText.transform.position = new Vector2 (scrapDelText.transform.position.x + 150, scrapDelText.transform.position.y);
+			populationDelText.transform.position = new Vector2 (populationIconDel.transform.position.x + 62.5f, populationIconDel.transform.position.y);
 		
 		//Food
 		foodIconDel = (Image)Instantiate (foodIcon);
 		foodIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		foodIconDel.rectTransform.sizeDelta = new Vector2 (50, 50);
-		foodIconDel.transform.Translate (populationIconDel.transform.position.x + 150, Screen.height - 50, 0);
+		foodIconDel.transform.Translate (populationIconDel.transform.position.x + 150, scrapIconDel.rectTransform.position.y - 18.5f, 0);
 
 			//Text
 			foodDelText = (Text)Instantiate (foodText);
 			foodDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 			
 			foodDelText.text = "";
-			foodDelText.transform.position = new Vector2 (populationDelText.transform.position.x + 150, scrapDelText.transform.position.y);
+			foodDelText.transform.position = new Vector2 (foodIconDel.transform.position.x + 62.5f, foodIconDel.transform.position.y);
 			foodDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
 		
 		//Water
@@ -132,14 +132,14 @@ using System.Collections.Generic;
 		waterIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		waterIconDel.rectTransform.sizeDelta = new Vector2 (50, 50);
-		waterIconDel.transform.Translate (foodIconDel.transform.position.x + 150, Screen.height - 50, 0);
+		waterIconDel.transform.Translate (foodIconDel.transform.position.x + 300, scrapIconDel.rectTransform.position.y - 18.5f, 0);
 
 			//Text
 			waterDelText = (Text)Instantiate (waterText);
 			waterDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 			
 			waterDelText.text = "";
-			waterDelText.transform.position = new Vector2 (foodDelText.transform.position.x + 150, scrapDelText.transform.position.y);
+			waterDelText.transform.position = new Vector2 (waterIconDel.transform.position.x + 62.5f, waterIconDel.transform.position.y);
 			waterDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
 		
 		//Power
@@ -147,14 +147,14 @@ using System.Collections.Generic;
 		powerIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		powerIconDel.rectTransform.sizeDelta = new Vector2 (50, 50);
-		powerIconDel.transform.Translate (waterIconDel.transform.position.x + 150, Screen.height - 50, 0);
+		powerIconDel.transform.Translate (waterIconDel.transform.position.x + 150, scrapIconDel.rectTransform.position.y - 18.5f, 0);
 
 			//Text
 			powerDelText = (Text)Instantiate (powerText);
 			powerDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 			
 			powerDelText.text = "";
-			powerDelText.transform.position = new Vector2 (waterDelText.transform.position.x + 150, scrapDelText.transform.position.y);
+			powerDelText.transform.position = new Vector2 (powerIconDel.transform.position.x + 62.5f, powerIconDel.transform.position.y);
 			powerDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
 		
 		//		//Time
@@ -188,7 +188,7 @@ using System.Collections.Generic;
 		buildBtnDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 
 		buildBtnDel.GetComponentInChildren<Text> ().text = "";
-		buildBtnDel.transform.position = new Vector2 (40, Screen.height - 300);
+		buildBtnDel.transform.position = new Vector2 (57.5f, Screen.height - 57.5f);
 		buildBtnDel.image.rectTransform.sizeDelta = new Vector2 (75, 75);
 		buildBtnDel.onClick.AddListener (() => buildBtnClicked ());
 		buildBtnDel.gameObject.SetActive (true);
@@ -196,13 +196,13 @@ using System.Collections.Generic;
 		buildClicked = false;
 		
 		//Destroy Button //HIDDEN FOR ALPHA PRESENTATION
-//		destroyBtnDel = (Button)Instantiate (destroyBtn);
-//		destroyBtnDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-//		
-//		destroyBtnDel.GetComponentInChildren<Text> ().text = "";
-//		destroyBtnDel.transform.position = new Vector2 (40, Screen.height - 155);
-//		destroyBtnDel.image.rectTransform.sizeDelta = new Vector2 (75, 75);
-//		destroyBtnDel.onClick.AddListener (() => buildBtnClicked ());
+		destroyBtnDel = (Button)Instantiate (destroyBtn);
+		destroyBtnDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		destroyBtnDel.GetComponentInChildren<Text> ().text = "";
+		destroyBtnDel.transform.position = new Vector2 (buildBtnDel.transform.position.x, buildBtnDel.transform.position.y - 95);
+		destroyBtnDel.image.rectTransform.sizeDelta = new Vector2 (75, 75);
+		destroyBtnDel.onClick.AddListener (() => buildBtnClicked ());
 
 		// === STRUCTURE BUTTONS === \\
 		//Shelter Button				
@@ -210,7 +210,7 @@ using System.Collections.Generic;
 		shelterDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		shelterDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		shelterDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 72.5f, buildBtnDel.transform.position.y + 97.5f);
+		shelterDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 72.5f, buildBtnDel.transform.position.y);
 		shelterDelBtn.GetComponentInChildren<Text> ().text = "Shelter";
 		shelterDelBtn.onClick.AddListener (() => switchStructure ("shelter"));
 		shelterDelBtn.gameObject.SetActive (false);
@@ -220,7 +220,7 @@ using System.Collections.Generic;
 		farmDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		farmDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		farmDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 137.5f, buildBtnDel.transform.position.y + 97.5f);
+		farmDelBtn.transform.position = new Vector2 (shelterDelBtn.transform.position.x + 67.5f, buildBtnDel.transform.position.y);
 		farmDelBtn.GetComponentInChildren<Text> ().text = "Farm";
 		farmDelBtn.onClick.AddListener (() => switchStructure ("farm"));
 		farmDelBtn.gameObject.SetActive (false);
@@ -230,7 +230,7 @@ using System.Collections.Generic;
 		waterStationDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		waterStationDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		waterStationDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 72.5f, buildBtnDel.transform.position.y + 32.5f);
+		waterStationDelBtn.transform.position = new Vector2 (shelterDelBtn.transform.position.x, buildBtnDel.transform.position.y - 67.5f);
 		waterStationDelBtn.GetComponentInChildren<Text> ().text = "Water Station";
 		waterStationDelBtn.onClick.AddListener (() => switchStructure ("water"));
 		waterStationDelBtn.gameObject.SetActive (false);
@@ -240,7 +240,7 @@ using System.Collections.Generic;
 		powerStationDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		powerStationDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		powerStationDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 137.5f, buildBtnDel.transform.position.y + 32.5f);
+		powerStationDelBtn.transform.position = new Vector2 (waterStationDelBtn.transform.position.x + 67.5f, buildBtnDel.transform.position.y - 67.5f);
 		powerStationDelBtn.GetComponentInChildren<Text> ().text = "Power Station";
 		powerStationDelBtn.onClick.AddListener (() => switchStructure ("power"));
 		powerStationDelBtn.gameObject.SetActive (false);
@@ -260,7 +260,7 @@ using System.Collections.Generic;
 		hospitalDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		hospitalDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		hospitalDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 72.5f, buildBtnDel.transform.position.y - 32.5f);
+		hospitalDelBtn.transform.position = new Vector2 (waterStationDelBtn.transform.position.x, waterStationDelBtn.transform.position.y - 67.5f);
 		hospitalDelBtn.GetComponentInChildren<Text> ().text = "Hospital";
 		hospitalDelBtn.onClick.AddListener (() => switchStructure ("hospital"));
 		hospitalDelBtn.gameObject.SetActive (false);
@@ -270,17 +270,17 @@ using System.Collections.Generic;
 		trainingGroundDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		trainingGroundDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		trainingGroundDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 137.5f, buildBtnDel.transform.position.y - 32.5f);
+		trainingGroundDelBtn.transform.position = new Vector2 (hospitalDelBtn.transform.position.x + 67.5f, hospitalDelBtn.transform.position.y);
 		trainingGroundDelBtn.GetComponentInChildren<Text> ().text = "Training Ground";
-		trainingGroundDelBtn.onClick.AddListener (() => switchStructure ("Training Ground"));
+		trainingGroundDelBtn.onClick.AddListener (() => switchStructure ("training ground"));
 		trainingGroundDelBtn.gameObject.SetActive (false);
 
 		//Switch Modes
 		switchModeDelBtn = (Button)Instantiate (switchModeBtn);
 		switchModeDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		switchModeDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		switchModeDelBtn.transform.Translate (Screen.width - 32.5f, 32.5f, 0);
+		switchModeDelBtn.image.rectTransform.sizeDelta = new Vector2 (75, 75);
+		switchModeDelBtn.transform.Translate (Screen.width - 57.5f, Screen.height - 57.5f, 0);
 		switchModeDelBtn.GetComponentInChildren<Text> ().text = "";
 		switchModeDelBtn.onClick.AddListener (() => switchMode ());
 	}
@@ -289,7 +289,8 @@ using System.Collections.Generic;
 	//=== Functions ===\\
 	//=================\\
 	void buildBtnClicked () {
-		Debug.Log ("Build button clicked");
+		transform.Translate (Vector3.forward * Time.deltaTime);
+		//Debug.Log ("Build button clicked");
 		buildClicked = !buildClicked;
 		structureBtnClicked = false;
 	}
@@ -357,6 +358,8 @@ using System.Collections.Generic;
 		bool hourZero = false;
 		bool minZero = false;
 		bool secZero = false;
+
+		//print ("this shit is: " + (scrapIconDel.transform.position.x - 315).ToString ());
 
 		if (buildClicked == false && structureBtnClicked == false && Input.GetMouseButtonDown (0)) {
 			switchStructure ("empty");
