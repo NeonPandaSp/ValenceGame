@@ -31,14 +31,12 @@ public class GameController : MonoBehaviour {
 		population = new List<GameObject> ();
 
 		buildingDatabase = new List<GameObject> ();
-
-		loadLastSave ();
-
         farmerList = new List<GameObject>();
         farmBuildingList = new List<GameObject>();
 
         powerWorkerList = new List<GameObject>();
         powerBuildingList = new List<GameObject>();
+		loadLastSave ();
 
 		if (firstLoad) {
 			//
@@ -94,15 +92,17 @@ public class GameController : MonoBehaviour {
 
 		foreach (serialBuilding bld in loadedData.buildingDatabase) {
 			GameObject tempBld = (GameObject) Instantiate( Resources.Load(bld.bType), new Vector3( bld.xPos, bld.yPos, bld.zPos), Quaternion.identity);
+			
+			if( tempBld.GetComponent<BuildingScript>().myType == "Farm" ){
+				farmBuildingList.Add ( tempBld );
+				Debug.Log ("Added to FarmBuilding List");
+			} else if ( tempBld.GetComponent<BuildingScript>().myType == "PowerStation" ){
+				powerBuildingList.Add ( tempBld );
+			}
 			tempBld.GetComponent<BuildingScript>().initBuildingType();
 			tempBld.GetComponent<BuildingScript>().beginProduction();
 
 			buildingDatabase.Add(tempBld);
-			if( tempBld.GetComponent<BuildingScript>().myType == "Farm" ){
-				farmBuildingList.Add ( tempBld );
-			} else if ( tempBld.GetComponent<BuildingScript>().myType == "PowerStation" ){
-				powerBuildingList.Add ( tempBld );
-			}
 		}
 
 		foreach (serialAgent agent in loadedData.population) {

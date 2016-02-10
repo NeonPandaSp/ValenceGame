@@ -12,6 +12,8 @@ public class SquadSelectionScript : MonoBehaviour {
 
 	public List<Button> buttons;
 
+	public GameObject popSelection;
+
 	public serialAgent[] myParty = new serialAgent[4];
 
 	public Image[] myPartyImageIcons = new Image[4];
@@ -32,23 +34,27 @@ public class SquadSelectionScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rowIndex = 0;
-		int index = 0;
-		PlayerData loadedData = PlayerDataManager.playerDataManager.loadSaveData ();
-		population = loadedData.population;
-		noneSelected = true;
-		for(int i = index; i < index + buttons.Count; i++) {
-			if( i < population.Count-1)
-				buttons[i].GetComponentInChildren<Text>().text = population[i].agentName;
-			else{
-				buttons[i].GetComponentInChildren<Text>().text = " ";
-				buttons[i].interactable = false;
-			}
-		}
+		loadPopulation ();
+		enablePopulationPanel(false);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	public void loadPopulation(){
+		int index = 0;
+		PlayerData loadedData = PlayerDataManager.playerDataManager.loadSaveData ();
+		population = loadedData.population;
+		for(int i = index; i < index + buttons.Count; i++) {
+			if( i < population.Count-1)
+				buttons[i].GetComponentInChildren<Text>().text = population[i].agentName;
+			else{
+				buttons[i].GetComponentInChildren<Text>().text = "NA";
+				buttons[i].interactable = false;
+			}
+		}
 	}
 
 	public void shiftLeft(){
@@ -79,12 +85,25 @@ public class SquadSelectionScript : MonoBehaviour {
 	}
 
 	public void setSelectedPartyIndex(int index){
+		Debug.Log ("SetSelectedPartyIndex Called");
 		selectedPartyIndex = index;
 		noneSelected = false;
+		enablePopulationPanel (true);
+	}
+
+	public void enablePopulationPanel(bool on){
+		if (on && !popSelection.gameObject.activeSelf) {
+			popSelection.gameObject.SetActive (true);
+			loadPopulation();
+		} else {
+			popSelection.gameObject.SetActive (false);
+		}
 	}
 
 	public void setPartyMember(int index){
+		Debug.Log ("setPartyMember called");
 		if (!noneSelected) {
+			Debug.Log ("setPartyMember called");
 			//Set Party UI Assets to selected Agent from population
 			myParty [selectedPartyIndex] = population [(rowIndex * buttons.Count) + index];
 			myPartyNames [selectedPartyIndex].text = population [(rowIndex * buttons.Count) + index].agentName;
@@ -94,6 +113,7 @@ public class SquadSelectionScript : MonoBehaviour {
 			//Reset Selection Variables
 			selectedPartyIndex = -1;
 			noneSelected = true;
+			enablePopulationPanel(false);
 		}
 	}
 }

@@ -49,12 +49,12 @@ public class BuildingType  {
 		if (typeName == "Shelter") {
 			return 10.0f;
 		} else if (typeName == "Farm") {
-            return 1.0f * a;
+            return 1.0f;
         } else if (typeName == "PowerStation") {
             //Each power station should produce 100 power
-            return 100;
+            return 5.0f;
 		} else if (typeName == "WaterStation") {
-			return 1.0f * a;
+			return 1.0f;
 		} else {
 			Debug.Log ( "Production Type Error");
 			return 0.0f;
@@ -67,13 +67,13 @@ public class BuildingType  {
             return 0.0f * a;
         }
         else if (typeName == "Farm") {
-            return 1.0f * a;
+            return 1.0f;
         }
         else if (typeName == "PowerStation") {
-            return 1.0f * a;
+            return 1.0f;
         }
         else if (typeName == "WaterStation") {
-            return 1.0f * a;
+            return 1.0f;
         }
         else {
             Debug.Log("Consumption Type Error");

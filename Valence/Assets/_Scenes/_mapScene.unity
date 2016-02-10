@@ -2652,6 +2652,7 @@ MonoBehaviour:
   mapCan: {fileID: 1458001608}
   squadCan: {fileID: 1180945589}
   mapIndex: 4
+  myParty: []
 --- !u!4 &971645640
 Transform:
   m_ObjectHideFlags: 0
@@ -3210,7 +3211,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1180945590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3230,6 +3231,7 @@ MonoBehaviour:
   - {fileID: 189024339}
   - {fileID: 1662367939}
   - {fileID: 2141161222}
+  popSelection: {fileID: 158033126}
   myParty:
   - agentName: 
     xPos: 0
@@ -3240,6 +3242,8 @@ MonoBehaviour:
     strength: 0
     perception: 0
     agility: 0
+    myWeapon:
+      weaponName: 
     state: 0
     job: 0
   - agentName: 
@@ -3251,6 +3255,8 @@ MonoBehaviour:
     strength: 0
     perception: 0
     agility: 0
+    myWeapon:
+      weaponName: 
     state: 0
     job: 0
   - agentName: 
@@ -3262,6 +3268,8 @@ MonoBehaviour:
     strength: 0
     perception: 0
     agility: 0
+    myWeapon:
+      weaponName: 
     state: 0
     job: 0
   - agentName: 
@@ -3273,6 +3281,8 @@ MonoBehaviour:
     strength: 0
     perception: 0
     agility: 0
+    myWeapon:
+      weaponName: 
     state: 0
     job: 0
   myPartyImageIcons:
@@ -4101,7 +4111,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1458001609
 MonoBehaviour:
   m_ObjectHideFlags: 0

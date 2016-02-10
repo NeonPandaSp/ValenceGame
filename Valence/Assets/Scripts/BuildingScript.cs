@@ -53,8 +53,8 @@ public class BuildingScript : MonoBehaviour {
             else if (bType.typeName == "Farm") {
                 //We should look into updating the generation algorithm to be affected by the number of agents assigned,ie. more farmers working = increased production rate -Zach
                 Debug.Log("bType.pRate: " + bType.pRate);
-
-                _myGameController.food += bType.pRate * _myGameController.farmerList.Count / _myGameController.farmBuildingList.Count;
+				if( _myGameController.farmBuildingList.Count > 0 )
+                	_myGameController.food += ( bType.pRate * _myGameController.farmerList.Count) / (_myGameController.farmBuildingList.Count);
             }
             else if (bType.typeName == "WaterStation") {
                 _myGameController.water += bType.pRate;
