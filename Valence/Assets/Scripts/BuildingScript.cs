@@ -46,7 +46,7 @@ public class BuildingScript : MonoBehaviour {
 	void GenerateResource(){
         //	Debug.Log ("GENERATING!");
         //First check that we have enough power to generate resources
-        if (_myGameController.power > 0) {
+        if (_myGameController.power > bType.cRate) {
             if (bType.typeName == "Shelter") {
                 _myGameController.popLimit += bType.pRate;
             }
@@ -73,7 +73,7 @@ public class BuildingScript : MonoBehaviour {
 
         //Since power stations do not consume power, they are not restricted by no power
         if (bType.typeName == "PowerStation") {
-            _myGameController.power += bType.pRate;
+			_myGameController.power += ( bType.pRate * _myGameController.powerWorkerList.Count) / (_myGameController.powerBuildingList.Count);
         }
     }
 

@@ -20,6 +20,11 @@ public class GameController : MonoBehaviour {
     public List<GameObject> powerWorkerList = new List<GameObject>();
     public List<GameObject> powerBuildingList = new List<GameObject>();
 
+	public List<GameObject> waterWorkerList = new List<GameObject> ();
+	public List<GameObject> waterBuildingList = new List<GameObject>();
+
+
+
     public int scrap;
 	public float food, power, water, popLimit, morale;
 
@@ -98,6 +103,8 @@ public class GameController : MonoBehaviour {
 				Debug.Log ("Added to FarmBuilding List");
 			} else if ( tempBld.GetComponent<BuildingScript>().myType == "PowerStation" ){
 				powerBuildingList.Add ( tempBld );
+			} else if ( tempBld.GetComponent<BuildingScript>().myType == "WaterStation" ){
+				waterBuildingList.Add ( tempBld );
 			}
 			tempBld.GetComponent<BuildingScript>().initBuildingType();
 			tempBld.GetComponent<BuildingScript>().beginProduction();

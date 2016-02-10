@@ -517,7 +517,7 @@ public class AgentLogic_07 : MonoBehaviour {
 
             //Give the agent 10% of the current food stored
             //Todo need to figureout a beter method for this algorithm
-            foodStored = 0.10f * gameController.food;
+            foodStored = 10;
             gameController.food -= foodStored;
 
             if (foodStored > 0) {
