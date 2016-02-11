@@ -185,6 +185,7 @@ public class AgentLogic_07 : MonoBehaviour {
     }
 
 	void LateUpdate() {
+
         if (aState == agentState.Working) {
 			settlerNameAndRole = firstLastName + " the " + jobState + " (" + aState + ")";
 		}
