@@ -55,6 +55,9 @@ public class AgentLogic_07 : MonoBehaviour {
     //0-100 int which holds the agent's current health. 0%= dead, 100% = perfectly healthy
     public int health;
 
+    //0-100 float which holds the likelyhood the agent will act (passed to the Choose() to bias the outcome)
+    public float perception;
+
 	//Settler Name
 	public AgentLogic_07 agentLogic;
 	public string firstLastName;
@@ -148,7 +151,9 @@ public class AgentLogic_07 : MonoBehaviour {
 			health = 100;
 			//Init the agent's happyness to 100 when spawned (they should be perfectly happy)
 			moraleLevel = 100;
-		}
+            //Init the agent's perception to 10% when spawned (this is the standard starting value for all agents)
+            perception = 10;
+        }
 		aiFollow = GetComponent<AIFollow_07> ();
 		wanderWaypoints = new List<Vector3> ();
 
@@ -369,7 +374,7 @@ public class AgentLogic_07 : MonoBehaviour {
 
 
                                 //if the agent reaches 25% hunger throw a dice with 10% probability of success
-                                isHungry = Choose(10);
+                                isHungry = Choose(perception);
                             }
                         break;
 
@@ -383,7 +388,7 @@ public class AgentLogic_07 : MonoBehaviour {
                                     if (!isHungry)
                                     {
                                         //if the agent reaches 50% hunger throw a dice with 35% probability of success
-                                        isHungry = Choose(10);
+                                        isHungry = Choose(perception);
                                     }
                             }
                         break;
@@ -398,7 +403,7 @@ public class AgentLogic_07 : MonoBehaviour {
                                     if (!isHungry)
                                     {
                                         //if the agent reaches 75% hunger throw a dice with 65% probability of success
-                                        isHungry = Choose(10);
+                                        isHungry = Choose(perception);
                                     }
                             }
                         break;
@@ -443,7 +448,7 @@ public class AgentLogic_07 : MonoBehaviour {
             isHungry = false;
     }
 
-    bool Choose(int probability) {
+    bool Choose(float probability) {
 
         //Calc the bayes theorm on probability of hunger after 100 tries at 20%
         /*float probability = 0.20f;

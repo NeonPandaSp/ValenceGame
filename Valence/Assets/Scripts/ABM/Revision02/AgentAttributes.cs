@@ -4,6 +4,7 @@ using System.Collections;
 public class AgentAttributes : MonoBehaviour {
 
 	public AIFollow_07 aiFollow;
+    public AgentLogic_07 agentLogic;
 
 	public float agentStrength;
 	public float agentAgility;
@@ -16,20 +17,20 @@ public class AgentAttributes : MonoBehaviour {
 		//Apply the attribute values to corresponding agent ability
 
 		SetStrength ();
-		//setPerception ();
+		SetPerception ();
 		SetAgility ();
 	}
 
 	void initAttributes(){
-		//Init all attributes with a random value
-		agentAgility = AttributeInit ();
-		agentPerception = AttributeInit ();
-		agentStrength = AttributeInit ();
+		//Init all attributes with a random value (pass a min max range)
+		agentAgility = AttributeInit (0.0f, 10.0f);
+		agentPerception = AttributeInit (0.0f, 10.0f);
+        agentStrength = AttributeInit(0.0f, 10.0f);
 	}
 
 	//When called Initialize return a random value between range 1 ~ 10
-	float AttributeInit(){
-		float tempValue = Random.Range (0.0F, 10.0F);
+	float AttributeInit(float min, float max){
+		float tempValue = Random.Range (min, max);
 		tempValue = Mathf.Round (tempValue * 1.0f) / 1.0f;
 		return(tempValue);
 	}
@@ -46,6 +47,15 @@ public class AgentAttributes : MonoBehaviour {
 		tempSpeed = ((tempSpeed/aiFollow.speed)*100);
 		aiFollow.speed = tempSpeed;*/
 	}
+
+    void SetPerception(){
+
+        float tempPerception = agentPerception / 10;
+        float tempValue = agentLogic.perception * agentPerception;
+
+        agentLogic.perception = agentLogic.perception + tempValue;
+
+    }
 
     void SetStrength(){
 
