@@ -219,6 +219,7 @@ public class InputController : MonoBehaviour {
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
+							_gameController.waterBuildingList.Add(tempObject);
                             //Add the newly placed building to building database
 							_gameController.buildingDatabase.Add(tempObject);
 
@@ -256,6 +257,7 @@ public class InputController : MonoBehaviour {
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
+							_gameController.powerBuildingList.Add(tempObject);
                             //Add the newly placed building to building database
 							_gameController.buildingDatabase.Add(tempObject);
 

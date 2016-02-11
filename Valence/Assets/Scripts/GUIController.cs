@@ -405,8 +405,8 @@ using System.Collections.Generic;
 		}
 
 		//Population
-		population = 5;
-		populationDelText.text = aSpawner.popSize + "/" + globalAttributes.popLimit;
+		population = globalAttributes.population.Count;
+		populationDelText.text = population + "/" + globalAttributes.popLimit;
 
 		if (aSpawner.popSize < 5) {
 			populationDelText.color = new Color (1, 0.2745098039215686f, 0.3215686274509804f);

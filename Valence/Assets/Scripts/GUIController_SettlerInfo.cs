@@ -11,6 +11,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
     protected bool showMenu = false;
     // Set showing the menu to false
 
+	public GameController _gameController;
+
     //Assign agent fsm to this GUI
     public AgentLogic_07 agentLogic;
 	public AgentAttributes agentAttributes;
@@ -83,6 +85,9 @@ public class GUIController_SettlerInfo : MonoBehaviour {
         powerstationAvailable = false;
         storageAvailable = false;
 		traininggroundAvailable = false;
+
+
+		_gameController = GameObject.Find ("GameController").GetComponent<GameController> ();
 
         myCanvas = GameObject.Find ("Canvas").GetComponent <Canvas>();
         selectedIcon = GetComponentInChildren<SpriteRenderer>();
@@ -559,7 +564,18 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			settlerCharismaTextDel.gameObject.SetActive (true);
 		}
     }
+	void resetJoblists(AgentLogic_07.jobSubState oldState ){
+		if (oldState == AgentLogic_07.jobSubState.Farmer) {
+			_gameController.farmerList.Remove(this.gameObject);
+		}
+		if (oldState == AgentLogic_07.jobSubState.PowerWorker) {
+			_gameController.powerWorkerList.Remove(this.gameObject);
+		}
+		if (oldState == AgentLogic_07.jobSubState.WaterPurifier) {
+			_gameController.waterWorkerList.Remove(this.gameObject);
+		}
 
+	}
 	void farmerRoleClicked () {
 		if ((agentLogic.jobState != AgentLogic_07.jobSubState.Farmer) && farmAvailable) {
 			//Obtain all farm waypoints that the agent should move between when working
@@ -567,7 +583,9 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			
 			//Set the agent to working
 			agentLogic.aState = AgentLogic_07.agentState.Working;
-			
+
+			if( agentLogic.jobState != AgentLogic_07.jobSubState.Default )
+				resetJoblists( agentLogic.jobState );
 			//Define the working state as farming
 			agentLogic.jobState = AgentLogic_07.jobSubState.Farmer;
 		}
@@ -579,7 +597,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			
 			//Set the agent to working
 			agentLogic.aState = AgentLogic_07.agentState.Working;
-			
+			if( agentLogic.jobState != AgentLogic_07.jobSubState.Default )
+				resetJoblists( agentLogic.jobState );
 			//Define the working state as farming
 			agentLogic.jobState = AgentLogic_07.jobSubState.WaterPurifier;
 		}
@@ -589,7 +608,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		if ((agentLogic.jobState != AgentLogic_07.jobSubState.PowerWorker) && powerstationAvailable) {
 			//Obtain all farm waypoints that the agent should move between when working
 			agentLogic.workWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("PowerWaypoint"));
-			
+			if( agentLogic.jobState != AgentLogic_07.jobSubState.Default )
+				resetJoblists( agentLogic.jobState );
 			//Set the agent to working
 			agentLogic.aState = AgentLogic_07.agentState.Working;
 			

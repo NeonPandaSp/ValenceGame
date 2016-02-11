@@ -47,7 +47,7 @@ public class GameController : MonoBehaviour {
 			//
 			scrap += 1000;
 			//Start the game with 100 power
-			power += 100;
+			power += 0;
 			
 			//Start population with a 10 person cap
 			popLimit = 10;
