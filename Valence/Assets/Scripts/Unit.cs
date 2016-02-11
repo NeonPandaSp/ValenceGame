@@ -155,10 +155,15 @@ public class Unit : MonoBehaviour {
 			CautionObject.SetActive (false);
 			lastKnownPosition = Vector2.zero;
 		}
-		if (isElite)
-			EliteObserve ();
 		MoveNextTile ();
 		translateUnit ();
+	}
+
+	void FixedUpdate(){
+		if (isElite) {
+			EliteObserve ();
+			EliteDetermineState ();
+		}
 	}
 
 	public void translateUnit(){
@@ -281,7 +286,6 @@ public class Unit : MonoBehaviour {
 	public void EliteObserve(){
 		int loopIndex = knownPosition.Count;
 		foreach (Unit fU in FolkUnits) {
-
 			if( raycastLineOfSight(fU,false) ){
 				if( !FolkUnitsWithinView.Contains (fU) ){
 					// ... the player is in sight.

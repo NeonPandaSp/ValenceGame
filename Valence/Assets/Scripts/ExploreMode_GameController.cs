@@ -79,13 +79,15 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 		PlayerData dataCopy = PlayerDataManager.playerDataManager.loadSaveData ();
 		int partyIndex = 0;
-		foreach (serialAgent agent in dataCopy.currentParty) {
-			folk[partyIndex].unitName = agent.agentName;
-			folk[partyIndex].agility = agent.agility;
-			folk[partyIndex].strength = agent.strength;
-			folk[partyIndex].perception = agent.perception;
-			///folk[partyIndex].myWeapon = agent.myWeapon;
-			partyIndex++;
+		if (PlayerDataManager.playerDataManager.isLive) {
+			foreach (serialAgent agent in dataCopy.currentParty) {
+				folk [partyIndex].unitName = agent.agentName;
+				folk [partyIndex].agility = agent.agility;
+				folk [partyIndex].strength = agent.strength;
+				folk [partyIndex].perception = agent.perception;
+				///folk[partyIndex].myWeapon = agent.myWeapon;
+				partyIndex++;
+			}
 		}
 
 		selectedUnit = folk [0];
