@@ -3,9 +3,9 @@ using System.Collections;
 
 public class TitleScript : MonoBehaviour {
 	public GameObject menuScreen, titleScreen;
+	public int sceneNumber = 2;
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame
@@ -16,8 +16,15 @@ public class TitleScript : MonoBehaviour {
 		}
 	}
 
-	public void loadScene(int sceneNumber){
-		Application.LoadLevel (sceneNumber);
+	public void loadScene(bool newGame){
+		if (!newGame)
+			Application.LoadLevel (sceneNumber);
+		else {
+			if( PlayerDataManager.playerDataManager.saveDataExists() )
+				PlayerDataManager.playerDataManager.deleteSaveData();
+			PlayerDataManager.playerDataManager.createNewData();
+			Application.LoadLevel (sceneNumber);
+		}
 	}
 
 	public void quit(){

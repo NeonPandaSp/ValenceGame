@@ -52,7 +52,7 @@ public class PlayerDataManager : MonoBehaviour {
 		}
 	}
 	
-	bool saveDataExists(){
+	public bool saveDataExists(){
 		if (File.Exists (Application.persistentDataPath + "/playerInfo.dat"))
 			return true;
 		else
@@ -92,6 +92,11 @@ public class PlayerDataManager : MonoBehaviour {
 		bf.Serialize (file, data);
 
 		dataExists = true;
+	}
+
+	public void deleteSaveData(){
+		File.Delete (Application.persistentDataPath + "/playerInfo.dat");
+		Debug.Log ("Save Deleted");
 	}
 }
 
