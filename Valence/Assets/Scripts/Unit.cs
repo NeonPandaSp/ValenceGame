@@ -289,7 +289,7 @@ public class Unit : MonoBehaviour {
 			if( raycastLineOfSight(fU,false) ){
 				if( !FolkUnitsWithinView.Contains (fU) ){
 					// ... the player is in sight.
-					Debug.Log ("SPOTTED");
+					//Debug.Log ("SPOTTED");
 
 					FolkUnitsWithinView.Add (fU);
 					//generateSound(currentPosition,3.0f);
@@ -337,16 +337,16 @@ public class Unit : MonoBehaviour {
 		{
 			case 1:
 				// conduct default behaviour
-				Debug.Log ( "Idle State");
+				//Debug.Log ( "Idle State");
 				break;
 			case 2:
-				Debug.Log ( "Pursuit State");
+				//Debug.Log ( "Pursuit State");
 				break;
 			case 3:
-				Debug.Log ( "Eliminate State");
+				//Debug.Log ( "Eliminate State");
 				break;
 			default:
-				Debug.Log ( "No State Defined");
+				//Debug.Log ( "No State Defined");
 				break;
 
 		}
