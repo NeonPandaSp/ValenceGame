@@ -8,7 +8,7 @@ public class InputController : MonoBehaviour {
 	TileMap _tileMap;
 	generateZone _generateZone;
 
-	Vector2 currentTile;
+	Vector3 currentTile;
 
 	Vector2 rootMousePos;
 
@@ -29,6 +29,8 @@ public class InputController : MonoBehaviour {
 	string hoverState;
 
 	public GUIController _GUIController;
+
+	public Collider lowerCollider1, lowerCollider2;
 
 	void Start(){
 		_tileMap = GetComponent<TileMap> ();
@@ -89,24 +91,47 @@ public class InputController : MonoBehaviour {
 		}
 		return (int) ( maxY - minY );
 	}
-
-	// Update is called once per frame
 	void FixedUpdate () {
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit hitInfo;
 
 		if ( GetComponent<Collider>().Raycast (ray, out hitInfo, Mathf.Infinity)) {
+			Debug.DrawRay(ray.origin,ray.direction);
 			int x = Mathf.FloorToInt( hitInfo.point.x  / _tileMap.tileSize );
+			int y = Mathf.FloorToInt( hitInfo.point.y );
 			int z = Mathf.FloorToInt( hitInfo.point.z / _tileMap.tileSize );
+			//Debug.Log ("X: "+ x + "Y: "+ y +" Z: "+ z );
 			currentTile.x = x;
-			currentTile.y = z;
+			currentTile.y = y;
+			currentTile.z = z;
 
-			if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
-				myHoverObject.transform.position = new Vector3( currentTile.x, 0, currentTile.y );
-			}
-
-		} else {
-
+			//if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
+			myHoverObject.transform.position = currentTile;
+			//}
+		} else if( lowerCollider1.Raycast (ray, out hitInfo, Mathf.Infinity)) {
+			Debug.DrawRay(ray.origin,ray.direction);
+			int x = Mathf.FloorToInt( hitInfo.point.x  / _tileMap.tileSize );
+			int y = Mathf.FloorToInt( hitInfo.point.y );
+			int z = Mathf.FloorToInt( hitInfo.point.z / _tileMap.tileSize );
+			//Debug.Log ("X: "+ x + "Y: "+ y +" Z: "+ z );
+			currentTile.x = x;
+			currentTile.y = y;
+			currentTile.z = z;
+			
+			//if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
+			myHoverObject.transform.position = currentTile;
+		} else if( lowerCollider2.Raycast (ray, out hitInfo, Mathf.Infinity)) {
+			Debug.DrawRay(ray.origin,ray.direction);
+			int x = Mathf.FloorToInt( hitInfo.point.x  / _tileMap.tileSize );
+			int y = Mathf.FloorToInt( hitInfo.point.y );
+			int z = Mathf.FloorToInt( hitInfo.point.z / _tileMap.tileSize );
+			//Debug.Log ("X: "+ x + "Y: "+ y +" Z: "+ z );
+			currentTile.x = x;
+			currentTile.y = y;
+			currentTile.z = z;
+			
+			//if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
+			myHoverObject.transform.position = currentTile;
 		}
 
 		if (Input.GetMouseButtonDown (0) && !Input.GetKey ( KeyCode.LeftAlt )) {
@@ -176,7 +201,7 @@ public class InputController : MonoBehaviour {
                     if (_gameController.scrap >= 25) {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
                             _gameController.scrap -= 25;
-                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("Farm"), new Vector3(currentTile.x, 0, currentTile.y), Quaternion.identity);
+                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("Farm"), currentTile, Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
@@ -215,7 +240,7 @@ public class InputController : MonoBehaviour {
                     if (_gameController.scrap >= 25){
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))){
                             _gameController.scrap -= 25;
-                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("WaterStation"), new Vector3(currentTile.x, 0, currentTile.y), Quaternion.identity);
+                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("WaterStation"), currentTile, Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
@@ -253,7 +278,7 @@ public class InputController : MonoBehaviour {
                     if (_gameController.scrap >= 25){
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag ("prop"))){
                             _gameController.scrap -= 25;
-                            GameObject tempObject = (GameObject)Instantiate(Resources.Load ("PowerStation"), new Vector3(currentTile.x, 0, currentTile.y), Quaternion.identity);
+                            GameObject tempObject = (GameObject)Instantiate(Resources.Load ("PowerStation"), currentTile, Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
@@ -291,7 +316,7 @@ public class InputController : MonoBehaviour {
 					if (_gameController.scrap >= 25) {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
                             _gameController.scrap -= 25;
-                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("Shelter"), new Vector3(currentTile.x, 0, currentTile.y), Quaternion.identity);
+                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("Shelter"), currentTile, Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
@@ -322,9 +347,9 @@ public class InputController : MonoBehaviour {
                 }
 				if (hoverState == "tavern") {
                     if (_gameController.scrap >= 25) {
-                        if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
+						if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
                             _gameController.scrap -= 25;
-                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("Tavern"), new Vector3(currentTile.x, 0, currentTile.y), Quaternion.identity);
+                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("Tavern"), currentTile, Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
@@ -355,8 +380,8 @@ public class InputController : MonoBehaviour {
                     }
                 }
             }
-			if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
-				myHoverObject.transform.position = new Vector3( currentTile.x, 1, currentTile.y );
+			if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= -50 && currentTile.z >= -40 ){
+				myHoverObject.transform.position = new Vector3( currentTile.x, 1, currentTile.z );
 			}
 		}
 
