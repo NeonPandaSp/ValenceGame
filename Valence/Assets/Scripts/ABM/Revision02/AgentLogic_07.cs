@@ -65,11 +65,19 @@ public class AgentLogic_07 : MonoBehaviour {
 
 	int randomFirstName;
 	int randomLastName;
-	string[] firstNameArray;
+	string[] maleFirstNameArray;
+    string[] femaleFirstNameArray;
 	string[] lastNameArray;
 
-//	public GUIController_SettlerInfo _GUIController_SettlerInfo;
-//	public Text hiTHERE;
+    //String array containing the gender of the agent
+    string[] genderArray;
+    //Index position of genderArray
+    int randomGender;
+    //String containing the randomly assigned gender
+    public string gender;
+
+    //	public GUIController_SettlerInfo _GUIController_SettlerInfo;
+    //	public Text hiTHERE;
 
     int amount = 0;
 
@@ -104,26 +112,64 @@ public class AgentLogic_07 : MonoBehaviour {
     public agentState currentState;
 
     void Start(){
-		//_GUIController_SettlerInfo = GameObject.Find ("Folk_Female_Agent").GetComponent<GUIController_SettlerInfo> ();
-		if (newAgent) {
+        //_GUIController_SettlerInfo = GameObject.Find ("Folk_Female_Agent").GetComponent<GUIController_SettlerInfo> ();
+        if (newAgent) {
+
+            //Gender
+            genderArray = new string[2] {
+                "Male",
+                "Female"
+            };
+
 			//Name
-			firstNameArray = new string[14] {
-				"Jimmy",
-				"T.D.",
-				"Very",
-				"Jackery",
-				"Fontana",
-				"Freya",
-				"Iris",
-				"Dean",
-				"Reed",
-				"Tate",
-				"Seth",
-				"Larry",
-				"Leaf",
-				"Marco"
-			};
-			lastNameArray = new string[14] {
+			maleFirstNameArray = new string[21] {
+                "Daron",
+                "Bernardo",
+                "Grady",
+                "Willie",
+                "Mark",
+                "Malcolm",
+                "Trevor",
+                "Len",
+                "Tod",
+                "Randy",
+                "Gail",
+                "Kurt",
+                "Alexis",
+                "Winford",
+                "Luigi",
+                "Jake",
+                "Reggie",
+                "Loyd",
+                "Darron",
+                "Tyler",
+                "Zachary"
+            };
+
+            femaleFirstNameArray = new string[20] {
+                "Joye",
+                "Argelia",
+                "Candelaria",
+                "Sheryll",
+                "Carma",
+                "Sheri",
+                "Anita",
+                "Magdalena",
+                "Laryssa",
+                "Zachary-a",
+                "Darcie",
+                "Sari",
+                "Shayna",
+                "Thea",
+                "Maryanna",
+                "Sanora",
+                "Deedra",
+                "Wanda",
+                "Creola",
+                "Weri"
+            };
+
+            lastNameArray = new string[14] {
 				"Hawthorne",
 				"Hazlewood",
 				"Beckett",
@@ -142,11 +188,22 @@ public class AgentLogic_07 : MonoBehaviour {
 		
 			randomFirstName = UnityEngine.Random.Range (0, 14);
 			randomLastName = UnityEngine.Random.Range (0, 14);
-			//Name - variable firstLastName outputs first and last name. variable settlerNameAndRole outputs name, what settler is currently doing, and their assigned role
-			firstLastName = (firstNameArray [randomFirstName] + " " + lastNameArray [randomLastName]);
+            randomGender = Random.Range(0, (genderArray.Length));
 
-			//Init the agent's hunger value to 0 when spawned (they shouldnt be hungry at start)
-			hungerValue = 0;
+            //Assigned gender to the agent
+            gender = genderArray[randomGender];
+
+            //Name - variable firstLastName outputs first and last name. variable settlerNameAndRole outputs name, what settler is currently doing, and their assigned role
+            if (gender == "Male"){
+                firstLastName = (maleFirstNameArray[randomFirstName] + " " + lastNameArray[randomLastName]);
+            }
+            else {
+                firstLastName = (femaleFirstNameArray[randomFirstName] + " " + lastNameArray[randomLastName]);
+            }
+            
+
+            //Init the agent's hunger value to 0 when spawned (they shouldnt be hungry at start)
+            hungerValue = 0;
 			//Init the agent's health to 100 when spawned (they should be perfectly healthy)
 			health = 100;
 			//Init the agent's happyness to 100 when spawned (they should be perfectly happy)
