@@ -477,7 +477,7 @@ public class InputController : MonoBehaviour {
             if (hoverState != "food")
             {
                 Destroy(myHoverObject);
-                myHoverObject = (GameObject)Instantiate(foodBuild, new Vector3(0, 0, 0), Quaternion.identity);
+                myHoverObject = (GameObject)Instantiate(foodBuild, new Vector3(0, 1, 0), Quaternion.identity);
                 hoverState = "food";
             }
             zoning = false;
