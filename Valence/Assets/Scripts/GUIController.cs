@@ -272,7 +272,7 @@ using System.Collections.Generic;
 		trainingGroundDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
 		trainingGroundDelBtn.transform.position = new Vector2 (hospitalDelBtn.transform.position.x + 67.5f, hospitalDelBtn.transform.position.y);
 		trainingGroundDelBtn.GetComponentInChildren<Text> ().text = "Training Ground";
-		trainingGroundDelBtn.onClick.AddListener (() => switchStructure ("training ground"));
+		trainingGroundDelBtn.onClick.AddListener (() => switchStructure ("training"));
 		trainingGroundDelBtn.gameObject.SetActive (false);
 
 		//Switch Modes
@@ -322,8 +322,8 @@ using System.Collections.Generic;
 			case "hospital":
 				setBuildingTypeName = "hospital";
 				break;
-			case "training ground":
-				setBuildingTypeName = "training ground";
+			case "training":
+				setBuildingTypeName = "training";
 				break;
 			case "empty":
 				setBuildingTypeName = "Null";

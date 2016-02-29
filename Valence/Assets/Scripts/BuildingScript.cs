@@ -96,6 +96,10 @@ public class BuildingScript : MonoBehaviour {
         else if (bType.typeName == "Tavern") {
             _myGameController.power -= bType.cRate;
         }
+        else if (bType.typeName == "Hospital")
+        {
+            _myGameController.power -= bType.cRate;
+        }
         else {
             Debug.Log("Production Type Error @ Resource Generation");
         }
