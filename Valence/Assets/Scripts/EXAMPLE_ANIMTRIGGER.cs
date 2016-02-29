@@ -12,8 +12,8 @@ public class EXAMPLE_ANIMTRIGGER : MonoBehaviour {
 	}
 
     public void FireWeapon() {
-        Rifle.GetComponent<WeaponLogic>().FireWeapon();
-        Pistol.GetComponent<WeaponLogic>().FireWeapon();
+        //Rifle.GetComponent<WeaponLogic>().FireWeapon();
+        //Pistol.GetComponent<WeaponLogic>().FireWeapon();
         Shotgun.GetComponent<WeaponLogic>().FireWeapon();
 
     }
