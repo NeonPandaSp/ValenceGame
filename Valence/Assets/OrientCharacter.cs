@@ -11,7 +11,7 @@ public class OrientCharacter : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		Vector3 lookDirection = transform.parent.position + transform.parent.GetComponent<Unit> ().facing;
-		lookDirection.y = 0.65f;
+		lookDirection.y = transform.position.y;
 		lookDirection.x += 0.5f;
 		lookDirection.z += 0.5f;
 		transform.LookAt (lookDirection, Vector3.up );

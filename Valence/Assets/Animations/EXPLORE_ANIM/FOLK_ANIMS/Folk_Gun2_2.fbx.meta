@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 1cecbb121f68ab9438358f9b3c577000
-timeCreated: 1455899237
+guid: 73651fb6e7bd4784ea91be96f6370719
+timeCreated: 1455899278
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -161,7 +161,7 @@ ModelImporter:
     400150: TylerROM2:TopSpine
     400152: TylerROM2:TylerROM2
     400154: Unlabeled_Markers
-    7400000: Folk_Explore_Walk003_x2d
+    7400000: Folk_Gun2_2_x2d
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -178,7 +178,196 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Folk_Gun2_2_x2d
+      takeName: Folk_Gun2_2_x2d
+      firstFrame: 68
+      lastFrame: 137
+      wrapMode: 0
+      orientationOffsetY: -90
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: .675174057
+        functionName: FireWeapon
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask:
+      - path: 
+        weight: 1
+      - path: System
+        weight: 0
+      - path: System/MX40_3779
+        weight: 0
+      - path: System/MX40_4315
+        weight: 0
+      - path: System/MX40_4521
+        weight: 0
+      - path: System/MX40_4537
+        weight: 0
+      - path: System/MX40_4540
+        weight: 0
+      - path: System/MX40_4541
+        weight: 0
+      - path: System/T20_S_22861
+        weight: 0
+      - path: System/T20_S_22971
+        weight: 0
+      - path: System/T20_S_22979
+        weight: 0
+      - path: System/T20_S_23074
+        weight: 0
+      - path: TylerROM2:TylerROM2
+        weight: 1
+      - path: TylerROM2:TylerROM2/TylerROM2:Chest
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:Hips
+        weight: 1
+      - path: TylerROM2:TylerROM2/TylerROM2:Hips/TylerROM2:LeftUpLeg
+        weight: 1
+      - path: TylerROM2:TylerROM2/TylerROM2:Hips/TylerROM2:LeftUpLeg/TylerROM2:LeftLeg
+        weight: 1
+      - path: TylerROM2:TylerROM2/TylerROM2:Hips/TylerROM2:LeftUpLeg/TylerROM2:LeftLeg/TylerROM2:LeftFoot
+        weight: 1
+      - path: TylerROM2:TylerROM2/TylerROM2:Hips/TylerROM2:LeftUpLeg/TylerROM2:LeftLeg/TylerROM2:LeftFoot/TylerROM2:LeftToeBase
+        weight: 1
+      - path: TylerROM2:TylerROM2/TylerROM2:Hips/TylerROM2:RightUpLeg
+        weight: 1
+      - path: TylerROM2:TylerROM2/TylerROM2:Hips/TylerROM2:RightUpLeg/TylerROM2:RightLeg
+        weight: 1
+      - path: TylerROM2:TylerROM2/TylerROM2:Hips/TylerROM2:RightUpLeg/TylerROM2:RightLeg/TylerROM2:RightFoot
+        weight: 1
+      - path: TylerROM2:TylerROM2/TylerROM2:Hips/TylerROM2:RightUpLeg/TylerROM2:RightLeg/TylerROM2:RightFoot/TylerROM2:RightToeBase
+        weight: 1
+      - path: TylerROM2:TylerROM2/TylerROM2:Hips/TylerROM2:Spine
+        weight: 1
+      - path: TylerROM2:TylerROM2/TylerROM2:Hips/TylerROM2:Spine/TylerROM2:Head
+        weight: 1
+      - path: TylerROM2:TylerROM2/TylerROM2:Hips/TylerROM2:Spine/TylerROM2:LeftShoulder
+        weight: 1
+      - path: TylerROM2:TylerROM2/TylerROM2:Hips/TylerROM2:Spine/TylerROM2:LeftShoulder/TylerROM2:LeftArm
+        weight: 1
+      - path: TylerROM2:TylerROM2/TylerROM2:Hips/TylerROM2:Spine/TylerROM2:LeftShoulder/TylerROM2:LeftArm/TylerROM2:LeftForeArm
+        weight: 1
+      - path: TylerROM2:TylerROM2/TylerROM2:Hips/TylerROM2:Spine/TylerROM2:LeftShoulder/TylerROM2:LeftArm/TylerROM2:LeftForeArm/TylerROM2:LeftHand
+        weight: 1
+      - path: TylerROM2:TylerROM2/TylerROM2:Hips/TylerROM2:Spine/TylerROM2:RightShoulder
+        weight: 1
+      - path: TylerROM2:TylerROM2/TylerROM2:Hips/TylerROM2:Spine/TylerROM2:RightShoulder/TylerROM2:RightArm
+        weight: 1
+      - path: TylerROM2:TylerROM2/TylerROM2:Hips/TylerROM2:Spine/TylerROM2:RightShoulder/TylerROM2:RightArm/TylerROM2:RightForeArm
+        weight: 1
+      - path: TylerROM2:TylerROM2/TylerROM2:Hips/TylerROM2:Spine/TylerROM2:RightShoulder/TylerROM2:RightArm/TylerROM2:RightForeArm/TylerROM2:RightHand
+        weight: 1
+      - path: TylerROM2:TylerROM2/TylerROM2:LAnkle
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:LBack
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:LBackHead
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:LBackWaist
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:LElbow
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:LForeArm
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:LFrontHead
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:LFrontWaist
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:LHand_A
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:LHand_B
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:LHeel
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:LKnee
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:LMidFoot
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:LowerBack
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:LShin
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:LShoulder
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:LThigh
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:LToe
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:LUpperArm
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:LWrist
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:MidBack
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:Rankle
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:RBack
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:RBackHead
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:RBackWaist
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:RElbow
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:RForeArm
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:RFrontHeaf
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:RFrontWaist
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:RHand_A
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:RHand_B
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:RHeel
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:RKnee
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:RMidFoot
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:Root
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:RPelvis
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:RShin
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:RShoulder
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:RThigh
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:RToe
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:RUpperArm
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:RWrist
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:Sternum
+        weight: 0
+      - path: TylerROM2:TylerROM2/TylerROM2:TopSpine
+        weight: 0
+      - path: Unlabeled_Markers
+        weight: 0
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -359,7 +548,7 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Folk_WalkCycle_Explore_8(Clone)
+    - name: Folk_Gun2_2(Clone)
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
@@ -425,322 +614,322 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:Chest
-      position: {x: .0291335694, y: 1.44663107, z: .0704304725}
+      position: {x: .0260305628, y: 1.42524445, z: .0375462659}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:Hips
-      position: {x: 0, y: .948361814, z: .0622739308}
-      rotation: {x: -.469523042, y: .445599407, z: .546729267, w: .531108618}
+      position: {x: 0, y: .945807576, z: .0267788768}
+      rotation: {x: -.465373695, y: .449969858, z: .545583785, w: .532252669}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LeftUpLeg
       position: {x: -0, y: .0593152978, z: 0}
-      rotation: {x: .10608048, y: .0369607881, z: -.141421884, w: .983555138}
+      rotation: {x: .0956389382, y: .0123980455, z: -.159565568, w: .982465446}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LeftLeg
       position: {x: -0, y: 0, z: -.468259007}
-      rotation: {x: -7.61344646e-18, y: -.0342879146, z: -9.51680725e-18, w: .999412}
+      rotation: {x: -5.71157356e-19, y: -.00257226429, z: -7.13946721e-19, w: .999996722}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LeftFoot
       position: {x: -0, y: 0, z: -.42453602}
-      rotation: {x: -.00625047181, y: -.0809090957, z: .0767694861, w: .993740976}
+      rotation: {x: -.00392664783, y: -.0852454826, z: .0458461903, w: .995296896}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LeftToeBase
       position: {x: -.146439999, y: 0, z: 0}
-      rotation: {x: 4.0461586e-17, y: .182222798, z: 5.05769858e-17, w: .983257294}
+      rotation: {x: 4.26544881e-17, y: .192098722, z: 5.33181068e-17, w: .981375635}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RightUpLeg
       position: {x: -0, y: -.0593152978, z: 0}
-      rotation: {x: -.0548883751, y: .0450824238, z: .0912512988, w: .993291557}
+      rotation: {x: -.0505445004, y: .0234010182, z: .0980692729, w: .99361968}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RightLeg
       position: {x: -0, y: 0, z: -.468259007}
-      rotation: {x: -1.08945866e-17, y: -.049064856, z: -1.36182326e-17, w: .998795629}
+      rotation: {x: -5.11992291e-18, y: -.0230580829, z: -6.39990343e-18, w: .999734163}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RightFoot
       position: {x: -0, y: 0, z: -.42453602}
-      rotation: {x: .00130732486, y: -.103799351, z: -.0125256917, w: .994518518}
+      rotation: {x: -.00310856546, y: -.113683827, z: .0271563996, w: .993140936}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RightToeBase
       position: {x: -.146439999, y: 0, z: 0}
-      rotation: {x: 4.36243905e-17, y: .196466789, z: 5.45304889e-17, w: .980510473}
+      rotation: {x: 4.60390233e-17, y: .207341343, z: 5.75487882e-17, w: .978268683}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:Spine
-      position: {x: .0176805891, y: -.0145236561, z: .180960417}
-      rotation: {x: .0304492619, y: .0794806033, z: .0433747582, w: .995426714}
+      position: {x: .033478763, y: -.0145802163, z: .171549007}
+      rotation: {x: .0230084267, y: .0562599935, z: .0386525877, w: .99740237}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:Head
-      position: {x: .0117110405, y: .0145123787, z: .509807706}
-      rotation: {x: -.00244791666, y: .0267081596, z: -.0279256515, w: .999250174}
+      position: {x: -.00539070647, y: .0404995307, z: .506650031}
+      rotation: {x: .0229292363, y: .0367443599, z: .247095108, w: .968022823}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LeftShoulder
       position: {x: -0, y: 0, z: .246837005}
-      rotation: {x: -.133664235, y: -.0019724369, z: -.0597245991, w: .98922348}
+      rotation: {x: -.132223159, y: -.00337672164, z: -.0605345368, w: .989364028}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LeftArm
       position: {x: -0, y: .188155994, z: .121854998}
-      rotation: {x: .692827046, y: .325924844, z: -.251243293, w: .592149138}
+      rotation: {x: .682415426, y: .34887436, z: -.2598162, w: .587444961}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LeftForeArm
       position: {x: -0, y: 0, z: -.272196978}
-      rotation: {x: .0100456299, y: -.00997223053, z: .233681262, w: .972210228}
+      rotation: {x: .0101390472, y: -.0137899332, z: .247258216, w: .968798518}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LeftHand
       position: {x: -0, y: 0, z: -.251823992}
-      rotation: {x: .0247251596, y: -.0444195047, z: -.00109970197, w: .998706341}
+      rotation: {x: .00634195004, y: -.00189559243, z: -1.20220147e-05, w: .999978125}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RightShoulder
       position: {x: -0, y: 0, z: .246837005}
-      rotation: {x: .122798502, y: -.0141779594, z: -.0174101405, w: .992177606}
+      rotation: {x: .123939633, y: -.0138437431, z: -.0163703691, w: .992058158}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RightArm
       position: {x: -0, y: -.188155994, z: .121854998}
-      rotation: {x: -.628963053, y: .450838566, z: .345768243, w: .530654788}
+      rotation: {x: -.63976711, y: .437289238, z: .331510276, w: .538123846}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RightForeArm
       position: {x: -0, y: 0, z: -.272196978}
-      rotation: {x: -.0263917502, y: .0626592636, z: -.387270004, w: .919455945}
+      rotation: {x: -.0364030562, y: .0541965477, z: -.437430948, w: .896878898}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RightHand
       position: {x: -0, y: 0, z: -.251823992}
-      rotation: {x: .0345284976, y: .0453410596, z: .00156810938, w: .998373449}
+      rotation: {x: .0284367967, y: -.0429628491, z: -.00122335169, w: .998671114}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LAnkle
-      position: {x: -.154525042, y: .0717376769, z: .30469954}
+      position: {x: -.166931659, y: .0704904422, z: .250733942}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LBack
-      position: {x: -.242500052, y: 1.39547348, z: .181440979}
+      position: {x: -.24240382, y: 1.39025295, z: .158679366}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LBackHead
-      position: {x: -.13473466, y: 1.74198198, z: .174546316}
+      position: {x: -.0501179025, y: 1.73593473, z: .153176218}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LBackWaist
-      position: {x: -.209411696, y: 1.02327311, z: .147803694}
+      position: {x: -.204083279, y: 1.02265286, z: .118725985}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LElbow
-      position: {x: -.151682168, y: 1.51242125, z: .531661689}
+      position: {x: -.124362148, y: 1.47271633, z: .50860405}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LForeArm
-      position: {x: -.107925184, y: 1.51436532, z: .671227336}
+      position: {x: -.0691389665, y: 1.46079028, z: .643586874}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LFrontHead
-      position: {x: .00373166963, y: 1.78651607, z: .135976389}
+      position: {x: .0429880172, y: 1.77438331, z: .0415566564}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LFrontWaist
-      position: {x: .0184308831, y: .968411386, z: .217886463}
+      position: {x: .0240758825, y: .955412984, z: .17707181}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LHand_A
-      position: {x: -.149919376, y: 1.51469636, z: .865407944}
+      position: {x: -.0894320831, y: 1.44431841, z: .841531515}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LHand_B
-      position: {x: -.172093585, y: 1.44736385, z: .864053726}
+      position: {x: -.113437869, y: 1.37902391, z: .838528097}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LHeel
-      position: {x: -.188414186, y: .0424824655, z: .254124403}
+      position: {x: -.197432354, y: .0438910574, z: .198039144}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LKnee
-      position: {x: -.109767593, y: .512729645, z: .280405104}
+      position: {x: -.126912385, y: .506770492, z: .233234614}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LMidFoot
-      position: {x: -.00892090425, y: .0375872515, z: .34394145}
+      position: {x: -.0256761443, y: .0362487249, z: .29946506}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LowerBack
-      position: {x: -.212191373, y: 1.24380791, z: .0805549026}
+      position: {x: -.21469152, y: 1.23798597, z: .0516430028}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LShin
-      position: {x: -.0802356005, y: .28618443, z: .288822562}
+      position: {x: -.0967317596, y: .284599513, z: .239118606}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LShoulder
-      position: {x: -.118418559, y: 1.53388023, z: .266579181}
+      position: {x: -.106734395, y: 1.51642942, z: .245711401}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LThigh
-      position: {x: -.0682838261, y: .657034457, z: .278919905}
+      position: {x: -.076262787, y: .647542834, z: .234395742}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LToe
-      position: {x: .0729042292, y: .0382135063, z: .288157761}
+      position: {x: .0610835142, y: .0377679467, z: .244497404}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LUpperArm
-      position: {x: -.169971809, y: 1.48026669, z: .419092059}
+      position: {x: -.149880812, y: 1.44998634, z: .396124274}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:LWrist
-      position: {x: -.148023158, y: 1.50215638, z: .781747282}
+      position: {x: -.101530395, y: 1.43994653, z: .755741417}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:MidBack
-      position: {x: -.23258765, y: 1.32356799, z: .0841691494}
+      position: {x: -.234959215, y: 1.31908047, z: .0570199005}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:Rankle
-      position: {x: -.14131999, y: .0892290398, z: -.191192463}
+      position: {x: -.172499284, y: .0888035074, z: -.217676729}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RBack
-      position: {x: -.244413897, y: 1.40257883, z: .0074915993}
+      position: {x: -.246036679, y: 1.39925241, z: -.0173866879}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RBackHead
-      position: {x: -.173753664, y: 1.69379783, z: .0181017462}
+      position: {x: -.169190273, y: 1.67907679, z: .0489209108}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RBackWaist
-      position: {x: -.206214264, y: 1.02319503, z: -.0324893855}
+      position: {x: -.208334893, y: 1.02372003, z: -.061074879}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RElbow
-      position: {x: -.178425446, y: 1.5124011, z: -.37586394}
+      position: {x: -.18325673, y: 1.50336885, z: -.403417945}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RForeArm
-      position: {x: -.182694808, y: 1.48234129, z: -.518813491}
+      position: {x: -.184215769, y: 1.48691416, z: -.547261059}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RFrontHeaf
-      position: {x: -.0525552258, y: 1.75498986, z: -.0118303439}
+      position: {x: -.083957687, y: 1.73355079, z: -.0490952544}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RFrontWaist
-      position: {x: .0174528975, y: .995290577, z: -.105016209}
+      position: {x: .0107168593, y: .98675704, z: -.144394457}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RHand_A
-      position: {x: -.10757228, y: 1.54562712, z: -.731543541}
+      position: {x: -.105998732, y: 1.54415536, z: -.757114112}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RHand_B
-      position: {x: -.159560055, y: 1.51084375, z: -.693955302}
+      position: {x: -.153709754, y: 1.52018988, z: -.70950073}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RHeel
-      position: {x: -.177478597, y: .0502467602, z: -.128252745}
+      position: {x: -.199811354, y: .0521680787, z: -.149896845}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RKnee
-      position: {x: -.0840888396, y: .504649341, z: -.156451702}
+      position: {x: -.113715544, y: .500644267, z: -.186233386}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RMidFoot
-      position: {x: .00403426401, y: .0445593596, z: -.238518938}
+      position: {x: -.0348510966, y: .0449171402, z: -.284180075}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:Root
-      position: {x: -.203392878, y: 1.08753645, z: .0630057976}
+      position: {x: -.200895488, y: 1.0847615, z: .0335780382}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RPelvis
-      position: {x: -.201188311, y: 1.19071186, z: .00505198119}
+      position: {x: -.204491287, y: 1.18687022, z: -.0248068906}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RShin
-      position: {x: -.0640143976, y: .326533198, z: -.157770291}
+      position: {x: -.0945584476, y: .325725466, z: -.192040369}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RShoulder
-      position: {x: -.142931148, y: 1.5588733, z: -.127285346}
+      position: {x: -.143372476, y: 1.55547512, z: -.157451048}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RThigh
-      position: {x: -.0286578406, y: .716402829, z: -.16185531}
+      position: {x: -.0501336567, y: .708749354, z: -.195056096}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RToe
-      position: {x: .0873045772, y: .0416743644, z: -.186616048}
+      position: {x: .0543100201, y: .041616641, z: -.243884087}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RUpperArm
-      position: {x: -.131254479, y: 1.54003501, z: -.259926319}
+      position: {x: -.133021235, y: 1.53044832, z: -.289258778}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:RWrist
-      position: {x: -.148113891, y: 1.53958678, z: -.635817885}
+      position: {x: -.130835772, y: 1.54118955, z: -.655889034}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:Sternum
-      position: {x: .0753922239, y: 1.28994393, z: .0768686533}
+      position: {x: .0690768138, y: 1.27185583, z: .0393443629}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
     - name: TylerROM2:TopSpine
-      position: {x: -.21309635, y: 1.5100261, z: .0879845694}
+      position: {x: -.208467782, y: 1.50999522, z: .064420864}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1

@@ -23,6 +23,7 @@ public class SelectAttackTarget : MonoBehaviour {
 		_GameController.selectedUnit.facing = new Vector3( tempFacing.x, 0, tempFacing.y );
 		int rand = Random.Range (0, 100);
 		if (_GameController.selectedUnit.calcChanceToHit(_GameController.selectedUnit.getDistance(_GameController.selectedUnit.currentPosition, myParentScript.currentPosition ) ) > rand ) {
+
 			_GameController.selectedUnit.Attack( myParentScript );
 			_GameController.selectedUnit.hasAttacked = true;
 

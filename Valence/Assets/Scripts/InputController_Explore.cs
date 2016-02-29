@@ -279,6 +279,9 @@ public class InputController_Explore : MonoBehaviour {
 		_GameController.selectedUnit.facing = new Vector3( tempFacing.x, 0, tempFacing.y );
 		int rand = Random.Range (0, 100);
 		
+		//_GameController.selectedUnit.myFAnimCtrl.InitAttackAnim();
+		_GameController.selectedUnit.isAttacking = true;
+		Debug.Log ("FolkAnimCtrl Called");
 
 		if (_GameController.selectedUnit.calcChanceToHit (_GameController.selectedUnit.getDistance (_GameController.selectedUnit.currentPosition, attackTarget.currentPosition)) > rand) {
 			Debug.Log("HIT");

@@ -22,6 +22,8 @@ public class Unit : MonoBehaviour {
 	public bool turnComplete;
 	public bool hasScrap;
 
+	public bool isAttacking;
+
 	/// //////////////////////////////////////////////
 
 	public int actionPoints;
@@ -75,6 +77,8 @@ public class Unit : MonoBehaviour {
 	public GameObject AlertObject, CautionObject;
 	public GameObject ScrapObject;
 
+	public EliteAnimCtrl myAnimCtrl;
+	public FolkAnimCtrl myFAnimCtrl;
 	// Use this for initialization
 	void Start () {
 
@@ -98,9 +102,13 @@ public class Unit : MonoBehaviour {
 		attackRating = myWeapon.GetComponent<weaponScript> ().damageModifier + (strength * 1);
 		aimRating = myWeapon.GetComponent<weaponScript> ().accuracy + (perception * 0.1f);
 
-
 		foreach( Unit fU in _GameController.folk ){
 			FolkUnits.Add (fU);
+		}
+		if (isElite) {
+			myAnimCtrl = transform.GetComponent<EliteAnimCtrl> ();
+		} else {
+			myFAnimCtrl = transform.GetComponent<FolkAnimCtrl>();
 		}
 		_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 3;
 	}
@@ -189,6 +197,7 @@ public class Unit : MonoBehaviour {
 					transform.position = transPath[0];
 					transPath.Remove(transPath[0]);
 					isMoving = false;
+					Debug.Log ("no longer moving");
 				}
 			}
 		}
@@ -290,7 +299,8 @@ public class Unit : MonoBehaviour {
 				if( !FolkUnitsWithinView.Contains (fU) ){
 					// ... the player is in sight.
 					//Debug.Log ("SPOTTED");
-
+					myAnimCtrl.InitAlertAnim();
+					//myAnimCtrl.InitAttackAnim();
 					FolkUnitsWithinView.Add (fU);
 					//generateSound(currentPosition,3.0f);
 					if( !knownPosition.Contains ( fU.currentPosition ) )
@@ -544,6 +554,7 @@ public class Unit : MonoBehaviour {
 	}
 
 	public void Attack(Unit targetUnit){
+
 		targetUnit.health -= attackRating;
 		generateSound (currentPosition, myWeapon.GetComponent<weaponScript> ().soundRange);
 		Debug.Log ("Attack Dealt " + attackRating + " Damage.");

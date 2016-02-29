@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: a5025a355ccd95e4ea69bbb74353a8eb
-timeCreated: 1455899305
+guid: d98d99eb736b5f540ba9c8ecd5a89663
+timeCreated: 1456761566
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -186,13 +186,13 @@ ModelImporter:
       firstFrame: 75
       lastFrame: 175
       wrapMode: 0
-      orientationOffsetY: 0
+      orientationOffsetY: -45
       level: 0
       cycleOffset: 0
       loop: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
+      loopBlendOrientation: 1
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
@@ -202,7 +202,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: .386727661
+        functionName: FireWeapon
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
