@@ -172,6 +172,14 @@ ModelImporter:
     bakeSimulation: 0
     optimizeGameObjects: 0
     motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: "\nClip 'Folk_Idle_Explore009_x2d' has import animation
+      warnings that might lower retargeting quality:\nNote: Activate translation DOF
+      on avatar to improve retargeting quality.\n\t'TylerROM2:Spine' has translation
+      animation that will be discarded.\n\t'TylerROM2:Head' has translation animation
+      that will be discarded.\n"
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
     animationCompression: 3
     animationRotationError: .5
     animationPositionError: .5
@@ -182,18 +190,18 @@ ModelImporter:
     - serializedVersion: 16
       name: Folk_Idle_Explore009_x2d
       takeName: Folk_Idle_Explore009_x2d
-      firstFrame: 52
-      lastFrame: 205
+      firstFrame: 38
+      lastFrame: 113
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       loopTime: 1
-      loopBlend: 0
+      loopBlend: 1
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
@@ -939,8 +947,10 @@ ModelImporter:
     legStretch: .0500000007
     feetSpacing: 0
     rootMotionBoneName: 
+    hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 3
+  humanoidOversampling: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
