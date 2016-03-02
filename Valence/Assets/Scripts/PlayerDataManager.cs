@@ -105,6 +105,7 @@ public class PlayerData{
 	public string versionId;
 
 	public int populationCount;
+
 	public List<serialAgent> population;
 	public List<serialBuilding> buildingDatabase;
 	public bool firstLoad = false;
@@ -113,4 +114,5 @@ public class PlayerData{
 	public float food, power, water, popLimit, morale;
 
 	public List<serialAgent> currentParty;
+
 }

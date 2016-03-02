@@ -815,8 +815,10 @@ public class ExploreMode_GameController : MonoBehaviour {
 	public bool canPickUp(Unit myUnit){
 		if (selectedUnit.getDistance (selectedUnit.currentPosition, new Vector2(scrapObj.transform.position.x, scrapObj.transform.position.z)) <= 1) {
 			return true;
+		} else {
+			Debug.Log ( selectedUnit.getDistance (selectedUnit.currentPosition, new Vector2(scrapObj.transform.position.x, scrapObj.transform.position.z)) );
+			return false;
 		}
-		return false;
 	}
 
 	public void enableAttackBox(Unit fU){
