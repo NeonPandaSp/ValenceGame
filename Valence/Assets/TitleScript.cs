@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class TitleScript : MonoBehaviour {
-	public GameObject menuScreen, titleScreen;
+	public GameObject menuScreen, titleScreen, loadScreen;
 	public int sceneNumber = 2;
 	// Use this for initialization
 	void Start () {
@@ -17,13 +17,19 @@ public class TitleScript : MonoBehaviour {
 	}
 
 	public void loadScene(bool newGame){
-		if (!newGame)
-			Application.LoadLevel (sceneNumber);
-		else {
+		if (!newGame) {
+			
+			menuScreen.SetActive(false);
+			loadScreen.SetActive(true);
+			Application.LoadLevelAsync (sceneNumber);
+		} else {
 			if( PlayerDataManager.playerDataManager.saveDataExists() )
 				PlayerDataManager.playerDataManager.deleteSaveData();
 			PlayerDataManager.playerDataManager.createNewData();
-			Application.LoadLevel (sceneNumber);
+			
+			menuScreen.SetActive(false);
+			loadScreen.SetActive(true);
+			Application.LoadLevelAsync (sceneNumber);
 		}
 	}
 
