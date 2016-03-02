@@ -102,8 +102,10 @@ public class InputController : MonoBehaviour {
 			int z = Mathf.FloorToInt( hitInfo.point.z / _tileMap.tileSize );
 			//Debug.Log ("X: "+ x + "Y: "+ y +" Z: "+ z );
 			currentTile.x = x;
-			currentTile.y = y;
-			currentTile.z = z;
+
+            currentTile.y = 1; //Fixed the y value to 1 to let hoverobject remain flush to the floor -ZACH
+
+            currentTile.z = z;
 
 			//if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
 			myHoverObject.transform.position = currentTile;
@@ -201,7 +203,7 @@ public class InputController : MonoBehaviour {
                     if (_gameController.scrap >= 25) {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
                             _gameController.scrap -= 25;
-                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("Farm"), new Vector3(currentTile.x, currentTile.y + 1,currentTile.z), Quaternion.identity);
+                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("Farm"), new Vector3(currentTile.x, currentTile.y,currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
@@ -240,7 +242,7 @@ public class InputController : MonoBehaviour {
                     if (_gameController.scrap >= 25){
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))){
                             _gameController.scrap -= 25;
-                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("WaterStation"), new Vector3(currentTile.x, currentTile.y + 0.75f, currentTile.z), Quaternion.identity);
+                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("WaterStation"), new Vector3(currentTile.x, currentTile.y, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
@@ -316,7 +318,7 @@ public class InputController : MonoBehaviour {
 					if (_gameController.scrap >= 25) {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
                             _gameController.scrap -= 25;
-                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("Shelter"), new Vector3(currentTile.x, currentTile.y + 1.3f, currentTile.z), Quaternion.identity);
+                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("Shelter"), new Vector3(currentTile.x, currentTile.y, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
@@ -386,7 +388,7 @@ public class InputController : MonoBehaviour {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop")))
                         {
                             _gameController.scrap -= 25;
-                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("Hospital"), new Vector3(currentTile.x, currentTile.y + 1.0f, currentTile.z), Quaternion.identity);
+                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("Hospital"), new Vector3(currentTile.x, currentTile.y, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
@@ -427,7 +429,7 @@ public class InputController : MonoBehaviour {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop")))
                         {
                             _gameController.scrap -= 25;
-                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("TrainingArea"), new Vector3(currentTile.x, currentTile.y + 1.0f, currentTile.z), Quaternion.identity);
+                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("TrainingArea"), new Vector3(currentTile.x, currentTile.y, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
