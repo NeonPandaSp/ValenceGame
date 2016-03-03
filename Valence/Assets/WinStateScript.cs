@@ -107,12 +107,11 @@ public class WinStateScript : MonoBehaviour {
 		foreach (serialAgent sA in myData.currentParty) {
 			if( myData.population.Contains( sA ) ){
 				myData.population.Remove ( sA );
-				
 			}
 		}
 		foreach (Unit fU in _gameController.folk) {
 			foreach( serialAgent sA in myData.currentParty ){
-				if( sA.agentName == fU.unitName ){
+				if( sA.agentName == fU.unitName){
 					sA.health = fU.health * 10;
 				}
 			}
@@ -120,8 +119,10 @@ public class WinStateScript : MonoBehaviour {
 		
 		
 		foreach (serialAgent sA in myData.currentParty) {
-			myData.population.Add ( sA );
+			if( sA.health > 0 )
+				myData.population.Add ( sA );
 		}
+		myData.currentParty.Clear ();
 
 		PlayerDataManager.playerDataManager.writePlayerData (myData);
 		loadBuild ();
