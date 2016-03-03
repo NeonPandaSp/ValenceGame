@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class Unit : MonoBehaviour {
 
+	public string agentId;
 	public string unitName;
 
 	public Vector2 currentPosition, lastPosition;
