@@ -2183,15 +2183,15 @@ Prefab:
         type: 3}
     - target: {fileID: 11412602, guid: cc1b7602fad4d27448637fd018016466, type: 2}
       propertyPath: m_Color.r
-      value: 1
+      value: .956862748
       objectReference: {fileID: 0}
     - target: {fileID: 11412602, guid: cc1b7602fad4d27448637fd018016466, type: 2}
       propertyPath: m_Color.g
-      value: 1
+      value: .956862748
       objectReference: {fileID: 0}
     - target: {fileID: 11412602, guid: cc1b7602fad4d27448637fd018016466, type: 2}
       propertyPath: m_Color.b
-      value: 1
+      value: .956862748
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cc1b7602fad4d27448637fd018016466, type: 2}
@@ -2447,6 +2447,67 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 921294019}
+--- !u!1 &942850890
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 942850891}
+  - 222: {fileID: 942850893}
+  - 114: {fileID: 942850892}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &942850891
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 942850890}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1458001612}
+  m_RootOrder: 6
+  m_AnchorMin: {x: .5, y: .5}
+  m_AnchorMax: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: .5, y: .5}
+--- !u!114 &942850892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 942850890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &942850893
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 942850890}
 --- !u!224 &949528676
 RectTransform:
   m_PrefabParentObject: {fileID: 22485180, guid: 2291770634f0d9b40ac1e685d5ff9afe,
@@ -4257,6 +4318,18 @@ Prefab:
       propertyPath: m_Pivot.y
       value: .5
       objectReference: {fileID: 0}
+    - target: {fileID: 11424210, guid: f46425670a09a744e974fdffb6748543, type: 2}
+      propertyPath: m_Color.r
+      value: .956862748
+      objectReference: {fileID: 0}
+    - target: {fileID: 11424210, guid: f46425670a09a744e974fdffb6748543, type: 2}
+      propertyPath: m_Color.g
+      value: .956862748
+      objectReference: {fileID: 0}
+    - target: {fileID: 11424210, guid: f46425670a09a744e974fdffb6748543, type: 2}
+      propertyPath: m_Color.b
+      value: .956862748
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f46425670a09a744e974fdffb6748543, type: 2}
   m_IsPrefabParent: 0
@@ -4349,6 +4422,7 @@ RectTransform:
   - {fileID: 787738659}
   - {fileID: 1946741651}
   - {fileID: 621345065}
+  - {fileID: 942850891}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_AnchorMin: {x: 0, y: 0}
@@ -4389,13 +4463,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 20752c4b03b1cb940b6f8b15a944a61b, type: 3}
   - {fileID: 21300000, guid: 20752c4b03b1cb940b6f8b15a944a61b, type: 3}
   stationNameTexts:
-  - Return Home
-  - Station 1
-  - Station 2
-  - Station 3
-  - Station 4
-  - Station 5
-  - Station 6
+  - RETURN HOME
+  - STATION 1
+  - STATION 2
+  - STATION 3
+  - STATION 4
+  - STATION 5
+  - STATION 6
   cursorTexture_default: {fileID: 2800000, guid: 2649f356638562342be594ec245ac2df,
     type: 3}
   cursorMode: 0
