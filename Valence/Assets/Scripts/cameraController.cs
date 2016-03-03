@@ -26,8 +26,6 @@ public class cameraController : MonoBehaviour {
 	float currentTime = -1;
 	float initialTime;
 
-
-
 	Vector2 lastMousePosition;
 	
 	public bool mouseEdgeControl;

@@ -16,6 +16,14 @@ public class MapSelectionScript : MonoBehaviour {
 	public Image stationGraphic;
 	public Image LeftPanelSwitch;
 
+	public int scrapRate;
+	public int recruitRate;
+	public int weaponRate;
+
+	public Image[] scrapRateIcons;
+	public Image[] weaponsRateIcons;
+	public Image[] recruitsRateIcons;
+
 	public Image selectIcon;
 
 	public Button[] myButtons;
@@ -35,6 +43,10 @@ public class MapSelectionScript : MonoBehaviour {
 	void Start () {
 		//cursorTexture_default.Resize (9, 11);
 		Cursor.SetCursor(cursorTexture_default, hotSpot, CursorMode.Auto);
+
+		scrapRate = 5;
+		recruitRate = 3;
+		weaponRate = 4;
 	}
 
 	//=================\\
@@ -48,6 +60,7 @@ public class MapSelectionScript : MonoBehaviour {
 	//===== Update =====\\
 	//==================\\
 	void Update () {
+		//Map Selection
 		switch (selectedMap){
 		case 4:
 			selectIcon.GetComponent<RectTransform>().localPosition = myButtons[1].GetComponent<RectTransform>().localPosition;
@@ -91,6 +104,39 @@ public class MapSelectionScript : MonoBehaviour {
 			stationName.text = stationNameTexts[0];
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[0];
 			break;
+		}
+
+		//Scrap Reward Rate
+		for (int i = 0; i < 10; i++){
+			if (i <= (scrapRate - 1)){
+				scrapRateIcons[i].CrossFadeAlpha (1.0f, 0, false);
+				print ("This is number: "+ i);
+			}
+			else{
+				scrapRateIcons[i].CrossFadeAlpha (0.0f, 0, false);
+			}
+		}
+
+		//Weapons Reward Rate
+		for (int i = 0; i < 10; i++){
+			if (i <= (weaponRate - 1)){
+				weaponsRateIcons[i].CrossFadeAlpha (1.0f, 0, false);
+				print ("This is number: "+ i);
+			}
+			else{
+				weaponsRateIcons[i].CrossFadeAlpha (0.0f, 0, false);
+			}
+		}
+		
+		//Recruits Reward Rate
+		for (int i = 0; i < 10; i++){
+			if (i <= (recruitRate - 1)){
+				recruitsRateIcons[i].CrossFadeAlpha (1.0f, 0, false);
+				print ("This is number: "+ i);
+			}
+			else{
+				recruitsRateIcons[i].CrossFadeAlpha (0.0f, 0, false);
+			}
 		}
 	}
 }
