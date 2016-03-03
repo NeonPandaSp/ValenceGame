@@ -60,6 +60,8 @@ using System.Collections.Generic;
 	bool buildClicked;
 	bool structureBtnClicked;
 
+	public GameObject loadScreen;
+
 	//=================\\
 	//===== Start =====\\
 	//=================\\
@@ -344,7 +346,8 @@ using System.Collections.Generic;
 		/// create new save data
 		///
 		globalAttributes.saveCurrentSettlement ();
-		Application.LoadLevel (3);
+		//loadScreen.SetActive (true);
+		Application.LoadLevelAsync (3);
 		globalAttributes.scrap = scrap + UnityEngine.Random.Range (10, 101);
 	}
 	 
