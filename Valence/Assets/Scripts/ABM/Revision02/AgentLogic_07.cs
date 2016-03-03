@@ -191,7 +191,7 @@ public class AgentLogic_07 : MonoBehaviour {
             randomGender = Random.Range(0, (genderArray.Length));
 
             //Assigned gender to the agent
-            gender = genderArray[randomGender];
+            //gender = genderArray[randomGender];
 
             //Name - variable firstLastName outputs first and last name. variable settlerNameAndRole outputs name, what settler is currently doing, and their assigned role
             if (gender == "Male"){
