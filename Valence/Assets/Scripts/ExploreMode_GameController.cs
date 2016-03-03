@@ -82,6 +82,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 		if (PlayerDataManager.playerDataManager.isLive) {
 			foreach (serialAgent agent in dataCopy.currentParty) {
 				folk[partyIndex].agentId = agent.agentId;
+
 				folk [partyIndex].unitName = agent.agentName;
 				folk [partyIndex].agility = agent.agility;
 				folk [partyIndex].strength = agent.strength;

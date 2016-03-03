@@ -16,10 +16,11 @@ public class AgentSpawner : MonoBehaviour {
     void Start() {
         _gameController = GameObject.Find("GameController").GetComponent<GameController>();
 
-
-        for (int i = 0; i < 4; i++){
-            SpawnAgent();
-        }
+		if (_gameController.firstLoad) {
+			for (int i = 0; i < 6; i++) {
+				SpawnAgent ();
+			}
+		}
     }
 
     //On call, spawn a new agent from 05_Revision prefab folder
@@ -29,8 +30,9 @@ public class AgentSpawner : MonoBehaviour {
         //if true then spawn a male else female
         if (Choose(50.0f)){
             //Spawn a new agent prefab at origin
-            GameObject newAgent = (GameObject)Instantiate(MaleAgent[Random.Range(0, MaleAgent.Count)], new Vector3(Random.Range(-3.0f, 3.0f), 0.51f, 0), Quaternion.identity);
-
+			int randVal = (int) Random.Range(0, MaleAgent.Count);
+            GameObject newAgent = (GameObject)Instantiate(MaleAgent[randVal], new Vector3(Random.Range(-3.0f, 3.0f), 0.51f, 0), Quaternion.identity);
+			newAgent.GetComponent<AgentLogic_07>().modelIndex = randVal;
             //Add the agent to the population database
             _gameController.population.Add(newAgent);
 

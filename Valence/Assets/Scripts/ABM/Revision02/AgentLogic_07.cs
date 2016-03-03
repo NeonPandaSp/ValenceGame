@@ -81,6 +81,8 @@ public class AgentLogic_07 : MonoBehaviour {
 
     int amount = 0;
 
+	public int modelIndex;
+
     AIFollow_07 aiFollow;
     GameController gameController;
     //Agent animator component
