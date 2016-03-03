@@ -81,7 +81,7 @@ public class AgentLogic_07 : MonoBehaviour {
 
     int amount = 0;
 
-	public int modelIndex;
+	public int modelIndex; //Used to track models - TYLER
 
     AIFollow_07 aiFollow;
     GameController gameController;
