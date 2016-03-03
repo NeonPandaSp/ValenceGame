@@ -31,7 +31,7 @@ public class GameController : MonoBehaviour {
 	public bool firstLoad;
 	
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 
 		population = new List<GameObject> ();
 

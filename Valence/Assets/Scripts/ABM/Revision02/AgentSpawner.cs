@@ -34,6 +34,8 @@ public class AgentSpawner : MonoBehaviour {
             //Add the agent to the population database
             _gameController.population.Add(newAgent);
 
+            AgentPopulation.Add(newAgent);
+
             //Provide the agent with a new name
             newAgent.name = "Agent" + newAgent.GetInstanceID();
 
@@ -48,6 +50,8 @@ public class AgentSpawner : MonoBehaviour {
 
             //Add the agent to the population database
             _gameController.population.Add(newAgent);
+
+            AgentPopulation.Add(newAgent);
 
             //Provide the agent with a new name
             newAgent.name = "Agent" + newAgent.GetInstanceID();
