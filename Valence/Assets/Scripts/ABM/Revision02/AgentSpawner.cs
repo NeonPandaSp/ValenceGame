@@ -15,14 +15,16 @@ public class AgentSpawner : MonoBehaviour {
     void Start() {
         _gameController = GameObject.Find("GameController").GetComponent<GameController>();
 
-        //SpawnAgent();
+        for (int i = 0; i < 4; i++){
+            SpawnAgent();
+        }
     }
 
     //On call, spawn a new agent from 05_Revision prefab folder
     void SpawnAgent() {
     
         //Spawn a new agent prefab at origin
-        GameObject newAgent = (GameObject)Instantiate(Agent, new Vector3(0, 0.51f, 0), Quaternion.identity);
+        GameObject newAgent = (GameObject)Instantiate(Agent, new Vector3(Random.Range(-3.0f, 3.0f), 0.51f, 0), Quaternion.identity);
 
         //Add the agent to the population database
         _gameController.population.Add(newAgent);
