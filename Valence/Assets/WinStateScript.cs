@@ -83,6 +83,7 @@ public class WinStateScript : MonoBehaviour {
 					"Female"
 				};
 				int randomGender = Random.Range(0, (genderArray.Length));
+				newAgent.agentId = "NEWAGENT";
 				newAgent.gender = genderArray[randomGender];
 				newAgent.agentName = generateNewAgentName(newAgent.gender);
 				newAgent.xPos = 0;
@@ -107,11 +108,12 @@ public class WinStateScript : MonoBehaviour {
 		foreach (serialAgent sA in myData.currentParty) {
 			if( myData.population.Contains( sA ) ){
 				myData.population.Remove ( sA );
+				Debug.Log ( "unit removed" );
 			}
 		}
 		foreach (Unit fU in _gameController.folk) {
 			foreach( serialAgent sA in myData.currentParty ){
-				if( sA.agentName == fU.unitName){
+				if( sA.agentId == fU.agentId ){
 					sA.health = fU.health * 10;
 				}
 			}

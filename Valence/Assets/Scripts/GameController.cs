@@ -114,6 +114,10 @@ public class GameController : MonoBehaviour {
 
 		foreach (serialAgent agent in loadedData.population) {
 			GameObject temp = (GameObject) Instantiate( agentPrefab, new Vector3( agent.xPos, agent.yPos, agent.zPos), Quaternion.identity);
+			if( agent.agentId != "NEWAGENT" )
+				temp.name = agent.agentId;
+			else
+				temp.name = "Agent" + temp.GetInstanceID();
 			temp.GetComponent<AgentLogic_07>().gender = agent.gender;
 			temp.GetComponent<AgentLogic_07>().firstLastName = agent.agentName;
 			temp.GetComponent<AgentLogic_07>().health = agent.health;
@@ -153,6 +157,7 @@ public class GameController : MonoBehaviour {
 		foreach (GameObject agent in population) {
 			serialAgent tempAgent = new serialAgent();
 
+			tempAgent.agentId = agent.name;
 			tempAgent.agentName = agent.GetComponent<AgentLogic_07>().firstLastName;
 			tempAgent.xPos = agent.transform.position.x;
 			tempAgent.yPos = agent.transform.position.y;
@@ -194,6 +199,8 @@ public class GameController : MonoBehaviour {
 }
 [Serializable]
 public class serialAgent{
+	public string agentId;
+
 	public string gender;
 	public string agentName;
 	public float xPos;
