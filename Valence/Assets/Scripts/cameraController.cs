@@ -17,8 +17,8 @@ public class cameraController : MonoBehaviour {
 	int zoomSpeed = 1000;
 	int playBoundX = 90;
 	int playBoundZ = 60;
-	int zoomMin = 10;
-	int zoomMax = 40;
+	public int zoomMin = 10;
+	public int zoomMax = 20;
 	
 	int panSpeed = 50;
 	int panAngleMin = 50;

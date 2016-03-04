@@ -81,6 +81,9 @@ public class AgentLogic_07 : MonoBehaviour {
 
     int amount = 0;
 
+    //wait time checks if WanderOrIdle function is currently pending
+    float wait = 3;
+
 	public int modelIndex; //Used to track models - TYLER
 
     AIFollow_07 aiFollow;
@@ -240,15 +243,8 @@ public class AgentLogic_07 : MonoBehaviour {
 		//Agent should not have populated any worker lists
 		populateList = false;
 
-        if (Choose(50.0f))
-        {
-            aState = agentState.Idle;
-        }
-        else
-        {
-            aState = agentState.Wandering;
-        }
-
+        //When the agent spawns, there is a 50% chance to spawn idle or wander
+        WanderOrIdle(50.0f);
 
         if (aState == null){
             //When an agent spawns, he should start by wandering if there is no starting state
@@ -260,7 +256,7 @@ public class AgentLogic_07 : MonoBehaviour {
     }
 
 	void LateUpdate() {
-
+             
         if (aState == agentState.Working) {
 			settlerNameAndRole = firstLastName + " the " + jobState + " (" + aState + ")";
 		}
@@ -290,17 +286,29 @@ public class AgentLogic_07 : MonoBehaviour {
                 currentState = aState;
 
                 agentAnim.SetBool("Walking", false);
-                agentAnim.SetTrigger("Idle");
+                agentAnim.SetBool("Idle", true);
 
                 aiFollow.Reset();
 
+                //yield return new WaitForSeconds(3.0f);
+
+                if (wait > 0)
+                {
+                    wait -= Time.deltaTime;
+                    print("wait" + wait);
+
+                }
+                else { 
+                    WanderOrIdle(50.0f);
+                    wait = Random.Range(3, 10);
+                }
                 break;
             case agentState.Wandering:
                 //Save the current state
                 currentState = aState;
 
                 agentAnim.SetBool("Walking", true);
-
+                agentAnim.SetBool("Idle", false);
                 //Set the current target to move towards
                 aiFollow.target = wanderWaypoints[wanderWaypointIndex];
 
@@ -381,6 +389,28 @@ public class AgentLogic_07 : MonoBehaviour {
         }
         
 	}
+
+    IEnumerator WaitForSeconds(float wait) {
+        yield return new WaitForSeconds(wait);
+    } 
+
+    //Choose between idle or wander with a given chance
+    agentState WanderOrIdle(float chance) {
+
+
+        if (Choose(chance))
+        {
+            print("IDELASSKDHAKSJDH");
+            return aState = agentState.Idle;
+        }
+        else
+        {
+            return aState = agentState.Wandering;
+        }
+
+
+        //WaitForSeconds(wait);
+    }
 
     //When called, the agent will begin consuming resources needed to live (food, water)
     public void BeginFeeding() {
@@ -588,8 +618,14 @@ public class AgentLogic_07 : MonoBehaviour {
     public void TargetReached(){
         if (aState == agentState.Wandering){
 
-            wanderWaypointIndex = Random.Range(0, wanderWaypoints.Count);
-            aiFollow.target = wanderWaypoints[wanderWaypointIndex];
+            //50% chance when target is reached, to stop and idle or find a new target
+            if (Choose(50.0f)){
+                aState = agentState.Idle;
+            }
+            else{
+                wanderWaypointIndex = Random.Range(0, wanderWaypoints.Count);
+                aiFollow.target = wanderWaypoints[wanderWaypointIndex];
+            }   
 
         }   else if (aState == agentState.Working){
 
