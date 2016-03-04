@@ -3389,7 +3389,7 @@ MonoBehaviour:
   workWaypoints: []
   wanderWaypoints: []
   storageWaypoints: []
-  wanderListSize: 10
+  wanderListSize: 100
   newAgent: 1
   foodStored: 0
   hungerValue: 0
@@ -3400,6 +3400,7 @@ MonoBehaviour:
   firstLastName: 
   settlerNameAndRole: 
   gender: 
+  modelIndex: 0
   aState: 0
   jobState: 0
   currentState: 0
@@ -3511,7 +3512,7 @@ MonoBehaviour:
   repathRate: .100000001
   pickNextWaypointDistance: 1
   targetReached: 1
-  speed: 1
+  speed: .100000001
   rotationSpeed: 1
   drawGizmos: 0
   canSearch: 1
@@ -3690,7 +3691,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: speed
+      value: .100000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: wanderListSize
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 151484}
