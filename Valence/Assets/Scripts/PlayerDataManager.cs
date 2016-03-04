@@ -46,7 +46,7 @@ public class PlayerDataManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (dataExists && isLive) {
+		if (dataExists && isLive && Application.loadedLevel == 0) {
 			dataExists = false;
 			Application.LoadLevelAsync (1);
 		}
@@ -65,6 +65,7 @@ public class PlayerDataManager : MonoBehaviour {
 			FileStream file = File.Open (Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
 			newSaveData.versionId = currentVersion;
 			bf.Serialize (file, newSaveData);
+			file.Close ();
 		} else {
 			Debug.Log ("NO SAVE FILE EXISTS: did you delete the save data during play?");
 		}
@@ -72,11 +73,15 @@ public class PlayerDataManager : MonoBehaviour {
 
 	public PlayerData loadSaveData(){
 		BinaryFormatter bf = new BinaryFormatter ();
-		FileStream file = File.Open (Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
-		PlayerData data = (PlayerData)bf.Deserialize (file);
-		file.Close ();
-
-		return data;
+		if (File.Exists (Application.persistentDataPath + "/playerInfo.dat")) {
+			FileStream file = File.Open (Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+			PlayerData data = (PlayerData)bf.Deserialize (file);
+			file.Close ();
+			return data;
+		} else {
+			Debug.Log ("No save data exists");
+			return null;
+		}
 	}
 	
 	public void createNewData(){
@@ -92,6 +97,7 @@ public class PlayerDataManager : MonoBehaviour {
 		bf.Serialize (file, data);
 
 		dataExists = true;
+		file.Close ();
 	}
 
 	public void deleteSaveData(){

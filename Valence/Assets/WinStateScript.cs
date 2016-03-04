@@ -74,6 +74,7 @@ public class WinStateScript : MonoBehaviour {
 		PlayerData myData = PlayerDataManager.playerDataManager.loadSaveData ();
 		//updatescrap
 		if (win) {
+			Debug.Log ( "win was called" );
 			myData.scrap += scrapRate;
 			for( int i = 0; i < recruitRate; i++){
 				serialAgent newAgent = new serialAgent();
@@ -101,14 +102,19 @@ public class WinStateScript : MonoBehaviour {
 				newAgent.job = AgentLogic_07.jobSubState.Default;
 				myData.population.Add( newAgent );
 				myData.populationCount++;
+				Debug.Log("newAgent: " + newAgent.agentName + " was added");
 			}
 		}
 		
 		
 		foreach (serialAgent sA in myData.currentParty) {
-			if( myData.population.Contains( sA ) ){
-				myData.population.Remove ( sA );
-				Debug.Log ( "unit removed" );
+			for( int i = myData.population.Count - 1; i >=0; i--){
+				if( sA.agentId == myData.population[i].agentId ){
+					Debug.Log ( myData.population.Count );
+					myData.population.Remove ( myData.population[i] );
+					Debug.Log ( sA.agentName + " was removed " + myData.population[i].agentName  );
+					Debug.Log ( myData.population.Count );
+				}
 			}
 		}
 		foreach (Unit fU in _gameController.folk) {
@@ -118,20 +124,23 @@ public class WinStateScript : MonoBehaviour {
 				}
 			}
 		}
-		
-		
 		foreach (serialAgent sA in myData.currentParty) {
-			if( sA.health > 0 )
+			if( sA.health > 0 ){
+				Debug.Log (sA.agentName + "readded to population");
 				myData.population.Add ( sA );
+			}
 		}
 		myData.currentParty.Clear ();
-
+		Debug.Log ("Current Population");
+		foreach (serialAgent sA in myData.population) {
+			Debug.Log ( sA.agentName );
+		}
 		PlayerDataManager.playerDataManager.writePlayerData (myData);
 		loadBuild ();
 	}
 
 	void loadBuild(){
-		Application.LoadLevelAsync (2);
+		Application.LoadLevel(2);
 	}
 	int randomStat(){
 		int randVal = (int) Random.Range (0, 100);

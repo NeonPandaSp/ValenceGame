@@ -98,7 +98,7 @@ public class Unit : MonoBehaviour {
 
 		currentPatrolPoint = 0;
 
-		movement = 4 + (agility);
+		movement = 2 + (agility);
 		attackRange = myWeapon.GetComponent<weaponScript> ().range;
 		attackRating = myWeapon.GetComponent<weaponScript> ().damageModifier + (strength * 1);
 		aimRating = myWeapon.GetComponent<weaponScript> ().accuracy + (perception * 0.1f);
@@ -143,6 +143,12 @@ public class Unit : MonoBehaviour {
 			_GameController.PartyButtons.Remove(_GameController.PartyButtons[_GameController.PartyButtons.Count-1]);
 			_GameController.folk.Remove (this.gameObject.GetComponent<Unit>());
 			gameObject.SetActive (false);
+			PlayerData updateData = PlayerDataManager.playerDataManager.loadSaveData();
+			foreach( serialAgent sA in updateData.currentParty ){
+				if( sA.agentId == agentId )
+					sA.health = 0;
+			}
+			PlayerDataManager.playerDataManager.writePlayerData(updateData);
 		}
 
 		if (isElite && FolkUnitsWithinView.Count > 0) {

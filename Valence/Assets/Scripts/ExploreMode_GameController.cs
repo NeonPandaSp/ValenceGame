@@ -818,7 +818,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 		if (selectedUnit.getDistance (selectedUnit.currentPosition, new Vector2(scrapObj.transform.position.x, scrapObj.transform.position.z)) <= 1) {
 			return true;
 		} else {
-			Debug.Log ( selectedUnit.getDistance (selectedUnit.currentPosition, new Vector2(scrapObj.transform.position.x, scrapObj.transform.position.z)) );
+			//Debug.Log ( selectedUnit.getDistance (selectedUnit.currentPosition, new Vector2(scrapObj.transform.position.x, scrapObj.transform.position.z)) );
 			return false;
 		}
 	}
