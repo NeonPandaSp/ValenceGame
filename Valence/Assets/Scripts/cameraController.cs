@@ -15,9 +15,10 @@ public class cameraController : MonoBehaviour {
 	int scrollArea = 25;
 	float scrollSpeed = 15;
 	int zoomSpeed = 1000;
-	int playBound = 1000;
-	int zoomMin = 15;
-	int zoomMax = 50;
+	int playBoundX = 90;
+	int playBoundZ = 60;
+	int zoomMin = 10;
+	int zoomMax = 40;
 	
 	int panSpeed = 50;
 	int panAngleMin = 50;
@@ -151,19 +152,19 @@ public class cameraController : MonoBehaviour {
 		
 		
 		// Check Play Area Bounds
-		targetPosition = transform.position + translation;
+		targetPosition = transform.position + translation + zoomTranslation;
 		
-		if (targetPosition.x < -playBound || playBound < targetPosition.x)
+		if (targetPosition.x < -playBoundX || playBoundX < targetPosition.x)
 		{
-			//translation.x = 0;
+			translation.x = 0;
 		}
 		if (targetPosition.y < zoomMin || zoomMax < targetPosition.y)
 		{
-			//translation.y = 0;
+			zoomTranslation = Vector3.zero;
 		}
-		if (targetPosition.z < -playBound || playBound < targetPosition.z)
+		if (targetPosition.z < -playBoundZ || playBoundZ < targetPosition.z)
 		{
-			//translation.z = 0;
+			translation.z = 0;
 		}
 		if (Input.GetMouseButton (0) && Input.GetKey ( KeyCode.LeftAlt ) ) {
 			//float rotateDelta = ((Input.mousePosition.x - lastMousePosition.x))*1.5f*Time.deltaTime;
@@ -202,6 +203,24 @@ public class cameraController : MonoBehaviour {
 
 		GetComponent<Camera>().transform.position += translation;
 		GetComponent<Camera>().transform.position += zoomTranslation;
+
+		if (transform.position.y <= zoomMin) {
+			transform.position = new Vector3( transform.position.x, zoomMin, transform.position.z);
+		} else if (transform.position.y >= zoomMax) {
+			transform.position = new Vector3( transform.position.x, zoomMax, transform.position.z);
+		}
+
+		if (transform.position.x <= -playBoundX ) {
+			transform.position = new Vector3( -playBoundX, transform.position.y, transform.position.z);
+		} else if( transform.position.x >= playBoundX ) {
+			transform.position = new Vector3( playBoundX, transform.position.y, transform.position.z);
+		}
+
+		if (transform.position.z <= -playBoundZ ) {
+			transform.position = new Vector3( transform.position.x, transform.position.y, -playBoundZ);
+		} else if( transform.position.z >= playBoundZ ) {
+			transform.position = new Vector3( transform.position.x, transform.position.y, playBoundZ);
+		}
 
 		lastMousePosition = Input.mousePosition;
 	}
