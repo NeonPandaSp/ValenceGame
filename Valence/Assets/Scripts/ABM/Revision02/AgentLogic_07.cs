@@ -90,7 +90,8 @@ public class AgentLogic_07 : MonoBehaviour {
 
     public enum agentState
 	{
-		Wandering,
+        Wandering,
+        Idle,
 		Hungry,
 		Working,
         Dead,
@@ -239,9 +240,19 @@ public class AgentLogic_07 : MonoBehaviour {
 		//Agent should not have populated any worker lists
 		populateList = false;
 
-		if (aState == null){
-	        //When an agent spawns, he should start by wandering
-			aState = agentState.Wandering;
+        if (Choose(50.0f))
+        {
+            aState = agentState.Idle;
+        }
+        else
+        {
+            aState = agentState.Wandering;
+        }
+
+
+        if (aState == null){
+            //When an agent spawns, he should start by wandering if there is no starting state
+            aState = agentState.Wandering;
 		}
 
         //Once everything has been set, begin consuming resources
@@ -274,9 +285,22 @@ public class AgentLogic_07 : MonoBehaviour {
 
         switch (aState)
         {
+            case agentState.Idle:
+                //Save the current state
+                currentState = aState;
+
+                agentAnim.SetBool("Walking", false);
+                agentAnim.SetTrigger("Idle");
+
+                aiFollow.Reset();
+
+                break;
             case agentState.Wandering:
                 //Save the current state
                 currentState = aState;
+
+                agentAnim.SetBool("Walking", true);
+
                 //Set the current target to move towards
                 aiFollow.target = wanderWaypoints[wanderWaypointIndex];
 
