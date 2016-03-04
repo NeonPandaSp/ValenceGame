@@ -31,9 +31,8 @@ public class MapSelectionScript : MonoBehaviour {
 	public string[] stationNameTexts;
 	public Sprite[] leftPanelBackgrounds;
 	
-	public Texture2D cursorTexture_default;
-	public CursorMode cursorMode = CursorMode.Auto;
-	public Vector2 hotSpot = Vector2.zero;
+	public Texture2D cursorTexture;
+	public Vector2 cursorHotspot = Vector2.zero;
 
 	//=================\\
 	//===== Start =====\\
@@ -41,8 +40,7 @@ public class MapSelectionScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//cursorTexture_default.Resize (9, 11);
-		Cursor.SetCursor(cursorTexture_default, hotSpot, CursorMode.Auto);
+		Cursor.SetCursor (cursorTexture, cursorHotspot, CursorMode.Auto);
 
 		scrapRate = 5;
 		recruitRate = 3;
@@ -110,7 +108,6 @@ public class MapSelectionScript : MonoBehaviour {
 		for (int i = 0; i < 10; i++){
 			if (i <= (scrapRate - 1)){
 				scrapRateIcons[i].CrossFadeAlpha (1.0f, 0, false);
-				print ("This is number: "+ i);
 			}
 			else{
 				scrapRateIcons[i].CrossFadeAlpha (0.0f, 0, false);
@@ -121,7 +118,6 @@ public class MapSelectionScript : MonoBehaviour {
 		for (int i = 0; i < 10; i++){
 			if (i <= (weaponRate - 1)){
 				weaponsRateIcons[i].CrossFadeAlpha (1.0f, 0, false);
-				print ("This is number: "+ i);
 			}
 			else{
 				weaponsRateIcons[i].CrossFadeAlpha (0.0f, 0, false);
@@ -132,11 +128,15 @@ public class MapSelectionScript : MonoBehaviour {
 		for (int i = 0; i < 10; i++){
 			if (i <= (recruitRate - 1)){
 				recruitsRateIcons[i].CrossFadeAlpha (1.0f, 0, false);
-				print ("This is number: "+ i);
 			}
 			else{
 				recruitsRateIcons[i].CrossFadeAlpha (0.0f, 0, false);
 			}
+
+//			if (GameObject.smaller > 5) {
+//				GameObject.FindObjectsOfType (public static abstract Type) = 50;
+//			}
+
 		}
 	}
 }
