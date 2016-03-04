@@ -23,11 +23,29 @@ public class AgentAttributes : MonoBehaviour {
 
 	void initAttributes(){
 		//Init all attributes with a random value (pass a min max range)
-		agentAgility = AttributeInit (0.0f, 10.0f);
-		agentPerception = AttributeInit (0.0f, 10.0f);
-        agentStrength = AttributeInit(0.0f, 10.0f);
+		agentAgility = randomStat();
+		agentPerception = randomStat();
+        agentStrength = randomStat ();
 	}
-
+	int randomStat(){
+		int randVal = (int) Random.Range (0, 100);
+		if (randVal < 50)
+			return 1;
+		else if (randVal < 75)
+			return 2;
+		else if (randVal < 87)
+			return 3;
+		else if (randVal < 93)
+			return 4;
+		else if (randVal < 96)
+			return 5;
+		else if (randVal < 98)
+			return 6;
+		else if (randVal < 99)
+			return 7;
+		else
+			return 8;
+	}
 	//When called Initialize return a random value between range 1 ~ 10
 	float AttributeInit(float min, float max){
 		float tempValue = Random.Range (min, max);
