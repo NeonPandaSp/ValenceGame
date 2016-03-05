@@ -117,7 +117,7 @@ public class AgentLogic_07 : MonoBehaviour {
         Default,
         Farmer,
         Medic,
-        WaterPurifier,
+        Hydrologist,
         PowerWorker
     }
 
@@ -382,7 +382,7 @@ public class AgentLogic_07 : MonoBehaviour {
 
                         break;
 
-                    case jobSubState.WaterPurifier:
+                    case jobSubState.Hydrologist:
 
                         if (workerPathCompleted)
                         {
