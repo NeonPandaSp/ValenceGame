@@ -10,6 +10,9 @@ public class CameraTargetController : MonoBehaviour {
 
 	public float lastMousePositionX, lastMousePositionY;
 
+	public GameObject followTarget;
+	public bool following;
+
 	public bool moving;
 	Vector3 endPos, startPos;
 	float t;
@@ -68,6 +71,14 @@ public class CameraTargetController : MonoBehaviour {
 			//Camera.main.transform.position += transform.position - lastPosition;
 			//Camera.main.transform.eulerAngles += myRotation - lastRotation;
 		}
+
+
+		if (following) {
+			//MoveCameraTo ( transform.position, followTarget.transform.position );
+			this.transform.position = followTarget.transform.position;
+			Camera.main.transform.LookAt( this.gameObject.transform );
+		}
+
 		lastMousePositionX = Input.mousePosition.x;
 		lastMousePositionY = Input.mousePosition.y;
 		lastPosition = transform.position;

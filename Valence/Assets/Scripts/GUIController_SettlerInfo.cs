@@ -71,6 +71,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	public Button exBtn;
 	Button exBtnDel;
 
+	public GameObject myCamObj;
+
 	//=================\\
 	//===== Start =====\\
 	//=================\\
@@ -86,6 +88,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 
 
 		_gameController = GameObject.Find ("GameController").GetComponent<GameController> ();
+
+		myCamObj = GameObject.Find ("CameraObject");
 
         myCanvas = GameObject.Find ("Canvas").GetComponent <Canvas>();
         selectedIcon = GetComponentInChildren<SpriteRenderer>();
@@ -418,11 +422,17 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		// When you click, change the variables value
 		if (showMenu) {
 			showMenu = false;
+			myCamObj.GetComponent<CameraTargetController>().following = false;
+
 			print ("The currently selected object is: " + gameObject);
 		} else{
 			showMenu = true;
 
 			firstLastNameDel.gameObject.SetActive (true);
+
+			//here
+			myCamObj.GetComponent<CameraTargetController>().followTarget = this.gameObject;
+			myCamObj.GetComponent<CameraTargetController>().following = true;
 
 			//Randomizing attributes when settler info box pops up
 			rndHP = UnityEngine.Random.Range (1, 101);
@@ -527,6 +537,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	//When the close button is clicked
 	void exBtnClicked () {
 		showMenu = false;
+		myCamObj.GetComponent<CameraTargetController>().following = false;
 	}
 
 	//==================\\
