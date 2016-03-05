@@ -163,7 +163,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			
 			settlerHealthTextDel.rectTransform.sizeDelta = new Vector2 (300, 100);
 			settlerHealthTextDel.transform.position = new Vector2 (settlerHealthImageDel.rectTransform.position.x + 45, settlerHealthImageDel.rectTransform.position.y);
-		settlerHealthTextDel.gameObject.SetActive (false);
+			settlerHealthTextDel.gameObject.SetActive (false);
 			settlerHealthTextDel.fontSize = 18;
 		
 		//Stamina
@@ -180,7 +180,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			
 			settlerStaminaTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
 			settlerStaminaTextDel.transform.position = new Vector2 (settlerStaminaImageDel.rectTransform.position.x + 45, settlerStaminaImageDel.rectTransform.position.y);
-		settlerStaminaTextDel.gameObject.SetActive (false);
+			settlerStaminaTextDel.gameObject.SetActive (false);
 			settlerStaminaTextDel.fontSize = 18;
 
 		//Hunger
@@ -197,7 +197,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			
 			settlerHungerTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
 			settlerHungerTextDel.transform.position = new Vector2 (settlerHungerImageDel.rectTransform.position.x + 45, settlerHungerImageDel.rectTransform.position.y);
-		settlerHungerTextDel.gameObject.SetActive (false);
+			settlerHungerTextDel.gameObject.SetActive (false);
 			settlerHungerTextDel.fontSize = 18;
 
 		//Thirst
@@ -214,7 +214,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			
 			settlerThirstTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
 			settlerThirstTextDel.transform.position = new Vector2 (settlerThirstImageDel.rectTransform.position.x + 45, settlerThirstImageDel.rectTransform.position.y);
-		settlerThirstTextDel.gameObject.SetActive (false);
+			settlerThirstTextDel.gameObject.SetActive (false);
 			settlerThirstTextDel.fontSize = 18;
 
 		//======================\\
@@ -234,7 +234,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			
 			settlerStrengthTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
 			settlerStrengthTextDel.transform.position = new Vector2 (settlerStrengthImageDel.rectTransform.position.x + 45, settlerStrengthImageDel.rectTransform.position.y);
-		settlerStrengthTextDel.gameObject.SetActive (false);
+			settlerStrengthTextDel.gameObject.SetActive (false);
 			settlerStrengthTextDel.fontSize = 18;
 
 		//Intelligence
@@ -251,7 +251,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			
 			settlerIntelligenceTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
 			settlerIntelligenceTextDel.transform.position = new Vector2 (settlerIntelligenceImageDel.rectTransform.position.x + 45, settlerIntelligenceImageDel.rectTransform.position.y);
-		settlerIntelligenceTextDel.gameObject.SetActive (false);
+			settlerIntelligenceTextDel.gameObject.SetActive (false);
 			settlerIntelligenceTextDel.fontSize = 18;
 
 		//Agility
@@ -268,7 +268,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			
 			settlerAgilityTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
 			settlerAgilityTextDel.transform.position = new Vector2 (settlerAgilityImageDel.rectTransform.position.x + 45, settlerAgilityImageDel.rectTransform.position.y);
-		settlerAgilityTextDel.gameObject.SetActive (false);
+			settlerAgilityTextDel.gameObject.SetActive (false);
 			settlerAgilityTextDel.fontSize = 18;
 
 		//Perception
@@ -285,7 +285,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			
 			settlerPerceptionTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
 			settlerPerceptionTextDel.transform.position = new Vector2 (settlerPerceptionImageDel.rectTransform.position.x + 45, settlerPerceptionImageDel.rectTransform.position.y);
-		settlerPerceptionTextDel.gameObject.SetActive (false);
+			settlerPerceptionTextDel.gameObject.SetActive (false);
 			settlerPerceptionTextDel.fontSize = 18;
 
 		//Charisma
@@ -302,7 +302,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			
 			settlerCharismaTextDel.rectTransform.sizeDelta = new Vector2 (150, 100);
 			settlerCharismaTextDel.transform.position = new Vector2 (settlerCharismaImageDel.rectTransform.position.x + 45, settlerCharismaImageDel.rectTransform.position.y);
-		settlerCharismaTextDel.gameObject.SetActive (false);
+			settlerCharismaTextDel.gameObject.SetActive (false);
 			settlerCharismaTextDel.fontSize = 18;
 		
 		//=========================\\
@@ -414,51 +414,14 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	//=================\\
 	//=== Functions ===\\
 	//=================\\
-    void OnMouseUp() {
+	void OnMouseUp () {
 		// When you click, change the variables value
-		if (showMenu) {
+		if (showMenu && Input.GetMouseButtonUp (0)) {
 			showMenu = false;
-
-			selectedIcon.enabled = false;
-			inventoryTitleDel.gameObject.SetActive (false);
-			rolesTitleDel.gameObject.SetActive (false);
-			attributesTitleDel.gameObject.SetActive (false);
-			SettlerInfoDelBg.gameObject.SetActive (false);
-			farmerRoleButtonDel.gameObject.SetActive (false);
-			waterPurifierRoleButtonDel.gameObject.SetActive (false);
-			powerEngineerRoleButtonDel.gameObject.SetActive (false);
-			medicRoleButtonDel.gameObject.SetActive (false);
-			traineeRoleButtonDel.gameObject.SetActive (false);
-			exBtnDel.gameObject.SetActive (false);
-			genericProfileIconDel.gameObject.SetActive (false);
-			firstLastNameDel.gameObject.SetActive (false);
-			inventoryFoodTextDel.gameObject.SetActive (false);
-
-			//Attributes
-			settlerHealthImageDel.gameObject.SetActive (false);
-			settlerStaminaImageDel.gameObject.SetActive (false);
-			settlerHungerImageDel.gameObject.SetActive (false);
-			settlerThirstImageDel.gameObject.SetActive (false);
-
-			settlerHealthTextDel.gameObject.SetActive (false);
-			settlerStaminaTextDel.gameObject.SetActive (false);
-			settlerHungerTextDel.gameObject.SetActive (false);
-			settlerThirstTextDel.gameObject.SetActive (false);
-						
-			//Traits
-			settlerStrengthImageDel.gameObject.SetActive (false);
-			settlerIntelligenceImageDel.gameObject.SetActive (false);
-			settlerAgilityImageDel.gameObject.SetActive (false);
-			settlerPerceptionImageDel.gameObject.SetActive (false);
-			settlerCharismaImageDel.gameObject.SetActive (false);
-
-			settlerStrengthTextDel.gameObject.SetActive (false);
-			settlerIntelligenceTextDel.gameObject.SetActive (false);
-			settlerAgilityTextDel.gameObject.SetActive (false);
-			settlerPerceptionTextDel.gameObject.SetActive (false);
-			settlerCharismaTextDel.gameObject.SetActive (false);
-		} else {
+			print ("The currently selected object is: " + gameObject);
+		} else{
 			showMenu = true;
+
 			firstLastNameDel.gameObject.SetActive (true);
 
 			//Randomizing attributes when settler info box pops up
@@ -472,43 +435,6 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			rndAgil = UnityEngine.Random.Range (0, 11);
 			rndPerc = UnityEngine.Random.Range (0, 11);
 			rndChar = UnityEngine.Random.Range (0, 11);
-
-			selectedIcon.enabled = true;
-			inventoryTitleDel.gameObject.SetActive (true);
-			rolesTitleDel.gameObject.SetActive (true);
-			attributesTitleDel.gameObject.SetActive (true);
-			SettlerInfoDelBg.gameObject.SetActive (true);
-			farmerRoleButtonDel.gameObject.SetActive (true);
-			waterPurifierRoleButtonDel.gameObject.SetActive (true);
-			powerEngineerRoleButtonDel.gameObject.SetActive (true);
-			medicRoleButtonDel.gameObject.SetActive (true);
-			traineeRoleButtonDel.gameObject.SetActive (true);
-			exBtnDel.gameObject.SetActive (true);
-			genericProfileIconDel.gameObject.SetActive (true);
-			inventoryFoodTextDel.gameObject.SetActive (true);
-
-			//Attributes
-			settlerHealthImageDel.gameObject.SetActive (true);
-			settlerStaminaImageDel.gameObject.SetActive (true);
-			settlerHungerImageDel.gameObject.SetActive (true);
-			settlerThirstImageDel.gameObject.SetActive (true);
-
-			settlerHealthTextDel.gameObject.SetActive (true);
-			settlerStaminaTextDel.gameObject.SetActive (true);
-			settlerHungerTextDel.gameObject.SetActive (true);
-			settlerThirstTextDel.gameObject.SetActive (true);
-
-			//Traits
-			settlerStrengthImageDel.gameObject.SetActive (true);
-			settlerIntelligenceImageDel.gameObject.SetActive (true);
-			settlerAgilityImageDel.gameObject.SetActive (true);
-			settlerPerceptionImageDel.gameObject.SetActive (true);
-			settlerCharismaImageDel.gameObject.SetActive (true);
-			settlerStrengthTextDel.gameObject.SetActive (true);
-			settlerIntelligenceTextDel.gameObject.SetActive (true);
-			settlerAgilityTextDel.gameObject.SetActive (true);
-			settlerPerceptionTextDel.gameObject.SetActive (true);
-			settlerCharismaTextDel.gameObject.SetActive (true);
 		}
 	}
 
@@ -601,44 +527,6 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	//When the close button is clicked
 	void exBtnClicked () {
 		showMenu = false;
-        selectedIcon.enabled = false;
-        inventoryTitleDel.gameObject.SetActive (false);
-		rolesTitleDel.gameObject.SetActive (false);
-		attributesTitleDel.gameObject.SetActive (false);
-		SettlerInfoDelBg.gameObject.SetActive (false);
-		farmerRoleButtonDel.gameObject.SetActive (false);
-		waterPurifierRoleButtonDel.gameObject.SetActive (false);
-		powerEngineerRoleButtonDel.gameObject.SetActive (false);
-		medicRoleButtonDel.gameObject.SetActive (false);
-		traineeRoleButtonDel.gameObject.SetActive (false);
-		exBtnDel.gameObject.SetActive (false);
-		genericProfileIconDel.gameObject.SetActive (false);
-		firstLastNameDel.gameObject.SetActive (false);
-		inventoryFoodTextDel.gameObject.SetActive (false);
-
-		//Attributes
-		settlerHealthImageDel.gameObject.SetActive (false);
-		settlerStaminaImageDel.gameObject.SetActive (false);
-		settlerHungerImageDel.gameObject.SetActive (false);
-		settlerThirstImageDel.gameObject.SetActive (false);
-
-		settlerHealthTextDel.gameObject.SetActive (false);
-		settlerStaminaTextDel.gameObject.SetActive (false);
-		settlerHungerTextDel.gameObject.SetActive (false);
-		settlerThirstTextDel.gameObject.SetActive (false);
-
-		//Traits
-		settlerStrengthImageDel.gameObject.SetActive (false);
-		settlerIntelligenceImageDel.gameObject.SetActive (false);
-		settlerAgilityImageDel.gameObject.SetActive (false);
-		settlerPerceptionImageDel.gameObject.SetActive (false);
-		settlerCharismaImageDel.gameObject.SetActive (false);
-
-		settlerStrengthTextDel.gameObject.SetActive (false);
-		settlerIntelligenceTextDel.gameObject.SetActive (false);
-		settlerAgilityTextDel.gameObject.SetActive (false);
-		settlerPerceptionTextDel.gameObject.SetActive (false);
-		settlerCharismaTextDel.gameObject.SetActive (false);
 	}
 
 	//==================\\
@@ -646,6 +534,98 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	//==================\\
 
     void Update() {
+		switch (showMenu) {
+		case true:
+			selectedIcon.enabled = true;
+			firstLastNameDel.gameObject.SetActive (true);
+
+			selectedIcon.enabled = true;
+			inventoryTitleDel.gameObject.SetActive (true);
+			rolesTitleDel.gameObject.SetActive (true);
+			attributesTitleDel.gameObject.SetActive (true);
+			SettlerInfoDelBg.gameObject.SetActive (true);
+			
+			//Buttons
+			farmerRoleButtonDel.gameObject.SetActive (true);
+			waterPurifierRoleButtonDel.gameObject.SetActive (true);
+			powerEngineerRoleButtonDel.gameObject.SetActive (true);
+			medicRoleButtonDel.gameObject.SetActive (true);
+			traineeRoleButtonDel.gameObject.SetActive (true);
+			exBtnDel.gameObject.SetActive (true);
+			
+			genericProfileIconDel.gameObject.SetActive (true);
+			inventoryFoodTextDel.gameObject.SetActive (true);
+			
+			//Attributes
+			settlerHealthImageDel.gameObject.SetActive (true);
+			settlerStaminaImageDel.gameObject.SetActive (true);
+			settlerHungerImageDel.gameObject.SetActive (true);
+			settlerThirstImageDel.gameObject.SetActive (true);
+			
+			settlerHealthTextDel.gameObject.SetActive (true);
+			settlerStaminaTextDel.gameObject.SetActive (true);
+			settlerHungerTextDel.gameObject.SetActive (true);
+			settlerThirstTextDel.gameObject.SetActive (true);
+			
+			//Traits
+			settlerStrengthImageDel.gameObject.SetActive (true);
+			settlerIntelligenceImageDel.gameObject.SetActive (true);
+			settlerAgilityImageDel.gameObject.SetActive (true);
+			settlerPerceptionImageDel.gameObject.SetActive (true);
+			settlerCharismaImageDel.gameObject.SetActive (true);
+			settlerStrengthTextDel.gameObject.SetActive (true);
+			settlerIntelligenceTextDel.gameObject.SetActive (true);
+			settlerAgilityTextDel.gameObject.SetActive (true);
+			settlerPerceptionTextDel.gameObject.SetActive (true);
+			settlerCharismaTextDel.gameObject.SetActive (true);
+			break;
+		case false:
+			selectedIcon.enabled = false;
+			inventoryTitleDel.gameObject.SetActive (false);
+			rolesTitleDel.gameObject.SetActive (false);
+			attributesTitleDel.gameObject.SetActive (false);
+			SettlerInfoDelBg.gameObject.SetActive (false);
+			
+			//Buttons
+			farmerRoleButtonDel.gameObject.SetActive (false);
+			waterPurifierRoleButtonDel.gameObject.SetActive (false);
+			powerEngineerRoleButtonDel.gameObject.SetActive (false);
+			medicRoleButtonDel.gameObject.SetActive (false);
+			traineeRoleButtonDel.gameObject.SetActive (false);
+			exBtnDel.gameObject.SetActive (false);
+			
+			genericProfileIconDel.gameObject.SetActive (false);
+			firstLastNameDel.gameObject.SetActive (false);
+			inventoryFoodTextDel.gameObject.SetActive (false);
+			
+			//Attributes
+			settlerHealthImageDel.gameObject.SetActive (false);
+			settlerStaminaImageDel.gameObject.SetActive (false);
+			settlerHungerImageDel.gameObject.SetActive (false);
+			settlerThirstImageDel.gameObject.SetActive (false);
+			
+			settlerHealthTextDel.gameObject.SetActive (false);
+			settlerStaminaTextDel.gameObject.SetActive (false);
+			settlerHungerTextDel.gameObject.SetActive (false);
+			settlerThirstTextDel.gameObject.SetActive (false);
+			
+			//Traits
+			settlerStrengthImageDel.gameObject.SetActive (false);
+			settlerIntelligenceImageDel.gameObject.SetActive (false);
+			settlerAgilityImageDel.gameObject.SetActive (false);
+			settlerPerceptionImageDel.gameObject.SetActive (false);
+			settlerCharismaImageDel.gameObject.SetActive (false);
+			
+			settlerStrengthTextDel.gameObject.SetActive (false);
+			settlerIntelligenceTextDel.gameObject.SetActive (false);
+			settlerAgilityTextDel.gameObject.SetActive (false);
+			settlerPerceptionTextDel.gameObject.SetActive (false);
+			settlerCharismaTextDel.gameObject.SetActive (false);
+			break;
+		}
+
+
+
 																						//=== General ===\\
 		firstLastNameDel.text = agentLogic.settlerNameAndRole;							//Name
 																						//Picture
