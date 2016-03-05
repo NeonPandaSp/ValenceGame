@@ -20,6 +20,8 @@ public class MapSquadSceneControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (squadCan.GetComponent<SquadSelectionScript> ().numSet > 1) {
+			proceedButton.interactable = true;
+		} else {
 			proceedButton.interactable = false;
 		}
 	}

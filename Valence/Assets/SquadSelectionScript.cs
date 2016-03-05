@@ -49,7 +49,7 @@ public class SquadSelectionScript : MonoBehaviour {
 		PlayerData loadedData = PlayerDataManager.playerDataManager.loadSaveData ();
 		population = loadedData.population;
 		for(int i = index; i < index + buttons.Count; i++) {
-			if( i < population.Count-1)
+			if( i <= population.Count-1)
 				buttons[i].GetComponentInChildren<Text>().text = population[i].agentName;
 			else{
 				buttons[i].GetComponentInChildren<Text>().text = "NA";

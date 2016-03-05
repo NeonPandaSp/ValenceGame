@@ -713,26 +713,26 @@ public class ExploreMode_GameController : MonoBehaviour {
 				float rand = Random.Range (0, 100);
 				elite[currentElite].myAnimCtrl.InitAttackAnim();
 				if( elite[currentElite].calcChanceToHit(elite[currentElite].getDistance(elite[currentElite].currentPosition, elite[currentElite].FolkUnitsWithinView[0].currentPosition)) > rand){
-//					GameObject tempObj = (GameObject) Instantiate ( _inputController.dmgText, Camera.main.WorldToScreenPoint(elite[currentElite].FolkUnitsWithinView[0].gameObject.transform.position), Quaternion.identity );
-//					tempObj.gameObject.transform.SetParent(_inputController.myCanvas.gameObject.transform);
-//					tempObj.GetComponent<Text>().text = ""+elite[currentElite].FolkUnitsWithinView[0].attackRating;
-//					tempObj.GetComponent<Text>().color = Color.red;
-//					Vector3 tempPosition = elite[currentElite].FolkUnitsWithinView[0].gameObject.transform.position;
-//					tempPosition.x = tempPosition.x+0.5f;
-//					tempPosition.y = 1.0f;
-//					tempPosition.z = tempPosition.z+0.5f;
-//					tempObj.transform.position = Camera.main.WorldToScreenPoint(tempPosition);
+					GameObject tempObj = (GameObject) Instantiate ( _inputController.dmgText, Camera.main.WorldToScreenPoint(elite[currentElite].FolkUnitsWithinView[0].gameObject.transform.position), Quaternion.identity );
+					tempObj.gameObject.transform.SetParent(_inputController.myCanvas.gameObject.transform);
+					tempObj.GetComponent<Text>().text = ""+elite[currentElite].FolkUnitsWithinView[0].attackRating;
+					tempObj.GetComponent<Text>().color = Color.red;
+					Vector3 tempPosition = elite[currentElite].FolkUnitsWithinView[0].gameObject.transform.position;
+					tempPosition.x = tempPosition.x+0.5f;
+					tempPosition.y = 1.0f;
+					tempPosition.z = tempPosition.z+0.5f;
+					tempObj.transform.position = Camera.main.WorldToScreenPoint(tempPosition);
 					elite[currentElite].Attack (elite[currentElite].FolkUnitsWithinView[0]);
 				} else{
-//					GameObject tempObj = (GameObject) Instantiate ( _inputController.dmgText, Vector3.zero, Quaternion.identity );
-//					tempObj.gameObject.transform.SetParent(_inputController.myCanvas.gameObject.transform);
-//					tempObj.GetComponent<Text>().text = "MISS";
-//					tempObj.GetComponent<Text>().color = Color.yellow;
-//					Vector3 tempPosition = elite[currentElite].FolkUnitsWithinView[0].gameObject.transform.position;
-//					tempPosition.x = tempPosition.x+0.5f;
-//					tempPosition.y = 1.0f;
-//					tempPosition.z = tempPosition.z+0.5f;
-//					tempObj.transform.position = Camera.main.WorldToScreenPoint(tempPosition);
+					GameObject tempObj = (GameObject) Instantiate ( _inputController.dmgText, Vector3.zero, Quaternion.identity );
+					tempObj.gameObject.transform.SetParent(_inputController.myCanvas.gameObject.transform);
+					tempObj.GetComponent<Text>().text = "MISS";
+					tempObj.GetComponent<Text>().color = Color.yellow;
+					Vector3 tempPosition = elite[currentElite].FolkUnitsWithinView[0].gameObject.transform.position;
+					tempPosition.x = tempPosition.x+0.5f;
+					tempPosition.y = 1.0f;
+					tempPosition.z = tempPosition.z+0.5f;
+					tempObj.transform.position = Camera.main.WorldToScreenPoint(tempPosition);
 				}
 				startBuffer(2);
 			}
