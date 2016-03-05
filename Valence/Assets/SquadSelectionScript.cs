@@ -30,6 +30,7 @@ public class SquadSelectionScript : MonoBehaviour {
 	public bool noneSelected;
 
 	public int rowIndex = 0;
+	public int numSet = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -102,7 +103,14 @@ public class SquadSelectionScript : MonoBehaviour {
 
 	public void setPartyMember(int index){
 		Debug.Log ("setPartyMember called");
-		if (!noneSelected) {
+		bool inParty = false;
+		foreach (serialAgent sA in myParty) {
+			if( sA.agentId ==  population [(rowIndex * buttons.Count) + index].agentId  ){
+				inParty = true;
+			}
+		}
+
+		if (!noneSelected && !inParty) {
 			Debug.Log ("setPartyMember called");
 			//Set Party UI Assets to selected Agent from population
 			myParty [selectedPartyIndex] = population [(rowIndex * buttons.Count) + index];
@@ -114,6 +122,8 @@ public class SquadSelectionScript : MonoBehaviour {
 			selectedPartyIndex = -1;
 			noneSelected = true;
 			enablePopulationPanel(false);
+			if( numSet < 4 )
+				numSet++;
 		}
 	}
 }

@@ -48,7 +48,7 @@ public class AgentSpawner : MonoBehaviour {
         }
         else {
             //Spawn a new agent prefab at origin
-            GameObject newAgent = (GameObject)Instantiate(FemaleAgent[Random.Range(0,FemaleAgent.Count)], new Vector3(Random.Range(-3.0f, 3.0f), 0.51f, 0), Quaternion.identity);
+            GameObject newAgent = (GameObject)Instantiate(FemaleAgent[Random.Range(0,FemaleAgent.Count)], new Vector3(Random.Range(-5.0f, 5.0f), 0.51f, Random.Range(-35.0f, 5.0f)), Quaternion.identity);
 
             //Add the agent to the population database
             _gameController.population.Add(newAgent);

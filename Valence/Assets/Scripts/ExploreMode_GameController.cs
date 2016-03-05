@@ -91,7 +91,12 @@ public class ExploreMode_GameController : MonoBehaviour {
 				partyIndex++;
 			}
 		}
-
+		if (partyIndex < 4) {
+			for (int i = 3; i >= partyIndex; i--) {
+				Destroy ( folk[i].gameObject );
+				folk.Remove (folk[i]);
+			}
+		}
 		selectedUnit = folk [0];
 		selectedIndex = 0;
 
