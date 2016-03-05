@@ -85,7 +85,7 @@ public class AgentLogic_07 : MonoBehaviour {
     int amount = 0;
 
     //wait time checks if WanderOrIdle function is currently pending
-    float wait = 3;
+    float wait = Random.Range(1.0f, 3.0f);
 
     //Wait time for the working animation
     float workWait = 2.0f;
