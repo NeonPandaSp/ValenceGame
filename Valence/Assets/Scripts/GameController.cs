@@ -97,8 +97,6 @@ public class GameController : MonoBehaviour {
 		popLimit = loadedData.popLimit;
 		morale = loadedData.morale;
 
-
-
 		foreach (serialBuilding bld in loadedData.buildingDatabase) {
 			GameObject tempBld = (GameObject) Instantiate( Resources.Load(bld.bType), new Vector3( bld.xPos, bld.yPos, bld.zPos), Quaternion.identity);
 			
