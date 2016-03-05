@@ -25,7 +25,7 @@ public class GameController : MonoBehaviour {
 	public List<GameObject> waterWorkerList = new List<GameObject> ();
 	public List<GameObject> waterBuildingList = new List<GameObject>();
 
-
+	public GUIController_SettlerInfo currentSettlerUI;
 
     public int scrap;
 	public float food, power, water, popLimit, morale;

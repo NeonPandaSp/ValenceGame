@@ -424,9 +424,16 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			showMenu = false;
 			myCamObj.GetComponent<CameraTargetController>().following = false;
 
+			_gameController.currentSettlerUI = null;
+
 			print ("The currently selected object is: " + gameObject);
 		} else{
 			showMenu = true;
+
+			if( _gameController.currentSettlerUI != null ){
+				_gameController.currentSettlerUI.exBtnClicked();
+			}
+			_gameController.currentSettlerUI = this;
 
 			firstLastNameDel.gameObject.SetActive (true);
 
@@ -535,8 +542,9 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	}
 
 	//When the close button is clicked
-	void exBtnClicked () {
+	public void exBtnClicked () {
 		showMenu = false;
+		_gameController.currentSettlerUI = null;
 		myCamObj.GetComponent<CameraTargetController>().following = false;
 	}
 
