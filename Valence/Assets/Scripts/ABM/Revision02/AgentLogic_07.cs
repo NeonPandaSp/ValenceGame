@@ -58,8 +58,11 @@ public class AgentLogic_07 : MonoBehaviour {
     //0-100 float which holds the likelyhood the agent will act (passed to the Choose() to bias the outcome)
     public float perception;
 
-	//Settler Name
-	public AgentLogic_07 agentLogic;
+    //Food consumption rate per agent, modified by Strength
+    public float consumeRate = 1.0f;
+
+    //Settler Name
+    public AgentLogic_07 agentLogic;
 	public string firstLastName;
 	public string settlerNameAndRole;
 
@@ -368,19 +371,40 @@ public class AgentLogic_07 : MonoBehaviour {
                         break;
                     case jobSubState.Medic:
 
-                        aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
+                        if (workerPathCompleted)
+                        {
+                            aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
+                            agentAnim.SetBool("Walking", true);
+                            agentAnim.SetBool("Idle", false);
+                            agentAnim.SetBool("Working", false);
+                            workerPathCompleted = false;
+                        }
 
                         break;
 
                     case jobSubState.WaterPurifier:
 
-                        aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
+                        if (workerPathCompleted)
+                        {
+                            aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
+                            agentAnim.SetBool("Walking", true);
+                            agentAnim.SetBool("Idle", false);
+                            agentAnim.SetBool("Working", false);
+                            workerPathCompleted = false;
+                        }
 
                         break;
 
                     case jobSubState.PowerWorker:
 
-                        aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
+                        if (workerPathCompleted)
+                        {
+                            aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
+                            agentAnim.SetBool("Walking", true);
+                            agentAnim.SetBool("Idle", false);
+                            agentAnim.SetBool("Working", false);
+                            workerPathCompleted = false;
+                        }
 
                         if (!populateList)
                         {
@@ -434,7 +458,7 @@ public class AgentLogic_07 : MonoBehaviour {
 
         Debug.Log("Agent has begun consuming resources...");
         //Repeat the function ConsumeResource, for 1 second, every 1 second
-        InvokeRepeating("ConsumeResource", 1.0f, 3.0f);
+        InvokeRepeating("ConsumeResource", 1.0f, consumeRate);
     }
             
     //When the agent's hunger % reaches a critial amount, then switch the current state of the agent to hunger state (search for food)

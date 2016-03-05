@@ -48,6 +48,7 @@ public class AgentAttributes : MonoBehaviour {
 	}
 	//When called Initialize return a random value between range 1 ~ 10
 	float AttributeInit(float min, float max){
+
 		float tempValue = Random.Range (min, max);
 		tempValue = Mathf.Round (tempValue * 1.0f) / 1.0f;
 		return(tempValue);
@@ -77,10 +78,12 @@ public class AgentAttributes : MonoBehaviour {
 
     void SetStrength(){
 
-        float tempAgility = agentAgility / 10;
-        float tempSpeed = aiFollow.speed * tempAgility;
+        float tempStrength = agentStrength * 100/10;
+        float tempSTR = aiFollow.speed * tempStrength;
 
-        aiFollow.speed = aiFollow.speed + tempSpeed;
+        agentLogic.consumeRate = agentLogic.consumeRate + tempSTR;
+
+        //aiFollow.speed = aiFollow.speed + tempSpeed;
 
         /*float tempSpeed = (agentAgility - aiFollow.speed);
 		tempSpeed = ((tempSpeed/aiFollow.speed)*100);
