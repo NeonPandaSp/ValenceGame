@@ -3428,6 +3428,7 @@ MonoBehaviour:
   firstLastName: 
   settlerNameAndRole: 
   gender: 
+  currentlyWorking: 0
   modelIndex: 0
   aState: 0
   jobState: 0
@@ -3533,6 +3534,7 @@ MonoBehaviour:
   drawGizmos: 0
   canSearch: 1
   canMove: 1
+  path: []
   agentLogic: {fileID: 11427620}
 --- !u!137 &13796636
 SkinnedMeshRenderer:
@@ -3696,6 +3698,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: speed
       value: .100000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: pickNextWaypointDistance
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

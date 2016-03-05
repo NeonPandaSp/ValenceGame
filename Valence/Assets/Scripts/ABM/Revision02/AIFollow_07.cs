@@ -57,7 +57,7 @@ public class AIFollow_07 : MonoBehaviour {
 	protected int pathIndex = 0;
 	
 	/** This is the path the AI is currently following */
-	protected Vector3[] path;
+	public Vector3[] path;
 
 	public AgentLogic_07 agentLogic;
 
