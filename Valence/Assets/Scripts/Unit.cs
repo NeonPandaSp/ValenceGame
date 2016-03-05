@@ -100,7 +100,7 @@ public class Unit : MonoBehaviour {
 
 		movement = 2 + (agility);
 		attackRange = myWeapon.GetComponent<weaponScript> ().range;
-		attackRating = myWeapon.GetComponent<weaponScript> ().damageModifier + (strength * 1);
+		attackRating = myWeapon.GetComponent<weaponScript> ().damageModifier + (strength);
 		aimRating = myWeapon.GetComponent<weaponScript> ().accuracy + (perception * 0.1f);
 
 		foreach( Unit fU in _GameController.folk ){
