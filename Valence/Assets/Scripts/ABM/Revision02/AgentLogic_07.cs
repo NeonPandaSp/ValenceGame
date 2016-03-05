@@ -441,7 +441,7 @@ public class AgentLogic_07 : MonoBehaviour {
 
         if (Choose(chance))
         {
-            print("IDELASSKDHAKSJDH");
+            //print("IDELASSKDHAKSJDH");
             return aState = agentState.Idle;
         }
         else
@@ -456,7 +456,7 @@ public class AgentLogic_07 : MonoBehaviour {
     //When called, the agent will begin consuming resources needed to live (food, water)
     public void BeginFeeding() {
 
-        Debug.Log("Agent has begun consuming resources...");
+        //Debug.Log("Agent has begun consuming resources...");
         //Repeat the function ConsumeResource, for 1 second, every 1 second
         InvokeRepeating("ConsumeResource", 1.0f, consumeRate);
     }
@@ -617,11 +617,11 @@ public class AgentLogic_07 : MonoBehaviour {
 
         if (Random.Range(1.0f, 100.0f) < probability) {
             // will be true 10% of the time
-            Debug.Log("True");
+            //Debug.Log("True");
             return true;
         }
         else {
-            Debug.Log("False");
+            //Debug.Log("False");
             return false;
         }
     }

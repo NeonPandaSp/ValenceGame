@@ -416,7 +416,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	//=================\\
 	void OnMouseUp () {
 		// When you click, change the variables value
-		if (showMenu && Input.GetMouseButtonUp (0)) {
+		if (showMenu) {
 			showMenu = false;
 			print ("The currently selected object is: " + gameObject);
 		} else{

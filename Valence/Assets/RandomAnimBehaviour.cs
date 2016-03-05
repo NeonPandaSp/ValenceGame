@@ -30,7 +30,7 @@ public class RandomAnimBehaviour : StateMachineBehaviour {
 
 	// OnStateMachineEnter is called when entering a statemachine via its Entry Node
 	override public void OnStateMachineEnter(Animator animator, int stateMachinePathHash){
-        Debug.Log("OnSTATEENTER");
+        //Debug.Log("OnSTATEENTER");
         animator.SetInteger("IdleAnimID", Random.Range(0, 4));
 	}
 
