@@ -84,7 +84,15 @@ public class AgentLogic_07 : MonoBehaviour {
     //wait time checks if WanderOrIdle function is currently pending
     float wait = 3;
 
-	public int modelIndex; //Used to track models - TYLER
+    //Wait time for the working animation
+    float workWait = 2.0f;
+
+    public bool currentlyWorking = false;
+
+    //Bool checks if the current worker has actually completed their path (triggering a work animation)
+    public bool workerPathCompleted = true;
+
+    public int modelIndex; //Used to track models - TYLER
 
     AIFollow_07 aiFollow;
     GameController gameController;
@@ -319,6 +327,9 @@ public class AgentLogic_07 : MonoBehaviour {
                 break;
             case agentState.Hungry:
 
+                agentAnim.SetBool("Idle", false);
+                agentAnim.SetBool("Working", false);
+
                 aiFollow.target = storageWaypoints[storageWaypointIndex].transform.position;
 
                 //remove this agent from all worker lists
@@ -339,8 +350,14 @@ public class AgentLogic_07 : MonoBehaviour {
                     case jobSubState.Farmer:
 
                         //Set the agent to move towards the farm waypoints
-                        aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
 
+                        if (workerPathCompleted) { 
+                            aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
+                            agentAnim.SetBool("Walking", true);
+                            agentAnim.SetBool("Idle", false);
+                            agentAnim.SetBool("Working", false);
+                            workerPathCompleted = false;
+                        }
                         //Add the agent to the list of farmers 
                         //Todo: Should update this to a function which when called takes a passed value of the substate and adds this agent to the correct list
                         if (!gameController.farmerList.Contains(this.gameObject))
@@ -591,27 +608,48 @@ public class AgentLogic_07 : MonoBehaviour {
 		return Vector3.Distance(point, center) < radius;
 	}
 
-    IEnumerator DelayNewWorkTarget(Transform waypoint) {
+    void DelayNewWorkTarget(Transform waypoint) {
         //Wait for how ever long it takes to play the work animation
-
+        
         Vector3 targetPostition = new Vector3(workWaypoints[workWaypointIndex].transform.parent.gameObject.transform.position.x,
                                        this.transform.position.y,
                                        workWaypoints[workWaypointIndex].transform.parent.gameObject.transform.position.z);
         this.transform.LookAt(targetPostition);
 
         //transform.LookAt(workWaypoints[workWaypointIndex].transform.parent.gameObject.transform);
-        agentAnim.SetBool("Working", true);
+        //agentAnim.SetBool("Working", true);
+        agentAnim.SetBool("Walking", false);
         aiFollow.Stop();
 
         //Wait for animation to finish playing
-        yield return new WaitForSeconds(agentAnim.GetCurrentAnimatorStateInfo(0).length);
-        
+        //yield return new WaitForSeconds(agentAnim.GetCurrentAnimatorStateInfo(0).length);
+
+        float tempwait = 5.33f;
+
+        if (tempwait > 0)
+        {
+            tempwait -= Time.deltaTime;
+            print("tempwait" + tempwait);
+
+        }
+        else
+        {
+            agentAnim.SetBool("Working", false);
+            agentAnim.SetBool("Walking", true);
+
+            currentlyWorking = false;
+
+            //workWaypointIndex = Random.Range(0, workWaypoints.Count);
+            //aiFollow.Resume();
+            //aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
+            //currentlyWorking = false;
+            //tempwait = Random.Range(3, 10);
+        }
         //Wait for exact animation time before exit
         //yield return new WaitForSeconds(5.33f);
 
-        agentAnim.SetBool("Working", false);
-        workWaypointIndex = Random.Range(0, workWaypoints.Count);
-        aiFollow.Resume();
+        
+        //aiFollow.Resume();
         //aiFollow.target = waypoint.position;
     }
 
@@ -630,8 +668,40 @@ public class AgentLogic_07 : MonoBehaviour {
         }   else if (aState == agentState.Working){
 
             //workWaypointIndex = Random.Range(0, workWaypoints.Count);
-            StartCoroutine(DelayNewWorkTarget(workWaypoints[workWaypointIndex].transform));
-            aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
+            //StartCoroutine(DelayNewWorkTarget(workWaypoints[workWaypointIndex].transform));
+            //if (currentlyWorking == true)
+            //{
+            //DelayNewWorkTarget(workWaypoints[workWaypointIndex].transform);
+            //currentlyWorking = false;
+            //}
+            //else {
+            //workWaypointIndex = Random.Range(0, workWaypoints.Count);
+            //aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
+            // currentlyWorking = true;
+            //}
+            
+
+            if (workWait > 0)
+            {
+                workWait -= Time.deltaTime;
+                agentAnim.SetBool("Walking", false);
+                agentAnim.SetBool("Working", true);
+                
+                Vector3 targetPostition = new Vector3(workWaypoints[workWaypointIndex].transform.parent.gameObject.transform.position.x,
+                                          this.transform.position.y,
+                                          workWaypoints[workWaypointIndex].transform.parent.gameObject.transform.position.z);
+                this.transform.LookAt(targetPostition);
+                aiFollow.Reset();
+                workerPathCompleted = false;
+                print("workWait: " + workWait);
+            }
+            else {
+                workWaypointIndex = Random.Range(0, workWaypoints.Count);
+                aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
+                workWait = 2.0f;
+                workerPathCompleted = true;
+            }
+           
 
         }   else if (aState == agentState.Hungry){
 
