@@ -306,7 +306,7 @@ public class AgentLogic_07 : MonoBehaviour {
                 if (wait > 0)
                 {
                     wait -= Time.deltaTime;
-                    print("wait" + wait);
+                    //print("wait" + wait);
 
                 }
                 else { 
