@@ -347,13 +347,14 @@ public class AgentLogic_07 : MonoBehaviour {
 
             case agentState.Working:
                 currentState = aState;
+                agentAnim.SetBool("Idle", false);
                 //Agent can be assigned various jobs each with their own behaviour
                 switch (jobState)
                 {
                     case jobSubState.Farmer:
 
-                        //Set the agent to move towards the farm waypoints
-
+                //Set the agent to move towards the farm waypoints
+                        aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
                         if (workerPathCompleted) { 
                             aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
                             agentAnim.SetBool("Walking", true);

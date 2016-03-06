@@ -509,7 +509,7 @@ public class InputController : MonoBehaviour {
             if (hoverState != "shelter")
             {
                 Destroy(myHoverObject);
-                myHoverObject = (GameObject)Instantiate(shelterBuild, new Vector3(0, 0, 0), Quaternion.identity);
+                myHoverObject = (GameObject)Instantiate(shelterBuild, new Vector3(0, 1, 0), Quaternion.identity);
                 hoverState = "shelter";
             }
             zoning = false;
