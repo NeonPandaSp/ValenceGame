@@ -40,6 +40,9 @@ public class AgentLogic_07 : MonoBehaviour {
     //Check if the agent is hungry, if true the go to a known foodsource
     bool isHungry;
 
+    //Check if the agent is injured, if true then go to a medic
+    bool isInjured;
+
     //Check if the agent has died
     bool isDead;
 	
@@ -109,6 +112,7 @@ public class AgentLogic_07 : MonoBehaviour {
 		Hungry,
 		Working,
         Dead,
+        Injured,
 		Default
 	}
 
@@ -341,6 +345,13 @@ public class AgentLogic_07 : MonoBehaviour {
                 populateList = false;
                 break;
 
+            case agentState.Injured:
+                agentAnim.SetBool("Idle", false);
+                agentAnim.SetBool("Working", false);
+
+                aiFollow.target = storageWaypoints[storageWaypointIndex].transform.position;
+                break;
+
             case agentState.Dead:
                 aiFollow.Reset();
                 break;
@@ -460,6 +471,7 @@ public class AgentLogic_07 : MonoBehaviour {
         //Debug.Log("Agent has begun consuming resources...");
         //Repeat the function ConsumeResource, for 1 second, every 1 second
         InvokeRepeating("ConsumeResource", 1.0f, consumeRate);
+        InvokeRepeating("CheckIfInjured", 1.0f, consumeRate); 
     }
             
     //When the agent's hunger % reaches a critial amount, then switch the current state of the agent to hunger state (search for food)
@@ -581,6 +593,76 @@ public class AgentLogic_07 : MonoBehaviour {
         }
     }
 
+    //When the agent's hunger % reaches a critial amount, then switch the current state of the agent to hunger state (search for food)
+    void CheckIfInjured() {
+
+        //Todo: need to update this function to take into account the current food the agent has collected...
+        //ie. once they collect 100 food ONLY start increasing the hungerValue once he has finished feeding on that 100 food
+
+
+       
+        if (isInjured) {
+            //if yes then set the agent's state to hungry, but first save the previous state..
+            //so the agent may return to it after feeding
+
+            aState = agentState.Injured;
+        }
+        else {
+            //Todo: need to incorporate a probability factor that is affected by the current hunger value %, higher % = higher probablility to change Astate to hungry
+
+            //Throw a series of dice at each milestone 25,50,75% hunger, if any dice roll true, then move to the food source
+            switch (health) {
+                case 75:
+
+                if (!isDead) {
+                    //Play hunger animation
+                    //Pause the ai pathfinding to play an animation, pass anim state name 
+                    //StartCoroutine(PlayAnimPauseAI("Hungry"));
+
+
+                    //if the agent reaches 25% hunger throw a dice with 10% probability of success
+                    isHungry = Choose(perception);
+                }
+                break;
+
+                case 50:
+                if (!isDead) {
+                    //Play hunger animation
+                    //Pause the ai pathfinding to play an animation, pass anim state name 
+                    //StartCoroutine(PlayAnimPauseAI("Hungry"));
+                    for (amount = 0; amount < 3; amount++)
+                        if (!isInjured) {
+                            //if the agent reaches 50% hunger throw a dice with 35% probability of success
+                            isInjured = Choose(perception);
+                        }
+                }
+                break;
+
+                case 25:
+                if (!isDead) {
+                    //Play hunger animation
+                    //Pause the ai pathfinding to play an animation, pass anim state name 
+                    //StartCoroutine(PlayAnimPauseAI("Hungry"));
+                    for (amount = 0; amount < 6; amount++)
+                        if (!isInjured) {
+                            //if the agent reaches 75% hunger throw a dice with 65% probability of success
+                            isInjured = Choose(perception);
+                        }
+                }
+                break;
+
+                case 5:
+                if (!isDead) {
+                    StartCoroutine(CheckMedic());
+                }
+                // isHungry = Choose(101);
+                break;
+            }
+
+            //Choose(hungerValue);
+        }
+    }
+
     IEnumerator PlayAnimPauseAI(string animation) {
         agentAnim.SetTrigger(animation);
         aiFollow.Stop();
@@ -601,6 +683,17 @@ public class AgentLogic_07 : MonoBehaviour {
             isHungry = true;
         else
             isHungry = false;
+    }
+
+    IEnumerator CheckMedic() {
+        yield return new WaitForSeconds(10.0f);
+        //Play hunger animation
+        //Pause the ai pathfinding to play an animation, pass anim state name 
+        //StartCoroutine(PlayAnimPauseAI("Hungry"));
+        if (!isDead)
+            isInjured = true;
+        else
+            isInjured = false;
     }
 
     bool Choose(float probability) {
@@ -737,8 +830,14 @@ public class AgentLogic_07 : MonoBehaviour {
 
             //Give the agent 10% of the current food stored
             //Todo need to figureout a beter method for this algorithm
-            foodStored = 10;
-            gameController.food -= foodStored;
+            if (gameController.food > 0) {
+                foodStored = gameController.food/10;
+                gameController.food -= foodStored;
+            }
+            else {
+                Debug.Log(gameObject.name + " tried to collect food, but none was found.");
+            }
+
 
             if (foodStored > 0) {
                 hungerValue = 0;
@@ -758,6 +857,29 @@ public class AgentLogic_07 : MonoBehaviour {
             aState = currentState;
             
             //Need to Update the wait length to take into account the % of hunger missing (Higher hunger missing = longer wait time)
+        }
+
+        else if (aState == agentState.Injured) {
+
+            //Reset health level or start replenishing
+            //Todo slowly start decreasing health value
+
+            isHungry = false;
+
+            /*
+            Apply healing algorithm here
+            */
+            if (gameController.food > 0) {
+                foodStored = gameController.food / 10;
+                gameController.food -= foodStored;
+            }
+            else {
+                Debug.Log(gameObject.name + " tried to collect food, but none was found.");
+            }
+
+            //Go back to previous task
+            aState = currentState;
+
         }
 
         /*

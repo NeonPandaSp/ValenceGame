@@ -327,7 +327,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		inventoryFoodTextDel = (Text)Instantiate (inventoryFoodText);
 		inventoryFoodTextDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		inventoryFoodTextDel.text = "Food: 120";
+		inventoryFoodTextDel.text = "Food: " + agentLogic.foodStored;
 		inventoryFoodTextDel.transform.position = new Vector2 (settlerHealthTextDel.rectTransform.position.x + 220, settlerHealthTextDel.rectTransform.position.y);
 		inventoryFoodTextDel.rectTransform.sizeDelta = new Vector2 (150, 50);
 		inventoryFoodTextDel.gameObject.SetActive (false);
@@ -659,9 +659,11 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		settlerAgilityTextDel.text = agentAttributes.agentAgility.ToString ();			//Agility
 		settlerPerceptionTextDel.text = agentAttributes.agentPerception.ToString ();	//Perception
 		settlerCharismaTextDel.text = rndChar.ToString ();								//Charisma
+                                                                                        //=== Inventory ===\\
+        inventoryFoodTextDel.text = "Food: " + agentLogic.foodStored;                   //Current amount of food stored
 
-		//Check to see if there are any gameobjects with the appropriate building tag
-		if (!GameObject.FindWithTag ("Farm"))
+        //Check to see if there are any gameobjects with the appropriate building tag
+        if (!GameObject.FindWithTag ("Farm"))
 		{
 			farmAvailable = false;
 			farmerRoleButtonDel.interactable = false;
