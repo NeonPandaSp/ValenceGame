@@ -13,6 +13,7 @@ public class BuildingScript : MonoBehaviour {
 		
 	public bool initProduction;
 
+	public bool powered;
 	// Use this for initialization
 	void Start () {
 		GameObject gameControllerObject =  GameObject.FindGameObjectWithTag("GameController");
@@ -38,9 +39,9 @@ public class BuildingScript : MonoBehaviour {
 
 	public void beginProduction(){
 		Debug.Log (bType.pTime);
-
+		InvokeRepeating("ConsumeResource", bType.pTime,bType.pTime);
 		InvokeRepeating("GenerateResource",bType.pTime,bType.pTime);
-        InvokeRepeating("ConsumeResource", bType.pTime, 5);
+        
     }
 
 	void GenerateResource(){
@@ -71,12 +72,12 @@ public class BuildingScript : MonoBehaviour {
         }
 
         //First check that we have enough power to generate resources
-        if (_myGameController.power > bType.cRate) {
+        if ( powered ) {
             
             if (bType.typeName == "Farm") {
                 //We should look into updating the generation algorithm to be affected by the number of agents assigned,ie. more farmers working = increased production rate -Zach
                 Debug.Log("bType.pRate: " + bType.pRate);
-				if( _myGameController.farmBuildingList.Count > 0 )
+				if( _myGameController.farmBuildingList.Count > 0  )
                 	_myGameController.food += ( bType.pRate * _myGameController.farmerList.Count) / (_myGameController.farmBuildingList.Count);
             }
             else if (bType.typeName == "WaterStation") {
@@ -99,29 +100,40 @@ public class BuildingScript : MonoBehaviour {
 
     void ConsumeResource() {
         //	Debug.Log ("GENERATING!");
-        if (bType.typeName == "Shelter") {
-            // nada 
-        }
-        else if (bType.typeName == "Farm") {
-            Debug.Log("Power consumed by farm: " + bType.cRate);
-            _myGameController.power -= bType.cRate;
-        }
-        //Remove power building consuming power
-        else if (bType.typeName == "PowerStation") {
-            //_myGameController.power += bType.cRate;
-        }
-        else if (bType.typeName == "WaterStation") {
-            _myGameController.power -= bType.cRate;
-        }
-        else if (bType.typeName == "Tavern") {
-            _myGameController.power -= bType.cRate;
-        }
-        else if (bType.typeName == "Hospital")
-        {
-            _myGameController.power -= bType.cRate;
-        }
-        else {
-            Debug.Log("Production Type Error @ Resource Generation");
-        }
+
+		if (_myGameController.power >= bType.cRate) {
+			_myGameController.power -= bType.cRate;
+			powered = true;
+		} else {
+			powered = false;
+		}
+
+
+
+//        if (bType.typeName == "Shelter") {
+//            // nada 
+//        }
+//        else if (bType.typeName == "Farm") {
+//            Debug.Log("Power consumed by farm: " + bType.cRate);
+//			if( _myGameController.power > bType )
+//            	_myGameController.power -= bType.cRate;
+//        }
+//        //Remove power building consuming power
+//        else if (bType.typeName == "PowerStation") {
+//            //_myGameController.power += bType.cRate;
+//        }
+//        else if (bType.typeName == "WaterStation") {
+//            _myGameController.power -= bType.cRate;
+//        }
+//        else if (bType.typeName == "Tavern") {
+//            _myGameController.power -= bType.cRate;
+//        }
+//        else if (bType.typeName == "Hospital")
+//        {
+//            _myGameController.power -= bType.cRate;
+//        }
+//        else {
+//            Debug.Log("Production Type Error @ Resource Generation");
+//        }
     }
 }

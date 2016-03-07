@@ -14,6 +14,7 @@ public class BuildingType  {
 	public int area;
 
     public int farmerVal, farmVal;
+
     // Use this for initialization
 
     void Awake() {
@@ -52,11 +53,10 @@ public class BuildingType  {
             return 1.0f;
         } else if (typeName == "PowerStation") {
             //Each power station should produce 100 power
-            return 5.0f;
+            return 1.0f;
 		} else if (typeName == "WaterStation") {
 			return 1.0f;
-		}
-        else if (typeName == "TrainingArea")
+		} else if (typeName == "TrainingArea")
         {
             return 1.0f;
         }
@@ -69,17 +69,16 @@ public class BuildingType  {
     //Currently buildings consume 1 power per tile they consume, 80 tiles = 80 power -Zach
     public float getConsumptionRate(int a) {
 		if (typeName == "Shelter") {
-            return 0.0f * a;
-        }
-        else if (typeName == "Farm") {
-            return 1.0f;
-        }
-        else if (typeName == "PowerStation") {
-            return 1.0f;
-        }
-        else if (typeName == "WaterStation") {
-            return 1.0f;
-        }
+			return 0.0f;
+		} else if (typeName == "Farm") {
+			return 3.0f;
+		} else if (typeName == "PowerStation") {
+			return 0.0f;
+		} else if (typeName == "WaterStation") {
+			return 3.0f;
+		} else if (typeName == "TrainingArea") {
+			return 0.0f;
+		}
         else {
             Debug.Log("Consumption Type Error");
             return 0.0f;
@@ -92,12 +91,10 @@ public class BuildingType  {
 		} else if (typeName == "Farm") {
 			return 5.0f;
 		} else if (typeName == "PowerStation") {
-			return 5.0f;
+			return 10.0f;
 		} else if (typeName == "WaterStation") {
-			return 5.0f;
-		}
-        else if (typeName == "TrainingArea")
-        {
+			return 10.0f;
+		} else if (typeName == "TrainingArea"){
             return 120.0f;
         }
         else

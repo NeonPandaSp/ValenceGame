@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour {
 
 		if (firstLoad) {
 			//
-			scrap += 1000;
+			scrap += 75;
 			//Start the game with 100 power
 			power += 0;
 			
@@ -72,6 +72,12 @@ public class GameController : MonoBehaviour {
         if (power < 0) {
             power = 0;
         }
+		if (power > 5 * powerBuildingList.Count) {
+			power = 5 * powerBuildingList.Count;
+		}
+		if (food > 20 * powerBuildingList.Count) {
+			food = 20 * powerBuildingList.Count;
+		}
 	}
 
     void updateGridGraph() {

@@ -854,7 +854,12 @@ public class AgentLogic_07 : MonoBehaviour {
             //Give the agent 10% of the current food stored
             //Todo need to figureout a beter method for this algorithm
             if (gameController.food > 0) {
-                foodStored = gameController.food/10;
+                //foodStored = gameController.food/10;
+				
+				foodStored = 10; /// Making Hunger a Flat rate for testing - Tyler
+				if( gameController.food < foodStored ){
+					foodStored = gameController.food;
+				} 
                 gameController.food -= foodStored;
             }
             else {
