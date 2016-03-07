@@ -45,6 +45,8 @@ public class MapSelectionScript : MonoBehaviour {
 	void Start () {
 		Cursor.SetCursor (cursorTexture, cursorHotspot, CursorMode.Auto);
 
+		selectedMap = 2; 
+
 		scrapRate = 5;
 		recruitRate = 3;
 		weaponRate = 4;
