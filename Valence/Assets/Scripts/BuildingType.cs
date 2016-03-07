@@ -55,7 +55,12 @@ public class BuildingType  {
             return 5.0f;
 		} else if (typeName == "WaterStation") {
 			return 1.0f;
-		} else {
+		}
+        else if (typeName == "TrainingArea")
+        {
+            return 1.0f;
+        }
+        else {
 			Debug.Log ( "Production Type Error");
 			return 0.0f;
 		}
@@ -90,7 +95,13 @@ public class BuildingType  {
 			return 5.0f;
 		} else if (typeName == "WaterStation") {
 			return 5.0f;
-		} else {
+		}
+        else if (typeName == "TrainingArea")
+        {
+            return 120.0f;
+        }
+        else
+        {
 			Debug.Log ( "Production Type Error");
 			return 0.0f;
 		}

@@ -3412,10 +3412,13 @@ MonoBehaviour:
   moraleLevel: 0
   health: 0
   perception: 0
+  consumeRate: 1
   agentLogic: {fileID: 11456228}
   firstLastName: 
   settlerNameAndRole: 
   gender: 
+  currentlyWorking: 0
+  workerPathCompleted: 0
   modelIndex: 0
   aState: 0
   jobState: 0
@@ -3434,7 +3437,7 @@ MonoBehaviour:
   drawGizmos: 1
   detailedGizmos: 0
   startEndModifier:
-    priority: 0
+    priority: 1
     addPoints: 0
     exactStartPoint: 3
     exactEndPoint: 3
@@ -3506,13 +3509,12 @@ MonoBehaviour:
     type: 2}
   powerEngineerRoleButton: {fileID: 11476706, guid: 9831faa3ff8967f4083bc9d3f6dff597,
     type: 2}
-  storageWorkerRoleButton: {fileID: 11433272, guid: deabeda781465244db21ee0b4dddd855,
-    type: 2}
+  storageWorkerRoleButton: {fileID: 0}
   medicRoleButton: {fileID: 11433474, guid: 69a9d67da4d49d745a449f7fb6d875aa, type: 2}
   traineeRoleButton: {fileID: 11474070, guid: c3ba80c3a6c17a14ebb6efd94ec7c635, type: 2}
-  worshipperRoleButton: {fileID: 11477148, guid: 4ebbab99cbd2fb940bde9d8e21327776,
-    type: 2}
+  worshipperRoleButton: {fileID: 0}
   exBtn: {fileID: 11447618, guid: 3268867637d831b4c87648ee2f00a3f5, type: 2}
+  myCamObj: {fileID: 0}
 --- !u!114 &11498598
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3533,6 +3535,7 @@ MonoBehaviour:
   drawGizmos: 0
   canSearch: 1
   canMove: 1
+  path: []
   agentLogic: {fileID: 11456228}
 --- !u!137 &13709416
 SkinnedMeshRenderer:
@@ -3699,6 +3702,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: wanderListSize
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: startEndModifier.priority
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

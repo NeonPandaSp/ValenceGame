@@ -122,7 +122,8 @@ public class AgentLogic_07 : MonoBehaviour {
         Farmer,
         Medic,
         Hydrologist,
-        PowerWorker
+        PowerWorker,
+        Trainee
     }
 
     public agentState aState;
@@ -383,6 +384,7 @@ public class AgentLogic_07 : MonoBehaviour {
                         break;
                     case jobSubState.Medic:
 
+                        aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
                         if (workerPathCompleted)
                         {
                             aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
@@ -396,6 +398,7 @@ public class AgentLogic_07 : MonoBehaviour {
 
                     case jobSubState.Hydrologist:
 
+                        aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
                         if (workerPathCompleted)
                         {
                             aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
@@ -409,6 +412,7 @@ public class AgentLogic_07 : MonoBehaviour {
 
                     case jobSubState.PowerWorker:
 
+                        aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
                         if (workerPathCompleted)
                         {
                             aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
@@ -421,6 +425,25 @@ public class AgentLogic_07 : MonoBehaviour {
                         if (!populateList)
                         {
                             gameController.powerWorkerList.Add(this.gameObject);
+                            populateList = true;
+                        }
+                        break;
+
+                    case jobSubState.Trainee:
+
+                        aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
+                        if (workerPathCompleted)
+                        {
+                            aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
+                            agentAnim.SetBool("Walking", true);
+                            agentAnim.SetBool("Idle", false);
+                            agentAnim.SetBool("Working", false);
+                            workerPathCompleted = false;
+                        }
+
+                        if (!populateList)
+                        {
+                            gameController.traineeList.Add(this.gameObject);
                             populateList = true;
                         }
                         break;
@@ -811,7 +834,7 @@ public class AgentLogic_07 : MonoBehaviour {
                 this.transform.LookAt(targetPostition);
                 aiFollow.Reset();
                 workerPathCompleted = false;
-                print("workWait: " + workWait);
+                //print("workWait: " + workWait);
             }
             else {
                 workWaypointIndex = Random.Range(0, workWaypoints.Count);

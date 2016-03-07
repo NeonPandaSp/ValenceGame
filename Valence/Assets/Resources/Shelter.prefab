@@ -3875,7 +3875,7 @@ MonoBehaviour:
     farmerVal: 0
     farmVal: 0
   myType: Shelter
-  myArea: 0
+  myArea: 25
   assignedAgents: []
   initProduction: 0
 --- !u!1001 &100100000
@@ -3884,7 +3884,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: myArea
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 144928}

@@ -280,7 +280,7 @@ public class InputController : MonoBehaviour {
                     if (_gameController.scrap >= 25){
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag ("prop"))){
                             _gameController.scrap -= 25;
-                            GameObject tempObject = (GameObject)Instantiate(Resources.Load ("PowerStation"), currentTile, Quaternion.identity);
+                            GameObject tempObject = (GameObject)Instantiate(Resources.Load ("PowerStation"), new Vector3(currentTile.x, currentTile.y - 1, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
@@ -429,7 +429,7 @@ public class InputController : MonoBehaviour {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop")))
                         {
                             _gameController.scrap -= 25;
-                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("TrainingArea"), new Vector3(currentTile.x, currentTile.y, currentTile.z), Quaternion.identity);
+                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("TrainingArea"), new Vector3(currentTile.x, currentTile.y - 1, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 

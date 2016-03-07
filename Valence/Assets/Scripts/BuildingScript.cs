@@ -14,7 +14,7 @@ public class BuildingScript : MonoBehaviour {
 	public bool initProduction;
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
 		GameObject gameControllerObject =  GameObject.FindGameObjectWithTag("GameController");
 		_myGameController = gameControllerObject.GetComponent<GameController> ();
 
@@ -45,12 +45,35 @@ public class BuildingScript : MonoBehaviour {
 
 	void GenerateResource(){
         //	Debug.Log ("GENERATING!");
+
+        if (bType.typeName == "Shelter"){
+            _myGameController.popLimit += bType.pRate;
+            //_myGameController.popLimit += 10;
+        }
+        if (bType.typeName == "TrainingArea"){
+            //Maybe add a moral increase rate?
+            //_myGameController.traineeList
+            foreach (GameObject agent in _myGameController.traineeList) {
+
+                print(agent + " is training");
+
+                //Increase the agent atributes by 1 while training
+                agent.GetComponent<AgentAttributes>().agentAgility += 1;
+                agent.GetComponent<AgentAttributes>().agentPerception += 1;
+                agent.GetComponent<AgentAttributes>().agentStrength += 1;
+
+                //Recalculate each attribute 
+                agent.GetComponent<AgentAttributes>().SetAgility();
+                agent.GetComponent<AgentAttributes>().SetPerception();
+                agent.GetComponent<AgentAttributes>().SetStrength();
+
+            }
+        }
+
         //First check that we have enough power to generate resources
         if (_myGameController.power > bType.cRate) {
-            if (bType.typeName == "Shelter") {
-                _myGameController.popLimit += bType.pRate;
-            }
-            else if (bType.typeName == "Farm") {
+            
+            if (bType.typeName == "Farm") {
                 //We should look into updating the generation algorithm to be affected by the number of agents assigned,ie. more farmers working = increased production rate -Zach
                 Debug.Log("bType.pRate: " + bType.pRate);
 				if( _myGameController.farmBuildingList.Count > 0 )
@@ -58,9 +81,6 @@ public class BuildingScript : MonoBehaviour {
             }
             else if (bType.typeName == "WaterStation") {
                 _myGameController.water += bType.pRate;
-            }
-            else if (bType.typeName == "Tavern") {
-                //Maybe add a moral increase rate?
             }
             else {
                 Debug.Log("Production Type Error @ Resource Generation");

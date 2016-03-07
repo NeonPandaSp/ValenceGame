@@ -55,7 +55,7 @@ public class AgentAttributes : MonoBehaviour {
 	}
 
 	//	
-	void SetAgility(){
+	public void SetAgility(){
 
 		float tempAgility = agentAgility / 10;
 		float tempSpeed = aiFollow.speed * tempAgility;
@@ -67,7 +67,7 @@ public class AgentAttributes : MonoBehaviour {
 		aiFollow.speed = tempSpeed;*/
 	}
 
-    void SetPerception(){
+    public void SetPerception(){
 
         float tempPerception = agentPerception / 10;
         float tempValue = agentLogic.perception * agentPerception;
@@ -76,7 +76,7 @@ public class AgentAttributes : MonoBehaviour {
 
     }
 
-    void SetStrength(){
+    public void SetStrength(){
 
         float tempStrength = agentStrength * 100/10;
         float tempSTR = aiFollow.speed * tempStrength;

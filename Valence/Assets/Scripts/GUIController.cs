@@ -424,7 +424,7 @@ using System.Collections.Generic;
 		}
 
 		//Food
-		food = globalAttributes.food;
+		food = (int)globalAttributes.food;
 		foodDelText.text = food.ToString ();
 
 		if (food <= 30) {

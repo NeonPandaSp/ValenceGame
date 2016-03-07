@@ -21,8 +21,8 @@ public class GameController : MonoBehaviour {
 
     public List<GameObject> powerWorkerList = new List<GameObject>();
     public List<GameObject> powerBuildingList = new List<GameObject>();
-
-	public List<GameObject> waterWorkerList = new List<GameObject> ();
+    public List<GameObject> traineeList = new List<GameObject>();
+    public List<GameObject> waterWorkerList = new List<GameObject> ();
 	public List<GameObject> waterBuildingList = new List<GameObject>();
 
 	public GUIController_SettlerInfo currentSettlerUI;

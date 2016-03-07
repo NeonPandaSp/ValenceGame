@@ -538,8 +538,34 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	}
 
 	void traineeRoleClicked () {
-		//TRAINEE
-	}
+        if ((agentLogic.jobState != AgentLogic_07.jobSubState.Trainee) && traininggroundAvailable)
+        {
+            agentLogic.workWaypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("TrainingWaypoint"));
+
+            //Shuffle the order of the waypoints
+            for (int i = 0; i < agentLogic.workWaypoints.Count; i++)
+            {
+
+                //Set the current list value to a temp var
+                GameObject temp = agentLogic.workWaypoints[i];
+
+                //Obtain a random index value within the scope of the waypoint list size
+                int randomIndex = UnityEngine.Random.Range(i, agentLogic.workWaypoints.Count);
+
+                //Set the current list index to the new shuffled index
+                agentLogic.workWaypoints[i] = agentLogic.workWaypoints[randomIndex];
+
+                //Replace the contents into the list
+                agentLogic.workWaypoints[randomIndex] = temp;
+            }
+
+            //Set the agent to working
+            agentLogic.aState = AgentLogic_07.agentState.Working;
+
+            //Define the working state as farming
+            agentLogic.jobState = AgentLogic_07.jobSubState.Trainee;
+        }
+    }
 
 	//When the close button is clicked
 	public void exBtnClicked () {
