@@ -36,7 +36,7 @@ public class SquadSelectionScript : MonoBehaviour {
 	void Start () {
 		rowIndex = 0;
 		loadPopulation ();
-		enablePopulationPanel(false);
+		enablePopulationPanel (false);
 	}
 	
 	// Update is called once per frame
@@ -48,10 +48,10 @@ public class SquadSelectionScript : MonoBehaviour {
 		int index = 0;
 		PlayerData loadedData = PlayerDataManager.playerDataManager.loadSaveData ();
 		population = loadedData.population;
-		for(int i = index; i < index + buttons.Count; i++) {
-			if( i <= population.Count-1)
+		for (int i = index; i < index + buttons.Count; i++) {
+			if (i <= population.Count - 1)
 				buttons[i].GetComponentInChildren<Text>().text = population[i].agentName;
-			else{
+			else {
 				buttons[i].GetComponentInChildren<Text>().text = "NA";
 				buttons[i].interactable = false;
 			}
@@ -64,8 +64,8 @@ public class SquadSelectionScript : MonoBehaviour {
 			rowIndex = 0;
 		int index = rowIndex * buttons.Count;
 		int butDex = 0;
-		for(int i = index; i < index + buttons.Count; i++) {
-			if( i < population.Count )
+		for (int i = index; i < index + buttons.Count; i++) {
+			if (i < population.Count)
 				buttons[butDex].GetComponentInChildren<Text>().text = population[i].agentName;
 			butDex++;
 		}
@@ -76,8 +76,8 @@ public class SquadSelectionScript : MonoBehaviour {
 			rowIndex = population.Count/buttons.Count;
 		int index = rowIndex * buttons.Count;
 		int butDex = 0;
-		for(int i = index; i < index + buttons.Count; i++) {
-			if( i < population.Count )
+		for (int i = index; i < index + buttons.Count; i++) {
+			if (i < population.Count)
 				buttons[butDex].GetComponentInChildren<Text>().text = population[i].agentName;
 			else
 				buttons[butDex].GetComponentInChildren<Text>().text = "NA";
@@ -85,14 +85,14 @@ public class SquadSelectionScript : MonoBehaviour {
 		}
 	}
 
-	public void setSelectedPartyIndex(int index){
+	public void setSelectedPartyIndex (int index) {
 		Debug.Log ("SetSelectedPartyIndex Called");
 		selectedPartyIndex = index;
 		noneSelected = false;
 		enablePopulationPanel (true);
 	}
 
-	public void enablePopulationPanel(bool on){
+	public void enablePopulationPanel (bool on) {
 		if (on && !popSelection.gameObject.activeSelf) {
 			popSelection.gameObject.SetActive (true);
 			loadPopulation();
@@ -101,11 +101,11 @@ public class SquadSelectionScript : MonoBehaviour {
 		}
 	}
 
-	public void setPartyMember(int index){
+	public void setPartyMember (int index) {
 		Debug.Log ("setPartyMember called");
 		bool inParty = false;
 		foreach (serialAgent sA in myParty) {
-			if( sA.agentId ==  population [(rowIndex * buttons.Count) + index].agentId  ){
+			if (sA.agentId ==  population [(rowIndex * buttons.Count) + index].agentId) {
 				inParty = true;
 			}
 		}
@@ -129,7 +129,7 @@ public class SquadSelectionScript : MonoBehaviour {
 }
 
 [Serializable]
-public class tempAgent{
+public class tempAgent {
 	public string name;
 	public int movement;
 	public int attack;
