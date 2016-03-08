@@ -656,7 +656,7 @@ public class AgentLogic_07 : MonoBehaviour {
         //Todo: need to update this function to take into account the current food the agent has collected...
         //ie. once they collect 100 food ONLY start increasing the hungerValue once he has finished feeding on that 100 food
 
-        /*
+        
         if (!isDead)
         {
             if (isInjured)
@@ -728,7 +728,7 @@ public class AgentLogic_07 : MonoBehaviour {
 
                 //Choose(hungerValue);
             }
-        }*/
+        }
     }
 
     IEnumerator PlayAnimPauseAI(string animation) {
@@ -751,7 +751,7 @@ public class AgentLogic_07 : MonoBehaviour {
         {
             isHungry = true;
             StartCoroutine(PlayAnimPauseAI("Hungry"));
-        }
+        }   
         else
             isHungry = false;
     }
