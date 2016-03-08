@@ -96,14 +96,14 @@ using System.Collections.Generic;
 			scrapDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 			
 			scrapDelText.text = "";
-			scrapDelText.transform.position = new Vector2 (scrapIconDel.rectTransform.position.x + 62.5f,  scrapIconDel.rectTransform.position.y);
+			scrapDelText.transform.position = new Vector2 (HUDDelBg.rectTransform.position.x + 32.5f,  scrapIconDel.rectTransform.position.y);
 			scrapDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
 
 		//Population
 		populationIconDel = (Image)Instantiate (populationIcon);
 		populationIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		populationIconDel.rectTransform.sizeDelta = new Vector2 (60, 60);
+		populationIconDel.rectTransform.sizeDelta = new Vector2 (70, 70);
 		populationIconDel.transform.Translate (scrapIconDel.transform.position.x - 300, scrapIconDel.rectTransform.position.y - 12.5f, 0);
 
 			//Text
@@ -112,7 +112,7 @@ using System.Collections.Generic;
 			
 			populationDelText.text = "";
 			populationDelText.fontSize = 20;
-			populationDelText.transform.position = new Vector2 (populationIconDel.transform.position.x + 62.5f, populationIconDel.transform.position.y);
+			populationDelText.transform.position = new Vector2 (scrapDelText.transform.position.x + -302.5f, scrapDelText.transform.position.y - 15f);
 		
 		//Food
 		foodIconDel = (Image)Instantiate (foodIcon);
@@ -126,7 +126,7 @@ using System.Collections.Generic;
 			foodDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 			
 			foodDelText.text = "";
-			foodDelText.transform.position = new Vector2 (foodIconDel.transform.position.x + 62.5f, foodIconDel.transform.position.y);
+			foodDelText.transform.position = new Vector2 (scrapDelText.transform.position.x - 152.5f, scrapDelText.transform.position.y - 15f);
 			foodDelText.rectTransform.sizeDelta = new Vector2 (100, 100);
 		
 		//Water
@@ -141,7 +141,7 @@ using System.Collections.Generic;
 			waterDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 			
 			waterDelText.text = "";
-			waterDelText.transform.position = new Vector2 (waterIconDel.transform.position.x + 62.5f, waterIconDel.transform.position.y);
+			waterDelText.transform.position = new Vector2 (scrapDelText.transform.position.x + 302.5f, scrapDelText.transform.position.y - 15f);
 			waterDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
 		
 		//Power
@@ -156,7 +156,7 @@ using System.Collections.Generic;
 			powerDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 			
 			powerDelText.text = "";
-			powerDelText.transform.position = new Vector2 (powerIconDel.transform.position.x + 62.5f, powerIconDel.transform.position.y);
+			powerDelText.transform.position = new Vector2 (scrapDelText.transform.position.x + 152.5f, scrapDelText.transform.position.y - 15f);
 			powerDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
 		
 		//		//Time
@@ -386,15 +386,15 @@ using System.Collections.Generic;
 
 		if (scrap < 50) {
 			scrapDelText.color = new Color (1, 0.2745098039215686f, 0.3215686274509804f);
-			scrapDelText.fontSize = 20;
+			scrapDelText.fontSize = 24;
 		} else if (scrap >= 50 || scrap <= 99) {
 			scrapDelText.color = new Color (0.9568627450980392f, 0.9568627450980392f, 0.9568627450980392f);
-			scrapDelText.fontSize = 20;
+			scrapDelText.fontSize = 22;
 		} else if (scrap > 99) {
 			scrapDelText.color = new Color (0.4509803921568627f, 1, 0.5843137254901961f);
-			scrapDelText.fontSize = 16;
+			scrapDelText.fontSize = 18;
 		} else if (scrap > 999) {
-			scrapDelText.fontSize = 14;
+			scrapDelText.fontSize = 16;
 		}
 
 		//Population
@@ -403,14 +403,14 @@ using System.Collections.Generic;
 
 		if (aSpawner.popSize < 5) {
 			populationDelText.color = new Color (1, 0.2745098039215686f, 0.3215686274509804f);
-			populationDelText.fontSize = 20;
+			populationDelText.fontSize = 24;
 		} else if (aSpawner.popSize > 5 || population < 30) {
 			populationDelText.color = new Color (0.9568627450980392f, 0.9568627450980392f, 0.9568627450980392f);
-			populationDelText.fontSize = 20;
+			populationDelText.fontSize = 22;
 		} else if (aSpawner.popSize > 30) {
 			populationDelText.color = new Color (0.4509803921568627f, 1, 0.5843137254901961f);
 		} else if (aSpawner.popSize > 99) {
-			populationDelText.fontSize = 16;
+			populationDelText.fontSize = 20;
 		}
 
 		//Food
@@ -419,15 +419,15 @@ using System.Collections.Generic;
 
 		if (food <= 30) {
 			foodDelText.color = new Color (1, 0.2745098039215686f, 0.3215686274509804f);
-			foodDelText.fontSize = 20;
+			foodDelText.fontSize = 24;
 		} else if (food >= 50 || food <= 99) {
 			foodDelText.color = new Color (0.9568627450980392f, 0.9568627450980392f, 0.9568627450980392f);
-			foodDelText.fontSize = 20;
+			foodDelText.fontSize = 22;
 		} else if (food > 99) {
-			foodDelText.fontSize = 16;
+			foodDelText.fontSize = 18;
 		} else if (food > 999) {
 			foodDelText.color = new Color (0.4509803921568627f, 1, 0.5843137254901961f);
-			foodDelText.fontSize = 14;
+			foodDelText.fontSize = 16;
 		}
 
 		//Water
@@ -436,15 +436,15 @@ using System.Collections.Generic;
 
 		if (water <= 30) {
 			waterDelText.color = new Color (1, 0.2745098039215686f, 0.3215686274509804f);
-			waterDelText.fontSize = 20;
+			waterDelText.fontSize = 24;
 		} else if (water >= 50 || water <= 99) {
 			waterDelText.color = new Color (0.9568627450980392f, 0.9568627450980392f, 0.9568627450980392f);
-			waterDelText.fontSize = 20;
+			waterDelText.fontSize = 22;
 		} else if (water > 99) {
-			waterDelText.fontSize = 16;
+			waterDelText.fontSize = 18;
 		} else if (water > 999) {
 			waterDelText.color = new Color (0.4509803921568627f, 1, 0.5843137254901961f);
-			waterDelText.fontSize = 14;
+			waterDelText.fontSize = 16;
 		}
 
 		//Power
@@ -453,15 +453,15 @@ using System.Collections.Generic;
 
 		if (power <= 30) {
 			powerDelText.color = new Color (1, 0.2745098039215686f, 0.3215686274509804f);
-			powerDelText.fontSize = 20;
+			powerDelText.fontSize = 24;
 		} else if (power >= 50 || power <= 99) {
 			powerDelText.color = new Color (0.9568627450980392f, 0.9568627450980392f, 0.9568627450980392f);
-			powerDelText.fontSize = 20;
+			powerDelText.fontSize = 22;
 		} else if (power > 99) {
-			powerDelText.fontSize = 16;
+			powerDelText.fontSize = 18;
 		} else if (power > 999) {
 			powerDelText.color = new Color (0.4509803921568627f, 1, 0.5843137254901961f);
-			powerDelText.fontSize = 14;
+			powerDelText.fontSize = 16;
 		}
 
 //		//Time
