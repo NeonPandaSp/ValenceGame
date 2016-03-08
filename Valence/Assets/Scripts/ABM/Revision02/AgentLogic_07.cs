@@ -44,7 +44,7 @@ public class AgentLogic_07 : MonoBehaviour {
     bool isInjured;
 
     //Check if the agent has died
-    bool isDead;
+    public bool isDead;
 	
     //Agent stores 5% of food found in storage facility
     public float foodStored;
@@ -292,14 +292,18 @@ public class AgentLogic_07 : MonoBehaviour {
 		}
 
         //Check if the agent has run out of health
-        if (health <= 0 && isDead == false)
+        if (health == 0 && isDead == false)
         {
             //Stop the agent from moving
             aiFollow.Stop();
+            aiFollow.Reset();
             aState = agentState.Dead;
             //Play a death animation
             agentAnim.SetTrigger("Dead");
-
+            agentAnim.SetBool("Idle", false);
+            agentAnim.SetBool("Working", false);
+            agentAnim.SetBool("Walking", false);
+            health = 0;
             //Ensure the agent only triggers this logic once
             isDead = true;
             //Destroy(this.gameObject);
@@ -347,9 +351,13 @@ public class AgentLogic_07 : MonoBehaviour {
 
                 agentAnim.SetBool("Idle", false);
                 agentAnim.SetBool("Working", false);
-
-                aiFollow.target = storageWaypoints[storageWaypointIndex].transform.position;
-
+                if (!isDead)
+                {
+                    aiFollow.target = storageWaypoints[storageWaypointIndex].transform.position;
+                }
+                else {
+                    aState = agentState.Dead;
+                }
                 //remove this agent from all worker lists
                 //Todo do this with a function call
                 gameController.farmerList.Remove(this.gameObject);
@@ -364,7 +372,12 @@ public class AgentLogic_07 : MonoBehaviour {
                 break;
 
             case agentState.Dead:
+                currentState = aState;
+                agentAnim.SetBool("Idle", false);
+                agentAnim.SetBool("Working", false);
+                agentAnim.SetBool("Walking", false);
                 aiFollow.Reset();
+                aiFollow.Stop();
                 break;
 
             case agentState.Working:
@@ -512,58 +525,68 @@ public class AgentLogic_07 : MonoBehaviour {
 
         //Todo: need to update this function to take into account the current food the agent has collected...
         //ie. once they collect 100 food ONLY start increasing the hungerValue once he has finished feeding on that 100 food
-        if (hungerValue >= 100)
+        if (hungerValue >= 100 && health >= 0)
         {
             health--;
         }
-
-        switch (hasFood) {
+        switch (hasFood)
+        {
             case true:
 
                 //Check that there still is food stored
-                if (foodStored > 0) {
+                if (foodStored > 0)
+                {
                     //if yes then decrease the amount of food stored on the agent and increase their health
                     foodStored--;
 
-                    if (health > 100){
+                    if (health > 100)
+                    {
                         //Increase the missing health of the agent when eating food
                         health++;
                     }
-                    else {
+                    else
+                    {
                         //Do nothing
                     }
 
-                    
+
                 }
-                else {
+                else
+                {
                     //if there is no more food stored on the agent, then start starving the agent
                     foodStored = 0;
                     hasFood = false;
                 }
 
-            break;
+                break;
             case false:
                 //check if the agent's hunger% has reached 25%, otherwise keep increasing the hungerValue
                 //Todo update this if statement to check boolean, boolean set based on probability
 
-                if (hungerValue >= 100){
+                if (hungerValue >= 100)
+                {
                     hungerValue = 100;
-                } else {
+                }
+                else
+                {
                     //Increase the current hunger value of the agent by 1
                     hungerValue++;
                 }
                 //Bool set if true then change state to hungry
-                if (isHungry) { 
+                if (isHungry)
+                {
                     //if yes then set the agent's state to hungry, but first save the previous state..
                     //so the agent may return to it after feeding
 
                     aState = agentState.Hungry;
                 }
-                else {                    
+                else
+                {
                     //Todo: need to incorporate a probability factor that is affected by the current hunger value %, higher % = higher probablility to change Astate to hungry
-                    
+
                     //Throw a series of dice at each milestone 25,50,75% hunger, if any dice roll true, then move to the food source
-                    switch (hungerValue) {
+                    switch (hungerValue)
+                    {
                         case 25:
 
                             if (!isDead)
@@ -576,7 +599,7 @@ public class AgentLogic_07 : MonoBehaviour {
                                 //if the agent reaches 25% hunger throw a dice with 10% probability of success
                                 isHungry = Choose(perception);
                             }
-                        break;
+                            break;
 
                         case 50:
                             if (!isDead)
@@ -591,7 +614,7 @@ public class AgentLogic_07 : MonoBehaviour {
                                         isHungry = Choose(perception);
                                     }
                             }
-                        break;
+                            break;
 
                         case 75:
                             if (!isDead)
@@ -606,24 +629,25 @@ public class AgentLogic_07 : MonoBehaviour {
                                         isHungry = Choose(perception);
                                     }
                             }
-                        break;
+                            break;
 
                         case 100:
                             if (!isDead)
                             {
                                 StartCoroutine(CheckFoodSource());
                             }
-                           // isHungry = Choose(101);
-                        break;
+                            // isHungry = Choose(101);
+                            break;
                     }
-                    
-                //Choose(hungerValue);
+
+                    //Choose(hungerValue);
                 }
-            break;
+                break;
             default:
                 Debug.Log("Default reached in AgentLogic_07 - ConsumeResource function");
-            break;
+                break;
         }
+
     }
 
     //When the agent's hunger % reaches a critial amount, then switch the current state of the agent to hunger state (search for food)
@@ -632,68 +656,79 @@ public class AgentLogic_07 : MonoBehaviour {
         //Todo: need to update this function to take into account the current food the agent has collected...
         //ie. once they collect 100 food ONLY start increasing the hungerValue once he has finished feeding on that 100 food
 
+        /*
+        if (!isDead)
+        {
+            if (isInjured)
+            {
+                //if yes then set the agent's state to hungry, but first save the previous state..
+                //so the agent may return to it after feeding
 
-       
-        if (isInjured) {
-            //if yes then set the agent's state to hungry, but first save the previous state..
-            //so the agent may return to it after feeding
-
-            aState = agentState.Injured;
-        }
-        else {
-            //Todo: need to incorporate a probability factor that is affected by the current hunger value %, higher % = higher probablility to change Astate to hungry
-
-            //Throw a series of dice at each milestone 25,50,75% hunger, if any dice roll true, then move to the food source
-            switch (health) {
-                case 75:
-
-                if (!isDead) {
-                    //Play hunger animation
-                    //Pause the ai pathfinding to play an animation, pass anim state name 
-                    //StartCoroutine(PlayAnimPauseAI("Hungry"));
-
-
-                    //if the agent reaches 25% hunger throw a dice with 10% probability of success
-                    isInjured = Choose(perception);
-                }
-                break;
-
-                case 50:
-                if (!isDead) {
-                    //Play hunger animation
-                    //Pause the ai pathfinding to play an animation, pass anim state name 
-                    //StartCoroutine(PlayAnimPauseAI("Hungry"));
-                    for (amount = 0; amount < 3; amount++)
-                        if (!isInjured) {
-                            //if the agent reaches 50% hunger throw a dice with 35% probability of success
-                            isInjured = Choose(perception);
-                        }
-                }
-                break;
-
-                case 25:
-                if (!isDead) {
-                    //Play hunger animation
-                    //Pause the ai pathfinding to play an animation, pass anim state name 
-                    //StartCoroutine(PlayAnimPauseAI("Hungry"));
-                    for (amount = 0; amount < 6; amount++)
-                        if (!isInjured) {
-                            //if the agent reaches 75% hunger throw a dice with 65% probability of success
-                            isInjured = Choose(perception);
-                        }
-                }
-                break;
-
-                case 5:
-                if (!isDead) {
-                    StartCoroutine(CheckMedic());
-                }
-                // isHungry = Choose(101);
-                break;
+                aState = agentState.Injured;
             }
+            else
+            {
+                //Todo: need to incorporate a probability factor that is affected by the current hunger value %, higher % = higher probablility to change Astate to hungry
 
-            //Choose(hungerValue);
-        }
+                //Throw a series of dice at each milestone 25,50,75% hunger, if any dice roll true, then move to the food source
+                switch (health)
+                {
+                    case 75:
+
+                        if (!isDead)
+                        {
+                            //Play hunger animation
+                            //Pause the ai pathfinding to play an animation, pass anim state name 
+                            //StartCoroutine(PlayAnimPauseAI("Hungry"));
+
+
+                            //if the agent reaches 25% hunger throw a dice with 10% probability of success
+                            isInjured = Choose(perception);
+                        }
+                        break;
+
+                    case 50:
+                        if (!isDead)
+                        {
+                            //Play hunger animation
+                            //Pause the ai pathfinding to play an animation, pass anim state name 
+                            //StartCoroutine(PlayAnimPauseAI("Hungry"));
+                            for (amount = 0; amount < 3; amount++)
+                                if (!isInjured)
+                                {
+                                    //if the agent reaches 50% hunger throw a dice with 35% probability of success
+                                    isInjured = Choose(perception);
+                                }
+                        }
+                        break;
+
+                    case 25:
+                        if (!isDead)
+                        {
+                            //Play hunger animation
+                            //Pause the ai pathfinding to play an animation, pass anim state name 
+                            //StartCoroutine(PlayAnimPauseAI("Hungry"));
+                            for (amount = 0; amount < 6; amount++)
+                                if (!isInjured)
+                                {
+                                    //if the agent reaches 75% hunger throw a dice with 65% probability of success
+                                    isInjured = Choose(perception);
+                                }
+                        }
+                        break;
+
+                    case 5:
+                        if (!isDead)
+                        {
+                            StartCoroutine(CheckMedic());
+                        }
+                        // isHungry = Choose(101);
+                        break;
+                }
+
+                //Choose(hungerValue);
+            }
+        }*/
     }
 
     IEnumerator PlayAnimPauseAI(string animation) {
@@ -711,9 +746,12 @@ public class AgentLogic_07 : MonoBehaviour {
         yield return new WaitForSeconds(10.0f);
         //Play hunger animation
         //Pause the ai pathfinding to play an animation, pass anim state name 
-        StartCoroutine(PlayAnimPauseAI("Hungry"));
+
         if (!isDead)
+        {
             isHungry = true;
+            StartCoroutine(PlayAnimPauseAI("Hungry"));
+        }
         else
             isHungry = false;
     }
