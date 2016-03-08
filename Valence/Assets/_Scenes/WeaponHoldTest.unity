@@ -65,6 +65,7 @@ LightmapSettings:
     m_TextureCompression: 1
     m_FinalGather: 0
     m_FinalGatherRayCount: 1024
+    m_ReflectionCompression: 2
   m_LightmapSnapshot: {fileID: 0}
   m_RuntimeCPUUsage: 25
 --- !u!196 &4
@@ -84,9 +85,6 @@ NavMeshSettings:
     cellSize: .166666672
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
---- !u!127 &5
-LevelGameManager:
-  m_ObjectHideFlags: 0
 --- !u!1001 &241113813
 Prefab:
   m_ObjectHideFlags: 0
@@ -126,14 +124,30 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9538324, guid: e4a5991b2d6f5b941a9d036d0fac0cf2, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11154034, guid: e4a5991b2d6f5b941a9d036d0fac0cf2, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11154034, guid: e4a5991b2d6f5b941a9d036d0fac0cf2, type: 2}
+      propertyPath: m_Animation
+      value: 
+      objectReference: {fileID: 7400000, guid: 054522c6a68107a4fa392830646d5f2a, type: 3}
+    - target: {fileID: 11154034, guid: e4a5991b2d6f5b941a9d036d0fac0cf2, type: 2}
+      propertyPath: m_AnimatePhysics
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e4a5991b2d6f5b941a9d036d0fac0cf2, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &427159172
+--- !u!1 &427159172 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100004, guid: 23538ba127e88484f83bd9b0598021d0, type: 3}
   m_PrefabInternal: {fileID: 1968328222}
---- !u!4 &427159173
+--- !u!4 &427159173 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400004, guid: 23538ba127e88484f83bd9b0598021d0, type: 3}
   m_PrefabInternal: {fileID: 1968328222}
@@ -4800,11 +4814,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0eaf5e08a4f4342419c9cd8a366c504e, type: 3}
   m_IsPrefabParent: 0
---- !u!4 &1078196239
+--- !u!4 &1078196239 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400004, guid: 0eaf5e08a4f4342419c9cd8a366c504e, type: 3}
   m_PrefabInternal: {fileID: 1078196238}
---- !u!4 &1135832221
+--- !u!4 &1135832221 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 5892d07b4044e7f49a551ad234041cd1, type: 3}
   m_PrefabInternal: {fileID: 978412625}
@@ -4876,10 +4890,12 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
+  m_TargetEye: 3
   m_HDR: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
+  m_StereoMirrorMode: 0
 --- !u!4 &1370343257
 Transform:
   m_ObjectHideFlags: 0
