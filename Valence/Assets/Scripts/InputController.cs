@@ -5,7 +5,8 @@ using System.Collections.Generic;
 public class InputController : MonoBehaviour {
 
 	public GameController _gameController;
-	TileMap _tileMap;
+    public NotificationController notificationController;
+    TileMap _tileMap;
 	generateZone _generateZone;
 
 	Vector3 currentTile;
@@ -25,8 +26,9 @@ public class InputController : MonoBehaviour {
 	bool generate;
 
 	public bool zoning;
+    public bool scrapAlerted;
 
-	string hoverState;
+    string hoverState;
 
 	public GUIController _GUIController;
 
@@ -43,7 +45,8 @@ public class InputController : MonoBehaviour {
         BuildingDatabase = new List<GameObject>();
 
 		_GUIController = GameObject.Find ("Canvas").GetComponent<GUIController> ();
-	}
+        notificationController = GameObject.Find("NotificationController").GetComponent<NotificationController>();
+    }
 
 	public void selectedMaterial (string color){
 		if (color == "blue") {
@@ -200,10 +203,12 @@ public class InputController : MonoBehaviour {
 //			} else 
 			if ( !zoning ){
 				if (hoverState == "food"){
-                    if (_gameController.scrap >= 25) {
-                        if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
+                    if (_gameController.scrap >= 25)
+                    {
+                        if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop")))
+                        {
                             _gameController.scrap -= 25;
-                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("Farm"), new Vector3(currentTile.x, currentTile.y,currentTile.z), Quaternion.identity);
+                            GameObject tempObject = (GameObject)Instantiate(Resources.Load("Farm"), new Vector3(currentTile.x, currentTile.y, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
@@ -215,27 +220,42 @@ public class InputController : MonoBehaviour {
 
                             //Debug.Log ( tempObject.GetComponent<BuildingScript>().initProduction );
 
-							Destroy(myHoverObject);
-							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
-							hoverState = "zone";
+                            Destroy(myHoverObject);
+                            myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
+                            hoverState = "zone";
 
-							//Makes the transparency back to default - Vishesh
-							_GUIController.setBuildingTypeName = "empty";
-							
-							//Update agent pathfinding to account for this new obstical -Zach
-                            foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
+                            scrapAlerted = false;
+
+                            //Makes the transparency back to default - Vishesh
+                            _GUIController.setBuildingTypeName = "empty";
+
+                            //Update agent pathfinding to account for this new obstical -Zach
+                            foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop"))
+                            {
                                 AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
                             }
 
-                            foreach (Transform child in tempObject.transform) {
-                                if (child.gameObject.tag == "buildTrans") {
+                            foreach (Transform child in tempObject.transform)
+                            {
+                                if (child.gameObject.tag == "buildTrans")
+                                {
                                     child.gameObject.SetActive(false);
                                 }
-                                if (child.gameObject.tag == "buildMesh") {
+                                if (child.gameObject.tag == "buildMesh")
+                                {
                                     child.gameObject.SetActive(true);
                                 }
-							}
+                            }
                         }
+                    }
+                    else if (!scrapAlerted){
+                                              
+                        notificationController.CreateNewNotification("No Scrap! Explore the metro to discover more scrap!");
+                        scrapAlerted = true;
+
+                        Destroy(myHoverObject);
+                        myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
+                        //hoverState = "zone";
                     }
 				}
 				if (hoverState == "water"){
@@ -254,7 +274,9 @@ public class InputController : MonoBehaviour {
 							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
 							hoverState = "zone";
 
-							_GUIController.setBuildingTypeName = "empty";
+                            scrapAlerted = false;
+
+                            _GUIController.setBuildingTypeName = "empty";
 							
 							//Update agent pathfinding to account for this new obstical -Zach
 							foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop"))
@@ -275,7 +297,18 @@ public class InputController : MonoBehaviour {
 							}
                         }
                     }
-				}
+                    else if (!scrapAlerted)
+                    {
+
+                        notificationController.CreateNewNotification("No Scrap! Explore the metro to discover more scrap!");
+                        scrapAlerted = true;
+
+                        Destroy(myHoverObject);
+                        myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
+                        //hoverState = "zone";
+                    }
+
+                }
 				if (hoverState == "power"){
                     if (_gameController.scrap >= 25){
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag ("prop"))){
@@ -292,7 +325,9 @@ public class InputController : MonoBehaviour {
 							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
 							hoverState = "zone";
 
-							_GUIController.setBuildingTypeName = "empty";
+                            scrapAlerted = false;
+
+                            _GUIController.setBuildingTypeName = "empty";
 							
 							//Update agent pathfinding to account for this new obstical -Zach
 							foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop"))
@@ -313,7 +348,17 @@ public class InputController : MonoBehaviour {
 							}
                         }
                     }
-				}
+                    else if (!scrapAlerted)
+                    {
+
+                        notificationController.CreateNewNotification("No Scrap! Explore the metro to discover more scrap!");
+                        scrapAlerted = true;
+
+                        Destroy(myHoverObject);
+                        myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
+                        //hoverState = "zone";
+                    }
+                }
 				if (hoverState == "shelter") {
 					if (_gameController.scrap >= 25) {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
@@ -329,7 +374,9 @@ public class InputController : MonoBehaviour {
 							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
 							hoverState = "zone";
 
-							_GUIController.setBuildingTypeName = "empty";
+                            scrapAlerted = false;
+
+                            _GUIController.setBuildingTypeName = "empty";
 
 							//Update agent pathfinding to account for this new obstical -Zach
 							foreach (GameObject obstcale in GameObject.FindGameObjectsWithTag("prop")) {
@@ -345,6 +392,16 @@ public class InputController : MonoBehaviour {
                                 }
                             }
                         }
+                    }
+                    else if (!scrapAlerted)
+                    {
+
+                        notificationController.CreateNewNotification("No Scrap! Explore the metro to discover more scrap!");
+                        scrapAlerted = true;
+
+                        Destroy(myHoverObject);
+                        myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
+                        //hoverState = "zone";
                     }
                 }
 				if (hoverState == "tavern") {
@@ -362,7 +419,9 @@ public class InputController : MonoBehaviour {
 							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
 							hoverState = "zone";
 
-							_GUIController.setBuildingTypeName = "empty";
+                            scrapAlerted = false;
+
+                            _GUIController.setBuildingTypeName = "empty";
 							
 							//Update agent pathfinding to account for this new obstical -Zach
 
@@ -379,6 +438,16 @@ public class InputController : MonoBehaviour {
                                 }
                             }
                         }
+                    }
+                    else if (!scrapAlerted)
+                    {
+
+                        notificationController.CreateNewNotification("No Scrap! Explore the metro to discover more scrap!");
+                        scrapAlerted = true;
+
+                        Destroy(myHoverObject);
+                        myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
+                        //hoverState = "zone";
                     }
                 }
                 if (hoverState == "hospital")
@@ -399,6 +468,8 @@ public class InputController : MonoBehaviour {
                             myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
                             hoverState = "zone";
 
+                            scrapAlerted = false;
+
                             _GUIController.setBuildingTypeName = "empty";
 
                             //Update agent pathfinding to account for this new obstical -Zach
@@ -420,6 +491,16 @@ public class InputController : MonoBehaviour {
                                 }
                             }
                         }
+                    }
+                    else if (!scrapAlerted)
+                    {
+
+                        notificationController.CreateNewNotification("No Scrap! Explore the metro to discover more scrap!");
+                        scrapAlerted = true;
+
+                        Destroy(myHoverObject);
+                        myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
+                        //hoverState = "zone";
                     }
                 }
                 if (hoverState == "training")
@@ -440,6 +521,8 @@ public class InputController : MonoBehaviour {
                             myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
                             hoverState = "zone";
 
+                            scrapAlerted = false;
+
                             _GUIController.setBuildingTypeName = "empty";
 
                             //Update agent pathfinding to account for this new obstical -Zach
@@ -462,6 +545,16 @@ public class InputController : MonoBehaviour {
                             }
                         }
                     }
+                    else if (!scrapAlerted)
+                    {
+
+                        notificationController.CreateNewNotification("No Scrap! Explore the metro to discover more scrap!");
+                        scrapAlerted = true;
+
+                        Destroy(myHoverObject);
+                        myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
+                        //hoverState = "zone";
+                    }
                 }
             }
 			if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= -50 && currentTile.z >= -40 ){
@@ -478,6 +571,7 @@ public class InputController : MonoBehaviour {
         {
             if (hoverState != "food")
             {
+                scrapAlerted = false;
                 Destroy(myHoverObject);
                 myHoverObject = (GameObject)Instantiate(foodBuild, new Vector3(0, 1, 0), Quaternion.identity);
                 hoverState = "food";
@@ -488,6 +582,7 @@ public class InputController : MonoBehaviour {
         {
             if (hoverState != "water")
             {
+                scrapAlerted = false;
                 Destroy(myHoverObject);
                 myHoverObject = (GameObject)Instantiate(waterBuild, new Vector3(0, 0, 0), Quaternion.identity);
                 hoverState = "water";
@@ -498,6 +593,7 @@ public class InputController : MonoBehaviour {
         {
             if (hoverState != "power")
             {
+                scrapAlerted = false;
                 Destroy(myHoverObject);
                 myHoverObject = (GameObject)Instantiate(powerBuild, new Vector3(0, 0, 0), Quaternion.identity);
                 hoverState = "power";
@@ -508,6 +604,7 @@ public class InputController : MonoBehaviour {
         {
             if (hoverState != "shelter")
             {
+                scrapAlerted = false;
                 Destroy(myHoverObject);
                 myHoverObject = (GameObject)Instantiate(shelterBuild, new Vector3(0, 1, 0), Quaternion.identity);
                 hoverState = "shelter";
@@ -518,6 +615,7 @@ public class InputController : MonoBehaviour {
         {
             if (hoverState != "tavern")
             {
+                scrapAlerted = false;
                 Destroy(myHoverObject);
                 myHoverObject = (GameObject)Instantiate(tavernBuild, new Vector3(0, 0, 0), Quaternion.identity);
                 hoverState = "tavern";
@@ -528,6 +626,7 @@ public class InputController : MonoBehaviour {
         {
             if (hoverState != "hospital")
             {
+                scrapAlerted = false;
                 Destroy(myHoverObject);
                 myHoverObject = (GameObject)Instantiate(hospitalBuild, new Vector3(0, 0, 0), Quaternion.identity);
                 hoverState = "hospital";
@@ -538,6 +637,7 @@ public class InputController : MonoBehaviour {
         {
             if (hoverState != "training")
             {
+                scrapAlerted = false;
                 Destroy(myHoverObject);
                 myHoverObject = (GameObject)Instantiate(trainingBuild, new Vector3(0, 0, 0), Quaternion.identity);
                 hoverState = "training";
