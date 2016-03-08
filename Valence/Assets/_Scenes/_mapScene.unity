@@ -2368,6 +2368,10 @@ Prefab:
       propertyPath: m_AnimationTriggers.m_DisabledTrigger
       value: Pressed
       objectReference: {fileID: 0}
+    - target: {fileID: 130894, guid: 15ab1543b4d76ad4e9f8055ece1a6ec3, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 15ab1543b4d76ad4e9f8055ece1a6ec3, type: 2}
   m_IsPrefabParent: 0
@@ -3230,7 +3234,7 @@ Prefab:
       objectReference: {fileID: 1458001613}
     - target: {fileID: 11479910, guid: a379b78f120af2f4ebc92963192d057c, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 11479910, guid: a379b78f120af2f4ebc92963192d057c, type: 2}
       propertyPath: m_Colors.m_HighlightedColor.r
@@ -5027,11 +5031,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22480584, guid: 996f55ab1e16d8240a183a0f01c24f18, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 42
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 22480584, guid: 996f55ab1e16d8240a183a0f01c24f18, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 42
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 22480584, guid: 996f55ab1e16d8240a183a0f01c24f18, type: 2}
       propertyPath: m_AnchorMin.x
@@ -5092,6 +5096,18 @@ Prefab:
     - target: {fileID: 11498492, guid: 996f55ab1e16d8240a183a0f01c24f18, type: 2}
       propertyPath: m_Colors.m_PressedColor.b
       value: .69042325
+      objectReference: {fileID: 0}
+    - target: {fileID: 11498492, guid: 996f55ab1e16d8240a183a0f01c24f18, type: 2}
+      propertyPath: m_Colors.m_NormalColor.r
+      value: .956862748
+      objectReference: {fileID: 0}
+    - target: {fileID: 11498492, guid: 996f55ab1e16d8240a183a0f01c24f18, type: 2}
+      propertyPath: m_Colors.m_NormalColor.g
+      value: .956862748
+      objectReference: {fileID: 0}
+    - target: {fileID: 11498492, guid: 996f55ab1e16d8240a183a0f01c24f18, type: 2}
+      propertyPath: m_Colors.m_NormalColor.b
+      value: .956862748
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 996f55ab1e16d8240a183a0f01c24f18, type: 2}
@@ -5325,7 +5341,7 @@ Prefab:
       objectReference: {fileID: 1458001613}
     - target: {fileID: 11498492, guid: 996f55ab1e16d8240a183a0f01c24f18, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 11498492, guid: 996f55ab1e16d8240a183a0f01c24f18, type: 2}
       propertyPath: m_Colors.m_HighlightedColor.r
@@ -6198,7 +6214,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1180945590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7509,7 +7525,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1458001609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7799,6 +7815,10 @@ Prefab:
     - target: {fileID: 11413038, guid: f53fe7eee396cdd48890226d23788db3, type: 2}
       propertyPath: m_Colors.m_PressedColor.b
       value: .69042325
+      objectReference: {fileID: 0}
+    - target: {fileID: 133270, guid: f53fe7eee396cdd48890226d23788db3, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f53fe7eee396cdd48890226d23788db3, type: 2}
@@ -8895,6 +8915,10 @@ Prefab:
       propertyPath: m_Colors.m_PressedColor.b
       value: .69042325
       objectReference: {fileID: 0}
+    - target: {fileID: 165950, guid: 2291770634f0d9b40ac1e685d5ff9afe, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2291770634f0d9b40ac1e685d5ff9afe, type: 2}
   m_IsPrefabParent: 0
@@ -9049,7 +9073,7 @@ Prefab:
       objectReference: {fileID: 1458001613}
     - target: {fileID: 11474072, guid: 57b6250a56ef2044786a31012ec44add, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 11474072, guid: 57b6250a56ef2044786a31012ec44add, type: 2}
       propertyPath: m_Colors.m_HighlightedColor.r
