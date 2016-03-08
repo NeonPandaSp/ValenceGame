@@ -431,7 +431,7 @@ using System.Collections.Generic;
 		}
 
 		//Water
-		water = globalAttributes.water;
+		water = (int) globalAttributes.water;
 		waterDelText.text = water.ToString ();
 
 		if (water <= 30) {
@@ -448,7 +448,7 @@ using System.Collections.Generic;
 		}
 
 		//Power
-		power = globalAttributes.power;
+		power = (int) globalAttributes.power;
 		powerDelText.text = power.ToString ();
 
 		if (power <= 30) {

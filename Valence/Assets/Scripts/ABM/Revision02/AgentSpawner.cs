@@ -24,7 +24,7 @@ public class AgentSpawner : MonoBehaviour {
     }
 
     //On call, spawn a new agent from 05_Revision prefab folder
-    void SpawnAgent() {
+    public void SpawnAgent() {
 
         //Choose to spawn a male or female agent with a 50% chance
         //if true then spawn a male else female
@@ -96,10 +96,10 @@ public class AgentSpawner : MonoBehaviour {
 
     void OnGUI() {
 
-        if (popSize < _gameController.popLimit) {
-            if (GUI.Button(new Rect(Screen.width - 100, 10, 100, 20), "Create Agent")) {
-                SpawnAgent();
-            }
-        }
+//        if (popSize < _gameController.popLimit) {
+//            if (GUI.Button(new Rect(Screen.width - 100, 10, 100, 20), "Create Agent")) {
+//                SpawnAgent();
+//            }
+//        }
     }
 }
