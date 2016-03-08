@@ -26,16 +26,19 @@ public class GameController : MonoBehaviour {
 	public List<GameObject> waterBuildingList = new List<GameObject>();
 
 	public GUIController_SettlerInfo currentSettlerUI;
+	public NotificationController notificationController;
 
     public int scrap;
 	public float food, power, water, popLimit, morale;
 
 	public bool firstLoad;
+	public bool foodAlerted, scrapAlerted, waterAlerted, powerAlerted;
 	
 	// Use this for initialization
 	void Awake () {
 
 		myAgentSpawner = FindObjectOfType<AgentSpawner> ();
+		notificationController = GameObject.Find("NotificationController").GetComponent<NotificationController>();
 
 		population = new List<GameObject> ();
 
@@ -55,6 +58,10 @@ public class GameController : MonoBehaviour {
 			
 			//Start population with a 10 person cap
 			popLimit = 10;
+
+			waterAlerted = true;
+			powerAlerted = true;
+			foodAlerted = true;
 		}
 
         for ( int x = 0; x < mapSize; x++){
@@ -62,6 +69,7 @@ public class GameController : MonoBehaviour {
 				
 			}
 		}
+		
 
         InvokeRepeating("updateGridGraph",3,10);
 
@@ -77,6 +85,31 @@ public class GameController : MonoBehaviour {
 		}
 		if (food > 20 * powerBuildingList.Count) {
 			food = 20 * powerBuildingList.Count;
+		}
+
+		if (food < 15 && !foodAlerted) {
+			notificationController.CreateNewNotification ("Food is low! Build more FARMS, or assign more settlers as FARMERS to increase productions!");
+			foodAlerted = true;
+		} else if( food > 15 ) {
+			foodAlerted = false;
+		}
+		if (scrap < 50 && !scrapAlerted) {
+			notificationController.CreateNewNotification ("Scrap is low! Explore the metro to discover more scrap!");
+			scrapAlerted = true;
+		} else if( scrap > 50 ) {
+			scrapAlerted = false;
+		}
+		if (water < 10 && !waterAlerted) {
+			notificationController.CreateNewNotification ("Water is low! Build more WATER STATIONS, or assign more settlers as HYDROLOGISTS to increase productions!");
+			waterAlerted = true;
+		} else if (water > 10 ) {
+			waterAlerted = false;
+		}
+		if (power < 5 && !powerAlerted) {
+			notificationController.CreateNewNotification ("Power is low! Without power buildings don't operate. Build more POWER STATIONS, or assign more settlers as POWER WORKERS to increases productions!");
+			powerAlerted = true;
+		} else if ( power > 5 ) {
+			powerAlerted = false;
 		}
 	}
 

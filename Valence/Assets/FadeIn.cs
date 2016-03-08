@@ -9,6 +9,7 @@ public class FadeIn : MonoBehaviour {
 	
 	public float delay;
 	float currentTime;
+	bool fadeOut;
 	// Use this for initialization
 	void Start () {
 		currentTime = 0;
@@ -20,14 +21,17 @@ public class FadeIn : MonoBehaviour {
 		//Debug.Log (Time.deltaTime);
 		if (currentTime > delay) {
 			//Debug.Log ( "fading" );
-			fadeObject.color = new Color (fadeObject.color.r, fadeObject.color.g, fadeObject.color.b, fadeObject.color.a + Time.deltaTime );
+			if( fadeObject.color.a < ( 0.6f ) ){
+				fadeObject.color = new Color (fadeObject.color.r, fadeObject.color.g, fadeObject.color.b, fadeObject.color.a + Time.deltaTime );
+				text.color = new Color (text.color.r, text.color.g, text.color.b, text.color.a + Time.deltaTime );
+			}
 
 			//Debug.Log ( fadeObject.color.a );
 			//Debug.Log ( text.color.a );
 		}
 		
-		if (currentTime > delay * 2) {
-			text.color = new Color (text.color.r, text.color.g, text.color.b, text.color.a + Time.deltaTime );
+		if (currentTime > delay * 2 ) {
+
 		}
 	}
 	

@@ -105,6 +105,8 @@ public class AgentLogic_07 : MonoBehaviour {
     //Agent animator component
     Animator agentAnim;
 
+	bool canCallHungerNotification = false; // Used for Notification Calling - Tyler
+
     public enum agentState
 	{
         Wandering,
@@ -272,7 +274,15 @@ public class AgentLogic_07 : MonoBehaviour {
     }
 
 	void LateUpdate() {
-             
+
+		/** ADDED BY TYLER NOTIFICATION CONTROLLER EXAMPLE **/
+        if (hungerValue > 75 && !canCallHungerNotification) {
+			canCallHungerNotification = true; // set this to true so that you don't spam the notification panel
+			gameController.notificationController.CreateNewNotification (firstLastName + " is getting hungry");
+		} else if (hungerValue < 75) {
+			canCallHungerNotification = false; // if agent hunger is back below 75 reset the boolean so the notification can be called again later. 
+												// this would probably be better served by a time buffer or something but this conditional statement will do for now
+		}
         if (aState == agentState.Working) {
 			settlerNameAndRole = firstLastName + " the " + jobState + " (" + aState + ")";
 		}
