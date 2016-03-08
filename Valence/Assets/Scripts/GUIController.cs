@@ -103,7 +103,7 @@ using System.Collections.Generic;
 		populationIconDel = (Image)Instantiate (populationIcon);
 		populationIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		populationIconDel.rectTransform.sizeDelta = new Vector2 (50, 50);
+		populationIconDel.rectTransform.sizeDelta = new Vector2 (100, 100);
 		populationIconDel.transform.Translate (scrapIconDel.transform.position.x - 300, scrapIconDel.rectTransform.position.y - 18.5f, 0);
 
 			//Text
@@ -118,7 +118,7 @@ using System.Collections.Generic;
 		foodIconDel = (Image)Instantiate (foodIcon);
 		foodIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		foodIconDel.rectTransform.sizeDelta = new Vector2 (50, 50);
+		foodIconDel.rectTransform.sizeDelta = new Vector2 (100, 100);
 		foodIconDel.transform.Translate (populationIconDel.transform.position.x + 150, scrapIconDel.rectTransform.position.y - 18.5f, 0);
 
 			//Text
@@ -127,13 +127,13 @@ using System.Collections.Generic;
 			
 			foodDelText.text = "";
 			foodDelText.transform.position = new Vector2 (foodIconDel.transform.position.x + 62.5f, foodIconDel.transform.position.y);
-			foodDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
+			foodDelText.rectTransform.sizeDelta = new Vector2 (100, 100);
 		
 		//Water
 		waterIconDel = (Image)Instantiate (waterIcon);
 		waterIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		waterIconDel.rectTransform.sizeDelta = new Vector2 (50, 50);
+		waterIconDel.rectTransform.sizeDelta = new Vector2 (100, 100);
 		waterIconDel.transform.Translate (foodIconDel.transform.position.x + 300, scrapIconDel.rectTransform.position.y - 18.5f, 0);
 
 			//Text
@@ -148,7 +148,7 @@ using System.Collections.Generic;
 		powerIconDel = (Image)Instantiate (powerIcon);
 		powerIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		powerIconDel.rectTransform.sizeDelta = new Vector2 (50, 50);
+		powerIconDel.rectTransform.sizeDelta = new Vector2 (100, 100);
 		powerIconDel.transform.Translate (waterIconDel.transform.position.x + 150, scrapIconDel.rectTransform.position.y - 18.5f, 0);
 
 			//Text
