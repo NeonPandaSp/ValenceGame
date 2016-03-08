@@ -93,11 +93,12 @@ public class SquadSelectionScript : MonoBehaviour {
 	}
 
 	public void enablePopulationPanel (bool on) {
-		if (on && !popSelection.gameObject.activeSelf) {
-			popSelection.gameObject.SetActive (true);
+		if(on){
+		//if (on && !popSelection.gameObject.activeSelf) {
+			//popSelection.gameObject.SetActive (true);
 			loadPopulation();
 		} else {
-			popSelection.gameObject.SetActive (false);
+			//popSelection.gameObject.SetActive (false);
 		}
 	}
 
