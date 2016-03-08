@@ -654,7 +654,7 @@ public class AgentLogic_07 : MonoBehaviour {
 
 
                     //if the agent reaches 25% hunger throw a dice with 10% probability of success
-                    isHungry = Choose(perception);
+                    isInjured = Choose(perception);
                 }
                 break;
 
