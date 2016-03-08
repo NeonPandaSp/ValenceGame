@@ -141,7 +141,7 @@ using System.Collections.Generic;
 			waterDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 			
 			waterDelText.text = "";
-			waterDelText.transform.position = new Vector2 (scrapDelText.transform.position.x + 302.5f, scrapDelText.transform.position.y - 15f);
+			waterDelText.transform.position = new Vector2 (scrapDelText.transform.position.x + 152.5f, scrapDelText.transform.position.y - 15f);
 			waterDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
 		
 		//Power
@@ -156,7 +156,7 @@ using System.Collections.Generic;
 			powerDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 			
 			powerDelText.text = "";
-			powerDelText.transform.position = new Vector2 (scrapDelText.transform.position.x + 152.5f, scrapDelText.transform.position.y - 15f);
+			powerDelText.transform.position = new Vector2 (scrapDelText.transform.position.x + 302.5f, scrapDelText.transform.position.y - 15f);
 			powerDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
 		
 		//		//Time
