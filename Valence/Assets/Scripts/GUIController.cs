@@ -103,8 +103,8 @@ using System.Collections.Generic;
 		populationIconDel = (Image)Instantiate (populationIcon);
 		populationIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		populationIconDel.rectTransform.sizeDelta = new Vector2 (100, 100);
-		populationIconDel.transform.Translate (scrapIconDel.transform.position.x - 300, scrapIconDel.rectTransform.position.y - 18.5f, 0);
+		populationIconDel.rectTransform.sizeDelta = new Vector2 (60, 60);
+		populationIconDel.transform.Translate (scrapIconDel.transform.position.x - 300, scrapIconDel.rectTransform.position.y - 12.5f, 0);
 
 			//Text
 			populationDelText = (Text)Instantiate (populationText);
@@ -118,8 +118,8 @@ using System.Collections.Generic;
 		foodIconDel = (Image)Instantiate (foodIcon);
 		foodIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		foodIconDel.rectTransform.sizeDelta = new Vector2 (100, 100);
-		foodIconDel.transform.Translate (populationIconDel.transform.position.x + 150, scrapIconDel.rectTransform.position.y - 18.5f, 0);
+		foodIconDel.rectTransform.sizeDelta = new Vector2 (120, 120);
+		foodIconDel.transform.Translate (populationIconDel.transform.position.x + 150, scrapIconDel.rectTransform.position.y - 10.5f, 0);
 
 			//Text
 			foodDelText = (Text)Instantiate (foodText);
@@ -134,7 +134,7 @@ using System.Collections.Generic;
 		waterIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		waterIconDel.rectTransform.sizeDelta = new Vector2 (100, 100);
-		waterIconDel.transform.Translate (foodIconDel.transform.position.x + 300, scrapIconDel.rectTransform.position.y - 18.5f, 0);
+		waterIconDel.transform.Translate (foodIconDel.transform.position.x + 300, scrapIconDel.rectTransform.position.y - 12.5f, 0);
 
 			//Text
 			waterDelText = (Text)Instantiate (waterText);
@@ -246,16 +246,6 @@ using System.Collections.Generic;
 		powerStationDelBtn.GetComponentInChildren<Text> ().text = "Power Station";
 		powerStationDelBtn.onClick.AddListener (() => switchStructure ("power"));
 		powerStationDelBtn.gameObject.SetActive (false);
-		
-//		//Storage Button
-//		storageDelBtn = (Button)Instantiate (storageBtn);
-//		storageDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-//		
-//		storageDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-//		storageDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 72.5f, buildBtnDel.transform.position.y - 32.5f);
-//		storageDelBtn.GetComponentInChildren<Text> ().text = "Storage";
-//		storageDelBtn.onClick.AddListener (() => switchStructure ("storage"));
-//		storageDelBtn.gameObject.SetActive (false);
 
 		//Hospital Button
 		hospitalDelBtn = (Button)Instantiate (hospitalBtn);
@@ -348,7 +338,7 @@ using System.Collections.Generic;
 		globalAttributes.saveCurrentSettlement ();
 		//loadScreen.SetActive (true);
 		Application.LoadLevelAsync (3);
-		globalAttributes.scrap = scrap + UnityEngine.Random.Range (10, 101);
+		//globalAttributes.scrap = scrap + UnityEngine.Random.Range (10, 101);
 	}
 	 
 	//==================\\
