@@ -84,6 +84,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 				folk[partyIndex].agentId = agent.agentId;
 
 				folk [partyIndex].unitName = agent.agentName;
+				folk[partyIndex].health = (int) agent.health / 10;
 				folk [partyIndex].agility = agent.agility;
 				folk [partyIndex].strength = agent.strength;
 				folk [partyIndex].perception = agent.perception;
@@ -91,7 +92,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 				partyIndex++;
 			}
 		}
-		if (partyIndex < 4) {
+		if (partyIndex < 4 && partyIndex > 0) {
 			for (int i = 3; i >= partyIndex; i--) {
 				Destroy ( folk[i].gameObject );
 				folk.Remove (folk[i]);
