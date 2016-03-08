@@ -33,7 +33,11 @@ public class EnemyMouseOver : MonoBehaviour {
 
 	void OnMouseOver(){
 
-		infoName.text = "ELITE GRUNT Lvl" + (int) ( myUnit.health / 5 + myUnit.attackRating / 3 );
+		if (myUnit.isElite) {
+			infoName.text = "ELITE GRUNT Lv. " + (int)(myUnit.health / 5 + myUnit.attackRating / 3);
+		} else {
+			infoName.text = myUnit.unitName + " Lv. " + (int)(myUnit.health / 5 + myUnit.attackRating / 3);
+		}
 
 		if (myUnit.health >= 10)
 			infoHP.text =  "" + myUnit.health;
