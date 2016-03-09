@@ -2330,7 +2330,7 @@ Prefab:
       objectReference: {fileID: 1458001613}
     - target: {fileID: 130894, guid: 15ab1543b4d76ad4e9f8055ece1a6ec3, type: 2}
       propertyPath: m_Name
-      value: RelayStnBtn
+      value: Stn5_Relay_Btn
       objectReference: {fileID: 0}
     - target: {fileID: 11430048, guid: 15ab1543b4d76ad4e9f8055ece1a6ec3, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
@@ -3182,7 +3182,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22464244, guid: a379b78f120af2f4ebc92963192d057c, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22464244, guid: a379b78f120af2f4ebc92963192d057c, type: 2}
       propertyPath: m_AnchoredPosition.x
@@ -3226,7 +3226,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 161998, guid: a379b78f120af2f4ebc92963192d057c, type: 2}
       propertyPath: m_Name
-      value: RailwaysStnBtn
+      value: Stn2_Railway_Btn
       objectReference: {fileID: 0}
     - target: {fileID: 11479910, guid: a379b78f120af2f4ebc92963192d057c, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -4779,12 +4779,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2041010317}
-  - {fileID: 949528676}
-  - {fileID: 441624114}
   - {fileID: 384406918}
-  - {fileID: 625386702}
+  - {fileID: 441624114}
   - {fileID: 1340377057}
+  - {fileID: 625386702}
   - {fileID: 2103039562}
+  - {fileID: 949528676}
   m_Father: {fileID: 1458001612}
   m_RootOrder: 2
   m_AnchorMin: {x: .5, y: .5}
@@ -5063,7 +5063,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 161894, guid: 996f55ab1e16d8240a183a0f01c24f18, type: 2}
       propertyPath: m_Name
-      value: StnHomeBtn
+      value: Stn1_Home_Btn
       objectReference: {fileID: 0}
     - target: {fileID: 11498492, guid: 996f55ab1e16d8240a183a0f01c24f18, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -5333,7 +5333,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 161894, guid: 996f55ab1e16d8240a183a0f01c24f18, type: 2}
       propertyPath: m_Name
-      value: CargoStnBtn
+      value: Stn3_Cargo_Btn
       objectReference: {fileID: 0}
     - target: {fileID: 11498492, guid: 996f55ab1e16d8240a183a0f01c24f18, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -5341,7 +5341,7 @@ Prefab:
       objectReference: {fileID: 1458001613}
     - target: {fileID: 11498492, guid: 996f55ab1e16d8240a183a0f01c24f18, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 11498492, guid: 996f55ab1e16d8240a183a0f01c24f18, type: 2}
       propertyPath: m_Colors.m_HighlightedColor.r
@@ -7665,40 +7665,40 @@ MonoBehaviour:
   selectIcon: {fileID: 621345066}
   stationIcons:
   - {fileID: 1803347871}
-  - {fileID: 979530463}
-  - {fileID: 441624115}
   - {fileID: 1060178630}
-  - {fileID: 1268369903}
+  - {fileID: 441624115}
   - {fileID: 60000878}
+  - {fileID: 1268369903}
   - {fileID: 1319985288}
+  - {fileID: 979530463}
   stationLine_Blue: {fileID: 1628213395}
   stationLine_Green: {fileID: 676347379}
   stationLine_Orange: {fileID: 712517399}
   stationLine_Yellow: {fileID: 770264860}
   stationNameTexts:
   - RETURN TO SETTLEMENT
-  - OUTPOST
+  - RAILWAY
   - CARGO
-  - RAILWAYS
-  - RELAY
   - SHORE
+  - RELAY
   - GLADIATOR
+  - OUTPOST
   stationGraphics:
-  - {fileID: 21300000, guid: 7ca904a1d0bc48d4db89ba7812fc6508, type: 3}
-  - {fileID: 21300000, guid: 20752c4b03b1cb940b6f8b15a944a61b, type: 3}
-  - {fileID: 21300000, guid: 20752c4b03b1cb940b6f8b15a944a61b, type: 3}
-  - {fileID: 21300000, guid: 20752c4b03b1cb940b6f8b15a944a61b, type: 3}
-  - {fileID: 21300000, guid: 20752c4b03b1cb940b6f8b15a944a61b, type: 3}
-  - {fileID: 21300000, guid: 20752c4b03b1cb940b6f8b15a944a61b, type: 3}
-  - {fileID: 21300000, guid: 20752c4b03b1cb940b6f8b15a944a61b, type: 3}
+  - {fileID: 21300000, guid: c8cb46ca6347276458e99301590f3092, type: 3}
+  - {fileID: 21300000, guid: 7fff3baad997a5049abdb38775817768, type: 3}
+  - {fileID: 21300000, guid: e1318e3b23ed9a34590ae9ec0f0acedb, type: 3}
+  - {fileID: 21300000, guid: 8d1769f48468b7440a08df5a0c604644, type: 3}
+  - {fileID: 21300000, guid: 78b26d4a2c62c944395bfa2855e5fe43, type: 3}
+  - {fileID: 21300000, guid: 000ff49759685d34d991e60ef5fa5fb3, type: 3}
+  - {fileID: 21300000, guid: 45b889e3133dded49b093d8e26b3e6e6, type: 3}
   leftPanelBackgrounds:
-  - {fileID: 21300000, guid: fd8720beb47ac3f4189e7aa403fb0db4, type: 3}
-  - {fileID: 21300000, guid: e526ae1355d899e48a4060f5c23e5978, type: 3}
-  - {fileID: 21300000, guid: cf485d097bb96b24bba39ef3195e96e4, type: 3}
-  - {fileID: 21300000, guid: 091e569328e745e42a101a078977cbfe, type: 3}
-  - {fileID: 21300000, guid: f89380379c831e74c876a49d7637f383, type: 3}
-  - {fileID: 21300000, guid: b078b3836bb13fb42a23320c83ea54c9, type: 3}
-  - {fileID: 21300000, guid: 657405dee4fc7354faca58a329654b65, type: 3}
+  - {fileID: 21300000, guid: e8fce893f6dae134c96493e3f895961b, type: 3}
+  - {fileID: 21300000, guid: 20fd450ea7d19094899fef4b41a0fec1, type: 3}
+  - {fileID: 21300000, guid: f4aec7ef70be6b345b08bca05e4c713f, type: 3}
+  - {fileID: 21300000, guid: 34d7f74ab542d1b45a2b426119ececf7, type: 3}
+  - {fileID: 21300000, guid: 8d398f16876533f4f89be5b0026a2839, type: 3}
+  - {fileID: 21300000, guid: cef7c5f92fe1a7d409bf532626ed4b0c, type: 3}
+  - {fileID: 21300000, guid: 805acde78e3a74d4f8f3ee556850c7bb, type: 3}
   cursorTexture: {fileID: 2800000, guid: 9e52870f775ce674b9060e4144c53e71, type: 3}
   cursorHotspot: {x: 0, y: 0}
 --- !u!1001 &1465490054
@@ -7738,7 +7738,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22452240, guid: f53fe7eee396cdd48890226d23788db3, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 22452240, guid: f53fe7eee396cdd48890226d23788db3, type: 2}
       propertyPath: m_AnchoredPosition.x
@@ -7786,11 +7786,11 @@ Prefab:
       objectReference: {fileID: 1458001613}
     - target: {fileID: 133270, guid: f53fe7eee396cdd48890226d23788db3, type: 2}
       propertyPath: m_Name
-      value: GladiatorStnBtn
+      value: Stn6_Gladiator_Btn
       objectReference: {fileID: 0}
     - target: {fileID: 11413038, guid: f53fe7eee396cdd48890226d23788db3, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 11413038, guid: f53fe7eee396cdd48890226d23788db3, type: 2}
       propertyPath: m_Colors.m_HighlightedColor.r
@@ -8837,7 +8837,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22485180, guid: 2291770634f0d9b40ac1e685d5ff9afe, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 22485180, guid: 2291770634f0d9b40ac1e685d5ff9afe, type: 2}
       propertyPath: m_AnchoredPosition.x
@@ -8881,7 +8881,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 165950, guid: 2291770634f0d9b40ac1e685d5ff9afe, type: 2}
       propertyPath: m_Name
-      value: OutpostStnBtn
+      value: Stn7_Outpost_Btn
       objectReference: {fileID: 0}
     - target: {fileID: 11499570, guid: 2291770634f0d9b40ac1e685d5ff9afe, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -8889,7 +8889,7 @@ Prefab:
       objectReference: {fileID: 1458001613}
     - target: {fileID: 11499570, guid: 2291770634f0d9b40ac1e685d5ff9afe, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 4
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 11499570, guid: 2291770634f0d9b40ac1e685d5ff9afe, type: 2}
       propertyPath: m_Colors.m_HighlightedColor.r
@@ -9021,7 +9021,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22446962, guid: 57b6250a56ef2044786a31012ec44add, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 22446962, guid: 57b6250a56ef2044786a31012ec44add, type: 2}
       propertyPath: m_AnchoredPosition.x
@@ -9065,7 +9065,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 111500, guid: 57b6250a56ef2044786a31012ec44add, type: 2}
       propertyPath: m_Name
-      value: ShoreStnBtn
+      value: Stn4_Shore_Btn
       objectReference: {fileID: 0}
     - target: {fileID: 11474072, guid: 57b6250a56ef2044786a31012ec44add, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -9073,7 +9073,7 @@ Prefab:
       objectReference: {fileID: 1458001613}
     - target: {fileID: 11474072, guid: 57b6250a56ef2044786a31012ec44add, type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 11474072, guid: 57b6250a56ef2044786a31012ec44add, type: 2}
       propertyPath: m_Colors.m_HighlightedColor.r
