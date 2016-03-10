@@ -31,28 +31,61 @@ public class EnemyMouseOver : MonoBehaviour {
 	
 	}
 
-	void OnMouseOver(){
-
+	void dataUpdate(){
 		if (myUnit.isElite) {
 			infoName.text = "ELITE GRUNT Lv. " + (int)(myUnit.health / 5 + myUnit.attackRating / 3);
 		} else {
 			infoName.text = myUnit.unitName + " Lv. " + (int)(myUnit.health / 5 + myUnit.attackRating / 3);
 		}
-
+		
 		if (myUnit.health >= 10)
-			infoHP.text =  "" + myUnit.health;
+			infoHP.text = "" + myUnit.health;
 		else
 			infoHP.text = "0" + myUnit.health;
-
+		
 		if (myUnit.attackRating >= 10)
 			infoAtk.text = "" + myUnit.attackRating;
 		else
 			infoAtk.text = "0" + myUnit.attackRating;
 	}
+
+	void OnMouseOver(){
+		if (!myUnit._GameController.selectedUnit.attackPressed) {
+			dataUpdate();
+		}
+	}
 	void OnMouseEnter(){
-		infoObject.SetActive (true);
+		if (!myUnit._GameController.selectedUnit.attackPressed) {
+			infoObject.SetActive (true);
+			infoObject.GetComponent<FollowMouse> ().targetPosition = this.transform.position;
+		}
+
 	}
 	void OnMouseExit(){
-		infoObject.SetActive (false);
+		if (!myUnit._GameController.selectedUnit.attackPressed) {
+			infoObject.SetActive (false);
+		}
+	}
+	void OnMouseDown(){
+		if (myUnit.isElite && !myUnit._GameController.selectedUnit.attackPressed) {
+			infoObject.SetActive (true);
+			infoObject.GetComponent<FollowMouse> ().targetPosition = this.transform.position;
+			dataUpdate();
+		} else if (myUnit.isElite && myUnit._GameController.selectedUnit.attackPressed) {
+			if( myUnit._GameController.selectedUnit.AttackTargets.Contains (myUnit) ){
+				myUnit._GameController.selectedUnit.currentAttackTarget = myUnit._GameController.selectedUnit.AttackTargets.IndexOf(myUnit);
+				infoObject.SetActive (true);
+				infoObject.GetComponent<FollowMouse> ().targetPosition = this.transform.position;
+				myUnit._GameController.attackIcon.selectUnit = myUnit._GameController.selectedUnit.AttackTargets [myUnit._GameController.selectedUnit.AttackTargets.IndexOf(myUnit)];
+				dataUpdate ();
+			}
+		} else if( !myUnit.isElite && !myUnit._GameController.selectedUnit.movePressed && !myUnit._GameController.selectedUnit.isMoving ) {
+			myUnit._GameController.selectSelectedUnit(myUnit);
+			Debug.Log ( "clicked");
+		}
+	}
+	public void enableUI(){
+		infoObject.SetActive (true);
+		infoObject.GetComponent<FollowMouse> ().targetPosition = this.transform.position;
 	}
 }

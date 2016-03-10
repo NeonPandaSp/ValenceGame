@@ -1406,6 +1406,7 @@ GameObject:
   - 114: {fileID: 11459232}
   - 65: {fileID: 6597150}
   - 114: {fileID: 11491670}
+  - 114: {fileID: 11487050}
   m_Layer: 0
   m_Name: Folk_Default
   m_TagString: FolkUnit
@@ -3045,7 +3046,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 168004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 0, z: 2}
+  m_LocalPosition: {x: 19, y: 0, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 432972}
@@ -4191,8 +4192,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .660000026, y: 2, z: .660000026}
-  m_Center: {x: .5, y: 1, z: .5}
+  m_Size: {x: .660000026, y: 1.25, z: .660000026}
+  m_Center: {x: .5, y: .612500012, z: .5}
 --- !u!95 &9510508
 Animator:
   serializedVersion: 3
@@ -4322,6 +4323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 243e9cc2abd9aa149a53110ed0d8ea5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agentId: 
   unitName: 
   currentPosition: {x: 0, y: 0}
   lastPosition: {x: 0, y: 0}
@@ -4374,6 +4376,7 @@ MonoBehaviour:
   ScrapObject: {fileID: 0}
   myAnimCtrl: {fileID: 0}
   myFAnimCtrl: {fileID: 0}
+  movementRemaining: 0
 --- !u!114 &11470474
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4385,6 +4388,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c5486aa5c859674994bce2c3971026d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11487050
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 168004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eb12896f78495c41b03464e717084e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoObject: {fileID: 0}
+  myUnit: {fileID: 0}
+  infoName: {fileID: 0}
+  infoHP: {fileID: 0}
+  infoAtk: {fileID: 0}
 --- !u!114 &11487180
 MonoBehaviour:
   m_ObjectHideFlags: 1

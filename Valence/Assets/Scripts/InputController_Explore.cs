@@ -93,7 +93,7 @@ public class InputController_Explore : MonoBehaviour {
 
 		if( Input.GetMouseButton(0) && !Input.GetKey (KeyCode.LeftAlt) ){
 
-			if( _GameController.selectedUnit.canMove && _GameController.GameState == 1 && _GameController.selectedUnit.movePressed ){
+			if( _GameController.selectedUnit.movementRemaining > 0 && _GameController.GameState == 1 && _GameController.selectedUnit.movePressed ){
 				if( _GameController.selectedUnit.withinMoveRange( currentTile ) && _GameController.GeneratePathTo((int)currentTile.x,(int)currentTile.y, 0 ) ){
 					//_GameController.selectedUnit.Move(currentTile);
 					//Instantiate( moveTargetIcon, new Vector3( currentTile.x, 0.1f, currentTile.y), Quaternion.identity );
@@ -114,7 +114,7 @@ public class InputController_Explore : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetKeyDown (KeyCode.Tab)) {
+		if (Input.GetKeyDown (KeyCode.Tab) && !_GameController.selectedUnit.isMoving) {
 			selectedNextUnit ();
 		}
 
@@ -197,8 +197,10 @@ public class InputController_Explore : MonoBehaviour {
 
 	public void AttackWithSelectedUnit(){
 		_GameController.enableAttackBox (_GameController.selectedUnit);
+
 		attackConfirmedButton.gameObject.SetActive(true);
 		moveConfirmedButton.gameObject.SetActive (false);
+		_GameController.selectedUnit.AttackTargets [_GameController.selectedUnit.currentAttackTarget].gameObject.GetComponent<EnemyMouseOver> ().enableUI ();
 		_GameController.selectedUnit.attackPressed = true;
 	}
 
@@ -248,7 +250,7 @@ public class InputController_Explore : MonoBehaviour {
 				i = 0;
 			} 
 			int dCount = 0;
-			while( !_GameController.folk[i].isActiveAndEnabled && _GameController.folk[i].actionPoints <= 0 ){
+			while( !_GameController.folk[i].isActiveAndEnabled || _GameController.folk[i].turnComplete ){
 				i++;
 				if( i > _GameController.folk.Count-1 ){
 					i = 0;
@@ -265,7 +267,6 @@ public class InputController_Explore : MonoBehaviour {
 			_GameController.selectedIndex = i;
 			_GameController.MoveIcon();
 			_GameController.cameraObject.MoveCameraTo( _GameController.cameraObject.transform.position, _GameController.selectedUnit.transform.position );
-
 		}
 	}
 
@@ -338,7 +339,9 @@ public class InputController_Explore : MonoBehaviour {
 		}
 		_GameController.chanceToHitText.text = ""+ _GameController.selectedUnit.calcChanceToHit (_GameController.selectedUnit.getDistance (_GameController.selectedUnit.currentPosition, _GameController.selectedUnit.AttackTargets[_GameController.selectedUnit.currentAttackTarget].currentPosition));
 		_GameController.attackIcon.selectUnit = _GameController.selectedUnit.AttackTargets [_GameController.selectedUnit.currentAttackTarget];
-
+		
+		_GameController.selectedUnit.AttackTargets[_GameController.selectedUnit.currentAttackTarget].gameObject.GetComponent<EnemyMouseOver>().infoObject.GetComponent<FollowMouse>().targetPosition = _GameController.selectedUnit.AttackTargets[_GameController.selectedUnit.currentAttackTarget].gameObject.transform.position;
+		_GameController.selectedUnit.AttackTargets[_GameController.selectedUnit.currentAttackTarget].gameObject.GetComponent<EnemyMouseOver>().enableUI();
 	}
 
 	public void DrawLine(List<ExploreMode_GameController.Node> path){

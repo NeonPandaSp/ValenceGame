@@ -80,11 +80,13 @@ public class Unit : MonoBehaviour {
 
 	public EliteAnimCtrl myAnimCtrl;
 	public FolkAnimCtrl myFAnimCtrl;
+
+	public int movementRemaining;
 	// Use this for initialization
 	void Start () {
 
 		_GameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<ExploreMode_GameController> ();
-
+		agentId = "" + Random.Range (0, 9999);
 		currentPosition = new Vector2( transform.position.x, transform.position.z );
 		startPosition = currentPosition;
 		moving = false;
@@ -97,8 +99,9 @@ public class Unit : MonoBehaviour {
 		isMoving = false;
 
 		currentPatrolPoint = 0;
-
+		
 		movement = 2 + (agility);
+		movementRemaining = movement;
 		attackRange = myWeapon.GetComponent<weaponScript> ().range;
 		attackRating = myWeapon.GetComponent<weaponScript> ().damageModifier + (strength);
 		aimRating = myWeapon.GetComponent<weaponScript> ().accuracy + (perception * 0.1f);
@@ -116,9 +119,10 @@ public class Unit : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-		if (actionPoints <= 0) {
-			turnComplete = true;
+		if (_GameController.selectedUnit.agentId == agentId ) {
+			if ((movementRemaining <= 0 && hasAttacked) || (movementRemaining <= 0 && !_GameController.attackButton.IsInteractable () && !isMoving) || waitPressed) {
+				turnComplete = true;
+			}
 		}
 		if(currentPath != null) {
 			_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 1;
@@ -229,6 +233,7 @@ public class Unit : MonoBehaviour {
 			// Move us to the next tile in the sequence
 			currentPosition.x = currentPath[1].x;
 			currentPosition.y = currentPath[1].y;
+			movementRemaining--;
 
 			//transform.position = new Vector3(currentPosition.x, 0, currentPosition.y);
 			if( isElite) {
@@ -373,26 +378,44 @@ public class Unit : MonoBehaviour {
 		Vector3 direction = fU.transform.position - transform.position;
 		//Debug.Log ( direction.normalized.x + " " + direction.normalized.y + " " + direction.normalized.z );
 		float angle = Vector3.Angle(direction, facing);
-		Debug.DrawLine( fU.transform.position+ new Vector3(0.5f,1.5f,0.5f), transform.position+ new Vector3(0.5f,1.5f,0.5f));
+		Debug.DrawLine( fU.transform.position+ new Vector3(0.5f,1.2f,0.5f), transform.position+ new Vector3(0.5f,1.2f,0.5f));
 		// If the angle between forward and where the player is, is less than half the angle of view...
 		if(angle < fieldOfViewAngle * 0.5f || ignoreAngle == true )
 		{
 			RaycastHit hit;
 			// ... and if a raycast towards the player hits something...
-			if(Physics.Raycast(transform.position + new Vector3(0.5f,1.5f,0.5f) , direction.normalized, out hit, 6.0f ) )
-			{
-				// ... and if the raycast hits the player...
-				if(hit.collider.gameObject == fU.gameObject )
+			if( isElite ){
+				if(Physics.Raycast(transform.position + new Vector3(0.5f,1.2f,0.5f) , direction.normalized, out hit, 6.0f ) )
 				{
-					return true;
+					// ... and if the raycast hits the player...
+					if(hit.collider.gameObject == fU.gameObject )
+					{
+						return true;
+					} else {
+						return false;
+						//FolkUnitsWithinView.Remove (fU);
+					}
 				} else {
 					return false;
-					//FolkUnitsWithinView.Remove (fU);
+					//if( FolkUnitsWithinView.Contains (fU) )
+						//FolkUnitsWithinView.Remove (fU);
 				}
 			} else {
-				return false;
-				//if( FolkUnitsWithinView.Contains (fU) )
+				if(Physics.Raycast(transform.position + new Vector3(0.5f,1.2f,0.5f) , direction.normalized, out hit ) )
+				{
+					// ... and if the raycast hits the player...
+					if(hit.collider.gameObject == fU.gameObject )
+					{
+						return true;
+					} else {
+						return false;
+						//FolkUnitsWithinView.Remove (fU);
+					}
+				} else {
+					return false;
+					//if( FolkUnitsWithinView.Contains (fU) )
 					//FolkUnitsWithinView.Remove (fU);
+				}
 			}
 		} else {
 			return false;
@@ -563,6 +586,10 @@ public class Unit : MonoBehaviour {
 	public void Attack(Unit targetUnit){
 
 		targetUnit.health -= attackRating;
+		if (targetUnit.isElite) {
+			targetUnit.knownPosition.Add (currentPosition);
+			targetUnit.lastKnownPosition = targetUnit.knownPosition[targetUnit.knownPosition.Count-1];
+		}
 		generateSound (currentPosition, myWeapon.GetComponent<weaponScript> ().soundRange);
 		Debug.Log ("Attack Dealt " + attackRating + " Damage.");
 		Debug.Log ("Unit has " + targetUnit.health + " remaining.");
@@ -594,9 +621,16 @@ public class Unit : MonoBehaviour {
 	}
 
 	public float calcChanceToHit(float distance){
-		float chance = aimRating - ( 0.1f * distance );
-
+		//float chance = aimRating - ( 0.1f * distance );
+		float chance = aimRating * Mathf.Sin( (myWeapon.GetComponent<weaponScript>().period*distance) + myWeapon.GetComponent<weaponScript>().offset );
+		if (distance > myWeapon.GetComponent<weaponScript> ().range) {
+			chance = 0;
+		}
 		chance = chance * 100;
+		if (chance <= 0)
+			chance = 0;
+		else if (chance >= 99)
+			chance = 99;
 		//Debug.Log ("Chance to hit: " + chance + "%");
 		return chance;
 		/**

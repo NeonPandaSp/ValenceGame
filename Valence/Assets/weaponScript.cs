@@ -8,6 +8,9 @@ public class weaponScript : MonoBehaviour {
 	public float accuracy;
 	public float soundRange;
 
+	public float period;
+	public float offset;
+
 	// Use this for initialization
 	void Start () {
 		

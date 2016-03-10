@@ -49,9 +49,9 @@ public class ExploreMode_GameController : MonoBehaviour {
 	public GameObject scrapObj;
 
 	public Text chanceToHitText;
-
-	public Image actionPointGfx_01, actionPointGfx_02;
-	public List<Image> healthBar;
+//
+//	public Image actionPointGfx_01, actionPointGfx_02;
+//	public List<Image> healthBar;
 
 	public InputController_Explore _inputController;
 
@@ -112,6 +112,19 @@ public class ExploreMode_GameController : MonoBehaviour {
 			Destroy( PartyButtons[PartyButtons.Count-1].gameObject );
 			PartyButtons.Remove (PartyButtons[PartyButtons.Count-1]);
 		}
+
+		foreach( Unit fU in folk ){
+			fU.turnComplete = false;
+			fU.movementRemaining = fU.movement;
+			fU.actionPoints = 2;
+			fU.canMove = true;
+			fU.movePressed = false;
+			fU.attackPressed = false;
+			fU.grabPressed = false;
+			fU.waitPressed = false;
+			fU.hasAttacked = false;
+		}
+
 	}
 
 	// Update is called once per frame
@@ -142,29 +155,36 @@ public class ExploreMode_GameController : MonoBehaviour {
 				}
 			}
 
-			if( selectedUnit.canMove && selectedUnit.actionPoints > 0 ){
+			if( selectedUnit.movementRemaining > 0 && !selectedUnit.isMoving ){
 				moveButton.interactable = true;
 			} else {
 				moveButton.interactable = false;
 			} 
 
-			if( canAttack(selectedUnit) && !selectedUnit.isMoving && !selectedUnit.hasScrap && selectedUnit.actionPoints > 0 && !selectedUnit.hasAttacked) {
+			if( canAttack(selectedUnit) && !selectedUnit.isMoving && !selectedUnit.hasScrap && !selectedUnit.hasAttacked) {
 				attackButton.interactable = true;
 			} else {
 				attackButton.interactable = false;
 			}
 
-			if( canPickUp(selectedUnit) && !selectedUnit.isMoving && selectedUnit.actionPoints > 0){
+			if( canPickUp(selectedUnit) && !selectedUnit.isMoving ){
 				pickUpButton.interactable = true;
 			} else {
 				pickUpButton.interactable = false;
 			}
 
-			if( selectedUnit.AttackTargets.Count > 0 ){
+			if( selectedUnit.isMoving ){
+				waitButton.interactable = false;
+			} else {
+				waitButton.interactable = true;
+			}
+
+			if( selectedUnit.AttackTargets.Count > 0 && !selectedUnit.isMoving){
 				attackSelectButton.interactable = true;
 				attackNext.interactable = true;
 				attackPrev.interactable = true;
-				chanceToHitText.text = ""+ selectedUnit.calcChanceToHit (selectedUnit.getDistance (selectedUnit.currentPosition, selectedUnit.AttackTargets[selectedUnit.currentAttackTarget].currentPosition));
+				chanceToHitText.transform.parent.gameObject.SetActive(true);
+				chanceToHitText.text = ""+ (int) selectedUnit.calcChanceToHit (selectedUnit.getDistance (selectedUnit.currentPosition, selectedUnit.AttackTargets[selectedUnit.currentAttackTarget].currentPosition));
 			} else {
 				attackSelectButton.interactable = false;
 				attackNext.interactable = false;
@@ -200,6 +220,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 				cameraObject.MoveCameraTo( cameraObject.transform.position, selectedUnit.transform.position );
 				foreach( Unit fU in folk ){
 					fU.turnComplete = false;
+					fU.movementRemaining = fU.movement;
 					fU.actionPoints = 2;
 					fU.canMove = true;
 					fU.movePressed = false;
@@ -222,26 +243,26 @@ public class ExploreMode_GameController : MonoBehaviour {
 			break;
 		}
 
-		if (!selectedUnit.isElite && selectedUnit.actionPoints >= 2) {
-			actionPointGfx_01.gameObject.SetActive(true);
-			actionPointGfx_02.gameObject.SetActive(true);
-		} else if (!selectedUnit.isElite && selectedUnit.actionPoints == 1) {
-			actionPointGfx_01.gameObject.SetActive(true);
-			actionPointGfx_02.gameObject.SetActive(false);
-		} else {
-			actionPointGfx_01.gameObject.SetActive(false);
-			actionPointGfx_02.gameObject.SetActive(false);
-		}
-		if (!selectedUnit.isElite) {
-			foreach (Image i in healthBar) {
-				if (selectedUnit.health < healthBar.IndexOf (i) + 1) {
-					i.gameObject.SetActive (false);
-				} else {
-					i.gameObject.SetActive (true);
-				}
-			}
-		}
-
+//		if (!selectedUnit.isElite && selectedUnit.actionPoints >= 2) {
+//			actionPointGfx_01.gameObject.SetActive(true);
+//			actionPointGfx_02.gameObject.SetActive(true);
+//		} else if (!selectedUnit.isElite && selectedUnit.actionPoints == 1) {
+//			actionPointGfx_01.gameObject.SetActive(true);
+//			actionPointGfx_02.gameObject.SetActive(false);
+//		} else {
+//			actionPointGfx_01.gameObject.SetActive(false);
+//			actionPointGfx_02.gameObject.SetActive(false);
+//		}
+//		if (!selectedUnit.isElite) {
+//			foreach (Image i in healthBar) {
+//				if (selectedUnit.health < healthBar.IndexOf (i) + 1) {
+//					i.gameObject.SetActive (false);
+//				} else {
+//					i.gameObject.SetActive (true);
+//				}
+//			}
+//		}
+//
 	}
 
 	public class Node{
@@ -298,8 +319,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 		
 		Dictionary<Vector2,int> mTiles = new Dictionary<Vector2, int> ();
 
-		for (int i = (int)selectedUnit.currentPosition.x-selectedUnit.movement; i <= (int)selectedUnit.currentPosition.x + selectedUnit.movement; i++) {
-			for (int j=(int)selectedUnit.currentPosition.y -selectedUnit.movement; j <= (int)selectedUnit.currentPosition.y +selectedUnit.movement; j++) {
+		for (int i = (int)selectedUnit.currentPosition.x-selectedUnit.movementRemaining; i <= (int)selectedUnit.currentPosition.x + selectedUnit.movementRemaining; i++) {
+			for (int j=(int)selectedUnit.currentPosition.y -selectedUnit.movementRemaining; j <= (int)selectedUnit.currentPosition.y +selectedUnit.movementRemaining; j++) {
 				if (i >= 0 && i < mapSize && j >= 0 && j < mapSize) {
 					if (selectedUnit.withinMoveRange (new Vector2 (i, j))) {
 						mTiles.Add ( new Vector2( i , j ), selectedUnit.getDistance (selectedUnit.currentPosition, new Vector2 (i, j)) );
@@ -308,7 +329,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 			}
 		}
 		List<Vector2> vTiles = new List<Vector2>();
-		int currentD = selectedUnit.movement;
+		int currentD = selectedUnit.movementRemaining;
 		while (currentD > 0) {
 			foreach (KeyValuePair<Vector2, int> entry in mTiles) {
 				if( entry.Value == currentD ){
@@ -849,6 +870,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 	}
 	public void disableAttackBox(){
 		selectedUnit.AttackTargets.Clear();
+		selectedUnit.attackPressed = false;
+		chanceToHitText.gameObject.transform.parent.gameObject.SetActive (false);
 		attackIcon.gameObject.SetActive (false);
 		chanceToHitText.text = "X";
 //		foreach (Unit eU in elite) {
@@ -889,6 +912,20 @@ public class ExploreMode_GameController : MonoBehaviour {
 				selectedUnit.movePressed = false;
 			}
 			selectedIndex = i;
+			MoveIcon();
+			cameraObject.MoveCameraTo( cameraObject.transform.position, selectedUnit.transform.position );
+			
+		}
+	}
+	public void selectSelectedUnit(Unit newUnit){
+		DestroyMovementRange ();
+		if( GameState == 1 ){
+			selectedUnit = newUnit;
+
+			if( selectedUnit.canMove ){
+				selectedUnit.movePressed = false;
+			}
+			selectedIndex = folk.IndexOf(newUnit);
 			MoveIcon();
 			cameraObject.MoveCameraTo( cameraObject.transform.position, selectedUnit.transform.position );
 			
