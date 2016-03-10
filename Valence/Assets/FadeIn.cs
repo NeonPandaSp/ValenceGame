@@ -21,11 +21,17 @@ public class FadeIn : MonoBehaviour {
 		//Debug.Log (Time.deltaTime);
 		if (currentTime > delay) {
 			//Debug.Log ( "fading" );
-			if( fadeObject.color.a < ( 0.6f ) ){
-				fadeObject.color = new Color (fadeObject.color.r, fadeObject.color.g, fadeObject.color.b, fadeObject.color.a + Time.deltaTime );
-				text.color = new Color (text.color.r, text.color.g, text.color.b, text.color.a + Time.deltaTime );
-			}
+			if( fadeObject != null ){
+				if( fadeObject.color.a < ( 0.6f ) ){
+					fadeObject.color = new Color (fadeObject.color.r, fadeObject.color.g, fadeObject.color.b, fadeObject.color.a + Time.deltaTime );
 
+				}
+			}
+			if( text != null ){
+				if( text.color.a < 1.0f) {
+					text.color = new Color (text.color.r, text.color.g, text.color.b, text.color.a + Time.deltaTime );
+				}
+			}
 			//Debug.Log ( fadeObject.color.a );
 			//Debug.Log ( text.color.a );
 		}

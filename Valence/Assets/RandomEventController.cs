@@ -71,7 +71,7 @@ public class RandomEventController : MonoBehaviour {
 			Debug.Log ("Event 002 Called");
 			eventTitle.text = "Event: Dark Corners";
 			int rand = Random.Range (0,_gameController.population.Count-1);
-			eventDescription.text = _gameController.population[rand].GetComponent<AgentLogic_07>().firstLastName + " thinks he found some building resources in a nearby collapsed tunnels. Its a dangerous area, but may result in more scrap. Send a group to invertigate?";
+			eventDescription.text = _gameController.population[rand].GetComponent<AgentLogic_07>().firstLastName + " thinks he found some building resources in a nearby collapsed tunnels. Its a dangerous area, but may result in more scrap. Send a group to investigate?";
 			confirmButton.GetComponentInChildren<Text>().text  = "Send Group";
 			declineButton.GetComponentInChildren<Text>().text = "Decline";
 			break;
