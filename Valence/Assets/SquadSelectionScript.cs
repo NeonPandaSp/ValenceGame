@@ -12,7 +12,8 @@ public class SquadSelectionScript : MonoBehaviour {
 
 	public List<Button> buttons;
 
-	public GameObject popSelection;
+	public GameObject settlerList;
+	//public GameObject weaponsList;
 
 	public serialAgent[] myParty = new serialAgent[4];
 
@@ -20,11 +21,24 @@ public class SquadSelectionScript : MonoBehaviour {
 
 	public Text[] myPartyNames = new Text[4];
 
+	//Stats of Squad members
 	public Text[] myParty_STR_Stats = new Text[4];
 	public Text[] myParty_PER_Stats = new Text[4];
 	public Text[] myParty_AGL_Stats = new Text[4];
 
 	public Image[] myPartyWeapon = new Image[4];
+
+	/*
+	//Stats of the Settlers in the Population
+	public Text[] settler_STR_Stats = new Text[4];
+	public Text[] settler_PER_Stats = new Text[4];
+	public Text[] settler_AGL_Stats = new Text[4];
+
+	//Stats of Weapons in Inventory
+	public Text[] weapon_DMG_Stats = new Text[4];
+	public Text[] weapon_RNG_Stats = new Text[4];
+	public Text[] weapon_ACC_Stats = new Text[4];
+	*/
 
 	public int selectedPartyIndex;
 	public bool noneSelected;
@@ -36,12 +50,11 @@ public class SquadSelectionScript : MonoBehaviour {
 	void Start () {
 		rowIndex = 0;
 		loadPopulation ();
-		enablePopulationPanel (false);
+		enableSettlerListPanel (false);
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update () {	
 	}
 
 	public void loadPopulation(){
@@ -66,7 +79,7 @@ public class SquadSelectionScript : MonoBehaviour {
 		int butDex = 0;
 		for (int i = index; i < index + buttons.Count; i++) {
 			if (i < population.Count)
-				buttons[butDex].GetComponentInChildren<Text>().text = population[i].agentName;
+				buttons[butDex].GetComponentInChildren <Text> ().text = population[i].agentName;
 			butDex++;
 		}
 	}
@@ -78,9 +91,9 @@ public class SquadSelectionScript : MonoBehaviour {
 		int butDex = 0;
 		for (int i = index; i < index + buttons.Count; i++) {
 			if (i < population.Count)
-				buttons[butDex].GetComponentInChildren<Text>().text = population[i].agentName;
+				buttons[butDex].GetComponentInChildren <Text> ().text = population[i].agentName;
 			else
-				buttons[butDex].GetComponentInChildren<Text>().text = "NA";
+				buttons[butDex].GetComponentInChildren <Text> ().text = "NA";
 			butDex++;
 		}
 	}
@@ -89,16 +102,15 @@ public class SquadSelectionScript : MonoBehaviour {
 		Debug.Log ("SetSelectedPartyIndex Called");
 		selectedPartyIndex = index;
 		noneSelected = false;
-		enablePopulationPanel (true);
+		enableSettlerListPanel (true);
 	}
 
-	public void enablePopulationPanel (bool on) {
-		if(on){
-		//if (on && !popSelection.gameObject.activeSelf) {
-			//popSelection.gameObject.SetActive (true);
-			loadPopulation();
+	public void enableSettlerListPanel (bool on) {
+		if (on && !settlerList.gameObject.activeSelf) {
+			settlerList.gameObject.SetActive (true);
+			loadPopulation ();
 		} else {
-			//popSelection.gameObject.SetActive (false);
+			settlerList.gameObject.SetActive (false);
 		}
 	}
 
@@ -111,6 +123,8 @@ public class SquadSelectionScript : MonoBehaviour {
 			}
 		}
 
+		enableSettlerListPanel (false);
+
 		if (!noneSelected && !inParty) {
 			Debug.Log ("setPartyMember called");
 			//Set Party UI Assets to selected Agent from population
@@ -122,7 +136,7 @@ public class SquadSelectionScript : MonoBehaviour {
 			//Reset Selection Variables
 			selectedPartyIndex = -1;
 			noneSelected = true;
-			enablePopulationPanel(false);
+			enableSettlerListPanel (false);
 			if( numSet < 4 )
 				numSet++;
 		}
@@ -134,6 +148,5 @@ public class tempAgent {
 	public string name;
 	public int movement;
 	public int attack;
-	public int perception;
-	
+	public int perception;	
 }
