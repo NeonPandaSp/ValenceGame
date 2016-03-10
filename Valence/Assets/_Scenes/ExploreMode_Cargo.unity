@@ -1394,7 +1394,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 164633215}
   m_OnClick:
     m_PersistentCalls:
@@ -3920,6 +3920,7 @@ MonoBehaviour:
   scrapObj: {fileID: 838115104}
   chanceToHitText: {fileID: 1058228213}
   _inputController: {fileID: 186758059}
+  lastScrapPos: {x: 0, y: 0}
 --- !u!4 &435930104
 Transform:
   m_ObjectHideFlags: 0
@@ -9860,7 +9861,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 497258, guid: a916a978b537f3c4ab9b8388202173cf, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 497258, guid: a916a978b537f3c4ab9b8388202173cf, type: 2}
       propertyPath: m_LocalPosition.z
@@ -13085,6 +13086,26 @@ Prefab:
       propertyPath: agentId
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11459232, guid: d1877e668c5ceaf45b567752aa759c30, type: 2}
+      propertyPath: health
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11459232, guid: d1877e668c5ceaf45b567752aa759c30, type: 2}
+      propertyPath: strength
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 11459232, guid: d1877e668c5ceaf45b567752aa759c30, type: 2}
+      propertyPath: agility
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 11459232, guid: d1877e668c5ceaf45b567752aa759c30, type: 2}
+      propertyPath: perception
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 11459232, guid: d1877e668c5ceaf45b567752aa759c30, type: 2}
+      propertyPath: movement
+      value: 99
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d1877e668c5ceaf45b567752aa759c30, type: 2}
   m_IsPrefabParent: 0
@@ -13504,7 +13525,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 497258, guid: a916a978b537f3c4ab9b8388202173cf, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 497258, guid: a916a978b537f3c4ab9b8388202173cf, type: 2}
       propertyPath: m_LocalPosition.z
@@ -14012,7 +14033,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 497258, guid: a916a978b537f3c4ab9b8388202173cf, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 497258, guid: a916a978b537f3c4ab9b8388202173cf, type: 2}
       propertyPath: m_LocalPosition.z
@@ -15633,7 +15654,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 497258, guid: a916a978b537f3c4ab9b8388202173cf, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 497258, guid: a916a978b537f3c4ab9b8388202173cf, type: 2}
       propertyPath: m_LocalPosition.z
@@ -17870,7 +17891,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1943604764}
   m_OnClick:
     m_PersistentCalls:
@@ -17928,7 +17949,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 497258, guid: a916a978b537f3c4ab9b8388202173cf, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 497258, guid: a916a978b537f3c4ab9b8388202173cf, type: 2}
       propertyPath: m_LocalPosition.z
@@ -19214,7 +19235,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2083717698}
   m_OnClick:
     m_PersistentCalls:

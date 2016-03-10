@@ -37,6 +37,9 @@ public class WinStateScript : MonoBehaviour {
 			if (_gameController.folk.Count <= 0) {
 				lose = true;
 			}
+			if(_gameController.elite.Count <= 0){
+				win = true;
+			}
 			foreach (Unit fU in _gameController.folk) {
 				if (fU.hasScrap) {
 					if (fU.getDistance (fU.currentPosition, rootPosition) <= 2) {

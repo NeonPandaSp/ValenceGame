@@ -55,6 +55,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 	public InputController_Explore _inputController;
 
+	public Vector2 lastScrapPos;
 	// Use this for initialization
 	void Start () {
 		tiles = new int[mapSize,mapSize];
@@ -130,7 +131,9 @@ public class ExploreMode_GameController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
+		tiles [(int)lastScrapPos.x,(int)lastScrapPos.y] = 1;
+		tiles [(int)scrapObj.transform.position.x,(int)scrapObj.transform.position.z] = 3;
+		lastScrapPos = new Vector2 ((int)scrapObj.transform.position.x, (int)scrapObj.transform.position.z);
 
 		switch (GameState)
 		{
@@ -173,7 +176,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 				pickUpButton.interactable = false;
 			}
 
-			if( selectedUnit.isMoving ){
+			if( selectedUnit.isMoving || selectedUnit.attackPressed || selectedUnit.movePressed ){
 				waitButton.interactable = false;
 			} else {
 				waitButton.interactable = true;

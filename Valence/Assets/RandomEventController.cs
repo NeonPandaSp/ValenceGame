@@ -176,14 +176,14 @@ public class RandomEventController : MonoBehaviour {
 
 	public void Confirm(){
 		EventResult (eventId, true);
-		eventActive = false;
+		//eventActive = false;
 		eventPanel.SetActive (false);
 		currentTime = 0;
 	}
 
 	public void Decline(){
 		EventResult (eventId, false);
-		eventActive = false;
+		//eventActive = false;
 		eventPanel.SetActive (false);
 		currentTime = 0;
 	}

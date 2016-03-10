@@ -196,12 +196,17 @@ public class InputController_Explore : MonoBehaviour {
 	}
 
 	public void AttackWithSelectedUnit(){
-		_GameController.enableAttackBox (_GameController.selectedUnit);
 
-		attackConfirmedButton.gameObject.SetActive(true);
-		moveConfirmedButton.gameObject.SetActive (false);
-		_GameController.selectedUnit.AttackTargets [_GameController.selectedUnit.currentAttackTarget].gameObject.GetComponent<EnemyMouseOver> ().enableUI ();
-		_GameController.selectedUnit.attackPressed = true;
+		if (!_GameController.selectedUnit.attackPressed) {
+			_GameController.enableAttackBox (_GameController.selectedUnit);
+			attackConfirmedButton.gameObject.SetActive (true);
+			moveConfirmedButton.gameObject.SetActive (false);
+			_GameController.selectedUnit.AttackTargets [_GameController.selectedUnit.currentAttackTarget].gameObject.GetComponent<EnemyMouseOver> ().enableUI ();
+			_GameController.selectedUnit.attackPressed = true;
+		} else {
+			attackConfirmedButton.gameObject.SetActive(false);
+			_GameController.disableAttackBox();
+		}
 	}
 
 	public void WaitSelectedUnit(){

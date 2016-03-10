@@ -83,7 +83,7 @@ public class CameraTargetController : MonoBehaviour {
 		if (following) {
 			//MoveCameraTo ( transform.position, followTarget.transform.position );
 			this.transform.position = followTarget.transform.position;
-			Camera.main.transform.LookAt( this.gameObject.transform );
+			//Camera.main.transform.LookAt( this.gameObject.transform );
 		}
 
 		lastMousePositionX = Input.mousePosition.x;

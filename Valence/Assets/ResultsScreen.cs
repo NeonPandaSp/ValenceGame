@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class ResultsScreen : MonoBehaviour {
-
+	public RandomEventController eventController;
 	// Use this for initialization
 	void Start () {
 	
@@ -14,6 +14,8 @@ public class ResultsScreen : MonoBehaviour {
 	}
 
 	public void Dismiss(){
+		eventController.eventActive = false;
 		this.gameObject.SetActive (false);
+
 	}
 }

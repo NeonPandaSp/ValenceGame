@@ -75,5 +75,6 @@ public class EnemyMouseOver : MonoBehaviour {
 	public void enableUI(){
 		infoObject.SetActive (true);
 		infoObject.GetComponent<FollowMouse> ().targetPosition = this.transform.position;
+		dataUpdate ();
 	}
 }
