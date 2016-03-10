@@ -234,6 +234,11 @@ public class AgentLogic_07 : MonoBehaviour {
 			moraleLevel = 100;
             //Init the agent's perception to 10% when spawned (this is the standard starting value for all agents)
             perception = 10;
+
+			
+			
+			//When the agent spawns, there is a 50% chance to spawn idle or wander
+			WanderOrIdle(50.0f);
         }
 		aiFollow = GetComponent<AIFollow_07> ();
 		wanderWaypoints = new List<Vector3> ();
@@ -261,12 +266,14 @@ public class AgentLogic_07 : MonoBehaviour {
 		//Agent should not have populated any worker lists
 		populateList = false;
 
-        //When the agent spawns, there is a 50% chance to spawn idle or wander
-        WanderOrIdle(50.0f);
-
         if (aState == null){
             //When an agent spawns, he should start by wandering if there is no starting state
             aState = agentState.Wandering;
+		}
+
+		if (jobState == jobSubState.Default) {
+			//When the agent spawns, there is a 50% chance to spawn idle or wander
+			WanderOrIdle(50.0f);
 		}
 
         //Once everything has been set, begin consuming resources
@@ -292,7 +299,7 @@ public class AgentLogic_07 : MonoBehaviour {
 		}
 
         //Check if the agent has run out of health
-        if (health == 0 && isDead == false)
+        if (health <= 0 && isDead == false)
         {
             //Stop the agent from moving
             aiFollow.Stop();
@@ -303,6 +310,8 @@ public class AgentLogic_07 : MonoBehaviour {
             agentAnim.SetBool("Idle", false);
             agentAnim.SetBool("Working", false);
             agentAnim.SetBool("Walking", false);
+
+			gameController.population.Remove (this.gameObject);
             health = 0;
             //Ensure the agent only triggers this logic once
             isDead = true;

@@ -31,13 +31,14 @@ public class InputController : MonoBehaviour {
     string hoverState;
 
 	public GUIController _GUIController;
+	public GameObject _debugUI;
 
 	public Collider lowerCollider1, lowerCollider2;
 
 	void Start(){
 		_tileMap = GetComponent<TileMap> ();
 		_generateZone = GetComponent < generateZone >();
-		myHoverObject = (GameObject) Instantiate (Resources.Load("Tile"), new Vector3 (0, 0, 0), Quaternion.identity);
+		//myHoverObject = (GameObject) Instantiate (Resources.Load("Tile"), new Vector3 (0, 0, 0), Quaternion.identity);
 		generate = false;
 		zoning = true;
 		currentColor = "blue";
@@ -50,14 +51,29 @@ public class InputController : MonoBehaviour {
 
 	public void selectedMaterial (string color){
 		if (color == "blue") {
-			myHoverObject.GetComponentInChildren<MeshRenderer> ().material = blueMat;
+			MeshRenderer[] meshes = myHoverObject.GetComponentsInChildren<MeshRenderer> ();
+			foreach( MeshRenderer m in meshes ){
+				m.material = blueMat;
+			}
 			currentColor = "blue";
 		} else if (color == "yellow") {
-			myHoverObject.GetComponentInChildren<MeshRenderer> ().material = yellowMat;
+			MeshRenderer[] meshes = myHoverObject.GetComponentsInChildren<MeshRenderer> ();
+			foreach( MeshRenderer m in meshes ){
+				m.material = yellowMat;
+			}
 			currentColor = "yellow";
 		} else if (color == "green") {
-			myHoverObject.GetComponentInChildren<MeshRenderer> ().material = greenMat;
+			MeshRenderer[] meshes = myHoverObject.GetComponentsInChildren<MeshRenderer> ();
+			foreach( MeshRenderer m in meshes ){
+				m.material = greenMat;
+			}
 			currentColor = "green";
+		} else if (color == "red") {
+			MeshRenderer[] meshes = myHoverObject.GetComponentsInChildren<MeshRenderer> ();
+			foreach( MeshRenderer m in meshes ){
+				m.material = redMat;
+			}
+			currentColor = "red";
 		}
 	}
 
@@ -95,8 +111,22 @@ public class InputController : MonoBehaviour {
 		return (int) ( maxY - minY );
 	}
 	void FixedUpdate () {
+		if (Input.GetKey (KeyCode.BackQuote)) {
+			if( _debugUI.activeSelf == true ){
+				_debugUI.SetActive(false);
+			} else {
+				_debugUI.SetActive (true);
+			}
+		}
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit hitInfo;
+		if (myHoverObject != null) {
+			if (!IsOverlapping (myHoverObject, GameObject.FindGameObjectsWithTag ("prop")) && _gameController.scrap > 25 && !MouseEdge() ) {
+				selectedMaterial("blue");
+			} else {
+				selectedMaterial("red");
+			}
+		}
 
 		if ( GetComponent<Collider>().Raycast (ray, out hitInfo, Mathf.Infinity)) {
 			Debug.DrawRay(ray.origin,ray.direction);
@@ -111,7 +141,9 @@ public class InputController : MonoBehaviour {
             currentTile.z = z;
 
 			//if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
-			myHoverObject.transform.position = currentTile;
+			if( myHoverObject != null ){
+				myHoverObject.transform.position = currentTile;
+			}
 			//}
 		} else if( lowerCollider1.Raycast (ray, out hitInfo, Mathf.Infinity)) {
 			Debug.DrawRay(ray.origin,ray.direction);
@@ -136,38 +168,40 @@ public class InputController : MonoBehaviour {
 			currentTile.z = z;
 			
 			//if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
-			myHoverObject.transform.position = currentTile;
+			if( myHoverObject != null )
+				myHoverObject.transform.position = currentTile;
 		}
 
 		if (Input.GetMouseButtonDown (0) && !Input.GetKey ( KeyCode.LeftAlt )) {
 			if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
-				myHoverObject.transform.position = new Vector3( currentTile.x, 0.1f, currentTile.y );
+				if( myHoverObject != null )
+					myHoverObject.transform.position = new Vector3( currentTile.x, 0.1f, currentTile.y );
 				rootMousePos = currentTile;
 			}
 		}
 		if (Input.GetMouseButton (0) && !Input.GetKey ( KeyCode.LeftAlt )) {
 			/// Zoning Stuff
-			if( zoning ){
-				if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
-					if( rootMousePos.x >= currentTile.x ){ myHoverObject.transform.position = new Vector3( rootMousePos.x + 1, 0.1f, myHoverObject.transform.position.y ); }
-					else { myHoverObject.transform.position = new Vector3( rootMousePos.x, 0.1f, myHoverObject.transform.position.y ); }
-					if( rootMousePos.y >= currentTile.y ){ myHoverObject.transform.position = new Vector3( myHoverObject.transform.position.x,0.1f, rootMousePos.y + 1 ); }
-					else { myHoverObject.transform.position = new Vector3(  myHoverObject.transform.position.x, 0.1f, rootMousePos.y ); }
-//					int scaleX = (int) ( rootMousePos.x - currentTile.x );
-//					int scaleY = (int) ( rootMousePos.y - currentTile.y );
-//					if( scaleX == 0 ) { scaleX = 1; }
-//					if( scaleY == 0 ) { scaleY = 1; }
-//					myHoverObject.transform.localScale = new Vector3( -1 * scaleX, 1 , -1 * scaleY );
-
-				}
-				if( getCurrentSize() >= 25 && getCurrentWidth() >= 5 && getCurrentHeight() >= 5 ){
-					selectedMaterial( currentColor );
-					generate = true;
-				} else {
-					myHoverObject.GetComponentInChildren<MeshRenderer>().material = redMat;
-					generate = false;
-				}
-			}
+//			if( zoning ){
+//				if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
+//					if( rootMousePos.x >= currentTile.x ){ myHoverObject.transform.position = new Vector3( rootMousePos.x + 1, 0.1f, myHoverObject.transform.position.y ); }
+//					else { myHoverObject.transform.position = new Vector3( rootMousePos.x, 0.1f, myHoverObject.transform.position.y ); }
+//					if( rootMousePos.y >= currentTile.y ){ myHoverObject.transform.position = new Vector3( myHoverObject.transform.position.x,0.1f, rootMousePos.y + 1 ); }
+//					else { myHoverObject.transform.position = new Vector3(  myHoverObject.transform.position.x, 0.1f, rootMousePos.y ); }
+////					int scaleX = (int) ( rootMousePos.x - currentTile.x );
+////					int scaleY = (int) ( rootMousePos.y - currentTile.y );
+////					if( scaleX == 0 ) { scaleX = 1; }
+////					if( scaleY == 0 ) { scaleY = 1; }
+////					myHoverObject.transform.localScale = new Vector3( -1 * scaleX, 1 , -1 * scaleY );
+//
+//				}
+//				if( getCurrentSize() >= 25 && getCurrentWidth() >= 5 && getCurrentHeight() >= 5 ){
+//					selectedMaterial( currentColor );
+//					generate = true;
+//				} else {
+//					myHoverObject.GetComponentInChildren<MeshRenderer>().material = redMat;
+//					generate = false;
+//				}
+//			}
 		}
 		if (Input.GetMouseButtonUp (0) && !Input.GetKey ( KeyCode.LeftAlt ) ) {
 
@@ -201,9 +235,9 @@ public class InputController : MonoBehaviour {
 //					AstarPath.active.UpdateGraphs(obstcale.gameObject.GetComponent<Collider>().bounds);
 //				} 
 //			} else 
-			if ( !zoning ){
+			if ( !zoning && !_gameController.randomEventController.eventActive){
 				if (hoverState == "food"){
-                    if (_gameController.scrap >= 25)
+					if (_gameController.scrap >= 25 && !MouseEdge())
                     {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop")))
                         {
@@ -259,7 +293,7 @@ public class InputController : MonoBehaviour {
                     }
 				}
 				if (hoverState == "water"){
-                    if (_gameController.scrap >= 25){
+					if (_gameController.scrap >= 25 && !MouseEdge()){
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))){
                             _gameController.scrap -= 25;
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("WaterStation"), new Vector3(currentTile.x, currentTile.y, currentTile.z), Quaternion.identity);
@@ -310,7 +344,7 @@ public class InputController : MonoBehaviour {
 
                 }
 				if (hoverState == "power"){
-                    if (_gameController.scrap >= 25){
+					if (_gameController.scrap >= 25 && !MouseEdge()){
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag ("prop"))){
                             _gameController.scrap -= 25;
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load ("PowerStation"), new Vector3(currentTile.x, currentTile.y - 1, currentTile.z), Quaternion.identity);
@@ -360,7 +394,7 @@ public class InputController : MonoBehaviour {
                     }
                 }
 				if (hoverState == "shelter") {
-					if (_gameController.scrap >= 25) {
+					if (_gameController.scrap >= 25 && !MouseEdge()) {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
                             _gameController.scrap -= 25;
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("Shelter"), new Vector3(currentTile.x, currentTile.y, currentTile.z), Quaternion.identity);
@@ -405,7 +439,7 @@ public class InputController : MonoBehaviour {
                     }
                 }
 				if (hoverState == "tavern") {
-                    if (_gameController.scrap >= 25) {
+					if (_gameController.scrap >= 25 && !MouseEdge()) {
 						if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
                             _gameController.scrap -= 25;
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("Tavern"), currentTile, Quaternion.identity);
@@ -452,7 +486,7 @@ public class InputController : MonoBehaviour {
                 }
                 if (hoverState == "hospital")
                 {
-                    if (_gameController.scrap >= 25)
+					if (_gameController.scrap >= 25 && !MouseEdge())
                     {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop")))
                         {
@@ -505,7 +539,7 @@ public class InputController : MonoBehaviour {
                 }
                 if (hoverState == "training")
                 {
-                    if (_gameController.scrap >= 25)
+                    if (_gameController.scrap >= 25 && !MouseEdge())
                     {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop")))
                         {
@@ -558,7 +592,8 @@ public class InputController : MonoBehaviour {
                 }
             }
 			if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= -50 && currentTile.z >= -40 ){
-				myHoverObject.transform.position = new Vector3( currentTile.x, 1, currentTile.z );
+				if( myHoverObject != null )
+					myHoverObject.transform.position = new Vector3( currentTile.x, 1, currentTile.z );
 			}
 		}
 
@@ -671,4 +706,25 @@ public class InputController : MonoBehaviour {
         }
         return false;
     }
+
+	bool MouseEdge(){
+		int scrollArea = Screen.width / 10;
+		if (Input.mousePosition.x < scrollArea) {
+			return true;
+		}
+		
+		if (Input.mousePosition.x >= Screen.width - scrollArea) {
+			return true;
+		}
+		
+		if (Input.mousePosition.y < scrollArea) {
+			return true;
+		}
+		
+		if (Input.mousePosition.y > Screen.height - scrollArea) {
+			return true;
+		}
+
+		return false;
+	}
 }

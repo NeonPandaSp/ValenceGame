@@ -53,7 +53,7 @@ public class BuildingType  {
             return 1.0f;
         } else if (typeName == "PowerStation") {
             //Each power station should produce 100 power
-            return 1.0f;
+            return 15.0f;
 		} else if (typeName == "WaterStation") {
 			return 1.0f;
 		} else if (typeName == "TrainingArea")
@@ -71,11 +71,11 @@ public class BuildingType  {
 		if (typeName == "Shelter") {
 			return 0.0f;
 		} else if (typeName == "Farm") {
-			return 3.0f;
+			return 10.0f;
 		} else if (typeName == "PowerStation") {
 			return 0.0f;
 		} else if (typeName == "WaterStation") {
-			return 3.0f;
+			return 10.0f;
 		} else if (typeName == "TrainingArea") {
 			return 0.0f;
 		}

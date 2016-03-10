@@ -27,6 +27,7 @@ public class GameController : MonoBehaviour {
 
 	public GUIController_SettlerInfo currentSettlerUI;
 	public NotificationController notificationController;
+	public RandomEventController randomEventController;
 
     public int scrap;
 	public float food, power, water, popLimit, morale;
@@ -49,7 +50,7 @@ public class GameController : MonoBehaviour {
         powerWorkerList = new List<GameObject>();
         powerBuildingList = new List<GameObject>();
 		loadLastSave ();
-
+		
 		if (firstLoad) {
 			//
 			scrap += 75;
@@ -80,11 +81,11 @@ public class GameController : MonoBehaviour {
         if (power < 0) {
             power = 0;
         }
-		if (power > 5 * powerBuildingList.Count) {
-			power = 5 * powerBuildingList.Count;
+		if (power > 30 * powerBuildingList.Count) {
+			power = 30 * powerBuildingList.Count;
 		}
-		if (food > 20 * powerBuildingList.Count) {
-			food = 20 * powerBuildingList.Count;
+		if (food > 20 * farmBuildingList.Count) {
+			food = 20 * farmBuildingList.Count;
 		}
 
 		if (food < 15 && !foodAlerted) {
@@ -105,10 +106,10 @@ public class GameController : MonoBehaviour {
 		} else if (water > 10 ) {
 			waterAlerted = false;
 		}
-		if (power < 5 && !powerAlerted) {
+		if (power < 20 && !powerAlerted) {
 			notificationController.CreateNewNotification ("Power is low! Without power buildings don't operate. Build more POWER STATIONS, or assign more settlers as POWER WORKERS to increases productions!");
 			powerAlerted = true;
-		} else if ( power > 5 ) {
+		} else if ( power > 20 ) {
 			powerAlerted = false;
 		}
 	}

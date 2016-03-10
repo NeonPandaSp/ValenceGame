@@ -89,7 +89,7 @@ public class RandomEventController : MonoBehaviour {
 		switch( _eventId ){
 			case 1:
 				Debug.Log ("Event 001 Results");
-				if( choice && _gameController.population.Count >= _gameController.popLimit + 2 ){
+				if( choice && _gameController.population.Count >= _gameController.popLimit - 2 ){
 					resultText.color = new Color( 1.0f, 1.0f,1.0f );
 					resultText.text = "You lack sufficient housing to accomodate new settlers. Build more houses if you want to welcome new members into your community";
 				} else if( choice && rand > 50 ){

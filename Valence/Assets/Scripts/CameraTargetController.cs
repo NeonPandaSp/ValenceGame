@@ -16,6 +16,8 @@ public class CameraTargetController : MonoBehaviour {
 	public bool moving;
 	Vector3 endPos, startPos;
 	float t;
+
+	public bool isBuild;
 	// Use this for initialization
 	void Start () {
 		lastPosition = transform.position;
@@ -30,20 +32,25 @@ public class CameraTargetController : MonoBehaviour {
 
 		Ray ray = Camera.main.ScreenPointToRay ( centerScreen );
 		RaycastHit hitInfo;
-		
+
 		if ( ground.GetComponent<Collider>().Raycast (ray, out hitInfo, Mathf.Infinity)) {
 			float x = hitInfo.point.x;//Mathf.FloorToInt( hitInfo.point.x );
 			float z = hitInfo.point.z;//Mathf.FloorToInt( hitInfo.point.z );
 			Vector3 lookAtTarget;
 			lookAtTarget = new Vector3( x, 0, z );
-			if( x >= 0 && x <= ground.GetComponent<TileMap>().worldSizeX ){
-				if( z >= 0 && z <= ground.GetComponent<TileMap>().worldSizeZ ){
-					Vector3 camPosition = Camera.main.transform.position;
-					transform.position = lookAtTarget;
-					Camera.main.transform.position = camPosition;
+			if( !isBuild ){
+				if( x >= 0 && x <= ground.GetComponent<TileMap>().worldSizeX ){
+					if( z >= 0 && z <= ground.GetComponent<TileMap>().worldSizeZ ){
+						Vector3 camPosition = Camera.main.transform.position;
+						transform.position = lookAtTarget;
+						Camera.main.transform.position = camPosition;
+					}
 				}
+			} else {
+				Vector3 camPosition = Camera.main.transform.position;
+				transform.position = lookAtTarget;
+				Camera.main.transform.position = camPosition;
 			}
-
 			//Camera.main.transform.position = new Vector3 (lookAtTarget.x, Camera.main.transform.position.y, Camera.main.transform.position.z );
 			//Camera.main.transform.LookAt (lookAtTarget);
 
