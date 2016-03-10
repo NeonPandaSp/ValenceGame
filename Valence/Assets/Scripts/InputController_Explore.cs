@@ -209,6 +209,7 @@ public class InputController_Explore : MonoBehaviour {
 		_GameController.selectedUnit.waitPressed = true;
 		_GameController.selectedUnit.canMove = false;
 		_GameController.selectedUnit.actionPoints = 0;
+		_GameController.selectedUnit.turnComplete = true;
 		attackConfirmedButton.gameObject.SetActive (false);
 		moveConfirmedButton.gameObject.SetActive (false);
 		selectedNextUnit ();
@@ -255,10 +256,10 @@ public class InputController_Explore : MonoBehaviour {
 				if( i > _GameController.folk.Count-1 ){
 					i = 0;
 				} 
-				//dCount++;
-				//if( dCount == _GameController.folk.Count ){
-					//break;
-				//}
+				dCount++;
+				if( dCount == _GameController.folk.Count ){
+					break;
+				}
 			}
 			_GameController.selectedUnit = _GameController.folk[i];
 			if( _GameController.selectedUnit.canMove ){
