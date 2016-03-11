@@ -279,7 +279,7 @@ public class Unit : MonoBehaviour {
 	}
 
 	public bool withinMoveRange( Vector2 targetPosition ){
-		if (movement >= getDistance (currentPosition, targetPosition)) {
+		if (movementRemaining >= getDistance (currentPosition, targetPosition)) {
 			return true;
 		} else {
 			return false;

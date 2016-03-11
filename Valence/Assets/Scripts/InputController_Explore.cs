@@ -208,6 +208,7 @@ public class InputController_Explore : MonoBehaviour {
 		} else {
 			attackConfirmedButton.gameObject.SetActive(false);
 			_GameController.disableAttackBox();
+			_GameController.selectedUnit.attackPressed = false;
 		}
 	}
 
