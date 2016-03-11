@@ -120,5 +120,4 @@ public class PlayerData{
 	public float food, power, water, popLimit, morale;
 
 	public List<serialAgent> currentParty;
-
 }

@@ -25,11 +25,6 @@ public class MapSquadSceneControl : MonoBehaviour {
 		} else {
 			proceedButton.interactable = false;
 		}
-		if (mapIndex == 2) {
-			squadButton.text = "Return Home";
-		} else {
-			squadButton.text = "Select Squad";
-		}
 	}
 
 	public void toggleCanvas(){

@@ -70,10 +70,8 @@ public class GameController : MonoBehaviour {
 				
 			}
 		}
-		
 
         InvokeRepeating("updateGridGraph",3,10);
-
 	}
 	
 	// Update is called once per frame
@@ -224,7 +222,6 @@ public class GameController : MonoBehaviour {
 			tempAgent.job = agent.GetComponent<AgentLogic_07>().jobState;
 
 			serialPopulation.Add (tempAgent);
-
 		}
 
 		List<serialBuilding> serialBuildingDatabase = new List<serialBuilding>();
@@ -247,10 +244,18 @@ public class GameController : MonoBehaviour {
 		PlayerDataManager.playerDataManager.writePlayerData (newData);
 		Debug.Log ("SAVED");
 	}
-
 }
+
 [Serializable]
-public class serialAgent{
+public class serialBuilding {
+	public string bType;
+	public float xPos;
+	public float yPos;
+	public float zPos;
+}
+
+[Serializable]
+public class serialAgent {
 	public string agentId;
 
 	public string gender;
@@ -275,14 +280,16 @@ public class serialAgent{
 }
 
 [Serializable]
-public class serialBuilding{
-	public string bType;
-	public float xPos;
-	public float yPos;
-	public float zPos;
-}
+public class serialWeapon {
+	public string weaponId;
 
-[Serializable]
-public class serialWeapon{
 	public string weaponName;
+	public string weaponType;	//Fist, Baton, Pistol, Rifle, Shotgun
+	public bool weaponState;	//Equipped or not equipped (part of the inventory). If already equipped, it is not accessible by another settler.
+
+	//Weapon Stats
+	public int weaponDMG;
+	public int weaponRNG;
+	public int weaponACC;
+	public int weaponSND;
 }
