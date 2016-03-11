@@ -30,6 +30,12 @@ public class InfoBoxInfo : MonoBehaviour {
 				infoAtk.text = "" + myUnit.attackRating;
 			else
 				infoAtk.text = "0" + myUnit.attackRating;
+
+			if (myUnit.health < 0) {
+				infoHP.text = "00";
+			}
+		} else {
+			this.gameObject.SetActive (false);
 		}
 	}
 }

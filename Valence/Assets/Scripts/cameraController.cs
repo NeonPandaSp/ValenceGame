@@ -36,7 +36,7 @@ public class cameraController : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		translation = new Vector3 (0,20,0);
+		translation = new Vector3 (-30,20,-30);
 		GetComponent<Camera>().transform.position = translation;
 		GetComponent<Camera> ().transform.eulerAngles = new Vector3 (30, 45, 0);
 		

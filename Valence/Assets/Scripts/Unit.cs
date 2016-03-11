@@ -584,7 +584,6 @@ public class Unit : MonoBehaviour {
 	}
 
 	public void Attack(Unit targetUnit){
-
 		targetUnit.health -= attackRating;
 		if (targetUnit.isElite) {
 			targetUnit.knownPosition.Add (currentPosition);

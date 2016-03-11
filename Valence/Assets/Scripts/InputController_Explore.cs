@@ -36,6 +36,8 @@ public class InputController_Explore : MonoBehaviour {
 
 	public GameObject HintObject;
 
+	public Sprite dropSprite, pickupSprite;
+
 	void Start(){
 		_tileMap = GetComponent<TileMap> ();
 		myHoverObject = (GameObject) Instantiate (Resources.Load("Tile"), new Vector3 (0, 0, 0), Quaternion.identity);
@@ -182,10 +184,10 @@ public class InputController_Explore : MonoBehaviour {
 	public void ToggleWallVisibilty (){
 		if (wallObject.activeInHierarchy) {
 			wallObject.SetActive (false);
-			boundObject.SetActive(true);
+			//boundObject.SetActive(true);
 		} else {
 			wallObject.SetActive (true);
-			boundObject.SetActive(false);
+			//boundObject.SetActive(false);
 		}
 	}
 	public void MoveSelectedUnit( ){
@@ -227,13 +229,19 @@ public class InputController_Explore : MonoBehaviour {
 			_GameController.selectedUnit.actionPoints--;
 			_GameController.scrapObj.transform.SetParent (_GameController.selectedUnit.gameObject.transform);
 			_GameController.scrapObj.transform.position = _GameController.selectedUnit.gameObject.transform.position;
+			_GameController.scrapObj.transform.position += _GameController.selectedUnit.facing / 2;
+			_GameController.scrapObj.transform.position += new Vector3( 0, 0.5f, 0 );
 			_GameController.selectedUnit.hasScrap = true;
+			_GameController.pickUpButton.image.sprite = dropSprite;
 		} else {
 			_GameController.disableAttackBox ();
 			_GameController.selectedUnit.grabPressed = true;
 			_GameController.selectedUnit.actionPoints--;
 			_GameController.scrapObj.transform.SetParent (null);
+			_GameController.scrapObj.transform.position = _GameController.selectedUnit.gameObject.transform.position;
+			//_GameController.scrapObj.transform.position += _GameController.selectedUnit.facing;
 			_GameController.selectedUnit.hasScrap = false;
+			_GameController.pickUpButton.image.sprite = pickupSprite;
 		}
 	}
 

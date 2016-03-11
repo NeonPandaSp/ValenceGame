@@ -35,6 +35,10 @@ public class InputController : MonoBehaviour {
 
 	public Collider lowerCollider1, lowerCollider2;
 
+	bool isPause;
+
+	public GameObject menuObj;
+
 	void Start(){
 		_tileMap = GetComponent<TileMap> ();
 		_generateZone = GetComponent < generateZone >();
@@ -110,6 +114,55 @@ public class InputController : MonoBehaviour {
 		}
 		return (int) ( maxY - minY );
 	}
+
+	void Update(){
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			isPause = !isPause;
+			if(isPause)
+				Time.timeScale = 0;
+			else
+				Time.timeScale = 1;
+		}
+
+		if (isPause) {
+			menuObj.SetActive (true);
+		} else {
+			menuObj.SetActive (false);
+		}
+	}
+
+	public void pause(){
+		isPause = !isPause;
+		if(isPause)
+			Time.timeScale = 0;
+		else
+			Time.timeScale = 1;
+		if (isPause) {
+			menuObj.SetActive (true);
+		} else {
+			menuObj.SetActive (false);
+		}
+	}
+
+	public void saveGame(){
+		_gameController.saveCurrentSettlement ();
+	}
+
+	public void loadLastSave(){
+		Time.timeScale = 1;
+		Application.LoadLevel (Application.loadedLevel);
+	}
+
+	public void quitGame(){
+		Time.timeScale = 1;
+		Application.Quit();
+	}
+
+	public void loadMainMenu(){
+		Time.timeScale = 1;
+		Application.LoadLevel (1);
+	}
+
 	void FixedUpdate () {
 		if (Input.GetKey (KeyCode.BackQuote)) {
 			if( _debugUI.activeSelf == true ){
@@ -689,10 +742,10 @@ public class InputController : MonoBehaviour {
             //Update agent pathfinding to account for this new obstical -Zach
         }
 
-		if (Input.GetKey (KeyCode.Escape)) {
-			Application.LoadLevel (0);
-		}
+
     }
+
+
 
     bool IsOverlapping(GameObject candidate, GameObject[] others)
     {

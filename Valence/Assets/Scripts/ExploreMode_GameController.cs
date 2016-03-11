@@ -56,6 +56,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 	public InputController_Explore _inputController;
 
 	public Vector2 lastScrapPos;
+
+	public Material redMat;
 	// Use this for initialization
 	void Start () {
 		tiles = new int[mapSize,mapSize];
@@ -130,11 +132,19 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		bool scrapHeld = false;
+		foreach (Unit fU in folk) {
+			if( fU.hasScrap ){
+				tiles [(int)lastScrapPos.x, (int)lastScrapPos.y] = 1;
 
-		tiles [(int)lastScrapPos.x,(int)lastScrapPos.y] = 1;
-		tiles [(int)scrapObj.transform.position.x,(int)scrapObj.transform.position.z] = 3;
-		lastScrapPos = new Vector2 ((int)scrapObj.transform.position.x, (int)scrapObj.transform.position.z);
-
+				scrapHeld = true;
+			}
+		}
+		if (!scrapHeld) {
+			tiles [(int)lastScrapPos.x, (int)lastScrapPos.y] = 1;
+			tiles [(int)scrapObj.transform.position.x, (int)scrapObj.transform.position.z] = 3;
+			lastScrapPos = new Vector2 ((int)scrapObj.transform.position.x, (int)scrapObj.transform.position.z);
+		}
 		switch (GameState)
 		{
 		case 1:
@@ -357,7 +367,59 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 
 	}
+	public void GenerateMovementRange(int x, int y, Unit _unit){
+		int[,] vectors = new int[mapSize,mapSize];
+		Unit tempUnit = selectedUnit;
+		selectedUnit = _unit;
+		foreach( GameObject n in moveTiles){
+			Destroy (n);
+		}
+		moveTiles.Clear ();
+		int pathingCalled = 0;
+		int tilesPlaced = 0;
+		
+		Dictionary<Vector2,int> mTiles = new Dictionary<Vector2, int> ();
+		
+		for (int i = (int)_unit.currentPosition.x-selectedUnit.movementRemaining; i <= (int)_unit.currentPosition.x + selectedUnit.movementRemaining; i++) {
+			for (int j=(int)_unit.currentPosition.y -selectedUnit.movementRemaining; j <= (int)_unit.currentPosition.y +selectedUnit.movementRemaining; j++) {
+				if (i >= 0 && i < mapSize && j >= 0 && j < mapSize) {
+					if (_unit.withinMoveRange (new Vector2 (i, j))) {
+						mTiles.Add ( new Vector2( i , j ), _unit.getDistance (_unit.currentPosition, new Vector2 (i, j)) );
+					}
+				}
+			}
+		}
+		List<Vector2> vTiles = new List<Vector2>();
+		int currentD = _unit.movementRemaining;
+		while (currentD > 0) {
+			foreach (KeyValuePair<Vector2, int> entry in mTiles) {
+				if( entry.Value == currentD ){
+					int vX = (int) entry.Key.x;
+					int vY = (int) entry.Key.y;
+					if (!checkIfTileAlreadyPlaced (vX, vY)) {
+						if (GeneratePathTo (vX, vY, 0)) {
+							pathingCalled++;
+							foreach (Node n in evaluatedPath) {
+								if (!checkIfTileAlreadyPlaced ((int)n.nodePos.x, (int)n.nodePos.y)) {
+									placeMovementTile ((int)n.nodePos.x, (int)n.nodePos.y);
+									tilesPlaced++;
+								}
+							}
+						}
+					}
+				}
+			}
+			currentD--;
+		}
+		borderVectors = vectors;
 
+		foreach (GameObject mTile in moveTiles) {
+			mTile.GetComponentInChildren<MeshRenderer>().material = redMat;
+		}
+
+		selectedUnit = tempUnit;
+		
+	}
 	public void GenerateMap(){
 		for( int x = 0; x < mapSize; x++){
 			for( int y = 0; y < mapSize; y++){
@@ -729,18 +791,28 @@ public class ExploreMode_GameController : MonoBehaviour {
 			elite[currentElite].canMove = false;
 			newElite = false;
 			newAction = true;
+
+			if( elite[currentElite].FolkUnitsWithinView.Count > 0 ){
+				elite[currentElite].FolkUnitsWithinView[0].gameObject.GetComponent<EnemyMouseOver> ().enableUI ();
+				attackIcon.gameObject.SetActive(true);
+				attackIcon.selectUnit = elite[currentElite].FolkUnitsWithinView[0];
+			}
+
 			startBuffer(2);
 		} 
+
+
 
 		if (checkBuffer () && newAction) {
 			Debug.Log ( "Action" );
 			if( elite[currentElite].FolkUnitsWithinView.Count > 0 ){
 				float rand = Random.Range (0, 100);
+
 				elite[currentElite].myAnimCtrl.InitAttackAnim();
 				if( elite[currentElite].calcChanceToHit(elite[currentElite].getDistance(elite[currentElite].currentPosition, elite[currentElite].FolkUnitsWithinView[0].currentPosition)) > rand){
 					GameObject tempObj = (GameObject) Instantiate ( _inputController.dmgText, Camera.main.WorldToScreenPoint(elite[currentElite].FolkUnitsWithinView[0].gameObject.transform.position), Quaternion.identity );
 					tempObj.gameObject.transform.SetParent(_inputController.myCanvas.gameObject.transform);
-					tempObj.GetComponent<Text>().text = ""+elite[currentElite].FolkUnitsWithinView[0].attackRating;
+					tempObj.GetComponent<Text>().text = ""+elite[currentElite].attackRating;
 					tempObj.GetComponent<Text>().color = Color.red;
 					Vector3 tempPosition = elite[currentElite].FolkUnitsWithinView[0].gameObject.transform.position;
 					tempPosition.x = tempPosition.x+0.5f;
@@ -760,6 +832,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 					tempObj.transform.position = Camera.main.WorldToScreenPoint(tempPosition);
 				}
 				startBuffer(2);
+				attackIcon.gameObject.SetActive(false);
 			}
 
 			elite[currentElite].turnComplete = true;
@@ -799,7 +872,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 	}
 
 	void updateBuffer(){
-		currentTime += Time.deltaTime;
+		if( !selectedUnit.isMoving )
+			currentTime += Time.deltaTime;
 	}
 
 	bool checkBuffer(){

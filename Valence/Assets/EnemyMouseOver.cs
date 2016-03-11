@@ -56,6 +56,7 @@ public class EnemyMouseOver : MonoBehaviour {
 	}
 	void OnMouseDown(){
 		if (myUnit.isElite && !myUnit._GameController.selectedUnit.attackPressed) {
+			myUnit._GameController.GenerateMovementRange((int) myUnit.currentPosition.x,(int) myUnit.currentPosition.y, myUnit);
 			infoObject.SetActive (true);
 			infoObject.GetComponent<FollowMouse> ().targetPosition = this.transform.position;
 			dataUpdate();

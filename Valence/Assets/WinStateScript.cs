@@ -21,6 +21,8 @@ public class WinStateScript : MonoBehaviour {
 	public int scrapRate;
 	public int recruitRate;
 	public int weaponRate;
+
+	public GameObject objectiveMarker;
 	// Use this for initialization
 	void Start () {
 		endScreen.gameObject.SetActive (false);
@@ -33,6 +35,23 @@ public class WinStateScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		int scrapless = 0;
+		foreach (Unit fU in _gameController.folk) {
+			if( fU.hasScrap ){
+
+			} else {
+				scrapless++;
+			}
+		}
+		if (scrapless == _gameController.folk.Count) {
+			objectiveMarker.transform.position = _gameController.scrapObj.transform.position;
+			objectiveMarker.GetComponentInChildren<TextMesh>().text = "collect";
+		} else {
+			objectiveMarker.transform.position = new Vector3( rootPosition.x, 0.0f, rootPosition.y);
+			objectiveMarker.GetComponentInChildren<TextMesh>().text = "escape";
+		}
+		objectiveMarker.transform.position += new Vector3(0.5f, 0, 0.5f );
+
 		if (!win && !lose) {
 			if (_gameController.folk.Count <= 0) {
 				lose = true;
