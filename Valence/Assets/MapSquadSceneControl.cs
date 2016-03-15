@@ -5,12 +5,14 @@ using UnityEngine.UI;
 
 
 public class MapSquadSceneControl : MonoBehaviour {
-	public GameObject mapCan, squadCan;
+	public GameObject mapCan, squadCan, loadScreen;
 
 	public Button proceedButton;
 	public Text squadButton;
 
 	public int mapIndex;
+
+
 
 	public List<serialAgent> myParty;
 	// Use this for initialization
@@ -29,10 +31,16 @@ public class MapSquadSceneControl : MonoBehaviour {
 
 	public void toggleCanvas(){
 		if (mapIndex == 2) {
-			Application.LoadLevel (mapIndex);
+			mapCan.SetActive(false);
+			loadScreen.SetActive(true);
+			Application.LoadLevelAsync (mapIndex);
 		}
 		if (mapCan.activeSelf) {
-			squadCan.SetActive(true);
+			if( mapIndex == 2 )
+				loadScreen.SetActive(true);
+			else
+				squadCan.SetActive(true);
+
 			mapCan.SetActive(false);
 		} else {
 			squadCan.SetActive(false);
