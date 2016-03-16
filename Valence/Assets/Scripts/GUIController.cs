@@ -9,8 +9,8 @@ using System.Collections.Generic;
 
 	//HUD Variables
 	//GameObject globalAttributes;
-	public Text scrapText, populationText, foodText, waterText, powerText, timeText;
-	Text scrapDelText, populationDelText, foodDelText, waterDelText, powerDelText, timeDelText;
+	public Text scrapText, populationText, foodText, waterText, powerText;
+	Text scrapDelText, populationDelText, foodDelText, waterDelText, powerDelText;
 	public Image scrapIcon, populationIcon, foodIcon, waterIcon, powerIcon;
 	Image scrapIconDel, populationIconDel, foodIconDel, waterIconDel, powerIconDel;
 
@@ -22,14 +22,6 @@ using System.Collections.Generic;
 	int scrap, population;
 	float food, water, power;
 
-//	//Time variables
-//	int hour;
-//	int minute;
-//	int second;
-//	String hourText;
-//	String minText;
-//	String secText;
-	
 	public Canvas myCanvas;
 
 	public Texture2D cursorTexture_default;
@@ -285,9 +277,6 @@ using System.Collections.Generic;
 			case "power":
 				setBuildingTypeName = "power";
 				break;
-//			case "storage":
-//				setBuildingTypeName = "storage";
-//				break;
 			case "hospital":
 				setBuildingTypeName = "hospital";
 				break;

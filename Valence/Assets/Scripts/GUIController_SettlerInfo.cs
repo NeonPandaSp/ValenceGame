@@ -64,8 +64,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	//Font
 	public Font font_hero;
 	
-	public Button farmerRoleButton, waterPurifierRoleButton, powerEngineerRoleButton, storageWorkerRoleButton, medicRoleButton, traineeRoleButton, worshipperRoleButton;
-	Button farmerRoleButtonDel, waterPurifierRoleButtonDel, powerEngineerRoleButtonDel, storageWorkerRoleButtonDel, medicRoleButtonDel, traineeRoleButtonDel, worshipperRoleButtonDel;
+	public Button farmerRoleButton, hydrologistRoleButton, powerEngineerRoleButton, traineeRoleButton;
+	Button farmerRoleButtonDel, hydrologistRoleButtonDel, powerEngineerRoleButtonDel, traineeRoleButtonDel;
 
 	// === Close Window Button === \\
 	public Button exBtn;
@@ -359,44 +359,33 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		farmerRoleButtonDel.gameObject.SetActive (false);
 		
 		//Hydrologist Role Button
-		waterPurifierRoleButtonDel = (Button)Instantiate (waterPurifierRoleButton);
-		waterPurifierRoleButtonDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		hydrologistRoleButtonDel = (Button)Instantiate (hydrologistRoleButton);
+		hydrologistRoleButtonDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		waterPurifierRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (160, 35);
-		waterPurifierRoleButtonDel.transform.Translate (farmerRoleButtonDel.image.rectTransform.position.x, farmerRoleButtonDel.image.rectTransform.position.y - 37.5f, 0);
-		waterPurifierRoleButtonDel.GetComponentInChildren<Text> ().text = "Hydrologist";
-		waterPurifierRoleButtonDel.GetComponentInChildren<Text> ().font = font_hero;
-		waterPurifierRoleButtonDel.onClick.AddListener (() => waterPurifierRoleClicked());
-		waterPurifierRoleButtonDel.gameObject.SetActive (false);
+		hydrologistRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (160, 35);
+		hydrologistRoleButtonDel.transform.Translate (farmerRoleButtonDel.image.rectTransform.position.x, farmerRoleButtonDel.image.rectTransform.position.y - 37.5f, 0);
+		hydrologistRoleButtonDel.GetComponentInChildren<Text> ().text = "Hydrologist";
+		hydrologistRoleButtonDel.GetComponentInChildren<Text> ().font = font_hero;
+		hydrologistRoleButtonDel.onClick.AddListener (() => waterPurifierRoleClicked());
+		hydrologistRoleButtonDel.gameObject.SetActive (false);
 
 		//Power Engineer Role Button
 		powerEngineerRoleButtonDel = (Button)Instantiate (powerEngineerRoleButton);
 		powerEngineerRoleButtonDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		powerEngineerRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (160, 35);
-		powerEngineerRoleButtonDel.transform.Translate (farmerRoleButtonDel.image.rectTransform.position.x, waterPurifierRoleButtonDel.image.rectTransform.position.y - 37.5f, 0);
+		powerEngineerRoleButtonDel.transform.Translate (farmerRoleButtonDel.image.rectTransform.position.x, hydrologistRoleButtonDel.image.rectTransform.position.y - 37.5f, 0);
 		powerEngineerRoleButtonDel.GetComponentInChildren<Text> ().text = "Power Engineer";
 		powerEngineerRoleButtonDel.GetComponentInChildren<Text> ().font = font_hero;
 		powerEngineerRoleButtonDel.onClick.AddListener (() => powerEngineerRoleClicked());
 		powerEngineerRoleButtonDel.gameObject.SetActive (false);
-
-		//Medic Role Button
-		medicRoleButtonDel = (Button)Instantiate (medicRoleButton);
-		medicRoleButtonDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		
-		medicRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (160, 35);
-		medicRoleButtonDel.transform.Translate (farmerRoleButtonDel.image.rectTransform.position.x, powerEngineerRoleButtonDel.image.rectTransform.position.y - 37.5f, 0);
-		medicRoleButtonDel.GetComponentInChildren<Text> ().text = "Medic";
-		medicRoleButtonDel.GetComponentInChildren<Text> ().font = font_hero;
-		medicRoleButtonDel.onClick.AddListener (() => medicRoleClicked());
-		medicRoleButtonDel.gameObject.SetActive (false);
 
 		//Trainee Role Button
 		traineeRoleButtonDel = (Button)Instantiate (traineeRoleButton);
 		traineeRoleButtonDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		traineeRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (160, 35);
-		traineeRoleButtonDel.transform.Translate (farmerRoleButtonDel.image.rectTransform.position.x, medicRoleButtonDel.image.rectTransform.position.y - 37.5f, 0);
+		traineeRoleButtonDel.transform.Translate (farmerRoleButtonDel.image.rectTransform.position.x, powerEngineerRoleButtonDel.image.rectTransform.position.y - 37.5f, 0);
 		traineeRoleButtonDel.GetComponentInChildren<Text> ().text = "Trainee";
 		traineeRoleButtonDel.GetComponentInChildren<Text> ().font = font_hero;
 		traineeRoleButtonDel.onClick.AddListener (() => traineeRoleClicked());
@@ -509,33 +498,33 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		}
 	}
 
-	void medicRoleClicked () {
-		if ((agentLogic.jobState != AgentLogic_07.jobSubState.Medic) && hospitalAvailable) {
-			agentLogic.workWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("HospitalWaypoint"));
-		
-			//Shuffle the order of the waypoints
-			for (int i = 0; i < agentLogic.workWaypoints.Count; i++){
-				
-				//Set the current list value to a temp var
-				GameObject temp = agentLogic.workWaypoints[i];
-				
-				//Obtain a random index value within the scope of the waypoint list size
-				int randomIndex = UnityEngine.Random.Range (i, agentLogic.workWaypoints.Count);
-				
-				//Set the current list index to the new shuffled index
-				agentLogic.workWaypoints[i] = agentLogic.workWaypoints[randomIndex];
-				
-				//Replace the contents into the list
-				agentLogic.workWaypoints[randomIndex] = temp;
-			}
-			
-			//Set the agent to working
-			agentLogic.aState = AgentLogic_07.agentState.Working;
-			
-			//Define the working state as farming
-			agentLogic.jobState = AgentLogic_07.jobSubState.Medic;
-		}
-	}
+//	void medicRoleClicked () {
+//		if ((agentLogic.jobState != AgentLogic_07.jobSubState.Medic) && hospitalAvailable) {
+//			agentLogic.workWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("HospitalWaypoint"));
+//		
+//			//Shuffle the order of the waypoints
+//			for (int i = 0; i < agentLogic.workWaypoints.Count; i++){
+//				
+//				//Set the current list value to a temp var
+//				GameObject temp = agentLogic.workWaypoints[i];
+//				
+//				//Obtain a random index value within the scope of the waypoint list size
+//				int randomIndex = UnityEngine.Random.Range (i, agentLogic.workWaypoints.Count);
+//				
+//				//Set the current list index to the new shuffled index
+//				agentLogic.workWaypoints[i] = agentLogic.workWaypoints[randomIndex];
+//				
+//				//Replace the contents into the list
+//				agentLogic.workWaypoints[randomIndex] = temp;
+//			}
+//			
+//			//Set the agent to working
+//			agentLogic.aState = AgentLogic_07.agentState.Working;
+//			
+//			//Define the working state as farming
+//			agentLogic.jobState = AgentLogic_07.jobSubState.Medic;
+//		}
+//	}
 
 	void traineeRoleClicked () {
         if ((agentLogic.jobState != AgentLogic_07.jobSubState.Trainee) && traininggroundAvailable)
@@ -592,9 +581,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			
 			//Buttons
 			farmerRoleButtonDel.gameObject.SetActive (true);
-			waterPurifierRoleButtonDel.gameObject.SetActive (true);
+			hydrologistRoleButtonDel.gameObject.SetActive (true);
 			powerEngineerRoleButtonDel.gameObject.SetActive (true);
-			medicRoleButtonDel.gameObject.SetActive (true);
 			traineeRoleButtonDel.gameObject.SetActive (true);
 			exBtnDel.gameObject.SetActive (true);
 			
@@ -633,9 +621,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			
 			//Buttons
 			farmerRoleButtonDel.gameObject.SetActive (false);
-			waterPurifierRoleButtonDel.gameObject.SetActive (false);
+			hydrologistRoleButtonDel.gameObject.SetActive (false);
 			powerEngineerRoleButtonDel.gameObject.SetActive (false);
-			medicRoleButtonDel.gameObject.SetActive (false);
 			traineeRoleButtonDel.gameObject.SetActive (false);
 			exBtnDel.gameObject.SetActive (false);
 			
@@ -702,12 +689,12 @@ public class GUIController_SettlerInfo : MonoBehaviour {
         if (!GameObject.FindWithTag ("WaterStation"))
         {
             waterstationAvailable = false;
-			waterPurifierRoleButtonDel.interactable = false;
+			hydrologistRoleButtonDel.interactable = false;
         }
         else
         {
             waterstationAvailable = true;
-			waterPurifierRoleButtonDel.interactable = true;
+			hydrologistRoleButtonDel.interactable = true;
         }
 
         if (!GameObject.FindWithTag ("PowerStation"))
@@ -720,16 +707,6 @@ public class GUIController_SettlerInfo : MonoBehaviour {
             powerstationAvailable = true;
 			powerEngineerRoleButtonDel.interactable = true;
         }
-
-		if (!GameObject.FindWithTag ("Hospital"))
-		{
-			hospitalAvailable = false;
-			medicRoleButtonDel.interactable = false;
-		}
-		else {
-			hospitalAvailable = true;
-			medicRoleButtonDel.interactable = true;
-		}
 
         if (!GameObject.FindWithTag ("TrainingArea")) {
             traininggroundAvailable = false;
