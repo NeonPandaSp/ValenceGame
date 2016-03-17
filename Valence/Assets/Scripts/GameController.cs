@@ -39,7 +39,7 @@ public class GameController : MonoBehaviour {
 	void Awake () {
 
 		myAgentSpawner = FindObjectOfType<AgentSpawner> ();
-		notificationController = GameObject.Find("NotificationController").GetComponent<NotificationController>();
+		notificationController = GameObject.Find ("NotificationController").GetComponent <NotificationController> ();
 
 		population = new List<GameObject> ();
 
@@ -87,7 +87,7 @@ public class GameController : MonoBehaviour {
 		}
 
 		if (food < 15 && !foodAlerted) {
-			notificationController.CreateNewNotification ("Food is low! Build more FARMS, or assign more settlers as FARMERS to increase productions!");
+			notificationController.CreateNewNotification ("Food is low! Build more FARMS, or assign more settlers as FARMERS to increase production!");
 			foodAlerted = true;
 		} else if( food > 15 ) {
 			foodAlerted = false;
@@ -99,13 +99,13 @@ public class GameController : MonoBehaviour {
 			scrapAlerted = false;
 		}
 		if (water < 10 && !waterAlerted) {
-			notificationController.CreateNewNotification ("Water is low! Build more WATER STATIONS, or assign more settlers as HYDROLOGISTS to increase productions!");
+			notificationController.CreateNewNotification ("Water is low! Build more WATER STATIONS, or assign more settlers as HYDROLOGISTS to increase production!");
 			waterAlerted = true;
 		} else if (water > 10 ) {
 			waterAlerted = false;
 		}
 		if (power < 20 && !powerAlerted) {
-			notificationController.CreateNewNotification ("Power is low! Without power buildings don't operate. Build more POWER STATIONS, or assign more settlers as POWER WORKERS to increases productions!");
+			notificationController.CreateNewNotification ("Power is low! Without power buildings don't operate. Build more POWER STATIONS, or assign more settlers as POWER WORKERS to increases production!");
 			powerAlerted = true;
 		} else if ( power > 20 ) {
 			powerAlerted = false;

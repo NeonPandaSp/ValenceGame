@@ -49,6 +49,10 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	Text settlerStrengthTextDel, settlerIntelligenceTextDel, settlerAgilityTextDel, settlerPerceptionTextDel, settlerCharismaTextDel;
 
 	int rndHP,rndStam, rndMor, rndHung, rndThir, rndStr, rndInt, rndAgil, rndPerc, rndChar;
+
+	Color redValue = new Color (255 / 255, 70 / 255, 82 / 255);
+	//Color yellowValue = new Color (115 / 255, 255 / 255, 149 / 255);
+	Color greenValue = new Color (115 / 255, 255 / 255, 149 / 255);
 	
 	// === Settler Inventory === \\
 	public Text inventoryTitle;
@@ -351,7 +355,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		farmerRoleButtonDel = (Button)Instantiate (farmerRoleButton);
 		farmerRoleButtonDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		farmerRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (160, 35);
+		farmerRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (160, 45);
 		farmerRoleButtonDel.transform.Translate (settlerHealthImageDel.rectTransform.position.x + 475, settlerHealthImageDel.rectTransform.position.y, 0);
 		farmerRoleButtonDel.GetComponentInChildren<Text> ().text = "Farmer";
 		farmerRoleButtonDel.GetComponentInChildren<Text> ().font = font_hero;
@@ -362,8 +366,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		hydrologistRoleButtonDel = (Button)Instantiate (hydrologistRoleButton);
 		hydrologistRoleButtonDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		hydrologistRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (160, 35);
-		hydrologistRoleButtonDel.transform.Translate (farmerRoleButtonDel.image.rectTransform.position.x, farmerRoleButtonDel.image.rectTransform.position.y - 37.5f, 0);
+		hydrologistRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (160, 45);
+		hydrologistRoleButtonDel.transform.Translate (farmerRoleButtonDel.image.rectTransform.position.x, farmerRoleButtonDel.image.rectTransform.position.y - 47.5f, 0);
 		hydrologistRoleButtonDel.GetComponentInChildren<Text> ().text = "Hydrologist";
 		hydrologistRoleButtonDel.GetComponentInChildren<Text> ().font = font_hero;
 		hydrologistRoleButtonDel.onClick.AddListener (() => waterPurifierRoleClicked());
@@ -373,8 +377,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		powerEngineerRoleButtonDel = (Button)Instantiate (powerEngineerRoleButton);
 		powerEngineerRoleButtonDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		powerEngineerRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (160, 35);
-		powerEngineerRoleButtonDel.transform.Translate (farmerRoleButtonDel.image.rectTransform.position.x, hydrologistRoleButtonDel.image.rectTransform.position.y - 37.5f, 0);
+		powerEngineerRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (160, 45);
+		powerEngineerRoleButtonDel.transform.Translate (farmerRoleButtonDel.image.rectTransform.position.x, hydrologistRoleButtonDel.image.rectTransform.position.y - 47.5f, 0);
 		powerEngineerRoleButtonDel.GetComponentInChildren<Text> ().text = "Power Engineer";
 		powerEngineerRoleButtonDel.GetComponentInChildren<Text> ().font = font_hero;
 		powerEngineerRoleButtonDel.onClick.AddListener (() => powerEngineerRoleClicked());
@@ -384,8 +388,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		traineeRoleButtonDel = (Button)Instantiate (traineeRoleButton);
 		traineeRoleButtonDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		traineeRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (160, 35);
-		traineeRoleButtonDel.transform.Translate (farmerRoleButtonDel.image.rectTransform.position.x, powerEngineerRoleButtonDel.image.rectTransform.position.y - 37.5f, 0);
+		traineeRoleButtonDel.image.rectTransform.sizeDelta = new Vector2 (160, 45);
+		traineeRoleButtonDel.transform.Translate (farmerRoleButtonDel.image.rectTransform.position.x, powerEngineerRoleButtonDel.image.rectTransform.position.y - 47.5f, 0);
 		traineeRoleButtonDel.GetComponentInChildren<Text> ().text = "Trainee";
 		traineeRoleButtonDel.GetComponentInChildren<Text> ().font = font_hero;
 		traineeRoleButtonDel.onClick.AddListener (() => traineeRoleClicked());
@@ -656,26 +660,65 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			break;
 		}
 
+		// === Settler Info === \\
 
+		//Name
+		firstLastNameDel.text = agentLogic.settlerNameAndRole;
 
-																						//=== General ===\\
-		firstLastNameDel.text = agentLogic.settlerNameAndRole;							//Name
-																						//Picture
-																						//=== Attributes ===\\
-		settlerHealthTextDel.text = agentLogic.health.ToString ();						//Health
-		settlerStaminaTextDel.text = rndStam.ToString ();								//Stamina
-		settlerHungerTextDel.text = agentLogic.hungerValue.ToString ();					//Hunger
-		settlerThirstTextDel.text = rndThir.ToString ();								//Thirst
-																						//=== Traits ===\\
-		settlerStrengthTextDel.text = agentAttributes.agentStrength.ToString ();		//Strength
-		settlerIntelligenceTextDel.text = rndInt.ToString ();							//Intelligence
-		settlerAgilityTextDel.text = agentAttributes.agentAgility.ToString ();			//Agility
-		settlerPerceptionTextDel.text = agentAttributes.agentPerception.ToString ();	//Perception
-		settlerCharismaTextDel.text = rndChar.ToString ();								//Charisma
-                                                                                        //=== Inventory ===\\
-        inventoryFoodTextDel.text = "Food: " + agentLogic.foodStored;                   //Current amount of food stored
+		//Picture
 
-        //Check to see if there are any gameobjects with the appropriate building tag
+		//=== Attributes ===\\
+		//Health
+		if (agentLogic.health <= 99) {
+			settlerHealthTextDel.text = agentLogic.health.ToString () + "/100";
+		} else if (agentLogic.health > 99) {
+			settlerHealthTextDel.text = agentLogic.health.ToString ();
+		}
+
+		float healthColourValue = ((agentLogic.health * 1.3f) / 100);
+		Color healthColour = Color.Lerp (redValue, greenValue, healthColourValue);
+		settlerHealthTextDel.color = healthColour;
+
+		//Stamina
+		settlerStaminaTextDel.text = rndStam.ToString ();
+
+		//Hunger
+		if (agentLogic.hungerValue <= 99) {
+			settlerHungerTextDel.text = agentLogic.hungerValue.ToString () + "/100";
+		} else if (agentLogic.hungerValue > 99) {
+			settlerHungerTextDel.text = agentLogic.hungerValue.ToString ();
+		}
+
+		float hungerColourValue = ((agentLogic.hungerValue * 1.3f) / 100);
+		Color hungerColour = Color.Lerp (greenValue, redValue, (hungerColourValue));
+		settlerHungerTextDel.color = hungerColour;
+		
+		//Thirst
+		settlerThirstTextDel.text = rndThir.ToString ();
+
+		//=== Traits ===\\
+		//Strength
+		settlerStrengthTextDel.text = agentAttributes.agentStrength.ToString ();
+
+		//Intelligence
+		settlerIntelligenceTextDel.text = rndInt.ToString ();
+
+		//Agility
+		settlerAgilityTextDel.text = agentAttributes.agentAgility.ToString ();
+
+		//Perception
+		settlerPerceptionTextDel.text = agentAttributes.agentPerception.ToString ();
+
+		//Charisma
+		settlerCharismaTextDel.text = rndChar.ToString ();
+
+		//=== Inventory ===\\
+        //Current amount of food stored
+		inventoryFoodTextDel.text = "Food: " + agentLogic.foodStored;
+
+		//=============================================================================\\
+        // Check to see if there are any gameobjects with the appropriate building tag \\
+		//=============================================================================\\
         if (!GameObject.FindWithTag ("Farm"))
 		{
 			farmAvailable = false;

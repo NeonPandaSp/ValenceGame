@@ -3495,17 +3495,13 @@ MonoBehaviour:
   rolesTitle: {fileID: 11441918, guid: e70e88d985985614b8ab203e7c2776f7, type: 2}
   font_hero: {fileID: 12800000, guid: 7a3d79cca5f51b34c9049336098f08c8, type: 3}
   farmerRoleButton: {fileID: 11426372, guid: 1ffd3ec782d9ba34587f607efcdcb7e3, type: 2}
-  waterPurifierRoleButton: {fileID: 11439568, guid: 6b79d5ce3db0dd246a54d46e017384e2,
+  hydrologistRoleButton: {fileID: 11439568, guid: 5c8700ad165226d439c72ecf80ce423e,
     type: 2}
   powerEngineerRoleButton: {fileID: 11476706, guid: 9831faa3ff8967f4083bc9d3f6dff597,
     type: 2}
-  storageWorkerRoleButton: {fileID: 11433272, guid: deabeda781465244db21ee0b4dddd855,
-    type: 2}
-  medicRoleButton: {fileID: 11433474, guid: 69a9d67da4d49d745a449f7fb6d875aa, type: 2}
   traineeRoleButton: {fileID: 11474070, guid: c3ba80c3a6c17a14ebb6efd94ec7c635, type: 2}
-  worshipperRoleButton: {fileID: 11477148, guid: 4ebbab99cbd2fb940bde9d8e21327776,
-    type: 2}
   exBtn: {fileID: 11447618, guid: 3268867637d831b4c87648ee2f00a3f5, type: 2}
+  myCamObj: {fileID: 0}
 --- !u!114 &11468796
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3522,16 +3518,19 @@ MonoBehaviour:
   storageWaypoints: []
   wanderListSize: 10
   newAgent: 1
+  isDead: 0
   foodStored: 0
   hungerValue: 0
   moraleLevel: 0
   health: 0
   perception: 0
+  consumeRate: 1
   agentLogic: {fileID: 11468796}
   firstLastName: 
   settlerNameAndRole: 
   gender: 
   currentlyWorking: 0
+  workerPathCompleted: 0
   modelIndex: 0
   aState: 0
   jobState: 0
