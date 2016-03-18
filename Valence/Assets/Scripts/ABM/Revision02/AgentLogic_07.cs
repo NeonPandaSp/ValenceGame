@@ -439,7 +439,11 @@ public class AgentLogic_07 : MonoBehaviour {
                             agentAnim.SetBool("Working", false);
                             workerPathCompleted = false;
                         }
-
+						if (!gameController.waterWorkerList.Contains(this.gameObject))
+						{
+							gameController.waterWorkerList.Add(this.gameObject);
+							//populateList = true;
+						}
                         break;
 
                     case jobSubState.PowerWorker:
@@ -913,7 +917,7 @@ public class AgentLogic_07 : MonoBehaviour {
             if (gameController.food > 0) {
                 //foodStored = gameController.food/10;
 				
-				foodStored = 10; /// Making Hunger a Flat rate for testing - Tyler
+				foodStored = 5; /// Making Hunger a Flat rate for testing - Tyler
 				if( gameController.food < foodStored ){
 					foodStored = gameController.food;
 				} 

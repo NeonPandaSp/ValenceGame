@@ -11,6 +11,7 @@ public class BuildingType  {
 	public float pRate;
 	public float pTime;
     public float cRate;
+	public float cTime;
 	public int area;
 
     public int farmerVal, farmVal;
@@ -30,6 +31,7 @@ public class BuildingType  {
 		pRate = getProductionRate (area);
 		pTime = getProductionTime ();
         cRate = getConsumptionRate(area);
+		cTime = getConsumptionTime();
 	}
 	public int getBuildingCost(){
 		if (typeName == "Shelter") {
@@ -40,6 +42,8 @@ public class BuildingType  {
 			return 25;
 		} else if (typeName == "WaterStation") {
 			return 25;
+		} else if (typeName == "TrainingArea") {
+			return 200;
 		} else {
 			Debug.Log ( "Building Cost Error");
 			return 0;
@@ -50,12 +54,12 @@ public class BuildingType  {
 		if (typeName == "Shelter") {
 			return 10.0f;
 		} else if (typeName == "Farm") {
-            return 1.0f;
+            return 5.0f;
         } else if (typeName == "PowerStation") {
             //Each power station should produce 100 power
-            return 15.0f;
+            return 2.0f;
 		} else if (typeName == "WaterStation") {
-			return 1.0f;
+			return 5.0f;
 		} else if (typeName == "TrainingArea")
         {
             return 1.0f;
@@ -71,13 +75,13 @@ public class BuildingType  {
 		if (typeName == "Shelter") {
 			return 0.0f;
 		} else if (typeName == "Farm") {
-			return 10.0f;
+			return 1.0f;
 		} else if (typeName == "PowerStation") {
 			return 0.0f;
 		} else if (typeName == "WaterStation") {
-			return 10.0f;
+			return 1.0f;
 		} else if (typeName == "TrainingArea") {
-			return 0.0f;
+			return 1.0f;
 		}
         else {
             Debug.Log("Consumption Type Error");
@@ -85,15 +89,33 @@ public class BuildingType  {
         }
     }
 
+	public float getConsumptionTime(){
+		if (typeName == "Shelter") {
+			return 0.0f;
+		} else if (typeName == "Farm") {
+			return 3.0f;
+		} else if (typeName == "PowerStation") {
+			return 0.0f;
+		} else if (typeName == "WaterStation") {
+			return 3.0f;
+		} else if (typeName == "TrainingArea") {
+			return 3.0f;
+		}
+		else {
+			Debug.Log("Consumption Time Error");
+			return 0.0f;
+		}
+	}
+
     public float getProductionTime(){
 		if (typeName == "Shelter") {
 			return 0.0f;
 		} else if (typeName == "Farm") {
-			return 5.0f;
+			return 20.0f;
 		} else if (typeName == "PowerStation") {
-			return 10.0f;
+			return 5.0f;
 		} else if (typeName == "WaterStation") {
-			return 10.0f;
+			return 20.0f;
 		} else if (typeName == "TrainingArea"){
             return 120.0f;
         }

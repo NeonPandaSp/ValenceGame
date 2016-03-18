@@ -415,6 +415,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		// When you click, change the variables value
 		if (showMenu) {
 			showMenu = false;
+			myCamObj.GetComponent<CameraTargetController>().moving = false;
 			myCamObj.GetComponent<CameraTargetController>().following = false;
 
 			_gameController.currentSettlerUI = null;
@@ -431,6 +432,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			firstLastNameDel.gameObject.SetActive (true);
 
 			//here
+			myCamObj.GetComponent<CameraTargetController>().moving = false;
 			myCamObj.GetComponent<CameraTargetController>().followTarget = this.gameObject;
 			myCamObj.GetComponent<CameraTargetController>().following = true;
 
@@ -564,6 +566,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	public void exBtnClicked () {
 		showMenu = false;
 		_gameController.currentSettlerUI = null;
+		myCamObj.GetComponent<CameraTargetController>().moving = false;
 		myCamObj.GetComponent<CameraTargetController>().following = false;
 	}
 

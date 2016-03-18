@@ -14,6 +14,10 @@ public class BuildingScript : MonoBehaviour {
 	public bool initProduction;
 
 	public bool powered;
+	public bool worked;
+
+	public float resourceProgress;
+	public float consumptionProgress;
 	// Use this for initialization
 	void Start () {
 		GameObject gameControllerObject =  GameObject.FindGameObjectWithTag("GameController");
@@ -21,26 +25,75 @@ public class BuildingScript : MonoBehaviour {
 
 
 		assignedAgents = new GameObject[3];
-		initProduction = false;
 		//beginProduction ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (initProduction)
+			production ();
+		
 
+	}
+
+	void production(){
+		// checks if any settlers are assigned to this building type
+		if (checkIfWorked ()) {
+			worked = true;
+			Debug.Log ("Building Worked");
+		} else {
+			worked = false;
+			Debug.Log ("Building NOT Worked");
+		}
+		
+		// adds to counter to check if its time to consume power
+		consumptionProgress += Time.deltaTime;
+		
+		// if its time to consume power, consume power, else tell the game this building isn't powered
+		if (consumptionProgress >= bType.cTime) {
+			if( _myGameController.power >= bType.cRate ){
+				_myGameController.power -= bType.cRate;
+				powered = true;
+				Debug.Log ("POWER CONSUMED");
+			} else {
+				Debug.Log ("NOT ENOUGH POWER");
+				if( bType.typeName == "PowerStation" )
+					powered = true;
+				else
+					powered = false;
+			}
+			consumptionProgress = 0;
+		}
+		
+		// if worked and powered, add to counter to check if its time to generate resource
+		if (worked && powered) {
+			Debug.Log ("Work and Power Check Successful, Incrementing resourceProgress");
+			resourceProgress += Time.deltaTime;
+		} else {
+			Debug.Log ("Work and Power Check Failed");
+		}
+		
+		// if its time to generate resource, generate resource and then reset counter
+		if (resourceProgress > bType.pTime) {
+			Debug.Log ("Generating Resource");
+			GenerateResource();
+			resourceProgress = 0;
+		}
 	}
 
 	public void initBuildingType(){
         //Create a new buildingtype and pass the type of building, the area of that building, the number of similar building, and the number of agents currently working at that building type
 		bType = new BuildingType (myType, myArea);
+
         //bType.farmerVal = _myGameController.farmerList.Count;
         //bType.farmVal = _myGameController.farmBuildingList.Count;
     }
 
 	public void beginProduction(){
-		Debug.Log (bType.pTime);
-		InvokeRepeating("ConsumeResource", bType.pTime,bType.pTime);
-		InvokeRepeating("GenerateResource",bType.pTime,bType.pTime);
+		initProduction = true;
+		Debug.Log ("Production Started");
+		//InvokeRepeating("ConsumeResource", bType.pTime,bType.pTime);
+		//InvokeRepeating("GenerateResource",bType.pTime,bType.pTime);
         
     }
 
@@ -72,13 +125,13 @@ public class BuildingScript : MonoBehaviour {
         }
 
         //First check that we have enough power to generate resources
-        if ( powered ) {
+       // if ( powered ) {
             
             if (bType.typeName == "Farm") {
                 //We should look into updating the generation algorithm to be affected by the number of agents assigned,ie. more farmers working = increased production rate -Zach
                 Debug.Log("bType.pRate: " + bType.pRate);
 				if( _myGameController.farmBuildingList.Count > 0  )
-                	_myGameController.food += ( bType.pRate * _myGameController.farmerList.Count) / (_myGameController.farmBuildingList.Count);
+					_myGameController.food += ( bType.pRate ); //* _myGameController.farmerList.Count) / (_myGameController.farmBuildingList.Count);
             }
             else if (bType.typeName == "WaterStation") {
                 _myGameController.water += bType.pRate;
@@ -86,11 +139,11 @@ public class BuildingScript : MonoBehaviour {
             else {
                 Debug.Log("Production Type Error @ Resource Generation");
             }
-        }
-        else {
+      //  }
+      //  else {
             
-            Debug.Log("No power! We require more minerals");
-        }
+       //     Debug.Log("No power! We require more minerals");
+      //  }
 
         //Since power stations do not consume power, they are not restricted by no power
         if (bType.typeName == "PowerStation") {
@@ -136,4 +189,28 @@ public class BuildingScript : MonoBehaviour {
 //            Debug.Log("Production Type Error @ Resource Generation");
 //        }
     }
+
+	public bool checkIfWorked(){
+		if (bType.typeName == "Farm") {
+			if( _myGameController.farmerList.Count > 0 )
+				return true;
+		}
+		if (bType.typeName == "PowerStation") {
+			if( _myGameController.powerWorkerList.Count > 0 )
+				return true;
+		}
+		if (bType.typeName == "WaterStation") {
+			if( _myGameController.waterWorkerList.Count > 0 )
+				return true;
+		}
+		if (bType.typeName == "TrainingArea") {
+			if( _myGameController.traineeList.Count > 0 )
+				return true;
+		}
+		if (bType.typeName == "Hospital") {
+			if( _myGameController.hospitalWorkerList.Count > 0 )
+				return true;
+		}
+		return false;
+	}
 }

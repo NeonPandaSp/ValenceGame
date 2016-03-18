@@ -79,17 +79,25 @@ public class CameraTargetController : MonoBehaviour {
 			//Camera.main.transform.eulerAngles += myRotation - lastRotation;
 		}
 
+		if (Input.GetAxisRaw ("Horizontal") != 0 || Input.GetAxisRaw ("Vertical") != 0) {
+			moving = false;
+			following = false;
+		}
 
-		if (following) {
-			//MoveCameraTo ( transform.position, followTarget.transform.position );
-			this.transform.position = followTarget.transform.position;
+		if (following && !moving) {
+			MoveCameraTo (transform.position, followTarget.transform.position);
+			//following = false;
+			//this.transform.position = followTarget.transform.position;
 			//Camera.main.transform.LookAt( this.gameObject.transform );
+		} else if( following ){
+			this.transform.position = followTarget.transform.position;
 		}
 
 		lastMousePositionX = Input.mousePosition.x;
 		lastMousePositionY = Input.mousePosition.y;
 		lastPosition = transform.position;
 		lastRotation = new Vector3 ( transform.rotation.x, transform.rotation.y, transform.rotation.z);
+
 
 
 		if (moving) {
@@ -99,7 +107,10 @@ public class CameraTargetController : MonoBehaviour {
 				t += Time.deltaTime;
 			} else if ( t > 3 ){
 				moving = false;
-			} 
+			}
+			if( Vector3.Distance( this.transform.position, endPos ) < 0.025f ){
+				moving = false;
+			}
 		}
 	}
 

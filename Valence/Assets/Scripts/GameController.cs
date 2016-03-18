@@ -21,9 +21,16 @@ public class GameController : MonoBehaviour {
 
     public List<GameObject> powerWorkerList = new List<GameObject>();
     public List<GameObject> powerBuildingList = new List<GameObject>();
-    public List<GameObject> traineeList = new List<GameObject>();
-    public List<GameObject> waterWorkerList = new List<GameObject> ();
+    
+	public List<GameObject> traineeList = new List<GameObject>();
+	public List<GameObject> trainingBuildingList = new List<GameObject> ();
+
+	public List<GameObject> waterWorkerList = new List<GameObject> ();
 	public List<GameObject> waterBuildingList = new List<GameObject>();
+
+	
+	public List<GameObject> hospitalWorkerList = new List<GameObject>();
+	public List<GameObject> hospitalBuildingList = new List<GameObject> ();
 
 	public GUIController_SettlerInfo currentSettlerUI;
 	public NotificationController notificationController;
@@ -49,6 +56,13 @@ public class GameController : MonoBehaviour {
 
         powerWorkerList = new List<GameObject>();
         powerBuildingList = new List<GameObject>();
+
+		waterWorkerList = new List<GameObject> ();
+		waterBuildingList = new List<GameObject> ();
+
+		traineeList = new List<GameObject> ();
+		trainingBuildingList = new List<GameObject> ();
+
 		loadLastSave ();
 		
 		if (firstLoad) {
@@ -79,8 +93,8 @@ public class GameController : MonoBehaviour {
         if (power < 0) {
             power = 0;
         }
-		if (power > 30 * powerBuildingList.Count) {
-			power = 30 * powerBuildingList.Count;
+		if (power > 10 * powerBuildingList.Count) {
+			power = 10 * powerBuildingList.Count;
 		}
 		if (food > 20 * farmBuildingList.Count) {
 			food = 20 * farmBuildingList.Count;
@@ -145,6 +159,10 @@ public class GameController : MonoBehaviour {
 				powerBuildingList.Add ( tempBld );
 			} else if ( tempBld.GetComponent<BuildingScript>().myType == "WaterStation" ){
 				waterBuildingList.Add ( tempBld );
+			} else if ( tempBld.GetComponent<BuildingScript>().myType == "TrainingArea"){
+				trainingBuildingList.Add( tempBld );
+			}  else if ( tempBld.GetComponent<BuildingScript>().myType == "Hospital"){
+				hospitalBuildingList.Add( tempBld );
 			}
 			tempBld.GetComponent<BuildingScript>().initBuildingType();
 			tempBld.GetComponent<BuildingScript>().beginProduction();
@@ -183,6 +201,15 @@ public class GameController : MonoBehaviour {
 			} else if ( temp.GetComponent<AgentLogic_07>().jobState == AgentLogic_07.jobSubState.PowerWorker){
 				temp.GetComponent<AgentLogic_07>().workWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("PowerWaypoint"));
 				powerWorkerList.Add (temp);
+			} else if ( temp.GetComponent<AgentLogic_07>().jobState == AgentLogic_07.jobSubState.Hydrologist){
+				temp.GetComponent<AgentLogic_07>().workWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("WaterWaypoint"));
+				waterWorkerList.Add (temp);
+			} else if ( temp.GetComponent<AgentLogic_07>().jobState == AgentLogic_07.jobSubState.Trainee){
+				temp.GetComponent<AgentLogic_07>().workWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("TrainingWaypoint"));
+				traineeList.Add (temp);
+			} else if ( temp.GetComponent<AgentLogic_07>().jobState == AgentLogic_07.jobSubState.Medic){
+				temp.GetComponent<AgentLogic_07>().workWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("HospitalWaypoint"));
+				hospitalWorkerList.Add (temp);
 			}
 			population.Add(temp);
 		}

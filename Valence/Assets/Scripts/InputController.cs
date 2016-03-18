@@ -592,11 +592,11 @@ public class InputController : MonoBehaviour {
                 }
                 if (hoverState == "training")
                 {
-                    if (_gameController.scrap >= 25 && !MouseEdge())
+                    if (_gameController.scrap >= 200 && !MouseEdge())
                     {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop")))
                         {
-                            _gameController.scrap -= 25;
+                            _gameController.scrap -= 200;
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("TrainingArea"), new Vector3(currentTile.x, currentTile.y - 1, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
