@@ -107,6 +107,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		SettlerInfoDelBg.rectTransform.sizeDelta = new Vector2 (821, 306);
 		SettlerInfoDelBg.transform.Translate (410, 152.5f, 0);
 		SettlerInfoDelBg.gameObject.SetActive (false);
+		SettlerInfoDelBg.CrossFadeAlpha (0.95f, 0, false);
 
 		//=======================\\
 		//=== Settler Picture ===\\

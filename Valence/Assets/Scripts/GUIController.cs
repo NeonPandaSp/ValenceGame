@@ -80,7 +80,7 @@ using System.Collections.Generic;
 		scrapIconDel = (Image)Instantiate (scrapIcon);
 		scrapIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 
-		scrapIconDel.rectTransform.sizeDelta = new Vector2 (76, 61);
+		scrapIconDel.rectTransform.sizeDelta = new Vector2 (90, 72);
 		scrapIconDel.transform.Translate (((HUDDelBg.gameObject.transform.position.x) - 30), Screen.height - 42.5f, 0);
 
 			//Text
