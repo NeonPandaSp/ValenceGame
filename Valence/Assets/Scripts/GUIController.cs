@@ -66,8 +66,8 @@ using System.Collections.Generic;
 		HUDDelBg = (Image)Instantiate (HUDBg);
 		HUDDelBg.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		HUDDelBg.rectTransform.sizeDelta = new Vector2 (770, 100);
-		HUDDelBg.transform.Translate (Screen.width / 2, Screen.height - 50, 0);
+		HUDDelBg.rectTransform.sizeDelta = new Vector2 (960, 109);
+		HUDDelBg.transform.Translate (Screen.width / 2, Screen.height - 54.5f, 0);
 		HUDDelBg.CrossFadeAlpha (0.9f, 0, false);
 
 		//cursorTexture_default.Resize (9, 11);
@@ -80,7 +80,7 @@ using System.Collections.Generic;
 		scrapIconDel = (Image)Instantiate (scrapIcon);
 		scrapIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 
-		scrapIconDel.rectTransform.sizeDelta = new Vector2 (50, 50);
+		scrapIconDel.rectTransform.sizeDelta = new Vector2 (76, 61);
 		scrapIconDel.transform.Translate (((HUDDelBg.gameObject.transform.position.x) - 30), Screen.height - 42.5f, 0);
 
 			//Text
@@ -96,7 +96,7 @@ using System.Collections.Generic;
 		populationIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		populationIconDel.rectTransform.sizeDelta = new Vector2 (70, 70);
-		populationIconDel.transform.Translate (scrapIconDel.transform.position.x - 300, scrapIconDel.rectTransform.position.y - 17.5f, 0);
+		populationIconDel.transform.Translate (scrapIconDel.transform.position.x - 380, scrapIconDel.rectTransform.position.y - 25.5f, 0);
 
 			//Text
 			populationDelText = (Text)Instantiate (populationText);
@@ -104,21 +104,21 @@ using System.Collections.Generic;
 			
 			populationDelText.text = "";
 			populationDelText.fontSize = 20;
-			populationDelText.transform.position = new Vector2 (populationIconDel.transform.position.x + 70, scrapDelText.transform.position.y - 15f);
+			populationDelText.transform.position = new Vector2 (populationIconDel.transform.position.x + 70, scrapDelText.transform.position.y - 25.5f);
 		
 		//Power
 		powerIconDel = (Image)Instantiate (powerIcon);
 		powerIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		powerIconDel.rectTransform.sizeDelta = new Vector2 (100, 100);
-		powerIconDel.transform.Translate (populationIconDel.transform.position.x + 150, scrapIconDel.rectTransform.position.y - 17.5f, 0);
+		powerIconDel.transform.Translate (populationIconDel.transform.position.x + 185, scrapIconDel.rectTransform.position.y - 25.5f, 0);
 		
 			//Text
 			powerDelText = (Text)Instantiate (powerText);
 			powerDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 			
 			powerDelText.text = "";
-			powerDelText.transform.position = new Vector2 (powerIconDel.transform.position.x + 70, scrapDelText.transform.position.y - 15f);
+			powerDelText.transform.position = new Vector2 (powerIconDel.transform.position.x + 70, scrapDelText.transform.position.y - 25.5f);
 			powerDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
 
 		//Food
@@ -126,14 +126,14 @@ using System.Collections.Generic;
 		foodIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		foodIconDel.rectTransform.sizeDelta = new Vector2 (120, 120);
-		foodIconDel.transform.Translate (powerIconDel.transform.position.x + 300, scrapIconDel.rectTransform.position.y - 10.5f, 0);
+		foodIconDel.transform.Translate (powerIconDel.transform.position.x + 390, scrapIconDel.rectTransform.position.y - 17.5f, 0);
 
 			//Text
 			foodDelText = (Text)Instantiate (foodText);
 			foodDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 			
 			foodDelText.text = "";
-			foodDelText.transform.position = new Vector2 (foodIconDel.transform.position.x + 70, scrapDelText.transform.position.y - 15f);
+			foodDelText.transform.position = new Vector2 (foodIconDel.transform.position.x + 70, scrapDelText.transform.position.y - 25.5f);
 			foodDelText.rectTransform.sizeDelta = new Vector2 (100, 100);
 		
 		//Water
@@ -141,14 +141,14 @@ using System.Collections.Generic;
 		waterIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		waterIconDel.rectTransform.sizeDelta = new Vector2 (100, 100);
-		waterIconDel.transform.Translate (foodIconDel.transform.position.x + 150, scrapIconDel.rectTransform.position.y - 12.5f, 0);
+		waterIconDel.transform.Translate (foodIconDel.transform.position.x + 185, scrapIconDel.rectTransform.position.y - 20.5f, 0);
 
 			//Text
 			waterDelText = (Text)Instantiate (waterText);
 			waterDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 			
 			waterDelText.text = "";
-			waterDelText.transform.position = new Vector2 (waterIconDel.transform.position.x + 70, scrapDelText.transform.position.y - 15f);
+			waterDelText.transform.position = new Vector2 (waterIconDel.transform.position.x + 70, scrapDelText.transform.position.y - 25.5f);
 			waterDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
 
 
