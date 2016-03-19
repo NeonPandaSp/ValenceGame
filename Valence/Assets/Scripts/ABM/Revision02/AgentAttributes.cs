@@ -73,7 +73,6 @@ public class AgentAttributes : MonoBehaviour {
         float tempValue = agentLogic.perception * agentPerception;
 
         agentLogic.perception = agentLogic.perception + tempValue;
-
     }
 
     public void SetStrength(){

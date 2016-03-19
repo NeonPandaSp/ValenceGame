@@ -28,8 +28,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
     public Image SettlerInfoBg;
 	Image SettlerInfoDelBg;
 
-	public Image genericProfileIcon;
-	Image genericProfileIconDel;
+	public Image settlerPhoto;
+	Image settlerPhotoDel;
 
 	public Text firstLastName;
 	Text firstLastNameDel;
@@ -50,9 +50,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 
 	int rndHP,rndStam, rndMor, rndHung, rndThir, rndStr, rndInt, rndAgil, rndPerc, rndChar;
 
-	Color redValue = new Color (255 / 255, 70 / 255, 82 / 255);
-	//Color yellowValue = new Color (115 / 255, 255 / 255, 149 / 255);
-	Color greenValue = new Color (115 / 255, 255 / 255, 149 / 255);
+	Color redValue, greenValue;
 	
 	// === Settler Inventory === \\
 	public Text inventoryTitle;
@@ -90,7 +88,6 @@ public class GUIController_SettlerInfo : MonoBehaviour {
         storageAvailable = false;
 		traininggroundAvailable = false;
 
-
 		_gameController = GameObject.Find ("GameController").GetComponent<GameController> ();
 
 		myCamObj = GameObject.Find ("CameraObject");
@@ -112,12 +109,12 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		//=======================\\
 		//=== Settler Picture ===\\
 		//=======================\\
-		genericProfileIconDel = (Image)Instantiate (genericProfileIcon);
-		genericProfileIconDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		settlerPhotoDel = (Image)Instantiate (settlerPhoto);
+		settlerPhotoDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		genericProfileIconDel.rectTransform.sizeDelta = new Vector2 (200, 300);
-		genericProfileIconDel.transform.Translate (105, 150, 0);
-		genericProfileIconDel.gameObject.SetActive (false);
+		settlerPhotoDel.rectTransform.sizeDelta = new Vector2 (200, 300);
+		settlerPhotoDel.transform.Translate (105, 150, 0);
+		settlerPhotoDel.gameObject.SetActive (false);
 
 		//====================\\
 		//=== Settler Name ===\\
@@ -407,6 +404,11 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		exBtnDel.onClick.AddListener (() => exBtnClicked());
 
 		agentAttributes = GetComponent <AgentAttributes> ();
+
+		//Colours
+		redValue = new Color (255 / 255f, 70 / 255f, 82 / 255f);
+		//Color yellowValue = new Color (115 / 255, 255 / 255, 149 / 255);
+		greenValue = new Color (115 / 255f, 255 / 255f, 149 / 255f);
     }
 
 	//=================\\
@@ -594,7 +596,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			traineeRoleButtonDel.gameObject.SetActive (true);
 			exBtnDel.gameObject.SetActive (true);
 			
-			genericProfileIconDel.gameObject.SetActive (true);
+			settlerPhotoDel.gameObject.SetActive (true);
 			inventoryFoodTextDel.gameObject.SetActive (true);
 			
 			//Attributes
@@ -634,7 +636,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			traineeRoleButtonDel.gameObject.SetActive (false);
 			exBtnDel.gameObject.SetActive (false);
 			
-			genericProfileIconDel.gameObject.SetActive (false);
+			settlerPhotoDel.gameObject.SetActive (false);
 			firstLastNameDel.gameObject.SetActive (false);
 			inventoryFoodTextDel.gameObject.SetActive (false);
 			

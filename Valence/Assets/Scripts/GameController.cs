@@ -186,6 +186,7 @@ public class GameController : MonoBehaviour {
 			temp.GetComponent<AgentLogic_07>().gender = agent.gender;
 			temp.GetComponent<AgentLogic_07>().modelIndex = agent.myModelIndex;
 			temp.GetComponent<AgentLogic_07>().firstLastName = agent.agentName;
+			temp.GetComponent<AgentLogic_07>().photo = agent.agentPhoto;
 			temp.GetComponent<AgentLogic_07>().health = agent.health;
 			temp.GetComponent<AgentLogic_07>().hungerValue = agent.hunger;
 			temp.GetComponent<AgentAttributes>().agentAgility = agent.agility;
@@ -287,6 +288,7 @@ public class serialAgent {
 
 	public string gender;
 	public string agentName;
+	public string photo;
 	public int myModelIndex;
 
 	public float xPos;

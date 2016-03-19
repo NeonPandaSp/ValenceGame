@@ -64,8 +64,9 @@ public class AgentLogic_07 : MonoBehaviour {
     //Food consumption rate per agent, modified by Strength
     public float consumeRate = 1.0f;
 
-    //Settler Name
-    public AgentLogic_07 agentLogic;
+	public AgentLogic_07 agentLogic;
+
+	//Settler Name
 	public string firstLastName;
 	public string settlerNameAndRole;
 
@@ -75,20 +76,26 @@ public class AgentLogic_07 : MonoBehaviour {
     string[] femaleFirstNameArray;
 	string[] lastNameArray;
 
-    //String array containing the gender of the agent
+	//Photo
+	public Image photo;
+
+	int randomMalePhoto;
+	int randomFemalePhoto;
+	public Image[] malePhotoArray;
+	public Image[] femalePhotoArray;
+
+    //Gender
+	//String array containing the gender of the agent
     string[] genderArray;
     //Index position of genderArray
     int randomGender;
     //String containing the randomly assigned gender
     public string gender;
 
-    //	public GUIController_SettlerInfo _GUIController_SettlerInfo;
-    //	public Text hiTHERE;
-
     int amount = 0;
 
     //wait time checks if WanderOrIdle function is currently pending
-    float wait = Random.Range(1.0f, 3.0f);
+    float wait = Random.Range (1.0f, 3.0f);
 
     //Wait time for the working animation
     float workWait = 2.0f;
@@ -146,21 +153,20 @@ public class AgentLogic_07 : MonoBehaviour {
             };
 
 			//Name
-			maleFirstNameArray = new string[21] {
+			maleFirstNameArray = new string[20] {
                 "Daron",
                 "Bernardo",
                 "Grady",
                 "Willie",
-                "Mark",
                 "Malcolm",
                 "Trevor",
-                "Len",
-                "Tod",
+                "Ken",
+                "Todd",
                 "Randy",
                 "Gail",
                 "Kurt",
                 "Alexis",
-                "Winford",
+                "Vishesh",
                 "Luigi",
                 "Jake",
                 "Reggie",
@@ -180,7 +186,7 @@ public class AgentLogic_07 : MonoBehaviour {
                 "Anita",
                 "Magdalena",
                 "Laryssa",
-                "Zachary-a",
+                "Zacharia",
                 "Darcie",
                 "Sari",
                 "Shayna",
@@ -190,11 +196,11 @@ public class AgentLogic_07 : MonoBehaviour {
                 "Deedra",
                 "Wanda",
                 "Creola",
-                "Weri"
+				"Weri"
             };
 
             lastNameArray = new string[14] {
-				"Hawthorne",
+				"Levine",
 				"Hazlewood",
 				"Beckett",
 				"Polo",
@@ -209,20 +215,23 @@ public class AgentLogic_07 : MonoBehaviour {
 				"Bob",
 				"Steele"
 			};
-		
-			randomFirstName = UnityEngine.Random.Range (0, 14);
+					
+			//Create Random Variables
+			randomFirstName = UnityEngine.Random.Range (0, 20);
 			randomLastName = UnityEngine.Random.Range (0, 14);
-            randomGender = Random.Range(0, (genderArray.Length));
+            randomMalePhoto = UnityEngine.Random.Range (0, 12);
+			randomFemalePhoto = UnityEngine.Random.Range (0, 6);
+			randomGender = Random.Range (0, (genderArray.Length));
 
-            //Assigned gender to the agent
-            //gender = genderArray[randomGender];
-
-            //Name - variable firstLastName outputs first and last name. variable settlerNameAndRole outputs name, what settler is currently doing, and their assigned role
+            //Assigns random names and photos according to gender
+			//Variable firstLastName outputs first and last name. variable settlerNameAndRole outputs name, what settler is currently doing, and their assigned role
             if (gender == "Male"){
                 firstLastName = (maleFirstNameArray[randomFirstName] + " " + lastNameArray[randomLastName]);
+				photo = malePhotoArray[randomMalePhoto];
             }
             else {
                 firstLastName = (femaleFirstNameArray[randomFirstName] + " " + lastNameArray[randomLastName]);
+				photo = femalePhotoArray[randomFemalePhoto];
             }
             
 
@@ -234,9 +243,7 @@ public class AgentLogic_07 : MonoBehaviour {
 			moraleLevel = 100;
             //Init the agent's perception to 10% when spawned (this is the standard starting value for all agents)
             perception = 10;
-
-			
-			
+						
 			//When the agent spawns, there is a 50% chance to spawn idle or wander
 			WanderOrIdle(50.0f);
         }

@@ -14,7 +14,12 @@ using System.Collections.Generic;
 	public Image scrapIcon, populationIcon, foodIcon, waterIcon, powerIcon;
 	Image scrapIconDel, populationIconDel, foodIconDel, waterIconDel, powerIconDel;
 
-    AgentSpawner aSpawner;
+	AgentSpawner aSpawner;
+
+	//Colours
+	Color redValue, whiteValue, greenValue;
+
+	float populationPercentage;
 
 	public GameController globalAttributes;
 	public string setBuildingTypeName;
@@ -57,12 +62,10 @@ using System.Collections.Generic;
 	//=================\\
 	//===== Start =====\\
 	//=================\\
-
-	// Use this for initialization
 	void Start () {
 		globalAttributes = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
-        aSpawner = GameObject.Find("ASpawner").GetComponent<AgentSpawner>();
-		// === HUD Background ===\\
+		aSpawner = GameObject.Find("ASpawner").GetComponent<AgentSpawner>();
+        // === HUD Background ===\\
 		HUDDelBg = (Image)Instantiate (HUDBg);
 		HUDDelBg.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
@@ -88,7 +91,7 @@ using System.Collections.Generic;
 			scrapDelText.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 			
 			scrapDelText.text = "";
-			scrapDelText.transform.position = new Vector2 (HUDDelBg.rectTransform.position.x + 32.5f, scrapIconDel.rectTransform.position.y);
+			scrapDelText.transform.position = new Vector2 (HUDDelBg.rectTransform.position.x + 42.5f, scrapIconDel.rectTransform.position.y);
 			scrapDelText.rectTransform.sizeDelta = new Vector2 (200, 50);
 
 		//Population
@@ -244,6 +247,11 @@ using System.Collections.Generic;
 		trainingGroundDelBtn.GetComponentInChildren<Text> ().text = "Training Ground";
 		trainingGroundDelBtn.onClick.AddListener (() => switchStructure ("training"));
 		trainingGroundDelBtn.gameObject.SetActive (false);
+
+		//Colours
+		redValue = new Color (255 / 255f, 70 / 255f, 82 / 255f);
+		whiteValue = new Color (244 / 255f, 244 / 255f, 244 / 255f);
+		greenValue = new Color (115 / 255f, 255 / 255f, 149 / 255f);
 	}
 
 	//=================\\
@@ -347,13 +355,13 @@ using System.Collections.Generic;
 		scrapDelText.text = scrap.ToString ();
 
 		if (scrap < 50) {
-			scrapDelText.color = new Color (1, 0.2745098039215686f, 0.3215686274509804f);
+			scrapDelText.color = redValue;
 			scrapDelText.fontSize = 24;
-		} else if (scrap >= 50 || scrap <= 99) {
-			scrapDelText.color = new Color (0.9568627450980392f, 0.9568627450980392f, 0.9568627450980392f);
+		} else if (scrap >= 50 && scrap <= 99) {
+			scrapDelText.color = whiteValue;
 			scrapDelText.fontSize = 22;
 		} else if (scrap > 99) {
-			scrapDelText.color = new Color (0.4509803921568627f, 1, 0.5843137254901961f);
+			scrapDelText.color = greenValue;
 			scrapDelText.fontSize = 18;
 		} else if (scrap > 999) {
 			scrapDelText.fontSize = 16;
@@ -362,33 +370,25 @@ using System.Collections.Generic;
 		//Population
 		population = globalAttributes.population.Count;
 		populationDelText.text = population + "/" + globalAttributes.popLimit;
+		populationPercentage = population / globalAttributes.popLimit;
 
-		if (aSpawner.popSize < 5) {
-			populationDelText.color = new Color (1, 0.2745098039215686f, 0.3215686274509804f);
-			populationDelText.fontSize = 24;
-		} else if (aSpawner.popSize > 5 || population < 30) {
-			populationDelText.color = new Color (0.9568627450980392f, 0.9568627450980392f, 0.9568627450980392f);
-			populationDelText.fontSize = 22;
-		} else if (aSpawner.popSize > 30) {
-			populationDelText.color = new Color (0.4509803921568627f, 1, 0.5843137254901961f);
-		} else if (aSpawner.popSize > 99) {
-			populationDelText.fontSize = 20;
-		}
+		Color popColour = Color.Lerp (redValue, greenValue, (populationPercentage));
+		populationDelText.color = popColour;
 
 		//Food
 		food = (int)globalAttributes.food;
 		foodDelText.text = food.ToString ();
 
 		if (food <= 30) {
-			foodDelText.color = new Color (1, 0.2745098039215686f, 0.3215686274509804f);
+			foodDelText.color = redValue;
 			foodDelText.fontSize = 24;
-		} else if (food >= 50 || food <= 99) {
-			foodDelText.color = new Color (0.9568627450980392f, 0.9568627450980392f, 0.9568627450980392f);
+		} else if (food >= 50 && food <= 99) {
+			foodDelText.color = whiteValue;
 			foodDelText.fontSize = 22;
 		} else if (food > 99) {
 			foodDelText.fontSize = 18;
 		} else if (food > 999) {
-			foodDelText.color = new Color (0.4509803921568627f, 1, 0.5843137254901961f);
+			foodDelText.color = greenValue;
 			foodDelText.fontSize = 16;
 		}
 
@@ -397,15 +397,15 @@ using System.Collections.Generic;
 		waterDelText.text = water.ToString ();
 
 		if (water <= 30) {
-			waterDelText.color = new Color (1, 0.2745098039215686f, 0.3215686274509804f);
+			waterDelText.color = redValue;
 			waterDelText.fontSize = 24;
-		} else if (water >= 50 || water <= 99) {
-			waterDelText.color = new Color (0.9568627450980392f, 0.9568627450980392f, 0.9568627450980392f);
+		} else if (water >= 50 && water <= 99) {
+			waterDelText.color = whiteValue;
 			waterDelText.fontSize = 22;
 		} else if (water > 99) {
 			waterDelText.fontSize = 18;
 		} else if (water > 999) {
-			waterDelText.color = new Color (0.4509803921568627f, 1, 0.5843137254901961f);
+			waterDelText.color = greenValue;
 			waterDelText.fontSize = 16;
 		}
 
@@ -414,15 +414,15 @@ using System.Collections.Generic;
 		powerDelText.text = power.ToString ();
 
 		if (power <= 30) {
-			powerDelText.color = new Color (1, 0.2745098039215686f, 0.3215686274509804f);
+			powerDelText.color = redValue;
 			powerDelText.fontSize = 24;
-		} else if (power >= 50 || power <= 99) {
-			powerDelText.color = new Color (0.9568627450980392f, 0.9568627450980392f, 0.9568627450980392f);
+		} else if (power >= 50 && power <= 99) {
+			powerDelText.color = whiteValue;
 			powerDelText.fontSize = 22;
 		} else if (power > 99) {
 			powerDelText.fontSize = 18;
 		} else if (power > 999) {
-			powerDelText.color = new Color (0.4509803921568627f, 1, 0.5843137254901961f);
+			powerDelText.color = greenValue;
 			powerDelText.fontSize = 16;
 		}
 
