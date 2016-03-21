@@ -40,10 +40,10 @@ public class BuildingScript : MonoBehaviour {
 		// checks if any settlers are assigned to this building type
 		if (checkIfWorked ()) {
 			worked = true;
-			Debug.Log ("Building Worked");
+			//Debug.Log ("Building Worked");
 		} else {
 			worked = false;
-			Debug.Log ("Building NOT Worked");
+			//Debug.Log ("Building NOT Worked");
 		}
 		
 		// adds to counter to check if its time to consume power
@@ -54,9 +54,9 @@ public class BuildingScript : MonoBehaviour {
 			if( _myGameController.power >= bType.cRate ){
 				_myGameController.power -= bType.cRate;
 				powered = true;
-				Debug.Log ("POWER CONSUMED");
+				//Debug.Log ("POWER CONSUMED");
 			} else {
-				Debug.Log ("NOT ENOUGH POWER");
+				//Debug.Log ("NOT ENOUGH POWER");
 				if( bType.typeName == "PowerStation" )
 					powered = true;
 				else
@@ -67,15 +67,15 @@ public class BuildingScript : MonoBehaviour {
 		
 		// if worked and powered, add to counter to check if its time to generate resource
 		if (worked && powered) {
-			Debug.Log ("Work and Power Check Successful, Incrementing resourceProgress");
+			//Debug.Log ("Work and Power Check Successful, Incrementing resourceProgress");
 			resourceProgress += Time.deltaTime;
 		} else {
-			Debug.Log ("Work and Power Check Failed");
+			//Debug.Log ("Work and Power Check Failed");
 		}
 		
 		// if its time to generate resource, generate resource and then reset counter
 		if (resourceProgress > bType.pTime) {
-			Debug.Log ("Generating Resource");
+			//Debug.Log ("Generating Resource");
 			GenerateResource();
 			resourceProgress = 0;
 		}
@@ -91,7 +91,7 @@ public class BuildingScript : MonoBehaviour {
 
 	public void beginProduction(){
 		initProduction = true;
-		Debug.Log ("Production Started");
+		//Debug.Log ("Production Started");
 		//InvokeRepeating("ConsumeResource", bType.pTime,bType.pTime);
 		//InvokeRepeating("GenerateResource",bType.pTime,bType.pTime);
         

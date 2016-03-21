@@ -19,7 +19,7 @@ public class NotificationController : MonoBehaviour {
 	}
 
 	public void CreateNewNotification(string newNotification){
-		Debug.Log (this.transform.position.x);
+		//Debug.Log (this.transform.position.x);
 
 		Image newPanel = Instantiate(tempPanel, new Vector2(this.transform.position.x - Screen.width - 430, this.transform.position.y + 100 ), Quaternion.Euler(Vector3.zero)) as Image;
 		//            button.transform.SetParent(GameObject.Find("Canvas").transform, false);

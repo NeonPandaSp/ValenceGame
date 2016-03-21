@@ -25,7 +25,7 @@ public class BuildingType  {
 		typeName = n;
 		area = a;
 
-        Debug.Log("farmerVal " + farmerVal);
+        //Debug.Log("farmerVal " + farmerVal);
 
 		cost = getBuildingCost ();
 		pRate = getProductionRate (area);
