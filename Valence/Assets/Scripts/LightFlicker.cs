@@ -3,8 +3,8 @@ using System.Collections;
 
 public class LightFlicker : MonoBehaviour {
 
-    float minFlickerSpeed = 0.1f;
-    float maxFlickerSpeed = 0.5f;
+    public float minFlickerSpeed = 0.1f;
+    public float maxFlickerSpeed = 0.5f;
 
     // Use this for initialization
     void Start () {
