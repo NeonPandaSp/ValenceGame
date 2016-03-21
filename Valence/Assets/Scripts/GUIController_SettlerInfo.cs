@@ -28,8 +28,8 @@ public class GUIController_SettlerInfo : MonoBehaviour {
     public Image SettlerInfoBg;
 	Image SettlerInfoDelBg;
 
-	public Image settlerPhoto;
-	Image settlerPhotoDel;
+	public Image settlerPortrait;
+	Image settlerPortraitDel;
 
 	public Text firstLastName;
 	Text firstLastNameDel;
@@ -109,12 +109,12 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		//=======================\\
 		//=== Settler Picture ===\\
 		//=======================\\
-		settlerPhotoDel = (Image)Instantiate (settlerPhoto);
-		settlerPhotoDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		settlerPortraitDel = (Image)Instantiate (settlerPortrait);
+		settlerPortraitDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		settlerPhotoDel.rectTransform.sizeDelta = new Vector2 (200, 300);
-		settlerPhotoDel.transform.Translate (105, 150, 0);
-		settlerPhotoDel.gameObject.SetActive (false);
+		settlerPortraitDel.rectTransform.sizeDelta = new Vector2 (200, 300);
+		settlerPortraitDel.transform.Translate (105, 150, 0);
+		settlerPortraitDel.gameObject.SetActive (false);
 
 		//====================\\
 		//=== Settler Name ===\\
@@ -596,7 +596,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			traineeRoleButtonDel.gameObject.SetActive (true);
 			exBtnDel.gameObject.SetActive (true);
 			
-			settlerPhotoDel.gameObject.SetActive (true);
+			settlerPortraitDel.gameObject.SetActive (true);
 			inventoryFoodTextDel.gameObject.SetActive (true);
 			
 			//Attributes
@@ -636,7 +636,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			traineeRoleButtonDel.gameObject.SetActive (false);
 			exBtnDel.gameObject.SetActive (false);
 			
-			settlerPhotoDel.gameObject.SetActive (false);
+			settlerPortraitDel.gameObject.SetActive (false);
 			firstLastNameDel.gameObject.SetActive (false);
 			inventoryFoodTextDel.gameObject.SetActive (false);
 			
@@ -672,6 +672,12 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		firstLastNameDel.text = agentLogic.settlerNameAndRole;
 
 		//Picture
+		if (agentLogic.gender == "Male") {
+			settlerPortraitDel.sprite = _gameController.malePortraitArray [agentLogic.malePortraitIndex];
+		} else {
+			settlerPortraitDel.sprite = _gameController.femalePortraitArray [agentLogic.femalePortraitIndex];
+		}
+		//Debug.Log ("In SettlerInfo, agentLogic.portraitIndex is" + settlerPortraitDel.sprite);
 
 		//=== Attributes ===\\
 		//Health

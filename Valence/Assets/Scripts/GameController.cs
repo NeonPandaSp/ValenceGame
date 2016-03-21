@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using System;
 public class GameController : MonoBehaviour {
 	static int mapSize = 50;
@@ -41,6 +42,10 @@ public class GameController : MonoBehaviour {
 
 	public bool firstLoad;
 	public bool foodAlerted, scrapAlerted, waterAlerted, powerAlerted;
+
+	//Photo
+	public Sprite[] malePortraitArray;
+	public Sprite[] femalePortraitArray;
 	
 	// Use this for initialization
 	void Awake () {
@@ -90,6 +95,9 @@ public class GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		//Debug.Log ("Male portrait array is: " + malePortraitArray[0]);
+
         if (power < 0) {
             power = 0;
         }
@@ -154,7 +162,7 @@ public class GameController : MonoBehaviour {
 			
 			if( tempBld.GetComponent<BuildingScript>().myType == "Farm" ){
 				farmBuildingList.Add ( tempBld );
-				Debug.Log ("Added to FarmBuilding List");
+				//Debug.Log ("Added to FarmBuilding List");
 			} else if ( tempBld.GetComponent<BuildingScript>().myType == "PowerStation" ){
 				powerBuildingList.Add ( tempBld );
 			} else if ( tempBld.GetComponent<BuildingScript>().myType == "WaterStation" ){
@@ -172,13 +180,13 @@ public class GameController : MonoBehaviour {
 
 		foreach (serialAgent agent in loadedData.population) {
 			GameObject temp;
-			if( agent.gender == "Male" ){
-				temp = (GameObject) Instantiate( myAgentSpawner.MaleAgent[agent.myModelIndex], new Vector3( agent.xPos, agent.yPos, agent.zPos), Quaternion.identity);
+			if (agent.gender == "Male"){
+				temp = (GameObject) Instantiate (myAgentSpawner.MaleAgent[agent.myModelIndex], new Vector3 (agent.xPos, agent.yPos, agent.zPos), Quaternion.identity);
 			} else {
-				temp = (GameObject) Instantiate( myAgentSpawner.FemaleAgent[agent.myModelIndex], new Vector3( agent.xPos, agent.yPos, agent.zPos), Quaternion.identity);
+				temp = (GameObject) Instantiate (myAgentSpawner.FemaleAgent[agent.myModelIndex], new Vector3 (agent.xPos, agent.yPos, agent.zPos), Quaternion.identity);
 			}
 
-			if( agent.agentId != "NEWAGENT" )
+			if (agent.agentId != "NEWAGENT")
 				temp.name = agent.agentId;
 			else
 				temp.name = "Agent" + temp.GetInstanceID();
@@ -186,7 +194,7 @@ public class GameController : MonoBehaviour {
 			temp.GetComponent<AgentLogic_07>().gender = agent.gender;
 			temp.GetComponent<AgentLogic_07>().modelIndex = agent.myModelIndex;
 			temp.GetComponent<AgentLogic_07>().firstLastName = agent.agentName;
-			temp.GetComponent<AgentLogic_07>().photo = agent.agentPhoto;
+			temp.GetComponent<AgentLogic_07>().portraitIndex = agent.photo;
 			temp.GetComponent<AgentLogic_07>().health = agent.health;
 			temp.GetComponent<AgentLogic_07>().hungerValue = agent.hunger;
 			temp.GetComponent<AgentAttributes>().agentAgility = agent.agility;
@@ -237,6 +245,7 @@ public class GameController : MonoBehaviour {
 			tempAgent.gender = agent.GetComponent<AgentLogic_07>().gender;
 			tempAgent.myModelIndex = agent.GetComponent<AgentLogic_07>().modelIndex;
 			tempAgent.agentName = agent.GetComponent<AgentLogic_07>().firstLastName;
+			tempAgent.photo = agent.GetComponent<AgentLogic_07>().portraitIndex;
 			tempAgent.xPos = agent.transform.position.x;
 			tempAgent.yPos = agent.transform.position.y;
 			tempAgent.zPos = agent.transform.position.z;
@@ -288,7 +297,7 @@ public class serialAgent {
 
 	public string gender;
 	public string agentName;
-	public string photo;
+	public int photo;
 	public int myModelIndex;
 
 	public float xPos;

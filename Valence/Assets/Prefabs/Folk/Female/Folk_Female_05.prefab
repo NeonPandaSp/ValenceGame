@@ -3391,7 +3391,7 @@ MonoBehaviour:
   agentAttributes: {fileID: 11406482}
   selectedIcon: {fileID: 21210570}
   SettlerInfoBg: {fileID: 11419220, guid: cd9fed07742c23f4198b49b24244ae41, type: 2}
-  settlerPhoto: {fileID: 11443008, guid: 7e887677f3b641144bd754f2e7607419, type: 2}
+  settlerPortrait: {fileID: 11452296, guid: 68950b5f3343c264aa54ab536292d48a, type: 2}
   firstLastName: {fileID: 11400736, guid: 768032789efbd84408398c022b05ffa1, type: 2}
   settlerHealthImage: {fileID: 11444890, guid: 0533e0e0aabe05e43b6376b7974983bd, type: 2}
   settlerStaminaImage: {fileID: 11422232, guid: 081d654ecfdc1014a8b936cefdfd1d0c,
@@ -3478,27 +3478,7 @@ MonoBehaviour:
   agentLogic: {fileID: 11419270}
   firstLastName: 
   settlerNameAndRole: 
-  photo: 
-  malePhotoArray:
-  - {fileID: 11400476, guid: 6dd38dadd98af2341b8f9e520d6014a0, type: 2}
-  - {fileID: 11400476, guid: fc902221a026dfa4e93968eb2fa3579a, type: 2}
-  - {fileID: 11400476, guid: cb2d8a4ee49f5ca448838c6a41bf3cb7, type: 2}
-  - {fileID: 11400476, guid: b70f299146f985a4fad37d41b0db5cfb, type: 2}
-  - {fileID: 11400476, guid: 28c9c08fbc9818e4981fe8719c53290b, type: 2}
-  - {fileID: 11400476, guid: 954d96ff919e0a5428ad925168126ec4, type: 2}
-  - {fileID: 11400476, guid: d49d8de7d8f428c4ba40dffbe3128861, type: 2}
-  - {fileID: 11400476, guid: 21a0ab80d91321045a676c62493aef98, type: 2}
-  - {fileID: 11400476, guid: 4c234b52149d7494c9ea98eda957eb8c, type: 2}
-  - {fileID: 11400476, guid: d2160913fe7ec4f48b549a46a90361ad, type: 2}
-  - {fileID: 11400476, guid: 9718b7dd122b2ca489340ce1c6e27efe, type: 2}
-  - {fileID: 11400476, guid: f6be97ad252a27e4f9fd243a2a001d61, type: 2}
-  femalePhotoArray:
-  - {fileID: 11443956, guid: faeefda3c8824b848ae1ae353864d09a, type: 2}
-  - {fileID: 11443956, guid: a002b6dff96a10e408a367c38f965f2f, type: 2}
-  - {fileID: 11443956, guid: 41cfd4cbc7b008c42bc043dbfd332d1a, type: 2}
-  - {fileID: 11443956, guid: a04ce7bbcd12f4d47b51dfe5d4f313f8, type: 2}
-  - {fileID: 11443956, guid: 1b49bea9572d33e46966f968f9381bd0, type: 2}
-  - {fileID: 11443956, guid: 10493265d37a31a4aa9ce74988490398, type: 2}
+  portraitIndex: 0
   gender: 
   currentlyWorking: 0
   workerPathCompleted: 0
@@ -3723,6 +3703,11 @@ Prefab:
       propertyPath: pickNextWaypointDistance
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: settlerPortrait
+      value: 
+      objectReference: {fileID: 11452296, guid: 68950b5f3343c264aa54ab536292d48a,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 192976}

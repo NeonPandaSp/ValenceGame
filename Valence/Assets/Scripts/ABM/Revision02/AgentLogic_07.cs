@@ -76,15 +76,12 @@ public class AgentLogic_07 : MonoBehaviour {
     string[] femaleFirstNameArray;
 	string[] lastNameArray;
 
-	//Photo
-	public Image photo;
+	//The number which correlates to each portait for agents
+	public int portraitIndex;
+	public int malePortraitIndex;
+	public int femalePortraitIndex;
 
-	int randomMalePhoto;
-	int randomFemalePhoto;
-	public Image[] malePhotoArray;
-	public Image[] femalePhotoArray;
-
-    //Gender
+	//Gender
 	//String array containing the gender of the agent
     string[] genderArray;
     //Index position of genderArray
@@ -219,21 +216,21 @@ public class AgentLogic_07 : MonoBehaviour {
 			//Create Random Variables
 			randomFirstName = UnityEngine.Random.Range (0, 20);
 			randomLastName = UnityEngine.Random.Range (0, 14);
-            randomMalePhoto = UnityEngine.Random.Range (0, 12);
-			randomFemalePhoto = UnityEngine.Random.Range (0, 6);
-			randomGender = Random.Range (0, (genderArray.Length));
+            randomGender = Random.Range (0, (genderArray.Length));
+
+			malePortraitIndex = UnityEngine.Random.Range (0, 12);
+			Debug.Log ("malePortraitIndex is: " + malePortraitIndex);
+			femalePortraitIndex = UnityEngine.Random.Range (0, 6);
+			Debug.Log ("femalePortraitIndex is: " + femalePortraitIndex);
 
             //Assigns random names and photos according to gender
 			//Variable firstLastName outputs first and last name. variable settlerNameAndRole outputs name, what settler is currently doing, and their assigned role
             if (gender == "Male"){
                 firstLastName = (maleFirstNameArray[randomFirstName] + " " + lastNameArray[randomLastName]);
-				photo = malePhotoArray[randomMalePhoto];
             }
             else {
                 firstLastName = (femaleFirstNameArray[randomFirstName] + " " + lastNameArray[randomLastName]);
-				photo = femalePhotoArray[randomFemalePhoto];
             }
-            
 
             //Init the agent's hunger value to 0 when spawned (they shouldnt be hungry at start)
             hungerValue = 0;
@@ -247,6 +244,7 @@ public class AgentLogic_07 : MonoBehaviour {
 			//When the agent spawns, there is a 50% chance to spawn idle or wander
 			WanderOrIdle(50.0f);
         }
+
 		aiFollow = GetComponent<AIFollow_07> ();
 		wanderWaypoints = new List<Vector3> ();
 
