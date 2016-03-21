@@ -58,6 +58,10 @@ public class ExploreMode_GameController : MonoBehaviour {
 	public Vector2 lastScrapPos;
 
 	public Material redMat;
+
+	public List<GameObject> maleModels;
+	public List<GameObject> femaleModels;
+
 	// Use this for initialization
 	void Start () {
 		tiles = new int[mapSize,mapSize];
@@ -77,7 +81,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 				}
 			}
 		}
-
+		Image myImg;
 		GameState = 0;
 
 		PlayerData dataCopy = PlayerDataManager.playerDataManager.loadSaveData ();
@@ -91,6 +95,23 @@ public class ExploreMode_GameController : MonoBehaviour {
 				folk [partyIndex].agility = agent.agility;
 				folk [partyIndex].strength = agent.strength;
 				folk [partyIndex].perception = agent.perception;
+
+				GameObject modelObj;
+				if( agent.gender == "Male"){
+					modelObj = femaleModels[0];
+				} else if( agent.gender == "Female"){
+				 	modelObj = (GameObject) Instantiate( femaleModels[agent.myModelIndex], folk[partyIndex].transform.position, Quaternion.identity );
+				} else {
+					modelObj = femaleModels[0];
+				}
+
+				modelObj.transform.SetParent( folk[partyIndex].transform );
+				modelObj.transform.position += new Vector3( 0.5f, 0.0f, 0.5f);
+
+				folk[partyIndex].myFAnimCtrl.myAnim = modelObj.GetComponent<Animator>();
+
+				//folk[partyIndex].myFAnimCtrl = modelObj.GetComponent<Animator>();
+				
 				///folk[partyIndex].myWeapon = agent.myWeapon;
 				partyIndex++;
 			}
