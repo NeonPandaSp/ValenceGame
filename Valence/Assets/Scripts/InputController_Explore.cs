@@ -38,9 +38,11 @@ public class InputController_Explore : MonoBehaviour {
 
 	public Sprite dropSprite, pickupSprite;
 
+	public bool hovering;
+
 	void Start(){
 		_tileMap = GetComponent<TileMap> ();
-		myHoverObject = (GameObject) Instantiate (Resources.Load("Tile"), new Vector3 (0, 0, 0), Quaternion.identity);
+		//myHoverObject = (GameObject) Instantiate (Resources.Load("Tile"), new Vector3 (0, 0, 0), Quaternion.identity);
 		myLine.gameObject.SetActive (false);
 		moveTargetIcon.gameObject.SetActive (false);
 		currentColor = "blue";
@@ -49,13 +51,13 @@ public class InputController_Explore : MonoBehaviour {
 	
 	public void selectedMaterial( string color ){
 		if (color == "blue") {
-			myHoverObject.GetComponentInChildren<MeshRenderer> ().material = blueMat;
+			//myHoverObject.GetComponentInChildren<MeshRenderer> ().material = blueMat;
 			currentColor = "blue";
 		} else if (color == "yellow") {
-			myHoverObject.GetComponentInChildren<MeshRenderer> ().material = yellowMat;
+			//myHoverObject.GetComponentInChildren<MeshRenderer> ().material = yellowMat;
 			currentColor = "yellow";
 		} else if (color == "green") {
-			myHoverObject.GetComponentInChildren<MeshRenderer> ().material = greenMat;
+			//myHoverObject.GetComponentInChildren<MeshRenderer> ().material = greenMat;
 			currentColor = "green";
 		}
 	}
@@ -77,13 +79,12 @@ public class InputController_Explore : MonoBehaviour {
 			currentTile.y = z;
 			
 			if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
-				myHoverObject.transform.position = new Vector3( currentTile.x, 0, currentTile.y );
+				//myHoverObject.transform.position = new Vector3( currentTile.x, 0, currentTile.y );
 			}
 			
 		} else {
 			
 		}
-
 		if (_GameController.selectedUnit.isElite) {
 			_GameController.moveButton.interactable = false;
 			_GameController.attackButton.interactable = false;
@@ -91,6 +92,34 @@ public class InputController_Explore : MonoBehaviour {
 			_GameController.pickUpButton.interactable = false;
 		} else {
 			_GameController.waitButton.interactable = true;
+			if (_GameController.selectedUnit.movementRemaining > 0 && !_GameController.selectedUnit.movePressed && !_GameController.selectedUnit.isMoving) {
+				_GameController.GenerateMovementRange ((int)_GameController.selectedUnit.currentPosition.x, (int)_GameController.selectedUnit.currentPosition.y);
+				_GameController.selectedUnit.movePressed = true;
+			} else if( ( !_GameController.selectedUnit.movePressed && _GameController.moveTiles.Count > 0 ) || _GameController.selectedUnit.isMoving ) {
+				foreach( GameObject n in _GameController.moveTiles){
+					Destroy (n);
+				}
+				_GameController.moveTiles.Clear();
+			}
+			
+			if (_GameController.selectedUnit.movePressed && !_GameController.selectedUnit.isMoving) {
+				if (_GameController.selectedUnit.withinMoveRange (currentTile) && _GameController.GeneratePathTo ((int)currentTile.x, (int)currentTile.y, 0)) {
+					List<ExploreMode_GameController.Node> pathToSelected = _GameController.GenerateNodePath ((int)currentTile.x, (int)currentTile.y);
+					DrawLine (pathToSelected);
+					moveTargetIcon.SetActive (true);
+					moveTargetIcon.transform.position = new Vector3 (currentTile.x, 0.1f, currentTile.y);
+				} else {
+					myLine.gameObject.SetActive (false);
+					moveTargetIcon.SetActive (false);
+				}
+			} else if (_GameController.selectedUnit.isMoving) {
+				List<ExploreMode_GameController.Node> pathToSelected = _GameController.GenerateNodePath((int) targetMovementPos.x, (int)targetMovementPos.y );
+				if( pathToSelected != null && pathToSelected.Count >= 1 ){
+					DrawLine( pathToSelected );
+					moveTargetIcon.SetActive(true);
+					moveTargetIcon.transform.position = new Vector3( pathToSelected[pathToSelected.Count-1].x, 0.1f, pathToSelected[pathToSelected.Count-1].y );
+				}
+			}
 		}
 
 		if( Input.GetMouseButton(0) && !Input.GetKey (KeyCode.LeftAlt) ){
@@ -99,17 +128,24 @@ public class InputController_Explore : MonoBehaviour {
 				if( _GameController.selectedUnit.withinMoveRange( currentTile ) && _GameController.GeneratePathTo((int)currentTile.x,(int)currentTile.y, 0 ) ){
 					//_GameController.selectedUnit.Move(currentTile);
 					//Instantiate( moveTargetIcon, new Vector3( currentTile.x, 0.1f, currentTile.y), Quaternion.identity );
-					moveTargetIcon.SetActive(true);
-					moveTargetIcon.transform.position = new Vector3( currentTile.x, 0.1f, currentTile.y);
-					targetMovementPos = currentTile;
-					List<ExploreMode_GameController.Node> pathToSelected = _GameController.GenerateNodePath((int)currentTile.x,(int)currentTile.y);
-					DrawLine( pathToSelected );
-					foreach( GameObject n in _GameController.moveTiles){
-						Destroy (n);
+
+					//OLD FORM 
+//					moveTargetIcon.SetActive(true);
+//					moveTargetIcon.transform.position = new Vector3( currentTile.x, 0.1f, currentTile.y);
+//					targetMovementPos = currentTile;
+//					List<ExploreMode_GameController.Node> pathToSelected = _GameController.GenerateNodePath((int)currentTile.x,(int)currentTile.y);
+//					DrawLine( pathToSelected );
+//					foreach( GameObject n in _GameController.moveTiles){
+//						Destroy (n);
+//					}
+//					_GameController.moveTiles.Clear();
+//					moveConfirmedButton.gameObject.SetActive(true);
+//					_GameController.selectedUnit.movePressed = false;
+					if( !hovering ){
+						targetMovementPos = currentTile;
+						moveConfirmed();
+						_GameController.selectedUnit.movePressed = false;
 					}
-					_GameController.moveTiles.Clear();
-					moveConfirmedButton.gameObject.SetActive(true);
-					_GameController.selectedUnit.movePressed = false;
 				} else {
 					// not within range
 				}
@@ -179,6 +215,8 @@ public class InputController_Explore : MonoBehaviour {
 			_GameController.MoveIcon();
 			_GameController.cameraObject.MoveCameraTo( _GameController.cameraObject.transform.position, _GameController.selectedUnit.transform.position );
 		}
+
+		hovering = false;
 	}
 	
 	public void ToggleWallVisibilty (){
@@ -339,7 +377,6 @@ public class InputController_Explore : MonoBehaviour {
 		myLine.gameObject.SetActive (false);
 		moveTargetIcon.gameObject.SetActive (false);
 		_GameController.selectedUnit.Move(targetMovementPos);
-		_GameController.selectedUnit.actionPoints--;
 
 		moveConfirmedButton.gameObject.SetActive (false);
 	}

@@ -14,6 +14,7 @@ public class PlayerDataManager : MonoBehaviour {
 	public string currentVersion;
 
 	void Awake(){
+		Application.targetFrameRate = 30;
 		if (playerDataManager == null) {
 			DontDestroyOnLoad (gameObject);
 			playerDataManager = this;

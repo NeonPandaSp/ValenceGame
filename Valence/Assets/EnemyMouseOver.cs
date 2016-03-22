@@ -38,7 +38,9 @@ public class EnemyMouseOver : MonoBehaviour {
 	}
 
 	void OnMouseOver(){
-		if (!myUnit._GameController.selectedUnit.attackPressed) {
+		if (!myUnit != myUnit._GameController.selectedUnit) {
+			myUnit._GameController._inputController.hovering = true;
+		} if (!myUnit._GameController.selectedUnit.attackPressed) {
 			dataUpdate();
 		}
 	}
@@ -68,7 +70,7 @@ public class EnemyMouseOver : MonoBehaviour {
 				myUnit._GameController.attackIcon.selectUnit = myUnit._GameController.selectedUnit.AttackTargets [myUnit._GameController.selectedUnit.AttackTargets.IndexOf(myUnit)];
 				dataUpdate ();
 			}
-		} else if( !myUnit.isElite && !myUnit._GameController.selectedUnit.movePressed && !myUnit._GameController.selectedUnit.isMoving ) {
+		} else if( !myUnit.isElite && !myUnit._GameController.selectedUnit.isMoving ) {
 			myUnit._GameController.selectSelectedUnit(myUnit);
 			Debug.Log ( "clicked");
 		}

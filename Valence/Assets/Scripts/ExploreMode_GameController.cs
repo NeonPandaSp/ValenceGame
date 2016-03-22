@@ -62,6 +62,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 	public List<GameObject> maleModels;
 	public List<GameObject> femaleModels;
 
+	public List<Sprite> tileSprites;
+
 	// Use this for initialization
 	void Start () {
 		tiles = new int[mapSize,mapSize];
@@ -209,7 +211,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 				pickUpButton.interactable = false;
 			}
 
-			if( selectedUnit.isMoving || selectedUnit.attackPressed || selectedUnit.movePressed ){
+			if( selectedUnit.isMoving || selectedUnit.attackPressed ){
 				waitButton.interactable = false;
 			} else {
 				waitButton.interactable = true;
@@ -388,6 +390,76 @@ public class ExploreMode_GameController : MonoBehaviour {
 		}
 		borderVectors = vectors;
 
+		foreach (GameObject g in moveTiles) {
+			bool u = true;
+			bool l = true;
+			bool d = true;
+			bool r = true;
+
+			if( checkIfTileAlreadyPlaced( (int)g.transform.position.x + 1, (int)g.transform.position.z ) ){
+				r = false;
+			}
+			if( checkIfTileAlreadyPlaced( (int)g.transform.position.x - 1,(int) g.transform.position.z ) ){
+				l = false;
+			}
+			if( checkIfTileAlreadyPlaced( (int)g.transform.position.x,(int) g.transform.position.z + 1 ) ){
+				u = false;
+			}
+			if( checkIfTileAlreadyPlaced((int) g.transform.position.x,(int) g.transform.position.z - 1 ) ){
+				d = false;
+			}
+
+			if( u && r && d && l ){
+				// 1111
+				g.GetComponentInChildren<SpriteRenderer>().sprite = tileSprites[0];
+			} else if ( u && r && d && !l ){
+				// 1110
+				g.GetComponentInChildren<SpriteRenderer>().sprite = tileSprites[1];
+			} else if ( u && r && !d && !l ){
+				// 1100
+				g.GetComponentInChildren<SpriteRenderer>().sprite = tileSprites[2];
+			} else if ( u && !r && !d && !l ){
+				// 1000
+				g.GetComponentInChildren<SpriteRenderer>().sprite = tileSprites[3];
+			} else if ( u && !r && d && !l ){
+				// 1010
+				g.GetComponentInChildren<SpriteRenderer>().sprite = tileSprites[4];
+			} else if ( u && !r && d && l ){
+				// 1011
+				g.GetComponentInChildren<SpriteRenderer>().sprite = tileSprites[5];
+			} else if ( u && r && !d && l ){
+				// 1101
+				g.GetComponentInChildren<SpriteRenderer>().sprite = tileSprites[6];
+			} else if ( !u && r && d && l ){
+				// 0111
+				g.GetComponentInChildren<SpriteRenderer>().sprite = tileSprites[7];
+			} else if ( !u && r && d && !l ){
+				// 0110
+				g.GetComponentInChildren<SpriteRenderer>().sprite = tileSprites[8];
+			} else if ( !u && r && !d && !l ){
+				// 0100
+				g.GetComponentInChildren<SpriteRenderer>().sprite = tileSprites[9];
+			} else if ( !u && !r && d && l ){
+				// 0011
+				g.GetComponentInChildren<SpriteRenderer>().sprite = tileSprites[10];
+			} else if ( !u && !r && d && !l ){
+				// 0010
+				g.GetComponentInChildren<SpriteRenderer>().sprite = tileSprites[11];
+			} else if ( !u && !r && !d && l ){
+				// 0001
+				g.GetComponentInChildren<SpriteRenderer>().sprite = tileSprites[12];
+			} else if ( !u && r && !d && l ){
+				// 0101
+				g.GetComponentInChildren<SpriteRenderer>().sprite = tileSprites[13];
+			} else if ( u && !r && !d && l ){
+				// 1001
+				g.GetComponentInChildren<SpriteRenderer>().sprite = tileSprites[14];
+			} else {
+				// 0000
+				g.GetComponentInChildren<SpriteRenderer>().sprite = tileSprites[15];
+			}
+		}
+
 
 	}
 	public void GenerateMovementRange(int x, int y, Unit _unit){
@@ -437,7 +509,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 		borderVectors = vectors;
 
 		foreach (GameObject mTile in moveTiles) {
-			mTile.GetComponentInChildren<MeshRenderer>().material = redMat;
+			mTile.GetComponentInChildren<SpriteRenderer>().color = Color.red;
 		}
 
 		selectedUnit = tempUnit;
