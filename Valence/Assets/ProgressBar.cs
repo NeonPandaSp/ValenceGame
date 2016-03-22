@@ -40,7 +40,7 @@ public class ProgressBar : MonoBehaviour {
 
 		float barScale = Remap (currentTime, 0.0f, productionCompleteTime, 0.0f, 1.0f);
         //Debug.Log (currentTime);
-        Debug.Log (barScale);
+        //Debug.Log (barScale);
 		//if (myBuildingScript.powered) {
 		this.gameObject.transform.localScale = new Vector3( barScale, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
 		//}
