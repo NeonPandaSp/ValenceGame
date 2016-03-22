@@ -27,7 +27,6 @@ public class GameController : MonoBehaviour {
 
 	public List<GameObject> waterWorkerList = new List<GameObject> ();
 	public List<GameObject> waterBuildingList = new List<GameObject>();
-
 	
 	public List<GameObject> hospitalWorkerList = new List<GameObject>();
 	public List<GameObject> hospitalBuildingList = new List<GameObject> ();
@@ -41,6 +40,10 @@ public class GameController : MonoBehaviour {
 
 	public bool firstLoad;
 	public bool foodAlerted, scrapAlerted, waterAlerted, powerAlerted;
+
+	//Photo
+	public Sprite[] malePortraitArray;
+	public Sprite[] femalePortraitArray;
 	
 	// Use this for initialization
 	void Awake () {

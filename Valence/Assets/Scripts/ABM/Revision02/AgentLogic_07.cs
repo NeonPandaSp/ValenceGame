@@ -219,9 +219,7 @@ public class AgentLogic_07 : MonoBehaviour {
             randomGender = Random.Range (0, (genderArray.Length));
 
 			malePortraitIndex = UnityEngine.Random.Range (0, 12);
-			Debug.Log ("malePortraitIndex is: " + malePortraitIndex);
 			femalePortraitIndex = UnityEngine.Random.Range (0, 6);
-			Debug.Log ("femalePortraitIndex is: " + femalePortraitIndex);
 
             //Assigns random names and photos according to gender
 			//Variable firstLastName outputs first and last name. variable settlerNameAndRole outputs name, what settler is currently doing, and their assigned role
