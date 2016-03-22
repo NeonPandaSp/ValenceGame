@@ -22,14 +22,18 @@ public class SquadSelectionScript : MonoBehaviour {
 
 	//Squad Info
 	public serialAgent [] myParty = new serialAgent [4];
-	public Image [] myPartyImageIcons = new Image [4];
+	public Image [] myPartyImageIcons = new Image [5];
 	public Text [] myPartyNames = new Text [4];
 	//Stats
 	public Text [] myParty_STR_Stats = new Text [4];
 	public Text [] myParty_PER_Stats = new Text [4];
 	public Text [] myParty_AGL_Stats = new Text [4];
 
-	public Image [] myPartyWeapon = new Image [4];
+	public Image [] myPartyWeaponIcons = new Image [4];
+
+	//Photos
+	public Sprite[] malePortraitArray;
+	public Sprite[] femalePortraitArray;
 
 	/*
 	//Weapons Info
@@ -120,16 +124,17 @@ public class SquadSelectionScript : MonoBehaviour {
 				inParty = true;
 			}
 		}
-		
 		enableSettlerListPanel (false);
 		
 		if (!noneSelected && !inParty) {
 			//Set Party UI Assets to selected Agent from population
 			myParty [selectedPartyIndex] = population [(rowIndex * settlerWeaponsButtons.Count) + index];
+
+			//myPartyImageIcons [selectedPartyIndex].sprite = population [(rowIndex * settlerWeaponsButtons.Count) + index].photo;
 			myPartyNames [selectedPartyIndex].text = population [(rowIndex * settlerWeaponsButtons.Count) + index].agentName;
-			myParty_AGL_Stats[selectedPartyIndex].text = "" + population[(rowIndex*settlerWeaponsButtons.Count)+index].agility;
-			myParty_PER_Stats[selectedPartyIndex].text = "" + population[(rowIndex*settlerWeaponsButtons.Count)+index].perception;
-			myParty_STR_Stats[selectedPartyIndex].text = "" + population[(rowIndex*settlerWeaponsButtons.Count)+index].strength;
+			myParty_AGL_Stats [selectedPartyIndex].text = "" + population [(rowIndex*settlerWeaponsButtons.Count) + index].agility;
+			myParty_PER_Stats [selectedPartyIndex].text = "" + population [(rowIndex*settlerWeaponsButtons.Count) + index].perception;
+			myParty_STR_Stats [selectedPartyIndex].text = "" + population [(rowIndex*settlerWeaponsButtons.Count) + index].strength;
 			//Reset Selection Variables
 			selectedPartyIndex = - 1;
 			noneSelected = true;
@@ -185,6 +190,7 @@ public class SquadSelectionScript : MonoBehaviour {
 [Serializable]
 public class tempAgent {
 	public string name;
+	public string portrait;
 	public int movement;
 	public int attack;
 	public int perception;	

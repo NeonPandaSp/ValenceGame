@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour {
 	public bool firstLoad;
 	public bool foodAlerted, scrapAlerted, waterAlerted, powerAlerted;
 
-	//Photo
+	//Photos
 	public Sprite[] malePortraitArray;
 	public Sprite[] femalePortraitArray;
 	

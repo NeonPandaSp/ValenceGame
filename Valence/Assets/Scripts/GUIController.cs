@@ -372,7 +372,7 @@ using System.Collections.Generic;
 		populationDelText.text = population + "/" + globalAttributes.popLimit;
 		populationPercentage = population / globalAttributes.popLimit;
 
-		Color popColour = Color.Lerp (redValue, greenValue, (populationPercentage));
+		Color popColour = Color.Lerp (greenValue, redValue, (populationPercentage));
 		populationDelText.color = popColour;
 
 		//Food
