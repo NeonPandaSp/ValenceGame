@@ -86,29 +86,31 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 		PlayerData dataCopy = PlayerDataManager.playerDataManager.loadSaveData ();
 		int partyIndex = 0;
+
+		Debug.Log ("Data Loaded");
+		Debug.Log ("Party Count: " + dataCopy.currentParty.Count);
 		if (PlayerDataManager.playerDataManager.isLive) {
+
 			foreach (serialAgent agent in dataCopy.currentParty) {
 				folk[partyIndex].agentId = agent.agentId;
-
 				folk [partyIndex].unitName = agent.agentName;
-				folk[partyIndex].health = (int) agent.health / 10;
+				folk[partyIndex].health = Mathf.CeilToInt( agent.health / 10 );
 				folk [partyIndex].agility = agent.agility;
 				folk [partyIndex].strength = agent.strength;
 				folk [partyIndex].perception = agent.perception;
 
 				GameObject modelObj;
+				Debug.Log ("Object Instantiated!");
 				if( agent.gender == "Male"){
-					modelObj = femaleModels[0];
+					modelObj = (GameObject) Instantiate( maleModels[agent.myModelIndex], folk[partyIndex].transform.position, Quaternion.identity );
 				} else if( agent.gender == "Female"){
 				 	modelObj = (GameObject) Instantiate( femaleModels[agent.myModelIndex], folk[partyIndex].transform.position, Quaternion.identity );
 				} else {
-					modelObj = femaleModels[0];
+					modelObj = (GameObject) Instantiate( femaleModels[3], folk[partyIndex].transform.position, Quaternion.identity );
 				}
 
 				modelObj.transform.SetParent( folk[partyIndex].transform );
 				modelObj.transform.position += new Vector3( 0.5f, 0.0f, 0.5f);
-
-				folk[partyIndex].myFAnimCtrl.myAnim = modelObj.GetComponent<Animator>();
 
 				//folk[partyIndex].myFAnimCtrl = modelObj.GetComponent<Animator>();
 				
