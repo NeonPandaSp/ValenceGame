@@ -1,10 +1,3 @@
-//
-// Author:
-//   Based on the Unity3D built-in shaders
-//   Andreas Suter (andy@edelweissinteractive.com)
-//
-// Copyright (C) 2013 Edelweiss Interactive (http://www.edelweissinteractive.com)
-//
 
 Shader "Decal/Colored/Shadow/Transparent Bumped Diffuse Colored Shadow" {
 	Properties {
