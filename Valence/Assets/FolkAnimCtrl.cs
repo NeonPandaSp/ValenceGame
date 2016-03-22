@@ -10,18 +10,23 @@ public class FolkAnimCtrl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		myUnit = transform.GetComponent<Unit> ();
+		//myAnim = transform.GetComponentInChildren<Animator> ();
 	}
 	
 	void Update () {
-		ResetTriggers ();
-		
-		if (myUnit.isMoving && currentAnimState != "walk") {
-			InitMoveAnim ();
-		} else if (myUnit.isAttacking && currentAnimState != "attack") {
-			InitAttackAnim();
-			myUnit.isAttacking = false;
-		} else if (!myUnit.isMoving && currentAnimState != "idle" && currentAnimState != "attack" ) {
-			InitIdleAnim();
+		if (myAnim != null) {
+			ResetTriggers ();
+			if (myUnit.isMoving && currentAnimState != "walk") {
+				InitMoveAnim ();
+			} else if (myUnit.isAttacking && currentAnimState != "attack") {
+				InitAttackAnim ();
+				myUnit.isAttacking = false;
+			} else if (!myUnit.isMoving && currentAnimState != "idle" && currentAnimState != "attack") {
+				InitIdleAnim ();
+			}
+		} else {
+			Debug.Log ("Anim Not Set");
+			lookForAnim();
 		}
 	}
 	void ResetTriggers(){
@@ -41,5 +46,14 @@ public class FolkAnimCtrl : MonoBehaviour {
 		Debug.Log ("ATK");
 		currentAnimState = "attack";
 		myAnim.SetTrigger ("attack");
+	}
+
+	void lookForAnim(){
+		Animator[] gameObjectArray = GetComponentsInChildren<Animator> ();
+		foreach (Animator g in gameObjectArray) {
+			if( g.gameObject.tag == "EXP_FOLK"){
+				myAnim = g;
+			}
+		}
 	}
 }

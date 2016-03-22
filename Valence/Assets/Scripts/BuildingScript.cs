@@ -18,25 +18,57 @@ public class BuildingScript : MonoBehaviour {
 
 	public float resourceProgress;
 	public float consumptionProgress;
+
+    public Transform infoUI;
+    public Transform progressUI;
+
+
+    //Bool checks if the user has clicked once or twice on the building
+    //used to toggle between UI components
+    bool checkClick;
+
 	// Use this for initialization
 	void Start () {
 		GameObject gameControllerObject =  GameObject.FindGameObjectWithTag("GameController");
 		_myGameController = gameControllerObject.GetComponent<GameController> ();
 
+        //Find child UI gameobjects of this building
+        infoUI = transform.Find("BuildingInfo");
+        progressUI = transform.Find("ProgressBar");
 
-		assignedAgents = new GameObject[3];
+        assignedAgents = new GameObject[3];
+
+
+        checkClick = true;
 		//beginProduction ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (initProduction)
-			production ();
-		
 
+        if (initProduction)
+			production ();
 	}
 
-	void production(){
+    void OnMouseDown() {
+
+        if (checkClick){
+
+            infoUI.gameObject.SetActive(true);
+            progressUI.gameObject.SetActive(false);
+
+            checkClick = false;
+        }
+        else {
+
+            infoUI.gameObject.SetActive(false);
+            progressUI.gameObject.SetActive(true);
+
+            checkClick = true;
+        }
+    }
+
+    void production(){
 		// checks if any settlers are assigned to this building type
 		if (checkIfWorked ()) {
 			worked = true;
