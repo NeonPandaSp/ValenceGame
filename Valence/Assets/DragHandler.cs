@@ -5,15 +5,21 @@ using UnityEngine.EventSystems;
 public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
     Vector3 startPos;
-    
+    public Transform parentToReturnTo = null;
+
     public void OnBeginDrag(PointerEventData eventData) {
         Debug.Log("OnBeginDrag: " + gameObject);
 
         startPos = this.transform.position;
+
+        parentToReturnTo = this.transform.parent;
+        this.transform.SetParent(this.transform.parent.parent.parent);
+
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
     public void OnDrag(PointerEventData eventData) {
-        Debug.Log("OnDrag: " + gameObject);
+        //Debug.Log("OnDrag: " + gameObject);
 
         Vector3 mouse = eventData.position;
         mouse.z = 30.0f;
@@ -28,5 +34,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         Debug.Log("OnEndDrag: " + gameObject);
 
         this.transform.position = startPos;
+        this.transform.SetParent(parentToReturnTo);
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
 }
