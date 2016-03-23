@@ -189,7 +189,7 @@ public class GameController : MonoBehaviour {
 			temp.GetComponent<AgentLogic_07>().gender = agent.gender;
 			temp.GetComponent<AgentLogic_07>().modelIndex = agent.myModelIndex;
 			temp.GetComponent<AgentLogic_07>().firstLastName = agent.agentName;
-			//temp.GetComponent<AgentLogic_07>().photo = agent.agentPhoto;
+			temp.GetComponent<AgentLogic_07>().portraitIndex = agent.photo;
 			temp.GetComponent<AgentLogic_07>().health = agent.health;
 			temp.GetComponent<AgentLogic_07>().hungerValue = agent.hunger;
 			temp.GetComponent<AgentAttributes>().agentAgility = agent.agility;
@@ -239,6 +239,7 @@ public class GameController : MonoBehaviour {
 			tempAgent.agentId = agent.name;
 			tempAgent.gender = agent.GetComponent<AgentLogic_07>().gender;
 			tempAgent.myModelIndex = agent.GetComponent<AgentLogic_07>().modelIndex;
+			tempAgent.photo = agent.GetComponent<AgentLogic_07>().portraitIndex;
 			tempAgent.agentName = agent.GetComponent<AgentLogic_07>().firstLastName;
 			tempAgent.xPos = agent.transform.position.x;
 			tempAgent.yPos = agent.transform.position.y;
@@ -291,7 +292,7 @@ public class serialAgent {
 
 	public string gender;
 	public string agentName;
-	public string photo;
+	public int photo;
 	public int myModelIndex;
 
 	public float xPos;

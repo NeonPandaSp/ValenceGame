@@ -22,7 +22,7 @@ public class SquadSelectionScript : MonoBehaviour {
 
 	//Squad Info
 	public serialAgent [] myParty = new serialAgent [4];
-	public Image [] myPartyImageIcons = new Image [5];
+	public Image [] myPartyPortraits = new Image [5];
 	public Text [] myPartyNames = new Text [4];
 	//Stats
 	public Text [] myParty_STR_Stats = new Text [4];
@@ -53,12 +53,15 @@ public class SquadSelectionScript : MonoBehaviour {
 	public int rowIndex = 0;
 	public int numSet = 0;
 
+	public GameObject prefabSettlerButton;
+	public RectTransform SettlerList;
+	public ScrollRect SettlerListScroll;
+
 	// Use this for initialization
 	void Start () {
 		rowIndex = 0;
 		loadPopulation ();
 		loadWeapons ();
-		enableSettlerListPanel (false);
 	}
 
 	//Loading the settler list
@@ -66,54 +69,39 @@ public class SquadSelectionScript : MonoBehaviour {
 		int index = 0;
 		PlayerData loadedData = PlayerDataManager.playerDataManager.loadSaveData ();
 		population = loadedData.population;
-		for (int i = index; i < index + settlerWeaponsButtons.Count; i++) {
-			if (i <= population.Count - 1)
-				settlerWeaponsButtons[i].GetComponentInChildren <Text>().text = population[i].agentName;
-			else {
-				settlerWeaponsButtons[i].GetComponentInChildren <Text>().text = "NA";
-				settlerWeaponsButtons[i].interactable = false;
-			}
+
+		foreach (serialAgent sA in population) {
+			GameObject settlerButton = (GameObject) Instantiate (prefabSettlerButton);
+			settlerButton.transform.SetParent (SettlerList, false);
+			settlerButton.transform.localScale = new Vector3 (1, 1, 1);
+			settlerButton.GetComponentInChildren<Text>().text = sA.agentName;
+
+			Button tempButton = settlerButton.GetComponent <Button>();
+			//int tempInt = sA;
+			
+			//tempButton.onClick.AddListener(() => ButtonClicked(tempInt));
+
+			SettlerListScroll.content = SettlerList;
 		}
+
+		//Creating static settler buttons the old way
+//		for (int i = index; i < index + settlerWeaponsButtons.Count; i++) {
+//			if (i <= population.Count - 1)
+//				settlerWeaponsButtons[i].GetComponentInChildren <Text>().text = population[i].agentName;
+//			else {
+//				settlerWeaponsButtons[i].GetComponentInChildren <Text>().text = "NA";
+//				settlerWeaponsButtons[i].interactable = false;
+//			}
+//		}
+
+//		foreach (serialAgent sA in population) {
+//			Debug.Log ("Settler " + sA.agentId +"'s photo is: " + sA.photo);
+//		}
 	}
 
 	//Loading the weapons list
 	public void loadWeapons () {
 		int index = 0;
-	}
-
-	//Selecting Squad Button
-	public void setSelectedPartyIndex (int index) {
-		selectedPartyIndex = index;
-		noneSelected = false;
-		enableSettlerListPanel (true);							//Opens up the list of settlers in the population
-		backgroundSelectSettler.gameObject.SetActive (true);	//Opens the select settler background
-
-		//Disabling the weapon buttons till you're done selecting a squad member
-		for (int i = 0; i < weaponButtons.Count - 1; i++) {
-			weaponButtons [i].interactable = false;
-		}
-	}
-	
-	//Selecting Weapon Button
-	public void setSelectedWeaponsIndex (int index) {
-		backgroundSelectSettler.gameObject.SetActive (false);	//Closes the select settler background
-
-		Debug.Log ("THE SQUAD BUTTONS SHOULD BE DISABLED!");
-
-		//Disabling the squad buttons till you're done selecting a weapon
-		for (int i = index; i < index + squadButtons.Count; i++) {
-			squadButtons [i].interactable = false;
-		}
-	}
-
-	//Enabling the list of settlers
-	public void enableSettlerListPanel (bool on) {
-		if (on && !settlerList.gameObject.activeSelf) {
-			settlerList.gameObject.SetActive (true);
-			loadPopulation ();
-		} else {
-			settlerList.gameObject.SetActive (false);
-		}
 	}
 
 	//Setting a squad member
@@ -124,21 +112,31 @@ public class SquadSelectionScript : MonoBehaviour {
 				inParty = true;
 			}
 		}
-		enableSettlerListPanel (false);
-		
+
 		if (!noneSelected && !inParty) {
 			//Set Party UI Assets to selected Agent from population
 			myParty [selectedPartyIndex] = population [(rowIndex * settlerWeaponsButtons.Count) + index];
 
-			//myPartyImageIcons [selectedPartyIndex].sprite = population [(rowIndex * settlerWeaponsButtons.Count) + index].photo;
+			//myPartyImageIcons [selectedPartyIndex].sprite = malePortraitArray;
+			if (population [(rowIndex * settlerWeaponsButtons.Count) + index].gender == "Male") {
+
+				myPartyPortraits[selectedPartyIndex].sprite = malePortraitArray [population [(rowIndex * settlerWeaponsButtons.Count) + index].photo];
+			} else {
+				myPartyPortraits[selectedPartyIndex].sprite = femalePortraitArray [population [(rowIndex * settlerWeaponsButtons.Count) + index].photo];
+			}
+
+//			for (int i = 0; i < population.Count; i++) {
+//				Debug.Log ("Settler " + population[(rowIndex * settlerWeaponsButtons.Count) + index].agentId +"'s photo is: " + population [(rowIndex * settlerWeaponsButtons.Count) + index].photo);
+//			}
+
 			myPartyNames [selectedPartyIndex].text = population [(rowIndex * settlerWeaponsButtons.Count) + index].agentName;
 			myParty_AGL_Stats [selectedPartyIndex].text = "" + population [(rowIndex*settlerWeaponsButtons.Count) + index].agility;
 			myParty_PER_Stats [selectedPartyIndex].text = "" + population [(rowIndex*settlerWeaponsButtons.Count) + index].perception;
 			myParty_STR_Stats [selectedPartyIndex].text = "" + population [(rowIndex*settlerWeaponsButtons.Count) + index].strength;
+
 			//Reset Selection Variables
 			selectedPartyIndex = - 1;
 			noneSelected = true;
-			enableSettlerListPanel (false);
 			if (numSet < 4) {
 				numSet++;
 			}
@@ -190,7 +188,6 @@ public class SquadSelectionScript : MonoBehaviour {
 [Serializable]
 public class tempAgent {
 	public string name;
-	public string portrait;
 	public int movement;
 	public int attack;
 	public int perception;	

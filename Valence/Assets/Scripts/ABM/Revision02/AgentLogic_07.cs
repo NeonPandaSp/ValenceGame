@@ -143,7 +143,10 @@ public class AgentLogic_07 : MonoBehaviour {
         //_GUIController_SettlerInfo = GameObject.Find ("Folk_Female_Agent").GetComponent<GUIController_SettlerInfo> ();
         if (newAgent) {
 
-            //Gender
+			malePortraitIndex = UnityEngine.Random.Range (0, 12);
+			femalePortraitIndex = UnityEngine.Random.Range (0, 6);
+
+			//Gender
             genderArray = new string[2] {
                 "Male",
                 "Female"
@@ -218,16 +221,15 @@ public class AgentLogic_07 : MonoBehaviour {
 			randomLastName = UnityEngine.Random.Range (0, 14);
             randomGender = Random.Range (0, (genderArray.Length));
 
-			malePortraitIndex = UnityEngine.Random.Range (0, 12);
-			femalePortraitIndex = UnityEngine.Random.Range (0, 6);
-
             //Assigns random names and photos according to gender
 			//Variable firstLastName outputs first and last name. variable settlerNameAndRole outputs name, what settler is currently doing, and their assigned role
             if (gender == "Male"){
                 firstLastName = (maleFirstNameArray[randomFirstName] + " " + lastNameArray[randomLastName]);
+				portraitIndex = malePortraitIndex;
             }
             else {
                 firstLastName = (femaleFirstNameArray[randomFirstName] + " " + lastNameArray[randomLastName]);
+				portraitIndex = femalePortraitIndex;
             }
 
             //Init the agent's hunger value to 0 when spawned (they shouldnt be hungry at start)
