@@ -35,6 +35,7 @@ public class AgentSpawner : MonoBehaviour {
 			newAgent.GetComponent<AgentLogic_07>().modelIndex = randVal;
             //Add the agent to the population database
             _gameController.population.Add(newAgent);
+            
 
             AgentPopulation.Add(newAgent);
 

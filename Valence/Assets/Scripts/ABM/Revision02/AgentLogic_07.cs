@@ -333,7 +333,9 @@ public class AgentLogic_07 : MonoBehaviour {
                 agentAnim.SetBool("Idle", true);
 
                 aiFollow.Reset();
-
+                if (!gameController.unAssignedPopulation.Contains(this.gameObject)) {
+                    gameController.unAssignedPopulation.Add(this.gameObject);
+                }
                 //yield return new WaitForSeconds(3.0f);
 
                 if (wait > 0)
@@ -355,6 +357,10 @@ public class AgentLogic_07 : MonoBehaviour {
                 agentAnim.SetBool("Idle", false);
                 //Set the current target to move towards
                 aiFollow.target = wanderWaypoints[wanderWaypointIndex];
+
+                if (!gameController.unAssignedPopulation.Contains(this.gameObject)) {
+                    gameController.unAssignedPopulation.Add(this.gameObject);
+                }
 
                 //remove this agent from all worker lists
                 //Todo do this with a function call
@@ -416,6 +422,7 @@ public class AgentLogic_07 : MonoBehaviour {
                         if (!gameController.farmerList.Contains(this.gameObject))
                         {
                             gameController.farmerList.Add(this.gameObject);
+                            gameController.unAssignedPopulation.Remove(this.gameObject);
                             //populateList = true;
                         }
                         break;
@@ -447,8 +454,9 @@ public class AgentLogic_07 : MonoBehaviour {
 						if (!gameController.waterWorkerList.Contains(this.gameObject))
 						{
 							gameController.waterWorkerList.Add(this.gameObject);
-							//populateList = true;
-						}
+                            gameController.unAssignedPopulation.Remove(this.gameObject);
+                            //populateList = true;
+                        }
                         break;
 
                     case jobSubState.PowerWorker:
@@ -466,6 +474,7 @@ public class AgentLogic_07 : MonoBehaviour {
                         if (!populateList)
                         {
                             gameController.powerWorkerList.Add(this.gameObject);
+                            gameController.unAssignedPopulation.Remove(this.gameObject);
                             populateList = true;
                         }
                         break;
@@ -485,6 +494,7 @@ public class AgentLogic_07 : MonoBehaviour {
                         if (!populateList)
                         {
                             gameController.traineeList.Add(this.gameObject);
+                            gameController.unAssignedPopulation.Remove(this.gameObject);
                             populateList = true;
                         }
                         break;

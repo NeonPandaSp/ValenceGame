@@ -16,6 +16,8 @@ public class GameController : MonoBehaviour {
 	public List<GameObject> population = new List<GameObject>();
 	public List<GameObject> buildingDatabase = new List<GameObject> ();
 
+    public List<GameObject> unAssignedPopulation = new List<GameObject>();
+
     public List<GameObject> farmerList = new List<GameObject>();
     public List<GameObject> farmBuildingList = new List<GameObject>();
 
@@ -53,7 +55,9 @@ public class GameController : MonoBehaviour {
 
 		population = new List<GameObject> ();
 
-		buildingDatabase = new List<GameObject> ();
+        unAssignedPopulation = new List<GameObject>();
+
+        buildingDatabase = new List<GameObject> ();
         farmerList = new List<GameObject>();
         farmBuildingList = new List<GameObject>();
 
@@ -199,10 +203,12 @@ public class GameController : MonoBehaviour {
 			temp.GetComponent<AgentLogic_07>().aState = agent.state;
 			temp.GetComponent<AgentLogic_07>().jobState = agent.job;
 			temp.GetComponent<AgentLogic_07>().newAgent = false;
+
 			if( temp.GetComponent<AgentLogic_07>().jobState == AgentLogic_07.jobSubState.Farmer){
 				temp.GetComponent<AgentLogic_07>().workWaypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag ("FarmWaypoint"));
 				farmerList.Add(temp);
-			} else if ( temp.GetComponent<AgentLogic_07>().jobState == AgentLogic_07.jobSubState.PowerWorker){
+                
+            } else if ( temp.GetComponent<AgentLogic_07>().jobState == AgentLogic_07.jobSubState.PowerWorker){
 				temp.GetComponent<AgentLogic_07>().workWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("PowerWaypoint"));
 				powerWorkerList.Add (temp);
 			} else if ( temp.GetComponent<AgentLogic_07>().jobState == AgentLogic_07.jobSubState.Hydrologist){
@@ -216,7 +222,8 @@ public class GameController : MonoBehaviour {
 				hospitalWorkerList.Add (temp);
 			}
 			population.Add(temp);
-		}
+            
+        }
 	}
 
 	public void saveCurrentSettlement(){
