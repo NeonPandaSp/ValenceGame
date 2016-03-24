@@ -80,8 +80,6 @@ public class SquadSelectionScript : MonoBehaviour {
 			//int tempInt = sA;
 			
 			//tempButton.onClick.AddListener(() => ButtonClicked(tempInt));
-
-			SettlerListScroll.content = SettlerList;
 		}
 
 		//Creating static settler buttons the old way
