@@ -86,45 +86,54 @@ public class ExploreMode_GameController : MonoBehaviour {
 		Image myImg;
 		GameState = 0;
 
-		PlayerData dataCopy = PlayerDataManager.playerDataManager.loadSaveData ();
-		int partyIndex = 0;
 
-		Debug.Log ("Data Loaded");
-		Debug.Log ("Party Count: " + dataCopy.currentParty.Count);
 		if (PlayerDataManager.playerDataManager.isLive) {
-
+			PlayerData dataCopy = PlayerDataManager.playerDataManager.loadSaveData ();
+			int partyIndex = 0;
+			
+			Debug.Log ("Data Loaded");
+			Debug.Log ("Party Count: " + dataCopy.currentParty.Count);
 			foreach (serialAgent agent in dataCopy.currentParty) {
-				folk[partyIndex].agentId = agent.agentId;
+				folk [partyIndex].agentId = agent.agentId;
 				folk [partyIndex].unitName = agent.agentName;
-				folk[partyIndex].health = Mathf.CeilToInt( agent.health / 10 );
+				folk [partyIndex].health = Mathf.CeilToInt (agent.health / 10);
 				folk [partyIndex].agility = agent.agility;
 				folk [partyIndex].strength = agent.strength;
 				folk [partyIndex].perception = agent.perception;
 
 				GameObject modelObj;
 				Debug.Log ("Object Instantiated!");
-				if( agent.gender == "Male"){
-					modelObj = (GameObject) Instantiate( maleModels[agent.myModelIndex], folk[partyIndex].transform.position, Quaternion.identity );
-				} else if( agent.gender == "Female"){
-				 	modelObj = (GameObject) Instantiate( femaleModels[agent.myModelIndex], folk[partyIndex].transform.position, Quaternion.identity );
+				if (agent.gender == "Male") {
+					modelObj = (GameObject)Instantiate (maleModels [agent.myModelIndex], folk [partyIndex].transform.position, Quaternion.identity);
+				} else if (agent.gender == "Female") {
+					modelObj = (GameObject)Instantiate (femaleModels [agent.myModelIndex], folk [partyIndex].transform.position, Quaternion.identity);
 				} else {
-					modelObj = (GameObject) Instantiate( femaleModels[3], folk[partyIndex].transform.position, Quaternion.identity );
+					modelObj = (GameObject)Instantiate (femaleModels [3], folk [partyIndex].transform.position, Quaternion.identity);
 				}
 
-				modelObj.transform.SetParent( folk[partyIndex].transform );
-				modelObj.transform.position += new Vector3( 0.5f, 0.0f, 0.5f);
+				modelObj.transform.SetParent (folk [partyIndex].transform);
+				modelObj.transform.position += new Vector3 (0.5f, 0.0f, 0.5f);
 
 				//folk[partyIndex].myFAnimCtrl = modelObj.GetComponent<Animator>();
 				
 				///folk[partyIndex].myWeapon = agent.myWeapon;
 				partyIndex++;
 			}
-		}
-		if (partyIndex < 4 && partyIndex > 0) {
-			for (int i = 3; i >= partyIndex; i--) {
-				Destroy ( folk[i].gameObject );
-				folk.Remove (folk[i]);
+			
+			if (partyIndex < 4 && partyIndex > 0) {
+				for (int i = 3; i >= partyIndex; i--) {
+					Destroy ( folk[i].gameObject );
+					folk.Remove (folk[i]);
+				}
 			}
+		} else {
+			foreach( Unit fU in folk ){
+				GameObject modelObj;
+				modelObj = (GameObject)Instantiate (femaleModels [2], fU.transform.position, Quaternion.identity);
+				modelObj.transform.SetParent (fU.transform);
+				modelObj.transform.position += new Vector3 (0.5f, 0.0f, 0.5f);
+			}
+
 		}
 		selectedUnit = folk [0];
 		selectedIndex = 0;
@@ -201,6 +210,11 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 			if( canAttack(selectedUnit) && !selectedUnit.isMoving && !selectedUnit.hasScrap && !selectedUnit.hasAttacked) {
 				attackButton.interactable = true;
+				enableAttackBox (selectedUnit);
+				_inputController.attackConfirmedButton.gameObject.SetActive (true);
+				_inputController.moveConfirmedButton.gameObject.SetActive (false);
+				//selectedUnit.AttackTargets [selectedUnit.currentAttackTarget].gameObject.GetComponent<EnemyMouseOver> ().enableUI ();
+				selectedUnit.attackPressed = true;
 			} else {
 				attackButton.interactable = false;
 			}
@@ -211,7 +225,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 				pickUpButton.interactable = false;
 			}
 
-			if( selectedUnit.isMoving || selectedUnit.attackPressed ){
+			if( selectedUnit.isMoving ){
 				waitButton.interactable = false;
 			} else {
 				waitButton.interactable = true;

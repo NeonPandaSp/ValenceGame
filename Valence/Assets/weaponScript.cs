@@ -5,6 +5,8 @@ public class weaponScript : MonoBehaviour {
 	public string name;
 	public int damageModifier;
 	public int range;
+
+	public float rangeModifier;
 	public float accuracy;
 	public float soundRange;
 

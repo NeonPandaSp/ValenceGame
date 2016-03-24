@@ -45,6 +45,7 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+  m_MultiThreadedStateMachine: 1
 --- !u!1101 &110112028
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -62,7 +63,6 @@ AnimatorStateTransition:
   m_TransitionOffset: 0
   m_ExitTime: .988560081
   m_HasExitTime: 1
-  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -86,7 +86,6 @@ AnimatorStateTransition:
   m_TransitionOffset: 0
   m_ExitTime: .899999976
   m_HasExitTime: 0
-  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 0
@@ -110,7 +109,6 @@ AnimatorStateTransition:
   m_TransitionOffset: 0
   m_ExitTime: .899999976
   m_HasExitTime: 0
-  m_HasFixedDuration: 0
   m_InterruptionSource: 1
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 0
@@ -130,11 +128,10 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: .100000001
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: .899999976
   m_HasExitTime: 0
-  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -153,14 +150,8 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 0
   m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 6eb00d92fc9dbb748b3d2df87d19e638, type: 3}
   m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
 --- !u!1102 &110247024
 AnimatorState:
   serializedVersion: 5
@@ -176,14 +167,8 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 1cecbb121f68ab9438358f9b3c577000, type: 3}
   m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
 --- !u!1102 &110293214
 AnimatorState:
   serializedVersion: 5
@@ -200,14 +185,8 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 73651fb6e7bd4784ea91be96f6370719, type: 3}
   m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
 --- !u!1107 &110762024
 AnimatorStateMachine:
   serializedVersion: 5

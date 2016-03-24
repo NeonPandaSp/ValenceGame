@@ -40,6 +40,8 @@ public class EnemyMouseOver : MonoBehaviour {
 	void OnMouseOver(){
 		if (!myUnit != myUnit._GameController.selectedUnit) {
 			myUnit._GameController._inputController.hovering = true;
+			myUnit._GameController._inputController.myLine.gameObject.SetActive(false);
+			myUnit._GameController._inputController.moveTargetIcon.SetActive(false);
 		} if (!myUnit._GameController.selectedUnit.attackPressed) {
 			dataUpdate();
 		}
@@ -61,8 +63,9 @@ public class EnemyMouseOver : MonoBehaviour {
 			myUnit._GameController.GenerateMovementRange((int) myUnit.currentPosition.x,(int) myUnit.currentPosition.y, myUnit);
 			infoObject.SetActive (true);
 			infoObject.GetComponent<FollowMouse> ().targetPosition = this.transform.position;
+
 			dataUpdate();
-		} else if (myUnit.isElite && myUnit._GameController.selectedUnit.attackPressed) {
+		} else if (myUnit.isElite ) {//&& myUnit._GameController.selectedUnit.attackPressed) {
 			if( myUnit._GameController.selectedUnit.AttackTargets.Contains (myUnit) ){
 				myUnit._GameController.selectedUnit.currentAttackTarget = myUnit._GameController.selectedUnit.AttackTargets.IndexOf(myUnit);
 				infoObject.SetActive (true);

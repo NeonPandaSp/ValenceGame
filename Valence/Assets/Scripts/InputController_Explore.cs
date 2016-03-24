@@ -103,7 +103,7 @@ public class InputController_Explore : MonoBehaviour {
 			}
 			
 			if (_GameController.selectedUnit.movePressed && !_GameController.selectedUnit.isMoving) {
-				if (_GameController.selectedUnit.withinMoveRange (currentTile) && _GameController.GeneratePathTo ((int)currentTile.x, (int)currentTile.y, 0)) {
+				if (!hovering && _GameController.selectedUnit.withinMoveRange (currentTile) && _GameController.GeneratePathTo ((int)currentTile.x, (int)currentTile.y, 0)) {
 					List<ExploreMode_GameController.Node> pathToSelected = _GameController.GenerateNodePath ((int)currentTile.x, (int)currentTile.y);
 					DrawLine (pathToSelected);
 					moveTargetIcon.SetActive (true);

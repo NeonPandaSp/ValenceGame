@@ -32,6 +32,7 @@ public class Unit : MonoBehaviour {
 	public int health;
 
 	public GameObject myWeapon;
+	public string myWeaponName;
 
 	public int strength;
 	public int agility;
@@ -115,6 +116,8 @@ public class Unit : MonoBehaviour {
 			myFAnimCtrl = transform.GetComponent<FolkAnimCtrl>();
 		}
 		_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 3;
+
+		myWeaponName = myWeapon.gameObject.name;
 	}
 	
 	// Update is called once per frame
@@ -193,7 +196,7 @@ public class Unit : MonoBehaviour {
 			facing = new Vector3( tempFacing.x, 0, tempFacing.y);
 			float distCovered = (Time.time - startTime) * speed;
 			float fracJourney = distCovered / journeyLength;
-			transform.position = Vector3.Lerp (transPath [0], transPath [1], fracJourney);
+			transform.position = Vector3.Lerp (transPath [0], transPath [1], fracJourney * moveSpeed);
 			if( !isElite ){
 				foreach( Unit eU in _GameController.elite ){
 					eU.EliteObserve();
@@ -620,8 +623,8 @@ public class Unit : MonoBehaviour {
 	}
 
 	public float calcChanceToHit(float distance){
-		//float chance = aimRating - ( 0.1f * distance );
-		float chance = aimRating * Mathf.Sin( (myWeapon.GetComponent<weaponScript>().period*distance) + myWeapon.GetComponent<weaponScript>().offset );
+		float chance = aimRating - ( myWeapon.GetComponent<weaponScript>().rangeModifier * distance );
+		//float chance = aimRating * Mathf.Sin( (myWeapon.GetComponent<weaponScript>().period*distance) + myWeapon.GetComponent<weaponScript>().offset );
 		if (distance > myWeapon.GetComponent<weaponScript> ().range) {
 			chance = 0;
 		}
