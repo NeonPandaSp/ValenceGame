@@ -30,7 +30,6 @@ public class NonWorkingAgentList : MonoBehaviour {
             unAssignedAgents.Add(newobject);
             //gameObject.transform;
         }
-        
     }
 	
 	// Update is called once per frame
@@ -43,7 +42,6 @@ public class NonWorkingAgentList : MonoBehaviour {
                 
                 Debug.Log("Current index " + unAssignedAgents.IndexOf(agent));
             }
-
         }
     }
 
@@ -68,6 +66,4 @@ public class NonWorkingAgentList : MonoBehaviour {
             indexMemory.Add(index);
         }
     }
-
 }
-

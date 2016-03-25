@@ -17,9 +17,6 @@ public class SquadSelectionScript : MonoBehaviour {
 	public List<Button> weaponButtons;
 	public List<Button> settlerWeaponsButtons;
 
-	public GameObject settlerList;
-	//public GameObject weaponsList;
-
 	//Squad Info
 	public serialAgent [] myParty = new serialAgent [4];
 	public Image [] myPartyPortraits = new Image [5];
@@ -53,15 +50,18 @@ public class SquadSelectionScript : MonoBehaviour {
 	public int rowIndex = 0;
 	public int numSet = 0;
 
-	public GameObject prefabSettlerButton;
-	public RectTransform SettlerList;
-	public ScrollRect SettlerListScroll;
+	public GameObject settlerList;
+	public GameObject prefabSettler;
+	public Image prefabSettlerPortrait;
+	public Text prefabSettlerName;
+	public Text prefabSettlerHealth;
+	public Text prefabSettlerStats;
+
 
 	// Use this for initialization
 	void Start () {
 		rowIndex = 0;
 		loadPopulation ();
-		loadWeapons ();
 	}
 
 	//Loading the settler list
@@ -71,16 +71,57 @@ public class SquadSelectionScript : MonoBehaviour {
 		population = loadedData.population;
 
 		foreach (serialAgent sA in population) {
-			GameObject settlerButton = (GameObject) Instantiate (prefabSettlerButton);
-			settlerButton.transform.SetParent (SettlerList, false);
-			settlerButton.transform.localScale = new Vector3 (1, 1, 1);
-			settlerButton.GetComponentInChildren<Text>().text = sA.agentName;
+			//Settler
+			GameObject settler = (GameObject) Instantiate (prefabSettler);
+			settler.gameObject.transform.SetParent (settlerList.gameObject.transform);
+			settler.transform.localScale = new Vector3 (1, 1, 1);
 
-			Button tempButton = settlerButton.GetComponent <Button>();
-			//int tempInt = sA;
+			settler.name = sA.agentName;
+			GameObject tempSettler = settler.GetComponent <GameObject>();
+
+			//Portrait
+			Image settlerPortrait = (Image) Instantiate (prefabSettlerPortrait);
+			settlerPortrait.gameObject.transform.SetParent (settler.gameObject.transform);
+
+			settlerPortrait.transform.localScale = new Vector3 (1, 1, 1);
+
+			if (sA.gender == "Male") {
+				settlerPortrait.sprite = malePortraitArray [sA.photo];
+			} else {
+				settlerPortrait.sprite = femalePortraitArray [sA.photo];
+			}
+
+			Image tempSettlerPortrait = settlerPortrait.GetComponent <Image>();
+
+			//Name
+			Text settlerName = (Text) Instantiate (prefabSettlerName);
+			settlerName.gameObject.transform.SetParent (settler.gameObject.transform);
+
+			settlerName.transform.localScale = new Vector3 (1, 1, 1);
+			settlerName.text = sA.agentName;
 			
-			//tempButton.onClick.AddListener(() => ButtonClicked(tempInt));
+			Image tempSettlerName = settlerName.GetComponent <Image>();
+
+			//Health
+			Text settlerHealth = (Text) Instantiate (prefabSettlerHealth);
+			settlerHealth.gameObject.transform.SetParent (settler.gameObject.transform);
+
+			settlerHealth.transform.localScale = new Vector3 (1, 1, 1);
+			settlerHealth.text = sA.health.ToString () + "/10";
+			
+			Text tempSettlerHealth = settlerPortrait.GetComponent <Text>();
+
+			//Stats
+			Text settlerStats = (Text) Instantiate (prefabSettlerStats);
+			settlerStats.gameObject.transform.SetParent (settler.gameObject.transform);
+
+			settlerStats.transform.localScale = new Vector3 (1, 1, 1);
+			settlerStats.text = sA.agentName;
+			
+			Text tempSettlerStats = settlerStats.GetComponent <Text>();
 		}
+
+		Destroy (prefabSettler);
 
 		//Creating static settler buttons the old way
 //		for (int i = index; i < index + settlerWeaponsButtons.Count; i++) {
@@ -91,15 +132,6 @@ public class SquadSelectionScript : MonoBehaviour {
 //				settlerWeaponsButtons[i].interactable = false;
 //			}
 //		}
-
-//		foreach (serialAgent sA in population) {
-//			Debug.Log ("Settler " + sA.agentId +"'s photo is: " + sA.photo);
-//		}
-	}
-
-	//Loading the weapons list
-	public void loadWeapons () {
-		int index = 0;
 	}
 
 	//Setting a squad member
