@@ -52,13 +52,33 @@ public class NonWorkingAgentList : MonoBehaviour {
 
             switch (this.gameObject.transform.root.GetComponent<BuildingScript>().bType.typeName) {
                 case "Farm":
-                string childLocation = "/" + this.gameObject.transform.root.name + "/Workwaypoints";
+                string tempChildLocation1 = "/" + this.gameObject.transform.root.name + "/Workwaypoints";
                 agent.GetComponent<AgentLogic_07>().workWaypoints = workWaypoints;
 
                 agent.GetComponent<AgentLogic_07>().aState = AgentLogic_07.agentState.Working;
                 agent.GetComponent<AgentLogic_07>().jobState = AgentLogic_07.jobSubState.Farmer;
                 stateChange = false;
                 Debug.Log("FARMER NOW!");
+                break;
+
+                case "PowerStation":
+                string tempChildLocation2 = "/" + this.gameObject.transform.root.name + "/Workwaypoints";
+                agent.GetComponent<AgentLogic_07>().workWaypoints = workWaypoints;
+
+                agent.GetComponent<AgentLogic_07>().aState = AgentLogic_07.agentState.Working;
+                agent.GetComponent<AgentLogic_07>().jobState = AgentLogic_07.jobSubState.PowerWorker;
+                stateChange = false;
+                Debug.Log("PowerWorker NOW!");
+                break;
+
+                case "WaterStation":
+                string tempChildLocation3 = "/" + this.gameObject.transform.root.name + "/Workwaypoints";
+                agent.GetComponent<AgentLogic_07>().workWaypoints = workWaypoints;
+
+                agent.GetComponent<AgentLogic_07>().aState = AgentLogic_07.agentState.Working;
+                agent.GetComponent<AgentLogic_07>().jobState = AgentLogic_07.jobSubState.Hydrologist;
+                stateChange = false;
+                Debug.Log("WaterWorker NOW!");
                 break;
             }
             Debug.Log("Agent Name: " + agent.GetComponent<AgentLogic_07>().firstLastName);
