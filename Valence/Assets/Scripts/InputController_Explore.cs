@@ -261,6 +261,21 @@ public class InputController_Explore : MonoBehaviour {
 		selectedNextUnit ();
 	}
 
+	public void EndTurn(){
+		_GameController.disableAttackBox();
+		moveTargetIcon.SetActive (false);
+		myLine.gameObject.SetActive (false);
+		_GameController.DestroyMovementRange ();
+		attackConfirmedButton.gameObject.SetActive (false);
+		moveConfirmedButton.gameObject.SetActive (false);
+		foreach (Unit fU in _GameController.folk) {
+			fU.waitPressed = true;
+			fU.canMove = false;
+			fU.actionPoints = 0;
+			fU.turnComplete = true;
+		}
+	}
+
 	public void PickupSelectedUnit(){
 		if (!_GameController.selectedUnit.hasScrap) {
 			_GameController.disableAttackBox ();
@@ -271,7 +286,7 @@ public class InputController_Explore : MonoBehaviour {
 			_GameController.scrapObj.transform.position += _GameController.selectedUnit.facing / 2;
 			_GameController.scrapObj.transform.position += new Vector3( 0, 0.5f, 0 );
 			_GameController.selectedUnit.hasScrap = true;
-			_GameController.pickUpButton.image.sprite = dropSprite;
+			//_GameController.pickUpButton.image.sprite = dropSprite;
 		} else {
 			_GameController.disableAttackBox ();
 			_GameController.selectedUnit.grabPressed = true;
@@ -280,7 +295,7 @@ public class InputController_Explore : MonoBehaviour {
 			_GameController.scrapObj.transform.position = _GameController.selectedUnit.gameObject.transform.position;
 			//_GameController.scrapObj.transform.position += _GameController.selectedUnit.facing;
 			_GameController.selectedUnit.hasScrap = false;
-			_GameController.pickUpButton.image.sprite = pickupSprite;
+			//_GameController.pickUpButton.image.sprite = pickupSprite;
 		}
 	}
 
@@ -330,10 +345,10 @@ public class InputController_Explore : MonoBehaviour {
 	}
 	public void attackConfirmed(){
 		Unit attackTarget = _GameController.selectedUnit.AttackTargets [_GameController.selectedUnit.currentAttackTarget];
-		if (attackTarget.myCam != null) {
-			recursiveLayerSet( attackTarget.gameObject, 16 );
-			attackTarget.myCam.SetActive (true);
-		}
+//		if (attackTarget.myCam != null) {
+//			recursiveLayerSet( attackTarget.gameObject, 16 );
+//			attackTarget.myCam.SetActive (true);
+//		}
 		_GameController.selectedUnit.actionPoints--;
 		_GameController.selectedUnit.hasAttacked = true;
 		attackTarget.generateSound (_GameController.selectedUnit.currentPosition, _GameController.selectedUnit.myWeapon.GetComponent<weaponScript> ().soundRange);
@@ -348,8 +363,8 @@ public class InputController_Explore : MonoBehaviour {
 
 		if (_GameController.selectedUnit.calcChanceToHit (_GameController.selectedUnit.getDistance (_GameController.selectedUnit.currentPosition, attackTarget.currentPosition)) > rand) {
 			Debug.Log("HIT");
-			attackTarget.myCam.GetComponent<ScreenShake>().shake = 2;
-			attackTarget.myCam.GetComponent<ScreenShake>().shakeAmount = _GameController.selectedUnit.attackRating/100;
+			//attackTarget.myCam.GetComponent<ScreenShake>().shake = 2;
+			//attackTarget.myCam.GetComponent<ScreenShake>().shakeAmount = _GameController.selectedUnit.attackRating/100;
 			GameObject tempObj = (GameObject) Instantiate ( dmgText, Camera.main.WorldToScreenPoint(attackTarget.gameObject.transform.position), Quaternion.identity );
 			tempObj.gameObject.transform.SetParent(myCanvas.gameObject.transform);
 			tempObj.GetComponent<Text>().text = ""+_GameController.selectedUnit.attackRating;
@@ -414,6 +429,10 @@ public class InputController_Explore : MonoBehaviour {
 			myLine.SetPosition( index, new Vector3( n.x+0.5f, 0.1f, n.y+0.5f ) );
 			index++;
 		}
+	}
+
+	public void undoMove(){
+		_GameController.undoLastMove ();
 	}
 
 }

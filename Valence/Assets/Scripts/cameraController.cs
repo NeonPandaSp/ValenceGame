@@ -11,7 +11,9 @@ public class cameraController : MonoBehaviour {
 	 **/ 
 	
 	
-	Vector3 translation, targetPosition, zoomTranslation;
+	public Vector3 translation = new Vector3 (-30,20,-30);
+	public Vector3 targetRotation = new Vector3 (30, 45, 0);
+	Vector3 targetPosition, zoomTranslation;
 	int scrollArea = 25;
 	float scrollSpeed = 15;
 	int zoomSpeed = 1000;
@@ -33,13 +35,14 @@ public class cameraController : MonoBehaviour {
 	public bool perspCam;
 
 	public CameraTargetController _camObject;
+	public ExploreMode_GameController _gameController;
 	
 	// Use this for initialization
 	void Start () {
-		translation = new Vector3 (-30,20,-30);
 		GetComponent<Camera>().transform.position = translation;
-		GetComponent<Camera> ().transform.eulerAngles = new Vector3 (30, 45, 0);
-		
+		GetComponent<Camera>().transform.eulerAngles = targetRotation; //new Vector3 (30, 45, 0);
+
+		_gameController = FindObjectOfType<ExploreMode_GameController> ();
 		//mouseEdgeControl = true;
 		perspCam = true;
 	}

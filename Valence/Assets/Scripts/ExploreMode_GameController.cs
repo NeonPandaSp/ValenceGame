@@ -41,7 +41,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 	public CameraTargetController cameraObject;
 
-	public Button moveButton, attackButton, pickUpButton, waitButton;
+	public Button moveButton, attackButton, pickUpButton, waitButton, undoButton;
 	public Button attackSelectButton, attackNext, attackPrev;
 
 	public List<Button> PartyButtons;
@@ -64,6 +64,12 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 	public List<Sprite> tileSprites;
 
+	public Unit lastSelectedUnit;
+	public Vector2 selectedUnitLastPos;
+	public int selectedUnitOldMovementRemaining;
+	public Vector3 selectedUnitTransformPosition;
+
+	public Dictionary<Unit, Vector2> newKnownPositions;
 	// Use this for initialization
 	void Start () {
 		tiles = new int[mapSize,mapSize];
@@ -179,6 +185,56 @@ public class ExploreMode_GameController : MonoBehaviour {
 			tiles [(int)scrapObj.transform.position.x, (int)scrapObj.transform.position.z] = 3;
 			lastScrapPos = new Vector2 ((int)scrapObj.transform.position.x, (int)scrapObj.transform.position.z);
 		}
+
+		if( selectedUnit.movementRemaining > 0 && !selectedUnit.isMoving && GameState == 1){
+			moveButton.interactable = true;
+		} else {
+			moveButton.interactable = false;
+		} 
+		
+		if( canAttack(selectedUnit) && !selectedUnit.isMoving && !selectedUnit.hasScrap && !selectedUnit.hasAttacked  && GameState == 1) {
+			attackButton.interactable = true;
+			enableAttackBox (selectedUnit);
+			_inputController.attackConfirmedButton.gameObject.SetActive (true);
+			_inputController.moveConfirmedButton.gameObject.SetActive (false);
+			//selectedUnit.AttackTargets [selectedUnit.currentAttackTarget].gameObject.GetComponent<EnemyMouseOver> ().enableUI ();
+			selectedUnit.attackPressed = true;
+		} else {
+			attackButton.interactable = false;
+		}
+		
+		
+		
+		if( canPickUp(selectedUnit) && !selectedUnit.isMoving && GameState == 1 ){
+			pickUpButton.interactable = true;
+		} else {
+			pickUpButton.interactable = false;
+		}
+		
+		if( selectedUnit.isMoving || GameState == 2 ){
+			waitButton.interactable = false;
+		} else {
+			waitButton.interactable = true;
+		}
+		
+		if( selectedUnit.AttackTargets.Count > 0 && !selectedUnit.isMoving  && GameState == 1){
+			attackSelectButton.interactable = true;
+			attackNext.interactable = true;
+			attackPrev.interactable = true;
+			chanceToHitText.transform.parent.gameObject.SetActive(true);
+			chanceToHitText.text = ""+ (int) selectedUnit.calcChanceToHit (selectedUnit.getDistance (selectedUnit.currentPosition, selectedUnit.AttackTargets[selectedUnit.currentAttackTarget].currentPosition));
+		} else {
+			attackSelectButton.interactable = false;
+			attackNext.interactable = false;
+			attackPrev.interactable = false;
+		}
+
+		if (!selectedUnit.hasAttacked && lastSelectedUnit != null && GameState == 1) {
+			undoButton.interactable = true;
+		} else {
+			undoButton.interactable = false;
+		}
+
 		switch (GameState)
 		{
 		case 1:
@@ -202,46 +258,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 				}
 			}
 
-			if( selectedUnit.movementRemaining > 0 && !selectedUnit.isMoving ){
-				moveButton.interactable = true;
-			} else {
-				moveButton.interactable = false;
-			} 
 
-			if( canAttack(selectedUnit) && !selectedUnit.isMoving && !selectedUnit.hasScrap && !selectedUnit.hasAttacked) {
-				attackButton.interactable = true;
-				enableAttackBox (selectedUnit);
-				_inputController.attackConfirmedButton.gameObject.SetActive (true);
-				_inputController.moveConfirmedButton.gameObject.SetActive (false);
-				//selectedUnit.AttackTargets [selectedUnit.currentAttackTarget].gameObject.GetComponent<EnemyMouseOver> ().enableUI ();
-				selectedUnit.attackPressed = true;
-			} else {
-				attackButton.interactable = false;
-			}
-
-			if( canPickUp(selectedUnit) && !selectedUnit.isMoving ){
-				pickUpButton.interactable = true;
-			} else {
-				pickUpButton.interactable = false;
-			}
-
-			if( selectedUnit.isMoving ){
-				waitButton.interactable = false;
-			} else {
-				waitButton.interactable = true;
-			}
-
-			if( selectedUnit.AttackTargets.Count > 0 && !selectedUnit.isMoving){
-				attackSelectButton.interactable = true;
-				attackNext.interactable = true;
-				attackPrev.interactable = true;
-				chanceToHitText.transform.parent.gameObject.SetActive(true);
-				chanceToHitText.text = ""+ (int) selectedUnit.calcChanceToHit (selectedUnit.getDistance (selectedUnit.currentPosition, selectedUnit.AttackTargets[selectedUnit.currentAttackTarget].currentPosition));
-			} else {
-				attackSelectButton.interactable = false;
-				attackNext.interactable = false;
-				attackPrev.interactable = false;
-			}
 
 			break;
 		case 2:
@@ -281,6 +298,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 					fU.waitPressed = false;
 					fU.hasAttacked = false;
 				}
+				lastSelectedUnit = null;
 				break;
 			} else {
 				EnemyTurn();
@@ -907,7 +925,11 @@ public class ExploreMode_GameController : MonoBehaviour {
 				attackIcon.selectUnit = elite[currentElite].FolkUnitsWithinView[0];
 			}
 
-			startBuffer(2);
+			if( elite[currentElite].EliteBehaviour == "Guard" && elite[currentElite].EliteState == 1 ){
+				startBuffer(0);
+			} else {
+				startBuffer(2);
+			}
 		} 
 
 
@@ -940,7 +962,11 @@ public class ExploreMode_GameController : MonoBehaviour {
 					tempPosition.z = tempPosition.z+0.5f;
 					tempObj.transform.position = Camera.main.WorldToScreenPoint(tempPosition);
 				}
-				startBuffer(2);
+				if( currentElite < elite.Count-1 && ( elite[currentElite+1].EliteBehaviour == "Guard" && elite[currentElite+1].EliteState == 1 ) ){
+					startBuffer(0);
+				} else {
+					startBuffer(2);
+				}
 				attackIcon.gameObject.SetActive(false);
 			}
 
@@ -1053,6 +1079,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 		}
 		attackIcon.gameObject.SetActive (true);
 		attackIcon.selectUnit = selectedUnit.AttackTargets [0];
+		selectedUnit.AttackTargets[0].GetComponent<EnemyMouseOver> ().enableUI ();
 	}
 	public void disableAttackBox(){
 		selectedUnit.AttackTargets.Clear();
@@ -1116,6 +1143,31 @@ public class ExploreMode_GameController : MonoBehaviour {
 			cameraObject.MoveCameraTo( cameraObject.transform.position, selectedUnit.transform.position );
 			
 		}
+	}
+
+	public void undoLastMove(){
+		selectedUnit = lastSelectedUnit;
+		selectedUnit.canMove = true;
+		selectedUnit.turnComplete = false;
+
+		foreach (Unit eU in elite) {
+			if( eU.knownPosition.Contains ( selectedUnit.currentPosition ) ){
+				eU.knownPosition.Remove (selectedUnit.currentPosition);
+				eU.FolkUnitsWithinView.Remove (selectedUnit);
+			}
+		}
+
+		disableAttackBox (); 
+
+		tiles [(int)selectedUnit.currentPosition.x,(int)selectedUnit.currentPosition.y] = 1;
+		selectedUnit.transform.position = selectedUnitTransformPosition;
+		selectedUnit.currentPosition = selectedUnitLastPos;
+		selectedUnit.movementRemaining = selectedUnitOldMovementRemaining;
+		GenerateMovementRange ((int)selectedUnit.currentPosition.x,(int)selectedUnit.currentPosition.y);
+
+
+
+		lastSelectedUnit = null;
 	}
 
 }

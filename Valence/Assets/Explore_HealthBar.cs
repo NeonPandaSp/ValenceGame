@@ -11,9 +11,19 @@ public class Explore_HealthBar : MonoBehaviour {
 
 	public float lastHealth;
 	public float preDamageHealth;
+
+	public bool shakeMe;
+	public float shakeSpeed;
+	public float timeSinceShakeStart;
+	public float shakeLength = 2.0f;
+	public Vector3 resetPosition;
+
+	public bool customUnit;
 	// Use this for initialization
 	void Start () {
-		myUnit = transform.parent.transform.parent.GetComponent<Unit> ();
+		if (!customUnit) {
+			myUnit = transform.parent.transform.parent.GetComponent<Unit> ();
+		}
 
 		myMax = myUnit.health;
 
@@ -34,17 +44,30 @@ public class Explore_HealthBar : MonoBehaviour {
 
 		currentHealth = Remap (currentHealth, 0.0f, myMax, 0.0f, 1.0f);
 
+		if (shakeMe && !customUnit) {
+			transform.parent.transform.position = resetPosition;
+			transform.parent.transform.position += Random.insideUnitSphere * ( shakeSpeed / 5 );
+			timeSinceShakeStart += Time.deltaTime;
+			if( timeSinceShakeStart > shakeLength ){
+				shakeMe = false;
+				transform.parent.transform.position = resetPosition;
+			}
+		}
+
 		if( currentHealth != lastHealth ){
 			preDamageHealth = lastHealth;
 			currentTime = 0;
+			shakeParent(currentHealth);
 		}
 
 		lastHealth = currentHealth;
 
 		if (currentHealth < currentValue) {
-			currentValue = easeInOutQuad( currentTime, preDamageHealth, currentHealth-preDamageHealth, 2.0f );
-			if ( currentValue - currentHealth < 0.01f )
+			currentValue = easeInOutQuad (currentTime, preDamageHealth, currentHealth - preDamageHealth, 2.0f);
+			if (currentValue - currentHealth < 0.01f)
 				currentValue = currentHealth;
+		} else if (currentHealth > currentValue) {
+			currentValue = currentHealth;
 		}
 
 
@@ -63,5 +86,12 @@ public class Explore_HealthBar : MonoBehaviour {
 			return change / 2 * time * time + start;
 		time--;
 		return -change / 2 * (time * (time - 2) - 1) + start;
+	}
+
+	void shakeParent(float newHealth){
+		shakeMe = true;
+		shakeSpeed = preDamageHealth - newHealth;
+		timeSinceShakeStart = 0;
+		resetPosition = transform.parent.position;
 	}
 }

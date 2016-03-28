@@ -17,9 +17,12 @@ public class CameraTargetController : MonoBehaviour {
 	Vector3 endPos, startPos;
 	float t;
 
+	public bool intro;
+
 	public bool isBuild;
 	// Use this for initialization
 	void Start () {
+
 		lastPosition = transform.position;
 		lastMousePositionX = Input.mousePosition.x;
 		lastRotation = new Vector3 ( transform.rotation.x, transform.rotation.y, transform.rotation.z);
