@@ -469,7 +469,9 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		if ((agentLogic.jobState != AgentLogic_07.jobSubState.Farmer) && farmAvailable) {
 			//Obtain all farm waypoints that the agent should move between when working
 			agentLogic.workWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("FarmWaypoint"));
-			
+
+			agentLogic.workWait = 0.0f;
+
 			//Set the agent to working
 			agentLogic.aState = AgentLogic_07.agentState.Working;
 
@@ -483,7 +485,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 	void waterPurifierRoleClicked () {
 		if ((agentLogic.jobState != AgentLogic_07.jobSubState.Hydrologist) && waterstationAvailable) {
 			agentLogic.workWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("WaterWaypoint"));
-			
+			agentLogic.workWait = 0.0f;
 			//Set the agent to working
 			agentLogic.aState = AgentLogic_07.agentState.Working;
 			if( agentLogic.jobState != AgentLogic_07.jobSubState.Default)
@@ -495,6 +497,7 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 
 	void powerEngineerRoleClicked () {
 		if ((agentLogic.jobState != AgentLogic_07.jobSubState.PowerWorker) && powerstationAvailable) {
+			agentLogic.workWait = 0.0f;
 			//Obtain all farm waypoints that the agent should move between when working
 			agentLogic.workWaypoints = new List<GameObject> (GameObject.FindGameObjectsWithTag ("PowerWaypoint"));
 			if (agentLogic.jobState != AgentLogic_07.jobSubState.Default)

@@ -95,7 +95,7 @@ public class AgentLogic_07 : MonoBehaviour {
     float wait = Random.Range (1.0f, 3.0f);
 
     //Wait time for the working animation
-    float workWait = 2.0f;
+    public float workWait = 2.0f;
 
     public bool currentlyWorking = false;
 
@@ -414,6 +414,7 @@ public class AgentLogic_07 : MonoBehaviour {
                     case jobSubState.Farmer:
 
                 //Set the agent to move towards the farm waypoints
+						aiFollow.Reset();
                         aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
                         if (workerPathCompleted) { 
                             aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
@@ -465,7 +466,7 @@ public class AgentLogic_07 : MonoBehaviour {
                         break;
 
                     case jobSubState.PowerWorker:
-
+						aiFollow.Reset();
                         aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
                         if (workerPathCompleted)
                         {
