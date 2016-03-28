@@ -6,12 +6,13 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     Vector3 startPos;
     public Transform parentToReturnTo = null;
+    //public bool parentChanged = false;
 
     public void OnBeginDrag(PointerEventData eventData) {
         Debug.Log("OnBeginDrag: " + gameObject);
 
         startPos = this.transform.position;
-
+        //parentChanged = false;
         parentToReturnTo = this.transform.parent;
         this.transform.SetParent(this.transform.parent.parent.parent);
 
@@ -35,6 +36,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
         this.transform.position = startPos;
         this.transform.SetParent(parentToReturnTo);
+        //parentChanged = true;
         GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
 }

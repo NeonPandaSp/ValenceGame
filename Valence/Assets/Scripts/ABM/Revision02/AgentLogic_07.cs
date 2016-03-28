@@ -355,6 +355,7 @@ public class AgentLogic_07 : MonoBehaviour {
 
                 agentAnim.SetBool("Walking", true);
                 agentAnim.SetBool("Idle", false);
+                agentAnim.SetBool("Working", false);
                 //Set the current target to move towards
                 aiFollow.target = wanderWaypoints[wanderWaypointIndex];
 
@@ -365,6 +366,10 @@ public class AgentLogic_07 : MonoBehaviour {
                 //remove this agent from all worker lists
                 //Todo do this with a function call
                 gameController.farmerList.Remove(this.gameObject);
+                gameController.waterWorkerList.Remove(this.gameObject);
+                gameController.powerWorkerList.Remove(this.gameObject);
+                gameController.traineeList.Remove(this.gameObject);
+
 
                 break;
             case agentState.Hungry:
