@@ -32,7 +32,7 @@ public class NonWorkingAgentList : MonoBehaviour {
         //GameObject test = Instantiate(agentProfile, agentProfile.transform.position, agentProfile.transform.rotation) as GameObject;
         //test.transform.SetParent(this.transform, false);
 
-        /*foreach (GameObject agent in _myGameController.unAssignedPopulation) {
+        foreach (GameObject agent in _myGameController.unAssignedPopulation) {
             GameObject newobject = Instantiate(agentProfile, agentProfile.transform.position, agentProfile.transform.rotation) as GameObject;
             newobject.transform.SetParent(this.transform, false);
             newobject.GetComponentInChildren<Text>().text = agent.GetComponent<AgentLogic_07>().firstLastName;
@@ -40,7 +40,7 @@ public class NonWorkingAgentList : MonoBehaviour {
             unAssignedAgents.Add(newobject);
             
             //gameObject.transform;
-        }*/
+        }
     }
 	
 	// Update is called once per frame
@@ -54,7 +54,7 @@ public class NonWorkingAgentList : MonoBehaviour {
             {
                 //if (UnlockComplete == true)
                 //{
-                UpdateAgents(agent);
+                //UpdateAgents(agent);
                 UnlockComplete = false;
                 //}
             }
