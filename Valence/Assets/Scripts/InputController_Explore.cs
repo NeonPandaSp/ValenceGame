@@ -322,9 +322,18 @@ public class InputController_Explore : MonoBehaviour {
 			_GameController.cameraObject.MoveCameraTo( _GameController.cameraObject.transform.position, _GameController.selectedUnit.transform.position );
 		}
 	}
-
+	public void recursiveLayerSet(GameObject g, int layer ){
+		g.layer = layer;
+		foreach (Transform child in g.transform) {
+			recursiveLayerSet(child.gameObject, layer) ;
+		}
+	}
 	public void attackConfirmed(){
 		Unit attackTarget = _GameController.selectedUnit.AttackTargets [_GameController.selectedUnit.currentAttackTarget];
+		if (attackTarget.myCam != null) {
+			recursiveLayerSet( attackTarget.gameObject, 16 );
+			attackTarget.myCam.SetActive (true);
+		}
 		_GameController.selectedUnit.actionPoints--;
 		_GameController.selectedUnit.hasAttacked = true;
 		attackTarget.generateSound (_GameController.selectedUnit.currentPosition, _GameController.selectedUnit.myWeapon.GetComponent<weaponScript> ().soundRange);
@@ -339,7 +348,8 @@ public class InputController_Explore : MonoBehaviour {
 
 		if (_GameController.selectedUnit.calcChanceToHit (_GameController.selectedUnit.getDistance (_GameController.selectedUnit.currentPosition, attackTarget.currentPosition)) > rand) {
 			Debug.Log("HIT");
-
+			attackTarget.myCam.GetComponent<ScreenShake>().shake = 2;
+			attackTarget.myCam.GetComponent<ScreenShake>().shakeAmount = _GameController.selectedUnit.attackRating/100;
 			GameObject tempObj = (GameObject) Instantiate ( dmgText, Camera.main.WorldToScreenPoint(attackTarget.gameObject.transform.position), Quaternion.identity );
 			tempObj.gameObject.transform.SetParent(myCanvas.gameObject.transform);
 			tempObj.GetComponent<Text>().text = ""+_GameController.selectedUnit.attackRating;

@@ -83,6 +83,8 @@ public class Unit : MonoBehaviour {
 	public FolkAnimCtrl myFAnimCtrl;
 
 	public int movementRemaining;
+
+	public GameObject myCam;
 	// Use this for initialization
 	void Start () {
 
@@ -118,6 +120,10 @@ public class Unit : MonoBehaviour {
 		_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 3;
 
 		myWeaponName = myWeapon.gameObject.name;
+		myCam = gameObject.GetComponentInChildren<Camera> ().gameObject;
+		if (myCam != null) {
+			myCam.SetActive(false);
+		}
 	}
 	
 	// Update is called once per frame
@@ -591,6 +597,7 @@ public class Unit : MonoBehaviour {
 		if (targetUnit.isElite) {
 			targetUnit.knownPosition.Add (currentPosition);
 			targetUnit.lastKnownPosition = targetUnit.knownPosition[targetUnit.knownPosition.Count-1];
+
 		}
 		generateSound (currentPosition, myWeapon.GetComponent<weaponScript> ().soundRange);
 		Debug.Log ("Attack Dealt " + attackRating + " Damage.");
