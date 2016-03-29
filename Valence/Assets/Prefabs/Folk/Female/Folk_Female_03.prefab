@@ -1720,6 +1720,8 @@ GameObject:
   - 114: {fileID: 11480324}
   - 114: {fileID: 11414152}
   - 114: {fileID: 11487508}
+  - 82: {fileID: 8250950}
+  - 114: {fileID: 11490380}
   m_Layer: 11
   m_Name: Folk_Female_03
   m_TagString: Agent
@@ -1999,7 +2001,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 193670}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.77479935, y: 0, z: -8.82202339}
+  m_LocalPosition: {x: -3.20277405, y: 0, z: 4.14651108}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 452340}
@@ -3379,6 +3381,76 @@ Transform:
   m_Children: []
   m_Father: {fileID: 489790}
   m_RootOrder: 0
+--- !u!82 &8250950
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 193670}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1.44462967
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!95 &9512274
 Animator:
   serializedVersion: 3
@@ -3429,7 +3501,7 @@ MonoBehaviour:
   pickNextWaypointDistance: 1
   targetReached: 1
   speed: .100000001
-  rotationSpeed: 1
+  rotationSpeed: 3
   drawGizmos: 0
   canSearch: 1
   canMove: 1
@@ -3570,6 +3642,7 @@ MonoBehaviour:
   malePortraitIndex: 0
   femalePortraitIndex: 0
   gender: 
+  workWait: 0
   currentlyWorking: 0
   workerPathCompleted: 0
   modelIndex: 0
@@ -3665,6 +3738,17 @@ MonoBehaviour:
     tagsChange: -1
     tagsSet: -1
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+--- !u!114 &11490380
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 193670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55c68da5f0c337f48a720b817f8e5268, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!137 &13719864
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -3914,6 +3998,14 @@ Prefab:
       value: 
       objectReference: {fileID: 11452296, guid: 68950b5f3343c264aa54ab536292d48a,
         type: 2}
+    - target: {fileID: 0}
+      propertyPath: rotationSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 193670}

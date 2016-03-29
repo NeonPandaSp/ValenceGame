@@ -1195,6 +1195,8 @@ GameObject:
   - 114: {fileID: 11461210}
   - 114: {fileID: 11402994}
   - 114: {fileID: 11432298}
+  - 82: {fileID: 8289218}
+  - 114: {fileID: 11422740}
   m_Layer: 11
   m_Name: Folk_Male_06
   m_TagString: Agent
@@ -3379,6 +3381,76 @@ Transform:
   m_Children: []
   m_Father: {fileID: 442942}
   m_RootOrder: 0
+--- !u!82 &8289218
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167360}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1.44462967
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!95 &9509488
 Animator:
   serializedVersion: 3
@@ -3451,6 +3523,17 @@ MonoBehaviour:
   agentStrength: 0
   agentAgility: 0
   agentPerception: 0
+--- !u!114 &11422740
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55c68da5f0c337f48a720b817f8e5268, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11423612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3582,6 +3665,7 @@ MonoBehaviour:
   malePortraitIndex: 0
   femalePortraitIndex: 0
   gender: 
+  workWait: 0
   currentlyWorking: 0
   workerPathCompleted: 0
   modelIndex: 0
@@ -3902,6 +3986,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: startEndModifier.priority
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_audioClip
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

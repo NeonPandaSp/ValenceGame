@@ -48,7 +48,7 @@ public class NonWorkingAgentList : MonoBehaviour {
 
         //unAssignedAgents.Count = _myGameController.unAssignedPopulation.Count;
 
-        if (unAssignedAgents.Count < _myGameController.unAssignedPopulation.Count)
+        /*if (unAssignedAgents.Count < _myGameController.unAssignedPopulation.Count)
         {
             foreach (GameObject agent in _myGameController.unAssignedPopulation)
             {
@@ -60,7 +60,7 @@ public class NonWorkingAgentList : MonoBehaviour {
             }
         }   
         else {
-            /*foreach (GameObject agent in unAssignedAgents) {
+            foreach (GameObject agent in unAssignedAgents) {
                 if (!assigned && _myGameController.population[unAssignedAgents.IndexOf(agent)].GetComponent<AgentLogic_07>().aState == AgentLogic_07.agentState.Working) {
                     Debug.Log("SHDKJASHDKSJAHDKJASHAD: " + _myGameController.population[unAssignedAgents.IndexOf(agent)].name);
                     //agent.transform.parent.tag = "Assigned";
@@ -74,12 +74,12 @@ public class NonWorkingAgentList : MonoBehaviour {
                     agent.transform.SetParent(unAssignedList);
                     assigned = false;
                 }
-            }*/
+            }
 
             foreach (GameObject agent in unAssignedAgents) {
 
             }
-        }
+        }*/
 
             /*foreach (GameObject agent in unAssignedAgents)
             {
