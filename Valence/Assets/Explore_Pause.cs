@@ -84,10 +84,10 @@ public class Explore_Pause : MonoBehaviour {
 	public void pauseGame(){
 		isPause = !isPause;
 		if (isPause) {
-			//Time.timeScale = 0;
+			Time.timeScale = 0;
 			pauseMenuObj.SetActive (true);
 		} else {
-			//Time.timeScale = 1;
+			Time.timeScale = 1;
 			pauseMenuObj.SetActive (false);
 		}
 	}
@@ -95,6 +95,7 @@ public class Explore_Pause : MonoBehaviour {
 	public void retreat(){
 		escaping = true;
 		timer = 0;
+		Time.timeScale = 1;
 		Debug.Log ("ESCAPE PRESSED");
 		for (int i = 0; i < escapeScore.Count; i ++) {
 			int rand = Random.Range (0,100);
