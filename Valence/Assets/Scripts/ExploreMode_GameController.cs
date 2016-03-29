@@ -191,50 +191,51 @@ public class ExploreMode_GameController : MonoBehaviour {
 		} else {
 			moveButton.interactable = false;
 		} 
+		if (selectedUnit != null) {
+			if (canAttack (selectedUnit) && !selectedUnit.isMoving && !selectedUnit.hasScrap && !selectedUnit.hasAttacked && GameState == 1) {
+				attackButton.interactable = true;
+				if( selectedUnit.AttackTargets.Count <= 0 )
+					enableAttackBox (selectedUnit);
+				_inputController.attackConfirmedButton.gameObject.SetActive (true);
+				_inputController.moveConfirmedButton.gameObject.SetActive (false);
+				//selectedUnit.AttackTargets [selectedUnit.currentAttackTarget].gameObject.GetComponent<EnemyMouseOver> ().enableUI ();
+				selectedUnit.attackPressed = true;
+			} else {
+				attackButton.interactable = false;
+			}
 		
-		if( canAttack(selectedUnit) && !selectedUnit.isMoving && !selectedUnit.hasScrap && !selectedUnit.hasAttacked  && GameState == 1) {
-			attackButton.interactable = true;
-			enableAttackBox (selectedUnit);
-			_inputController.attackConfirmedButton.gameObject.SetActive (true);
-			_inputController.moveConfirmedButton.gameObject.SetActive (false);
-			//selectedUnit.AttackTargets [selectedUnit.currentAttackTarget].gameObject.GetComponent<EnemyMouseOver> ().enableUI ();
-			selectedUnit.attackPressed = true;
-		} else {
-			attackButton.interactable = false;
-		}
 		
 		
+			if (canPickUp (selectedUnit) && !selectedUnit.isMoving && GameState == 1) {
+				pickUpButton.interactable = true;
+			} else {
+				pickUpButton.interactable = false;
+			}
 		
-		if( canPickUp(selectedUnit) && !selectedUnit.isMoving && GameState == 1 ){
-			pickUpButton.interactable = true;
-		} else {
-			pickUpButton.interactable = false;
-		}
+			if (selectedUnit.isMoving || GameState == 2) {
+				waitButton.interactable = false;
+			} else {
+				waitButton.interactable = true;
+			}
 		
-		if( selectedUnit.isMoving || GameState == 2 ){
-			waitButton.interactable = false;
-		} else {
-			waitButton.interactable = true;
-		}
-		
-		if( selectedUnit.AttackTargets.Count > 0 && !selectedUnit.isMoving  && GameState == 1){
-			attackSelectButton.interactable = true;
-			attackNext.interactable = true;
-			attackPrev.interactable = true;
-			chanceToHitText.transform.parent.gameObject.SetActive(true);
-			chanceToHitText.text = ""+ (int) selectedUnit.calcChanceToHit (selectedUnit.getDistance (selectedUnit.currentPosition, selectedUnit.AttackTargets[selectedUnit.currentAttackTarget].currentPosition));
-		} else {
-			attackSelectButton.interactable = false;
-			attackNext.interactable = false;
-			attackPrev.interactable = false;
-		}
+			if (selectedUnit.AttackTargets.Count > 0 && !selectedUnit.isMoving && GameState == 1) {
+				attackSelectButton.interactable = true;
+				attackNext.interactable = true;
+				attackPrev.interactable = true;
+				chanceToHitText.transform.parent.gameObject.SetActive (true);
+				chanceToHitText.text = "" + (int)selectedUnit.calcChanceToHit (selectedUnit.getDistance (selectedUnit.currentPosition, selectedUnit.AttackTargets [selectedUnit.currentAttackTarget].currentPosition));
+			} else {
+				attackSelectButton.interactable = false;
+				attackNext.interactable = false;
+				attackPrev.interactable = false;
+			}
 
-		if (!selectedUnit.hasAttacked && lastSelectedUnit != null && GameState == 1) {
-			undoButton.interactable = true;
-		} else {
-			undoButton.interactable = false;
+			if (!selectedUnit.hasAttacked && lastSelectedUnit != null && GameState == 1) {
+				undoButton.interactable = true;
+			} else {
+				undoButton.interactable = false;
+			}
 		}
-
 		switch (GameState)
 		{
 		case 1:
@@ -1062,6 +1063,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 	}
 
 	public void enableAttackBox(Unit fU){
+		selectedUnit.AttackTargets.Clear ();
 		foreach (Unit eU in elite) {
 			if( fU.isWithinAttackRange(eU) ){
 				if( eU.health > 0 ){
@@ -1087,6 +1089,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 		chanceToHitText.gameObject.transform.parent.gameObject.SetActive (false);
 		attackIcon.gameObject.SetActive (false);
 		chanceToHitText.text = "X";
+		_inputController.attackConfirmedButton.gameObject.SetActive (false);
 //		foreach (Unit eU in elite) {
 //			if( Vector3.Distance ( eU.transform.position, selectedUnit.transform.position ) <= 5 ){
 //				Transform[] eUChildren = eU.GetComponentsInChildren<Transform>(true);
@@ -1101,6 +1104,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 	public void selectedNextUnit(){
 		DestroyMovementRange ();
+		disableAttackBox ();
 		int i = selectedIndex;
 		if( GameState == 1 ){
 			i += 1;
@@ -1132,6 +1136,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 	}
 	public void selectSelectedUnit(Unit newUnit){
 		DestroyMovementRange ();
+		disableAttackBox ();
+		selectedUnit.gameObject.GetComponent<EnemyMouseOver> ().infoObject.SetActive (false);
 		if( GameState == 1 ){
 			selectedUnit = newUnit;
 

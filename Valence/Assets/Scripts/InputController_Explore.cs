@@ -160,10 +160,6 @@ public class InputController_Explore : MonoBehaviour {
 			ToggleWallVisibilty();
 		}
 
-		if (Input.GetKeyDown (KeyCode.Escape)) {
-			Application.LoadLevel(2);
-		}
-
 		if (Input.GetKeyDown (KeyCode.H)) {
 			if( HintObject.activeSelf ){
 				HintObject.SetActive(false);
@@ -311,6 +307,8 @@ public class InputController_Explore : MonoBehaviour {
 		moveTargetIcon.SetActive (false);
 		myLine.gameObject.SetActive (false);
 		_GameController.DestroyMovementRange ();
+		_GameController.disableAttackBox ();
+		_GameController.selectedUnit.gameObject.GetComponent<EnemyMouseOver> ().infoObject.SetActive (false);
 		int i = _GameController.selectedIndex;
 		if( _GameController.GameState == 1 ){
 			i += 1;

@@ -9,7 +9,7 @@ public class WinStateScript : MonoBehaviour {
 
 	public Vector2 rootPosition; 
 
-	bool win, lose;
+	public bool win, lose;
 
 	public Image endScreen;
 	public Canvas mainUI;
