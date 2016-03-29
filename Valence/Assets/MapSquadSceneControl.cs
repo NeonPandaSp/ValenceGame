@@ -22,7 +22,7 @@ public class MapSquadSceneControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		mapIndex = mapCan.GetComponent<MapSelectionScript> ().selectedMap;
-		if (squadCan.GetComponent<SquadSelectionScript> ().numSet >= 1) {
+		if (squadCan.GetComponent<SquadSelectionScript> ().squadNumber >= 1) {
 			proceedButton.interactable = true;
 		} else {
 			proceedButton.interactable = false;
@@ -52,7 +52,7 @@ public class MapSquadSceneControl : MonoBehaviour {
 		PlayerData oldData = PlayerDataManager.playerDataManager.loadSaveData ();
 
 		//foreach (serialAgent pM in squadCan.GetComponent<SquadSelectionScript>().myParty) {
-		for( int i = 0; i < squadCan.GetComponent<SquadSelectionScript>().numSet; i++){
+		for( int i = 0; i < squadCan.GetComponent<SquadSelectionScript>().squadNumber; i++){
 			myParty.Add( squadCan.GetComponent<SquadSelectionScript>().myParty[i] );
 		}
 		oldData.currentParty = myParty;

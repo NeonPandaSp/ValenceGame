@@ -184,23 +184,23 @@ public class AgentLogic_07 : MonoBehaviour {
                 "Carma",
                 "Sheri",
                 "Anita",
-                "Magdalena",
-                "Laryssa",
-                "Zacharia",
+				"Xuan",
+                "Robyn",
+                "Allie",
                 "Darcie",
                 "Sari",
                 "Shayna",
                 "Thea",
-                "Maryanna",
+                "Christie",
                 "Sanora",
-                "Deedra",
+				"Elicia",
                 "Wanda",
                 "Creola",
-				"Weri"
+				"Heidi"
             };
 
             lastNameArray = new string[14] {
-				"Levine",
+				"Slate",
 				"Hazlewood",
 				"Beckett",
 				"Polo",
@@ -211,8 +211,8 @@ public class AgentLogic_07 : MonoBehaviour {
 				"Stone",
 				"Drake",
 				"Richards",
-				"Fontana",
-				"Bob",
+				"Allard",
+				"Black",
 				"Steele"
 			};
 					

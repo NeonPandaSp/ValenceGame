@@ -10,14 +10,28 @@ public class SquadSelectionScript : MonoBehaviour {
 
 	public List<serialAgent> population = new List<serialAgent>();
 
-	public Image backgroundSelectSettler;
-	public Image backgroundSelectWeapons;
+//	public List<Button> squadButtons;
+//	public List<Button> weaponButtons;
+//	public List<Button> settlerWeaponsButtons;
 
-	public List<Button> squadButtons;
-	public List<Button> weaponButtons;
-	public List<Button> settlerWeaponsButtons;
+	//Settler Info
+	public GameObject settlerList;
+	public Text numberOfSettlersInPopulation;
+	public GameObject prefabSettler;
+	public Image prefabSettlerPortrait;
+	public Text prefabSettlerName;
+	public Text prefabSettlerHealth;
+	public Text prefabSettlerStats;
+	public Text prefabSettlerID;
 
 	//Squad Info
+	public GameObject squadList;
+	public Text numberOfSettlersInSquad;
+
+	//Photos
+	public Sprite[] malePortraitArray;
+	public Sprite[] femalePortraitArray;
+
 	public serialAgent [] myParty = new serialAgent [4];
 	public Image [] myPartyPortraits = new Image [5];
 	public Text [] myPartyNames = new Text [4];
@@ -25,12 +39,8 @@ public class SquadSelectionScript : MonoBehaviour {
 	public Text [] myParty_STR_Stats = new Text [4];
 	public Text [] myParty_PER_Stats = new Text [4];
 	public Text [] myParty_AGL_Stats = new Text [4];
-
+	//Squad Weapon
 	public Image [] myPartyWeaponIcons = new Image [4];
-
-	//Photos
-	public Sprite[] malePortraitArray;
-	public Sprite[] femalePortraitArray;
 
 	/*
 	//Weapons Info
@@ -45,22 +55,15 @@ public class SquadSelectionScript : MonoBehaviour {
 	*/
 
 	public int selectedPartyIndex;
-	public bool noneSelected;
 
-	public int rowIndex = 0;
-	public int numSet = 0;
+	String [] squadMemberArray;
+	bool [] numSet = {false, false, false, false};
+	public int squadNumber = 0;
 
-	public GameObject settlerList;
-	public GameObject prefabSettler;
-	public Image prefabSettlerPortrait;
-	public Text prefabSettlerName;
-	public Text prefabSettlerHealth;
-	public Text prefabSettlerStats;
-
+	public Button ventureBtn;
 
 	// Use this for initialization
 	void Start () {
-		rowIndex = 0;
 		loadPopulation ();
 	}
 
@@ -80,137 +83,99 @@ public class SquadSelectionScript : MonoBehaviour {
 			GameObject tempSettler = settler.GetComponent <GameObject>();
 
 			//Portrait
-			Image settlerPortrait = (Image) Instantiate (prefabSettlerPortrait);
+			Image settlerPortrait = settler.GetComponent<Image>();
 			settlerPortrait.gameObject.transform.SetParent (settler.gameObject.transform);
 
 			settlerPortrait.transform.localScale = new Vector3 (1, 1, 1);
 
-			if (sA.gender == "Male") {
-				settlerPortrait.sprite = malePortraitArray [sA.photo];
-			} else {
-				settlerPortrait.sprite = femalePortraitArray [sA.photo];
+			Image[] tempImgs = settler.GetComponentsInChildren<Image>();
+
+			foreach( Image img in tempImgs ){
+				if( img.gameObject.name == "Settler Portrait" ){
+					Image tempSettlerPortrait = img;
+					if (sA.gender == "Male") {
+						tempSettlerPortrait.sprite = malePortraitArray [sA.photo];
+					} else {
+						tempSettlerPortrait.sprite = femalePortraitArray [sA.photo];
+					}
+				}
 			}
 
-			Image tempSettlerPortrait = settlerPortrait.GetComponent <Image>();
+			Text[] childTexts = settler.GetComponentsInChildren<Text>();
 
+			Text settlerName, settlerHealth, settlerStats, settlerID;
 			//Name
-			Text settlerName = (Text) Instantiate (prefabSettlerName);
-			settlerName.gameObject.transform.SetParent (settler.gameObject.transform);
-
-			settlerName.transform.localScale = new Vector3 (1, 1, 1);
-			settlerName.text = sA.agentName;
-			
-			Image tempSettlerName = settlerName.GetComponent <Image>();
-
-			//Health
-			Text settlerHealth = (Text) Instantiate (prefabSettlerHealth);
-			settlerHealth.gameObject.transform.SetParent (settler.gameObject.transform);
-
-			settlerHealth.transform.localScale = new Vector3 (1, 1, 1);
-			settlerHealth.text = sA.health.ToString () + "/10";
-			
-			Text tempSettlerHealth = settlerPortrait.GetComponent <Text>();
-
-			//Stats
-			Text settlerStats = (Text) Instantiate (prefabSettlerStats);
-			settlerStats.gameObject.transform.SetParent (settler.gameObject.transform);
-
-			settlerStats.transform.localScale = new Vector3 (1, 1, 1);
-			settlerStats.text = sA.agentName;
-			
-			Text tempSettlerStats = settlerStats.GetComponent <Text>();
+			foreach( Text cT in childTexts ){
+				if( cT.gameObject.name == "Settler Name" ){
+					settlerName = cT;
+					settlerName.gameObject.transform.SetParent (settler.gameObject.transform);
+					
+					settlerName.transform.localScale = new Vector3 (1, 1, 1);
+					settlerName.text = sA.agentName;
+					
+					Image tempSettlerName = settlerName.GetComponent <Image>();
+				} 
+				if ( cT.gameObject.name == "Settler Health" ){
+					settlerHealth = cT;
+					settlerHealth.gameObject.transform.SetParent (settler.gameObject.transform);
+					
+					settlerHealth.transform.localScale = new Vector3 (1, 1, 1);
+					settlerHealth.text = (sA.health / 10).ToString () + "/10";
+					
+					Text tempSettlerHealth = settlerPortrait.GetComponent <Text>();
+				} 
+				if( cT.gameObject.name == "Settler Stats" ){
+					settlerStats = cT;
+					settlerStats.gameObject.transform.SetParent (settler.gameObject.transform);
+					
+					settlerStats.transform.localScale = new Vector3 (1, 1, 1);
+					settlerStats.text = "STRN: " + sA.strength + " PERC: " + sA.perception + " AGIL: " + sA.agility;
+					
+					Text tempSettlerStats = settlerStats.GetComponent <Text>();
+				} 
+				if (cT.gameObject.name == "Settler ID") {
+					settlerID = cT;
+					settlerID.gameObject.transform.SetParent (settler.gameObject.transform);
+					settlerID.text = sA.agentId.ToString();
+				}
+			}
 		}
 
 		Destroy (prefabSettler);
-
-		//Creating static settler buttons the old way
-//		for (int i = index; i < index + settlerWeaponsButtons.Count; i++) {
-//			if (i <= population.Count - 1)
-//				settlerWeaponsButtons[i].GetComponentInChildren <Text>().text = population[i].agentName;
-//			else {
-//				settlerWeaponsButtons[i].GetComponentInChildren <Text>().text = "NA";
-//				settlerWeaponsButtons[i].interactable = false;
-//			}
-//		}
 	}
 
-	//Setting a squad member
-	public void setPartyMember (int index) {
-		bool inParty = false;
+	void Update () {
+		numberOfSettlersInPopulation.text = "Settler List (" + settlerList.transform.childCount + ")";
+
+		numberOfSettlersInSquad.text = ("Squad " + squadNumber) + "/4";
+
+		int partyIndex = 0;
 		foreach (serialAgent sA in myParty) {
-			if (sA.agentId ==  population [(rowIndex * settlerWeaponsButtons.Count) + index].agentId) {
-				inParty = true;
+			//for (int partyIndex = 0; partyIndex < 4; partyIndex++) {
+				if (sA.agentId != "") {
+					numSet [partyIndex] = true;
+				}
+			partyIndex++;
+			//}
+		}
+		squadNumber = 0;
+		foreach (bool i in numSet) {
+			if (i == true) {
+				squadNumber++;
 			}
 		}
 
-		if (!noneSelected && !inParty) {
-			//Set Party UI Assets to selected Agent from population
-			myParty [selectedPartyIndex] = population [(rowIndex * settlerWeaponsButtons.Count) + index];
-
-			//myPartyImageIcons [selectedPartyIndex].sprite = malePortraitArray;
-			if (population [(rowIndex * settlerWeaponsButtons.Count) + index].gender == "Male") {
-
-				myPartyPortraits[selectedPartyIndex].sprite = malePortraitArray [population [(rowIndex * settlerWeaponsButtons.Count) + index].photo];
+		for (int i = 0; i < 4; i++) {
+			string currId = squadList.transform.GetChild (i).GetChild (4).GetComponent<Text> ().text;
+			if (currId == "") {
+				//DO NOTHING
 			} else {
-				myPartyPortraits[selectedPartyIndex].sprite = femalePortraitArray [population [(rowIndex * settlerWeaponsButtons.Count) + index].photo];
+				foreach (serialAgent sA in population) {
+					if (sA.agentId == currId) {
+						myParty [i] = sA;
+					}
+				}
 			}
-
-//			for (int i = 0; i < population.Count; i++) {
-//				Debug.Log ("Settler " + population[(rowIndex * settlerWeaponsButtons.Count) + index].agentId +"'s photo is: " + population [(rowIndex * settlerWeaponsButtons.Count) + index].photo);
-//			}
-
-			myPartyNames [selectedPartyIndex].text = population [(rowIndex * settlerWeaponsButtons.Count) + index].agentName;
-			myParty_AGL_Stats [selectedPartyIndex].text = "" + population [(rowIndex*settlerWeaponsButtons.Count) + index].agility;
-			myParty_PER_Stats [selectedPartyIndex].text = "" + population [(rowIndex*settlerWeaponsButtons.Count) + index].perception;
-			myParty_STR_Stats [selectedPartyIndex].text = "" + population [(rowIndex*settlerWeaponsButtons.Count) + index].strength;
-
-			//Reset Selection Variables
-			selectedPartyIndex = - 1;
-			noneSelected = true;
-			if (numSet < 4) {
-				numSet++;
-			}
-		}
-
-		for (int i = 0; i < weaponButtons.Count - 1; i++) {
-			weaponButtons [i].interactable = true;
-		}
-	}
-
-	//Setting a weapon
-	public void setWeapon (int index) {
-		for (int i = 0; i < squadButtons.Count - 1; i++) {
-			squadButtons [i].interactable = true;
-		}
-	}
-
-	//Previous Button
-	public void shiftLeft(){
-		rowIndex--;
-		if (rowIndex < 0)
-			rowIndex = 0;
-		int index = rowIndex * settlerWeaponsButtons.Count;
-		int butDex = 0;
-		for (int i = index; i < index + settlerWeaponsButtons.Count; i++) {
-			if (i < population.Count)
-				settlerWeaponsButtons[butDex].GetComponentInChildren <Text> ().text = population[i].agentName;
-			butDex++;
-		}
-	}
-
-	//Next Button
-	public void shiftRight(){
-		rowIndex++;
-		if (rowIndex * settlerWeaponsButtons.Count > population.Count)
-			rowIndex = population.Count/settlerWeaponsButtons.Count;
-		int index = rowIndex * settlerWeaponsButtons.Count;
-		int butDex = 0;
-		for (int i = index; i < index + settlerWeaponsButtons.Count; i++) {
-			if (i < population.Count)
-				settlerWeaponsButtons[butDex].GetComponentInChildren <Text> ().text = population[i].agentName;
-			else
-				settlerWeaponsButtons[butDex].GetComponentInChildren <Text> ().text = "NA";
-			butDex++;
 		}
 	}
 }
