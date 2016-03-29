@@ -151,10 +151,10 @@ public class ExploreMode_GameController : MonoBehaviour {
 		GenerateMap();
 
 		cameraObject.MoveCameraTo (cameraObject.transform.position, folk [0].transform.position);
-		while (PartyButtons.Count > folk.Count) {
-			Destroy( PartyButtons[PartyButtons.Count-1].gameObject );
-			PartyButtons.Remove (PartyButtons[PartyButtons.Count-1]);
-		}
+//		while (PartyButtons.Count > folk.Count) {
+//			Destroy( PartyButtons[PartyButtons.Count-1].gameObject );
+//			PartyButtons.Remove (PartyButtons[PartyButtons.Count-1]);
+//		}
 
 		foreach( Unit fU in folk ){
 			fU.turnComplete = false;
