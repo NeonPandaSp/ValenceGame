@@ -51,8 +51,17 @@ public class SquadSelectionScript : MonoBehaviour {
 	public Text[] weapon_SND_Stats = new Text[4];
 	*/
 
-	public string [] settlerID;
 	int myTrustyIntVariable = 0;
+	//Arrays made for checking which settler is being referred to
+	public string [] sNames;
+	public string [] settlerID;
+	public string [] settlerSTRs;
+	public string [] settlerAGLs;
+	public string [] settlerPERs;
+
+	//Comparison variables
+	public String[] AgentIDArray;
+	public String[] AgentNameArray;
 
 	bool [] numSet = {false, false, false, false};
 	public int squadNumber = 0;
@@ -75,6 +84,12 @@ public class SquadSelectionScript : MonoBehaviour {
 		population = loadedData.population;
 
 		settlerID = new string[population.Count];
+		sNames = new string[population.Count];
+		settlerSTRs = new string[population.Count];
+		settlerAGLs = new string[population.Count];
+		settlerPERs = new string[population.Count];
+		AgentIDArray = new string[population.Count];
+		AgentNameArray = new string[population.Count];
 
 		foreach (serialAgent sA in population) {
 			//Settler
@@ -132,14 +147,20 @@ public class SquadSelectionScript : MonoBehaviour {
 					settlerStats.gameObject.transform.SetParent (settler.gameObject.transform);
 					
 					settlerStats.transform.localScale = new Vector3 (1, 1, 1);
-					settlerStats.text = "STRN: " + sA.strength + " PERC: " + sA.perception + " AGIL: " + sA.agility;
+					settlerStats.text = sA.strength + " " + sA.perception + " " + sA.agility;
 					
 					Text tempSettlerStats = settlerStats.GetComponent <Text>();
 				}
 			}
 
 			settlerID[myTrustyIntVariable] = sA.agentId;
-			//Debug.Log (settler + "'s ID is: " + settlerID[myTrustyIntVariable]);
+			Debug.Log (settler + "'s ID is: " + settlerID[myTrustyIntVariable]);
+
+			sNames[myTrustyIntVariable] = sA.agentName;
+			settlerSTRs[myTrustyIntVariable] = sA.strength.ToString();
+			settlerAGLs[myTrustyIntVariable] = sA.agility.ToString();
+			settlerPERs[myTrustyIntVariable] = sA.perception.ToString();
+
 			myTrustyIntVariable++;
 		}
 
@@ -147,17 +168,23 @@ public class SquadSelectionScript : MonoBehaviour {
 	}
 
 	void Update () {
-		numberOfSettlersInPopulation.text = "Settler List (" + scrollableSettlerList.transform.childCount + ")";
-
-		numberOfSettlersInSquad.text = ("Squad " + squadNumber) + "/4";
-
-//		for (int i = 0; i < settlerID.Length; i++) {
-//			Debug.Log ("SETTLER IDs ARE : " + settlerID[i] + "for agent " + i);
-//		}
+		for (int i = 0; i < MemberList.Length; i++) {
+			//Checks if slot's ID is empty or not
+			if (MemberList[i].GetComponent<SquadSelection_DropZone> ()._SquadSelectionScript.AgentIDArray[i] != "") {
+				currId = MemberList[i].GetComponent<SquadSelection_DropZone> ()._SquadSelectionScript.AgentIDArray[i];
+				//Debug.Log ("Agent ID for Member: " + i + " is: " + currId);
+			}
+			
+			foreach (serialAgent sA in population) {
+				if (currId == sA.agentId) {
+					myParty [i] = sA;
+				}
+			}
+		}
 
 		int partyIndex = 0;
-		foreach (serialAgent sA in myParty) {
-			if (sA.agentId != "") {
+		foreach (serialAgent partyMember in myParty) {
+			if (partyMember.agentId != "") {
 				numSet [partyIndex] = true;
 			}
 			partyIndex++;
@@ -169,18 +196,12 @@ public class SquadSelectionScript : MonoBehaviour {
 			}
 		}
 
-		for (int i = 0; i < MemberList.Length; i++) {
-			if (MemberList[i].GetComponent<SquadSelection_DropZone> ().AgentIDArray[i] != "") {
-				currId = MemberList[i].GetComponent<SquadSelection_DropZone> ().AgentIDArray[i];
-				//Debug.Log ("CURRENT ID IS : " + currId);
-			}
-
-			foreach (serialAgent sA in population) {
-				if (sA.agentId == currId) {
-					myParty [i] = sA;
-				}
-			}
-		}
+		numberOfSettlersInPopulation.text = "Settler List (" + scrollableSettlerList.transform.childCount + ")";		
+		numberOfSettlersInSquad.text = ("Squad " + squadNumber) + "/4";
+		
+//		for (int i = 0; i < settlerID.Length; i++) {
+//			Debug.Log ("Agent ID for Agent: " + i + " is: " + settlerID[i]);
+//		}
 
 		RectTransform thisBeMyTransform = scrollableSettlerList.transform.GetChild(0).GetComponent<RectTransform> ();
 		NumOfPopSettlers = scrollableSettlerList.transform.childCount * Math.Abs (thisBeMyTransform.sizeDelta.y) + (scrollableSettlerList.transform.childCount * scrollableSettlerList.GetComponent<GridLayoutGroup>().spacing.y);

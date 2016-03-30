@@ -6,11 +6,9 @@ using UnityEngine.EventSystems;
 
 public class SquadSelection_DropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler {
 
-	//public SquadSelection_Draggable.Slot memberNumber = SquadSelection_Draggable.Slot.MEMBER1;
-	public String[] AgentIDArray = new String[4];
-	public String[] parentNameArray = new String[4] {"Member 1", "Member 2", "Member 3", "Member 4"};
-
 	public SquadSelectionScript _SquadSelectionScript;
+
+	public String[] parentNameArray = new String[4] {"Member 1", "Member 2", "Member 3", "Member 4"};
 	
 	public void OnPointerEnter (PointerEventData eventData) {
 	}
@@ -23,11 +21,19 @@ public class SquadSelection_DropZone : MonoBehaviour, IDropHandler, IPointerEnte
 		if (d != null) {
 			d.parentToReturnTo = this.transform;
 
-			for (int i = 0; i < parentNameArray.Length; i++) {
-				if (d.parentToReturnTo.gameObject.name.ToString() == parentNameArray[i]) {
-					Debug.Log ("IT WORKS");
-					AgentIDArray [i] = _SquadSelectionScript.settlerID[i];
-					//Debug.Log ("The gameobject " + d.parentToReturnTo.gameObject.name.ToString() + "'s Agent ID is: " + AgentIDArray [i]);
+			for (int j = 0; j < _SquadSelectionScript.population.Count; j++) {									//i GOES TO 4
+				for (int i = 0; i < parentNameArray.Length; i++) {
+					foreach (serialAgent fs in _SquadSelectionScript.population) {
+						if (d.parentToReturnTo.gameObject.name.ToString() == parentNameArray[i]) {		//j GOES TO settler count
+							if (fs.agentName != d.name) {
+								_SquadSelectionScript.AgentIDArray [j] = fs.agentId;
+							}
+
+							_SquadSelectionScript.AgentNameArray [j] = _SquadSelectionScript.sNames[j];
+						}
+					}
+
+					Debug.Log (d.parentToReturnTo.gameObject.name.ToString() + " is Settler " + _SquadSelectionScript.AgentNameArray[j] + ", ID: " + _SquadSelectionScript.AgentIDArray [j]);
 				}
 			}
 		}
