@@ -23,8 +23,6 @@ public class EnemyMouseOver : MonoBehaviour {
 				infoAtk = child.gameObject.GetComponent<Text>();
 			else if( child.gameObject.tag == "UI_NAME")
 				infoName = child.gameObject.GetComponent<Text>();
-			else
-				Debug.Log ("NO CHILD TAG");
 		}
 	}
 	

@@ -47,7 +47,7 @@ public class Unit : MonoBehaviour {
 	public bool moving, hasAttacked, isMoving;
 	public Vector2 target;
 	
-	public float moveSpeed = 1;
+	float moveSpeed = 2.5f;
 
 	public List<ExploreMode_GameController.Node> currentPath = null;
 
@@ -152,7 +152,7 @@ public class Unit : MonoBehaviour {
 
 			_GameController.tiles[(int)currentPosition.x, (int)currentPosition.y ] = 1;
 			//int index = _GameController.folk.IndexOf(this);
-			Destroy ( _GameController.PartyButtons[_GameController.PartyButtons.Count-1].gameObject ) ;
+			//Destroy ( _GameController.PartyButtons[_GameController.PartyButtons.Count-1].gameObject ) ;
 			_GameController.PartyButtons.Remove(_GameController.PartyButtons[_GameController.PartyButtons.Count-1]);
 			_GameController.folk.Remove (this.gameObject.GetComponent<Unit>());
 			gameObject.SetActive (false);

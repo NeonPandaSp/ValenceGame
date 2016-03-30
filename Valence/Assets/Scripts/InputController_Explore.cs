@@ -263,7 +263,7 @@ public class InputController_Explore : MonoBehaviour {
 		myLine.gameObject.SetActive (false);
 		_GameController.DestroyMovementRange ();
 		attackConfirmedButton.gameObject.SetActive (false);
-		moveConfirmedButton.gameObject.SetActive (false);
+		//moveConfirmedButton.gameObject.SetActive (false);
 		foreach (Unit fU in _GameController.folk) {
 			fU.waitPressed = true;
 			fU.canMove = false;
@@ -401,7 +401,7 @@ public class InputController_Explore : MonoBehaviour {
 		moveTargetIcon.gameObject.SetActive (false);
 		_GameController.selectedUnit.Move(targetMovementPos);
 
-		moveConfirmedButton.gameObject.SetActive (false);
+		//moveConfirmedButton.gameObject.SetActive (false);
 	}
 	
 	public void selectAttackTarget(int x){

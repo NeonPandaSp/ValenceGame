@@ -92,7 +92,6 @@ public class ExploreMode_GameController : MonoBehaviour {
 		Image myImg;
 		GameState = 0;
 
-
 		if (PlayerDataManager.playerDataManager.isLive) {
 			PlayerData dataCopy = PlayerDataManager.playerDataManager.loadSaveData ();
 			int partyIndex = 0;
@@ -197,7 +196,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 				if( selectedUnit.AttackTargets.Count <= 0 )
 					enableAttackBox (selectedUnit);
 				_inputController.attackConfirmedButton.gameObject.SetActive (true);
-				_inputController.moveConfirmedButton.gameObject.SetActive (false);
+				//_inputController.moveConfirmedButton.gameObject.SetActive (false);
 				//selectedUnit.AttackTargets [selectedUnit.currentAttackTarget].gameObject.GetComponent<EnemyMouseOver> ().enableUI ();
 				selectedUnit.attackPressed = true;
 			} else {
