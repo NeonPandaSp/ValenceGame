@@ -12,13 +12,8 @@ public class MapSquadSceneControl : MonoBehaviour {
 
 	public int mapIndex;
 
-
-
 	public List<serialAgent> myParty;
-	// Use this for initialization
-	void Start () {
-	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		mapIndex = mapCan.GetComponent<MapSelectionScript> ().selectedMap;
@@ -31,29 +26,28 @@ public class MapSquadSceneControl : MonoBehaviour {
 
 	public void toggleCanvas(){
 		if (mapIndex == 2) {
-			mapCan.SetActive(false);
-			loadScreen.SetActive(true);
+			mapCan.SetActive (false);
+			loadScreen.SetActive (true);
 			Application.LoadLevelAsync (mapIndex);
 		}
 		if (mapCan.activeSelf) {
-			if( mapIndex == 2 )
-				loadScreen.SetActive(true);
+			if (mapIndex == 2 )
+				loadScreen.SetActive (true);
 			else
-				squadCan.SetActive(true);
+				squadCan.SetActive (true);
 
-			mapCan.SetActive(false);
+			mapCan.SetActive (false);
 		} else {
-			squadCan.SetActive(false);
-			mapCan.SetActive(true);
+			squadCan.SetActive (false);
+			mapCan.SetActive (true);
 		}
 	}
 
 	public void loadExploreMap(){
 		PlayerData oldData = PlayerDataManager.playerDataManager.loadSaveData ();
 
-		//foreach (serialAgent pM in squadCan.GetComponent<SquadSelectionScript>().myParty) {
 		for( int i = 0; i < squadCan.GetComponent<SquadSelectionScript>().squadNumber; i++){
-			myParty.Add( squadCan.GetComponent<SquadSelectionScript>().myParty[i] );
+			myParty.Add (squadCan.GetComponent<SquadSelectionScript>().myParty[i] );
 		}
 		oldData.currentParty = myParty;
 		PlayerDataManager.playerDataManager.writePlayerData (oldData);

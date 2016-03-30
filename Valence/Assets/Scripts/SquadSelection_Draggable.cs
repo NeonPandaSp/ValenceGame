@@ -9,11 +9,8 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 
 	public Transform parentToReturnTo = null;
 
-//	public enum Slot {MEMBER1, MEMBER2, MEMBER3, MEMBER4};
-//	public Slot memberNumber = Slot.MEMBER1;
-
 	public int numberOfSettlersSelected;
-	
+
 	public void OnBeginDrag (PointerEventData eventData) {
 
 		parentToReturnTo = this.transform.parent;
@@ -35,13 +32,5 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 	{
 		this.transform.SetParent (parentToReturnTo);
 		GetComponent<CanvasGroup> ().blocksRaycasts = true;
-
-		//Debug.Log ("It's parent is: " + this.transform.parent);
-		//Debug.Log ("Child 4 of it's parent is: " + this.transform.parent.GetChild(3));
-
-		this.transform.parent.GetChild (0).GetComponent<Image>().sprite = this.transform.GetChild (0).GetComponent<Image> ().sprite;
-		for (int i = 1; i < 5; i++) {
-			this.transform.parent.GetChild (i).GetComponent<Text> ().text = this.transform.GetChild (i).GetComponent<Text> ().text;
-		}
 	}
 }

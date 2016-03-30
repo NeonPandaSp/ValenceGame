@@ -10,22 +10,19 @@ public class SquadSelectionScript : MonoBehaviour {
 
 	public List<serialAgent> population = new List<serialAgent>();
 
-//	public List<Button> squadButtons;
-//	public List<Button> weaponButtons;
-//	public List<Button> settlerWeaponsButtons;
-
 	//Settler Info
 	public GameObject settlerList;
+	public GameObject scrollableSettlerList;
 	public Text numberOfSettlersInPopulation;
 	public GameObject prefabSettler;
 	public Image prefabSettlerPortrait;
 	public Text prefabSettlerName;
 	public Text prefabSettlerHealth;
 	public Text prefabSettlerStats;
-	public Text prefabSettlerID;
 
 	//Squad Info
 	public GameObject squadList;
+	public GameObject[] MemberList = new GameObject[4];
 	public Text numberOfSettlersInSquad;
 
 	//Photos
@@ -54,13 +51,17 @@ public class SquadSelectionScript : MonoBehaviour {
 	public Text[] weapon_SND_Stats = new Text[4];
 	*/
 
-	public int selectedPartyIndex;
+	public string [] settlerID;
+	int myTrustyIntVariable = 0;
 
-	String [] squadMemberArray;
 	bool [] numSet = {false, false, false, false};
 	public int squadNumber = 0;
+	string currId;
 
 	public Button ventureBtn;
+
+	float NumOfPopSettlers;
+	int newSettlerListHeight;
 
 	// Use this for initialization
 	void Start () {
@@ -73,10 +74,12 @@ public class SquadSelectionScript : MonoBehaviour {
 		PlayerData loadedData = PlayerDataManager.playerDataManager.loadSaveData ();
 		population = loadedData.population;
 
+		settlerID = new string[population.Count];
+
 		foreach (serialAgent sA in population) {
 			//Settler
 			GameObject settler = (GameObject) Instantiate (prefabSettler);
-			settler.gameObject.transform.SetParent (settlerList.gameObject.transform);
+			settler.gameObject.transform.SetParent (scrollableSettlerList.gameObject.transform);
 			settler.transform.localScale = new Vector3 (1, 1, 1);
 
 			settler.name = sA.agentName;
@@ -90,8 +93,8 @@ public class SquadSelectionScript : MonoBehaviour {
 
 			Image[] tempImgs = settler.GetComponentsInChildren<Image>();
 
-			foreach( Image img in tempImgs ){
-				if( img.gameObject.name == "Settler Portrait" ){
+			foreach (Image img in tempImgs) {
+				if (img.gameObject.name == "Settler Portrait") {
 					Image tempSettlerPortrait = img;
 					if (sA.gender == "Male") {
 						tempSettlerPortrait.sprite = malePortraitArray [sA.photo];
@@ -103,10 +106,10 @@ public class SquadSelectionScript : MonoBehaviour {
 
 			Text[] childTexts = settler.GetComponentsInChildren<Text>();
 
-			Text settlerName, settlerHealth, settlerStats, settlerID;
+			Text settlerName, settlerHealth, settlerStats;
 			//Name
-			foreach( Text cT in childTexts ){
-				if( cT.gameObject.name == "Settler Name" ){
+			foreach (Text cT in childTexts ){
+				if (cT.gameObject.name == "Settler Name") {
 					settlerName = cT;
 					settlerName.gameObject.transform.SetParent (settler.gameObject.transform);
 					
@@ -115,7 +118,7 @@ public class SquadSelectionScript : MonoBehaviour {
 					
 					Image tempSettlerName = settlerName.GetComponent <Image>();
 				} 
-				if ( cT.gameObject.name == "Settler Health" ){
+				if (cT.gameObject.name == "Settler Health") {
 					settlerHealth = cT;
 					settlerHealth.gameObject.transform.SetParent (settler.gameObject.transform);
 					
@@ -124,7 +127,7 @@ public class SquadSelectionScript : MonoBehaviour {
 					
 					Text tempSettlerHealth = settlerPortrait.GetComponent <Text>();
 				} 
-				if( cT.gameObject.name == "Settler Stats" ){
+				if (cT.gameObject.name == "Settler Stats") {
 					settlerStats = cT;
 					settlerStats.gameObject.transform.SetParent (settler.gameObject.transform);
 					
@@ -132,31 +135,32 @@ public class SquadSelectionScript : MonoBehaviour {
 					settlerStats.text = "STRN: " + sA.strength + " PERC: " + sA.perception + " AGIL: " + sA.agility;
 					
 					Text tempSettlerStats = settlerStats.GetComponent <Text>();
-				} 
-				if (cT.gameObject.name == "Settler ID") {
-					settlerID = cT;
-					settlerID.gameObject.transform.SetParent (settler.gameObject.transform);
-					settlerID.text = sA.agentId.ToString();
 				}
 			}
+
+			settlerID[myTrustyIntVariable] = sA.agentId;
+			//Debug.Log (settler + "'s ID is: " + settlerID[myTrustyIntVariable]);
+			myTrustyIntVariable++;
 		}
 
 		Destroy (prefabSettler);
 	}
 
 	void Update () {
-		numberOfSettlersInPopulation.text = "Settler List (" + settlerList.transform.childCount + ")";
+		numberOfSettlersInPopulation.text = "Settler List (" + scrollableSettlerList.transform.childCount + ")";
 
 		numberOfSettlersInSquad.text = ("Squad " + squadNumber) + "/4";
 
+//		for (int i = 0; i < settlerID.Length; i++) {
+//			Debug.Log ("SETTLER IDs ARE : " + settlerID[i] + "for agent " + i);
+//		}
+
 		int partyIndex = 0;
 		foreach (serialAgent sA in myParty) {
-			//for (int partyIndex = 0; partyIndex < 4; partyIndex++) {
-				if (sA.agentId != "") {
-					numSet [partyIndex] = true;
-				}
+			if (sA.agentId != "") {
+				numSet [partyIndex] = true;
+			}
 			partyIndex++;
-			//}
 		}
 		squadNumber = 0;
 		foreach (bool i in numSet) {
@@ -165,18 +169,37 @@ public class SquadSelectionScript : MonoBehaviour {
 			}
 		}
 
-		for (int i = 0; i < 4; i++) {
-			string currId = squadList.transform.GetChild (i).GetChild (4).GetComponent<Text> ().text;
-			if (currId == "") {
-				//DO NOTHING
-			} else {
-				foreach (serialAgent sA in population) {
-					if (sA.agentId == currId) {
-						myParty [i] = sA;
-					}
+		for (int i = 0; i < MemberList.Length; i++) {
+			if (MemberList[i].GetComponent<SquadSelection_DropZone> ().AgentIDArray[i] != "") {
+				currId = MemberList[i].GetComponent<SquadSelection_DropZone> ().AgentIDArray[i];
+				//Debug.Log ("CURRENT ID IS : " + currId);
+			}
+
+			foreach (serialAgent sA in population) {
+				if (sA.agentId == currId) {
+					myParty [i] = sA;
 				}
 			}
 		}
+
+		RectTransform thisBeMyTransform = scrollableSettlerList.transform.GetChild(0).GetComponent<RectTransform> ();
+		NumOfPopSettlers = scrollableSettlerList.transform.childCount * Math.Abs (thisBeMyTransform.sizeDelta.y) + (scrollableSettlerList.transform.childCount * scrollableSettlerList.GetComponent<GridLayoutGroup>().spacing.y);
+		float subtractThisAmount = (float)(Math.Abs (scrollableSettlerList.GetComponent<RectTransform> ().rect.y) / 1.85);
+		scrollableSettlerList.GetComponent<RectTransform> ().sizeDelta = new Vector2 (thisBeMyTransform.sizeDelta.x, NumOfPopSettlers - subtractThisAmount);
+		//Debug.Log ("Height is: " + subtractThisAmount);
+
+		////////////////////////DELETE THIS - OLD WAY FOR SCROLLING\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//		//Debug.Log ("Child count is: " + NumOfPopSettlers);
+//		newSettlerListHeight =  150 * NumOfPopSettlers;
+//		ScrollRect thisBeMySettlerTransform = settlerList.GetComponent<ScrollRect> ();
+//		//foreach (RectTransform fj in settlerList.transform) {
+//		for (int i = 0; i < NumOfPopSettlers; i++) {
+//			thisBeMySettlerTransform.content = settlerList.GetComponent<RectTransform> ();
+//		}
+//		Debug.Log ("SCROLLRECT CONTENT IS: " + thisBeMySettlerTransform.content);// = settlerList;
+		//}
+		//thisBeMySettlerTransform.sizeDelta = new Vector2 (thisBeMySettlerTransform.sizeDelta.y, newSettlerListHeight);
+		//thisBeMySettlerTransform.anchoredPosition = new Vector3 (thisBeMySettlerTransform.anchoredPosition.y, newSettlerListHeight * 0.5f);
 	}
 }
 
