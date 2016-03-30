@@ -8,7 +8,10 @@ public class SquadSelection_DropZone : MonoBehaviour, IDropHandler, IPointerEnte
 
 	public SquadSelectionScript _SquadSelectionScript;
 
-	public String[] parentNameArray = new String[4] {"Member 1", "Member 2", "Member 3", "Member 4"};
+	public GameObject[] MemberListObjects = new GameObject[4];
+	//public String[] parentNameArray = new String[4] {"Member 1", "Member 2", "Member 3", "Member 4"};
+	int blah = 0;
+	public string tempAgentIDToPass;
 	
 	public void OnPointerEnter (PointerEventData eventData) {
 	}
@@ -21,21 +24,31 @@ public class SquadSelection_DropZone : MonoBehaviour, IDropHandler, IPointerEnte
 		if (d != null) {
 			d.parentToReturnTo = this.transform;
 
-			for (int j = 0; j < _SquadSelectionScript.population.Count; j++) {									//i GOES TO 4
-				for (int i = 0; i < parentNameArray.Length; i++) {
-					foreach (serialAgent fs in _SquadSelectionScript.population) {
-						if (d.parentToReturnTo.gameObject.name.ToString() == parentNameArray[i]) {		//j GOES TO settler count
-							if (fs.agentName != d.name) {
-								_SquadSelectionScript.AgentIDArray [j] = fs.agentId;
+			if (d.parentToReturnTo != null) {
+				for (int i = 0; i < MemberListObjects.Length; i++) {
+					if (d.parentToReturnTo.gameObject.name.ToString() == "Scrollable List") {
+						foreach (GameObject listList in MemberListObjects) {
+							Debug.Log (listList.name);
+							if (listList.transform.childCount == 0) {
+							    tempAgentIDToPass = "";
+								Debug.Log ("ARRAY INDEX IS: ");
+								Array.IndexOf (MemberListObjects, MemberListObjects[i].gameObject.name.ToString());
+								_SquadSelectionScript.myParty[i] = null;
+								Debug.Log (listList.name + "has no agent");
 							}
-
-							_SquadSelectionScript.AgentNameArray [j] = _SquadSelectionScript.sNames[j];
 						}
 					}
-
-					Debug.Log (d.parentToReturnTo.gameObject.name.ToString() + " is Settler " + _SquadSelectionScript.AgentNameArray[j] + ", ID: " + _SquadSelectionScript.AgentIDArray [j]);
+					if (d.parentToReturnTo.gameObject.name.ToString() == MemberListObjects[i].name.ToString()) {
+						foreach (serialAgent fs in _SquadSelectionScript.population) {
+							if (fs.agentName == d.name) {
+								tempAgentIDToPass = fs.agentId;
+								//Debug.Log (d.parentToReturnTo.gameObject.name.ToString() + " is Settler " + fs.agentName + ", ID: " + tempAgentIDToPass);
+							}
+						}
+					blah++;
+					}
 				}
-			}
+			} //if parent not null end
 		}
 	}
 }

@@ -88,8 +88,7 @@ public class SquadSelectionScript : MonoBehaviour {
 		settlerSTRs = new string[population.Count];
 		settlerAGLs = new string[population.Count];
 		settlerPERs = new string[population.Count];
-		AgentIDArray = new string[population.Count];
-		AgentNameArray = new string[population.Count];
+		//AgentIDArray = new string[population.Count];
 
 		foreach (serialAgent sA in population) {
 			//Settler
@@ -154,7 +153,7 @@ public class SquadSelectionScript : MonoBehaviour {
 			}
 
 			settlerID[myTrustyIntVariable] = sA.agentId;
-			Debug.Log (settler + "'s ID is: " + settlerID[myTrustyIntVariable]);
+			//Debug.Log (settler + "'s ID is: " + settlerID[myTrustyIntVariable]);
 
 			sNames[myTrustyIntVariable] = sA.agentName;
 			settlerSTRs[myTrustyIntVariable] = sA.strength.ToString();
@@ -170,8 +169,8 @@ public class SquadSelectionScript : MonoBehaviour {
 	void Update () {
 		for (int i = 0; i < MemberList.Length; i++) {
 			//Checks if slot's ID is empty or not
-			if (MemberList[i].GetComponent<SquadSelection_DropZone> ()._SquadSelectionScript.AgentIDArray[i] != "") {
-				currId = MemberList[i].GetComponent<SquadSelection_DropZone> ()._SquadSelectionScript.AgentIDArray[i];
+			if (MemberList[i].GetComponent<SquadSelection_DropZone> ().tempAgentIDToPass != "") {
+				currId = MemberList[i].GetComponent<SquadSelection_DropZone> ().tempAgentIDToPass;
 				//Debug.Log ("Agent ID for Member: " + i + " is: " + currId);
 			}
 			
