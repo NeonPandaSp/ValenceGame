@@ -39,6 +39,8 @@ public class InputController : MonoBehaviour {
 
 	public GameObject menuObj;
 
+	public List<AudioClip> myClips;
+
 	void Start(){
 		_tileMap = GetComponent<TileMap> ();
 		_generateZone = GetComponent < generateZone >();
@@ -133,6 +135,9 @@ public class InputController : MonoBehaviour {
 
 	public void pause(){
 		isPause = !isPause;
+
+		GetComponent<AudioSource> ().clip = myClips [0];// whatever the clip is called
+		GetComponent<AudioSource> ().Play ();
 		if(isPause)
 			Time.timeScale = 0;
 		else

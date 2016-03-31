@@ -95,6 +95,41 @@ public class PlayerDataManager : MonoBehaviour {
 		data.populationCount = 1;
 		data.population = new List<serialAgent> ();
 		data.buildingDatabase = new List<serialBuilding> ();
+
+		serialWeapon defaultWeapon = new serialWeapon();
+		defaultWeapon.weaponName = "Beginner's Handgun";
+		defaultWeapon.weaponType = "Blacktail (Handgun)";
+		defaultWeapon.accuracy = 0.85f;
+		defaultWeapon.damageModifier = 4;
+		defaultWeapon.range = 12;
+		defaultWeapon.rangeModifier = 0.1f;
+		defaultWeapon.soundRange = 6;
+		data.settlementWeapons.Add (defaultWeapon);
+		defaultWeapon.weaponName = "Matilda (Handgun) ";
+		defaultWeapon.weaponType = "Handgun";
+		defaultWeapon.accuracy = 0.95f;
+		defaultWeapon.damageModifier = 4;
+		defaultWeapon.range = 12;
+		defaultWeapon.rangeModifier = 0.1f;
+		defaultWeapon.soundRange = 6;
+		data.settlementWeapons.Add (defaultWeapon);
+		defaultWeapon.weaponName = "Stiker (Shotgun)";
+		defaultWeapon.weaponType = "Shotgun";
+		defaultWeapon.accuracy = 0.95f;
+		defaultWeapon.damageModifier = 6;
+		defaultWeapon.range = 8;
+		defaultWeapon.rangeModifier = 0.2f;
+		defaultWeapon.soundRange = 12;
+		data.settlementWeapons.Add (defaultWeapon);
+		defaultWeapon.weaponName = "Hunting Rifle (Rifle)";
+		defaultWeapon.weaponType = "Rifle";
+		defaultWeapon.accuracy = 0.75f;
+		defaultWeapon.damageModifier = 6;
+		defaultWeapon.range = 13;
+		defaultWeapon.rangeModifier = 0.05f;
+		defaultWeapon.soundRange = 13;
+		data.settlementWeapons.Add (defaultWeapon);
+
 		bf.Serialize (file, data);
 
 		dataExists = true;
@@ -115,6 +150,7 @@ public class PlayerData{
 
 	public List<serialAgent> population;
 	public List<serialBuilding> buildingDatabase;
+	public List<serialWeapon> settlementWeapons;
 	public bool firstLoad = false;
 	public string fLname;
 	public int scrap;

@@ -46,6 +46,8 @@ public class GameController : MonoBehaviour {
 	//Photos
 	public Sprite[] malePortraitArray;
 	public Sprite[] femalePortraitArray;
+
+	public List<serialWeapon> weaponStash;
 	
 	// Use this for initialization
 	void Awake () {
@@ -155,6 +157,8 @@ public class GameController : MonoBehaviour {
 		water = loadedData.water;
 		popLimit = loadedData.popLimit;
 		morale = loadedData.morale;
+
+		weaponStash = loadedData.settlementWeapons;
 
 		foreach (serialBuilding bld in loadedData.buildingDatabase) {
 			GameObject tempBld = (GameObject) Instantiate( Resources.Load(bld.bType), new Vector3( bld.xPos, bld.yPos, bld.zPos), Quaternion.identity);
@@ -277,6 +281,7 @@ public class GameController : MonoBehaviour {
 			serialBuildingDatabase.Add(tempBuilding);
 		}
 
+		newData.settlementWeapons = weaponStash;
 		newData.population = serialPopulation;
 		newData.buildingDatabase = serialBuildingDatabase;
 
@@ -328,8 +333,10 @@ public class serialWeapon {
 	public bool weaponState;	//Equipped or not equipped (part of the inventory). If already equipped, it is not accessible by another settler.
 
 	//Weapon Stats
-	public int weaponDMG;
-	public int weaponRNG;
-	public int weaponACC;
-	public int weaponSND;
+	public int damageModifier;
+	public int range;
+	
+	public float rangeModifier;
+	public float accuracy;
+	public float soundRange;
 }
