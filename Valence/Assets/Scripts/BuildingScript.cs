@@ -36,8 +36,11 @@ public class BuildingScript : MonoBehaviour {
         infoUI = transform.Find("BuildingInfo");
         progressUI = transform.Find("ProgressBar");
 
+
         assignedAgents = new GameObject[3];
 
+		infoUI.gameObject.SetActive (false);
+		progressUI.gameObject.SetActive (true);
 
         checkClick = true;
 		//beginProduction ();
@@ -58,8 +61,7 @@ public class BuildingScript : MonoBehaviour {
             progressUI.gameObject.SetActive(false);
 
             checkClick = false;
-        }
-        else {
+        } else {
 
             infoUI.gameObject.SetActive(false);
             progressUI.gameObject.SetActive(true);
