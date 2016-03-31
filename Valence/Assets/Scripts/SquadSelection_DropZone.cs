@@ -2,6 +2,7 @@
 using System;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
 public class SquadSelection_DropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler {
@@ -9,9 +10,13 @@ public class SquadSelection_DropZone : MonoBehaviour, IDropHandler, IPointerEnte
 	public SquadSelectionScript _SquadSelectionScript;
 
 	public GameObject[] MemberListObjects = new GameObject[4];
-	//public String[] parentNameArray = new String[4] {"Member 1", "Member 2", "Member 3", "Member 4"};
-	int blah = 0;
+	public String[] parentNameArray = new String[4] {"Member 1", "Member 2", "Member 3", "Member 4"};
+	String scrollAbleListString = "Scrollable List";
 	public string tempAgentIDToPass;
+	int placeInIndex;
+
+	//Image change
+	public Sprite placeholderSquadIcon;
 	
 	public void OnPointerEnter (PointerEventData eventData) {
 	}
@@ -22,33 +27,60 @@ public class SquadSelection_DropZone : MonoBehaviour, IDropHandler, IPointerEnte
 	public void OnDrop (PointerEventData eventData) {
 		SquadSelection_Draggable d = eventData.pointerDrag.GetComponent <SquadSelection_Draggable> ();
 		if (d != null) {
-			d.parentToReturnTo = this.transform;
+			d.newParent = this.transform;
 
-			if (d.parentToReturnTo != null) {
+			if (d.newParent.name.ToString() != null) {
 				for (int i = 0; i < MemberListObjects.Length; i++) {
-					if (d.parentToReturnTo.gameObject.name.ToString() == "Scrollable List") {
-						foreach (GameObject listList in MemberListObjects) {
-							Debug.Log (listList.name);
-							if (listList.transform.childCount == 0) {
-							    tempAgentIDToPass = "";
-								Debug.Log ("ARRAY INDEX IS: ");
-								Array.IndexOf (MemberListObjects, MemberListObjects[i].gameObject.name.ToString());
-								_SquadSelectionScript.myParty[i] = null;
-								Debug.Log (listList.name + "has no agent");
+
+					//========================================\\
+					//FROM: Member List | TO: Scrollable  List\\
+					//========================================\\
+					if (d.newParent.name.ToString() == "Scrollable List") {
+						foreach (string listList in parentNameArray) {
+							//listList OUTPUTS Member 1, Member 2, Member 3, Member 4
+							if (d.oldParent.name == listList) {
+								//Finds the index for that particular parent name in the array of 4
+								placeInIndex =  Array.IndexOf (parentNameArray, d.oldParent.name);
+								this.transform.root.GetComponent<SquadSelectionScript>().myParty[placeInIndex].agentId = "-1";
+								//Debug.Log ("DURING IF:  " + _SquadSelectionScript.population.Count);
 							}
 						}
 					}
-					if (d.parentToReturnTo.gameObject.name.ToString() == MemberListObjects[i].name.ToString()) {
+
+					if (d.newParent.name == parentNameArray[i] && d.oldParent.name == parentNameArray[i]) {
+						Debug.Log ("YAAAY");
+						placeInIndex =  Array.IndexOf (parentNameArray, d.oldParent.name);
+					}
+						
+						
+					//===================================\\
+					//FROM: Member List | TO: Member List\\
+					//===================================\\
+					if (d.newParent.name.ToString() == parentNameArray[i]) {
+						//Debug.Log ("ERASING DATA for " + _SquadSelectionScript.population.Count );
 						foreach (serialAgent fs in _SquadSelectionScript.population) {
 							if (fs.agentName == d.name) {
-								tempAgentIDToPass = fs.agentId;
-								//Debug.Log (d.parentToReturnTo.gameObject.name.ToString() + " is Settler " + fs.agentName + ", ID: " + tempAgentIDToPass);
+								//tempAgentIDToPass = fs.agentId;
+								//Debug.Log ("The current parent is: " + d.newParent.name.ToString());
+								placeInIndex =  Array.IndexOf (parentNameArray, d.newParent.name);
+								this.transform.root.GetComponent<SquadSelectionScript>().myParty[placeInIndex].agentId = fs.agentId;
+								//Debug.Log ("Parent: " + parentNameArray[i] + " has child " + fs.agentName);
 							}
 						}
-					blah++;
+					}
+
+					//================================\\
+					//FROM: Member List | TO: Anywhere\\
+					//================================\\
+					if (d.oldParent.name == parentNameArray[i]) {
+						placeInIndex =  Array.IndexOf (parentNameArray, d.oldParent.name);
+						this.transform.root.GetComponent<SquadSelectionScript>().myParty[placeInIndex].agentId = "-1";
 					}
 				}
-			} //if parent not null end
+			} else {
+				//if parent not null end
+				Debug.Log ("Detectivery");
+			}
 		}
 	}
 }

@@ -51,14 +51,6 @@ public class SquadSelectionScript : MonoBehaviour {
 	public Text[] weapon_SND_Stats = new Text[4];
 	*/
 
-	int myTrustyIntVariable = 0;
-	//Arrays made for checking which settler is being referred to
-	public string [] sNames;
-	public string [] settlerID;
-	public string [] settlerSTRs;
-	public string [] settlerAGLs;
-	public string [] settlerPERs;
-
 	//Comparison variables
 	public String[] AgentIDArray;
 	public String[] AgentNameArray;
@@ -82,13 +74,6 @@ public class SquadSelectionScript : MonoBehaviour {
 		int index = 0;
 		PlayerData loadedData = PlayerDataManager.playerDataManager.loadSaveData ();
 		population = loadedData.population;
-
-		settlerID = new string[population.Count];
-		sNames = new string[population.Count];
-		settlerSTRs = new string[population.Count];
-		settlerAGLs = new string[population.Count];
-		settlerPERs = new string[population.Count];
-		//AgentIDArray = new string[population.Count];
 
 		foreach (serialAgent sA in population) {
 			//Settler
@@ -151,40 +136,19 @@ public class SquadSelectionScript : MonoBehaviour {
 					Text tempSettlerStats = settlerStats.GetComponent <Text>();
 				}
 			}
-
-			settlerID[myTrustyIntVariable] = sA.agentId;
-			//Debug.Log (settler + "'s ID is: " + settlerID[myTrustyIntVariable]);
-
-			sNames[myTrustyIntVariable] = sA.agentName;
-			settlerSTRs[myTrustyIntVariable] = sA.strength.ToString();
-			settlerAGLs[myTrustyIntVariable] = sA.agility.ToString();
-			settlerPERs[myTrustyIntVariable] = sA.perception.ToString();
-
-			myTrustyIntVariable++;
 		}
 
 		Destroy (prefabSettler);
 	}
 
 	void Update () {
-		for (int i = 0; i < MemberList.Length; i++) {
-			//Checks if slot's ID is empty or not
-			if (MemberList[i].GetComponent<SquadSelection_DropZone> ().tempAgentIDToPass != "") {
-				currId = MemberList[i].GetComponent<SquadSelection_DropZone> ().tempAgentIDToPass;
-				//Debug.Log ("Agent ID for Member: " + i + " is: " + currId);
-			}
-			
-			foreach (serialAgent sA in population) {
-				if (currId == sA.agentId) {
-					myParty [i] = sA;
-				}
-			}
-		}
-
 		int partyIndex = 0;
 		foreach (serialAgent partyMember in myParty) {
-			if (partyMember.agentId != "") {
+			if (partyMember.agentId != "" && partyMember.agentId != "-1") {
 				numSet [partyIndex] = true;
+			}
+			if (partyMember.agentId == "-1") {
+				numSet [partyIndex] = false;
 			}
 			partyIndex++;
 		}
@@ -197,29 +161,11 @@ public class SquadSelectionScript : MonoBehaviour {
 
 		numberOfSettlersInPopulation.text = "Settler List (" + scrollableSettlerList.transform.childCount + ")";		
 		numberOfSettlersInSquad.text = ("Squad " + squadNumber) + "/4";
-		
-//		for (int i = 0; i < settlerID.Length; i++) {
-//			Debug.Log ("Agent ID for Agent: " + i + " is: " + settlerID[i]);
-//		}
 
 		RectTransform thisBeMyTransform = scrollableSettlerList.transform.GetChild(0).GetComponent<RectTransform> ();
 		NumOfPopSettlers = scrollableSettlerList.transform.childCount * Math.Abs (thisBeMyTransform.sizeDelta.y) + (scrollableSettlerList.transform.childCount * scrollableSettlerList.GetComponent<GridLayoutGroup>().spacing.y);
 		float subtractThisAmount = (float)(Math.Abs (scrollableSettlerList.GetComponent<RectTransform> ().rect.y) / 1.85);
 		scrollableSettlerList.GetComponent<RectTransform> ().sizeDelta = new Vector2 (thisBeMyTransform.sizeDelta.x, NumOfPopSettlers - subtractThisAmount);
-		//Debug.Log ("Height is: " + subtractThisAmount);
-
-		////////////////////////DELETE THIS - OLD WAY FOR SCROLLING\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-//		//Debug.Log ("Child count is: " + NumOfPopSettlers);
-//		newSettlerListHeight =  150 * NumOfPopSettlers;
-//		ScrollRect thisBeMySettlerTransform = settlerList.GetComponent<ScrollRect> ();
-//		//foreach (RectTransform fj in settlerList.transform) {
-//		for (int i = 0; i < NumOfPopSettlers; i++) {
-//			thisBeMySettlerTransform.content = settlerList.GetComponent<RectTransform> ();
-//		}
-//		Debug.Log ("SCROLLRECT CONTENT IS: " + thisBeMySettlerTransform.content);// = settlerList;
-		//}
-		//thisBeMySettlerTransform.sizeDelta = new Vector2 (thisBeMySettlerTransform.sizeDelta.y, newSettlerListHeight);
-		//thisBeMySettlerTransform.anchoredPosition = new Vector3 (thisBeMySettlerTransform.anchoredPosition.y, newSettlerListHeight * 0.5f);
 	}
 }
 
