@@ -328,8 +328,14 @@ public class Unit : MonoBehaviour {
 					//myAnimCtrl.InitAttackAnim();
 					FolkUnitsWithinView.Add (fU);
 					//generateSound(currentPosition,3.0f);
-					if( !knownPosition.Contains ( fU.currentPosition ) )
+					if( !knownPosition.Contains ( fU.currentPosition ) ){
 						knownPosition.Add( fU.currentPosition );
+						/**
+						 * JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE
+						 * ADD ALERT SOUND EFFECT HERE
+						 * JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE
+						 **/
+					}
 					// Set the last global sighting is the players current position.
 					
 				} else {

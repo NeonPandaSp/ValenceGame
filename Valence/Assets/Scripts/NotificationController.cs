@@ -21,6 +21,14 @@ public class NotificationController : MonoBehaviour {
 	public void CreateNewNotification(string newNotification){
 		//Debug.Log (this.transform.position.x);
 
+		/**
+		 * JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE
+		 * ADD NOTIFICATION SOUND HERE
+		 * JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE
+		 **/
+
+		//GetComponent<AudioSource> ().Play ();
+
 		Image newPanel = Instantiate(tempPanel, new Vector2(this.transform.position.x - Screen.width - 430, this.transform.position.y + 100 ), Quaternion.Euler(Vector3.zero)) as Image;
 		//            button.transform.SetParent(GameObject.Find("Canvas").transform, false);
 		newPanel.transform.SetParent(this.transform, false);

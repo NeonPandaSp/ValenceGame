@@ -15,10 +15,21 @@ public class TitleScript : MonoBehaviour {
 			menuScreen.SetActive (true);
 			titleScreen.SetActive (false);
 			hasBeenPressed = false;
+
+			/**
+			 * JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE
+			 * PRESS ANY BUTTON SOUND?!
+			 * JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE
+			 **/
 		}
 	}
 
 	public void loadScene(bool newGame){
+		/**
+		 * JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE
+		 * ADD MAIN MENU BUTTON SOUND HERE
+		 * JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE
+		 **/
 		if (!newGame) {
 			
 			menuScreen.SetActive(false);
