@@ -70,6 +70,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 	public Vector3 selectedUnitTransformPosition;
 
 	public Dictionary<Unit, Vector2> newKnownPositions;
+
+	public List<GameObject> weaponDefaults;
 	// Use this for initialization
 	void Start () {
 		tiles = new int[mapSize,mapSize];
@@ -91,6 +93,10 @@ public class ExploreMode_GameController : MonoBehaviour {
 		}
 		Image myImg;
 		GameState = 0;
+		string filePath = "Weapons/";
+		weaponDefaults.Add ( (GameObject) Resources.Load (filePath+"Weapon_Handgun", typeof(GameObject)));
+		weaponDefaults.Add ( (GameObject) Resources.Load (filePath+"Weapon_Shotgun", typeof(GameObject)));
+		weaponDefaults.Add ( (GameObject) Resources.Load (filePath+"Weapon_Rifle", typeof(GameObject)));
 
 		if (PlayerDataManager.playerDataManager.isLive) {
 			PlayerData dataCopy = PlayerDataManager.playerDataManager.loadSaveData ();
@@ -120,8 +126,21 @@ public class ExploreMode_GameController : MonoBehaviour {
 				modelObj.transform.position += new Vector3 (0.5f, 0.0f, 0.5f);
 
 				//folk[partyIndex].myFAnimCtrl = modelObj.GetComponent<Animator>();
-				
-				///folk[partyIndex].myWeapon = agent.myWeapon;
+
+				if ( agent.myWeapon.weaponType == "Shotgun" ){
+					folk[partyIndex].myWeapon = weaponDefaults[1];
+				} else if ( agent.myWeapon.weaponType == "Rifle"){
+					folk[partyIndex].myWeapon = weaponDefaults[2];
+				} else {
+					folk[partyIndex].myWeapon = weaponDefaults[0];
+				}
+				folk[partyIndex].myWeapon.GetComponent<weaponScript>().name = agent.myWeapon.weaponType;
+				folk[partyIndex].myWeapon.GetComponent<weaponScript>().damageModifier = agent.myWeapon.damageModifier;
+				folk[partyIndex].myWeapon.GetComponent<weaponScript>().accuracy = agent.myWeapon.accuracy;
+				folk[partyIndex].myWeapon.GetComponent<weaponScript>().range = agent.myWeapon.range;
+				folk[partyIndex].myWeapon.GetComponent<weaponScript>().rangeModifier = agent.myWeapon.rangeModifier;
+				folk[partyIndex].myWeapon.GetComponent<weaponScript>().soundRange = agent.myWeapon.soundRange;
+
 				partyIndex++;
 			}
 			
