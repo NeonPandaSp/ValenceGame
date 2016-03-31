@@ -46,8 +46,20 @@ public class MapSquadSceneControl : MonoBehaviour {
 	public void loadExploreMap(){
 		PlayerData oldData = PlayerDataManager.playerDataManager.loadSaveData ();
 
-		for( int i = 0; i < squadCan.GetComponent<SquadSelectionScript>().squadNumber; i++){
-			myParty.Add (squadCan.GetComponent<SquadSelectionScript>().myParty[i] );
+		for( int i = 0; i < squadCan.GetComponent<SquadSelectionScript>().myParty.Length; i++){
+			// Don't know why the else never triggers but were going with it, refer to this if things get freaky deaky. 
+			if( squadCan.GetComponent<SquadSelectionScript>().myParty[i].agentId.Equals("-1") || squadCan.GetComponent<SquadSelectionScript>().myParty[i].agentId != " " ){
+				foreach( serialAgent sA in squadCan.GetComponent<SquadSelectionScript>().population ){
+					if( sA.agentId == squadCan.GetComponent<SquadSelectionScript>().myParty[i].agentId ){
+						myParty.Add( sA );
+						Debug.Log ( "Agent at myParty[ " + i + " ] set to GameSave Party @ " + myParty.Count );
+					}
+				}
+			} else {
+				Debug.Log ( "Agent at myParty[ " + i + " ] not set." );
+			}
+
+			//myParty.Add (squadCan.GetComponent<SquadSelectionScript>().myParty[i] );
 		}
 		oldData.currentParty = myParty;
 		PlayerDataManager.playerDataManager.writePlayerData (oldData);

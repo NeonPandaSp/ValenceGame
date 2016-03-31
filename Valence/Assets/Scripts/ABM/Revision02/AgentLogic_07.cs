@@ -153,7 +153,7 @@ public class AgentLogic_07 : MonoBehaviour {
             };
 
 			//Name
-			maleFirstNameArray = new string[20] {
+			maleFirstNameArray = new string[32] {
                 "Daron",
                 "Bernardo",
                 "Grady",
@@ -162,8 +162,8 @@ public class AgentLogic_07 : MonoBehaviour {
                 "Trevor",
                 "Ken",
                 "Todd",
-                "Randy",
-                "Gail",
+                "Rand",
+                "Jeff",
                 "Kurt",
                 "Alexis",
                 "Vishesh",
@@ -173,13 +173,24 @@ public class AgentLogic_07 : MonoBehaviour {
                 "Loyd",
                 "Darron",
                 "Tyler",
-                "Zachary"
+                "Zachary",
+				"Roderick",
+				"Raiden",
+				"Miguel",
+				"Ender",
+				"Colm",
+				"Phil",
+				"Niko",
+				"Tyson",
+				"Sacha",
+				"Tariq",
+				"Zeph",
+				"Ram"
             };
 
-            femaleFirstNameArray = new string[20] {
+            femaleFirstNameArray = new string[32] {
                 "Joye",
                 "Argelia",
-                "Candelaria",
                 "Sheryll",
                 "Carma",
                 "Sheri",
@@ -193,13 +204,26 @@ public class AgentLogic_07 : MonoBehaviour {
                 "Thea",
                 "Christie",
                 "Sanora",
+				"Laryssa",
+				"Weri",
 				"Elicia",
                 "Wanda",
                 "Creola",
-				"Heidi"
+				"Heidi",
+				"Irene",
+				"Helene",
+				"Elora",
+				"Joselyn",
+				"Margery",
+				"Oona",
+				"Clair",
+				"Freya",
+				"Yvonne",
+				"Sue",
+				"Miley"
             };
 
-            lastNameArray = new string[14] {
+            lastNameArray = new string[35] {
 				"Slate",
 				"Hazlewood",
 				"Beckett",
@@ -213,12 +237,33 @@ public class AgentLogic_07 : MonoBehaviour {
 				"Richards",
 				"Allard",
 				"Black",
-				"Steele"
+				"Steele",
+				"Sparks",
+				"Quan",
+				"Sparrow",
+				"Poehler",
+				"Carnes",
+				"Vivek",
+				"Cumberbatch",
+				"Weaver",
+				"Clay",
+				"Yu",
+				"Keyes",
+				"Baird",
+				"Crane",
+				"Gould",
+				"Valentine",
+				"Frost",
+				"Stark",
+				"McDonald",
+				"Willis",
+				"Kirby",
+				"Goldblum"
 			};
 					
 			//Create Random Variables
-			randomFirstName = UnityEngine.Random.Range (0, 20);
-			randomLastName = UnityEngine.Random.Range (0, 14);
+			randomFirstName = UnityEngine.Random.Range (0, 32);
+			randomLastName = UnityEngine.Random.Range (0, 35);
             randomGender = Random.Range (0, (genderArray.Length));
 
             //Assigns random names and photos according to gender

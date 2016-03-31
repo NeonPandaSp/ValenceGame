@@ -47,10 +47,10 @@ public class SquadSelection_DropZone : MonoBehaviour, IDropHandler, IPointerEnte
 						}
 					}
 
-					if (d.newParent.name == parentNameArray[i] && d.oldParent.name == parentNameArray[i]) {
-						Debug.Log ("YAAAY");
-						placeInIndex =  Array.IndexOf (parentNameArray, d.oldParent.name);
-					}
+//					if (d.newParent.name == parentNameArray[i] && d.oldParent.name == parentNameArray[i]) {
+//						Debug.Log ("YAAAY");
+//						placeInIndex =  Array.IndexOf (parentNameArray, d.oldParent.name);
+//					}
 						
 						
 					//===================================\\

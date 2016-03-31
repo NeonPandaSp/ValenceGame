@@ -65,7 +65,6 @@ public class WinStateScript : MonoBehaviour {
 						win = true;
 					}
 				}
-
 			}
 		} else {
 			winScreen();
@@ -184,58 +183,80 @@ public class WinStateScript : MonoBehaviour {
 			return 8;
 	}
 
-	string generateNewAgentName(string gen){
-		
+	string generateNewAgentName(string gender){
 		//Name
-		string[] maleFirstNameArray = new string[21] {
+		string[] maleFirstNameArray = new string[32] {
 			"Daron",
 			"Bernardo",
 			"Grady",
 			"Willie",
-			"Mark",
 			"Malcolm",
 			"Trevor",
-			"Len",
-			"Tod",
-			"Randy",
-			"Gail",
+			"Ken",
+			"Todd",
+			"Rand",
+			"Jeff",
 			"Kurt",
 			"Alexis",
-			"Winford",
+			"Vishesh",
 			"Luigi",
 			"Jake",
 			"Reggie",
 			"Loyd",
 			"Darron",
 			"Tyler",
-			"Zachary"
+			"Zachary",
+			"Roderick",
+			"Raiden",
+			"Miguel",
+			"Ender",
+			"Colm",
+			"Phil",
+			"Niko",
+			"Tyson",
+			"Sacha",
+			"Tariq",
+			"Zeph",
+			"Ram"
 		};
 		
-		string[] femaleFirstNameArray = new string[20] {
+		string[] femaleFirstNameArray = new string[32] {
 			"Joye",
 			"Argelia",
-			"Candelaria",
 			"Sheryll",
 			"Carma",
 			"Sheri",
 			"Anita",
-			"Magdalena",
-			"Laryssa",
-			"Zachary-a",
+			"Xuan",
+			"Robyn",
+			"Allie",
 			"Darcie",
 			"Sari",
 			"Shayna",
 			"Thea",
-			"Maryanna",
+			"Christie",
 			"Sanora",
-			"Deedra",
+			"Laryssa",
+			"Weri",
+			"Elicia",
 			"Wanda",
 			"Creola",
-			"Weri"
+			"Heidi",
+			"Irene",
+			"Helene",
+			"Elora",
+			"Joselyn",
+			"Margery",
+			"Oona",
+			"Clair",
+			"Freya",
+			"Yvonne",
+			"Sue",
+			"Miley"
 		};
 		
-		string[] lastNameArray = new string[14] {
-			"Hawthorne",
+		string[] lastNameArray = new string[35] {
+			"Slate",
 			"Hazlewood",
 			"Beckett",
 			"Polo",
@@ -246,23 +267,48 @@ public class WinStateScript : MonoBehaviour {
 			"Stone",
 			"Drake",
 			"Richards",
-			"Fontana",
-			"Bob",
-			"Steele"
+			"Allard",
+			"Black",
+			"Steele",
+			"Sparks",
+			"Quan",
+			"Sparrow",
+			"Poehler",
+			"Carnes",
+			"Vivek",
+			"Cumberbatch",
+			"Weaver",
+			"Clay",
+			"Yu",
+			"Keyes",
+			"Baird",
+			"Crane",
+			"Gould",
+			"Valentine",
+			"Frost",
+			"Stark",
+			"McDonald",
+			"Willis",
+			"Kirby",
+			"Goldblum"
 		};
 		
-		int randomFirstName = (int) UnityEngine.Random.Range (0, 14);
-		int randomLastName = (int) UnityEngine.Random.Range (0, 14);
-
+		
 		string firstLastName;
-		//Name - variable firstLastName outputs first and last name. variable settlerNameAndRole outputs name, what settler is currently doing, and their assigned role
-		if (gen == "Male"){
+
+		//Create Random Variables
+		int randomFirstName = UnityEngine.Random.Range (0, 32);
+		int randomLastName = UnityEngine.Random.Range (0, 35);
+				
+		//Assigns random names and photos according to gender
+		//Variable firstLastName outputs first and last name. variable settlerNameAndRole outputs name, what settler is currently doing, and their assigned role
+		if (gender == "Male"){
 			firstLastName = (maleFirstNameArray[randomFirstName] + " " + lastNameArray[randomLastName]);
 		}
 		else {
 			firstLastName = (femaleFirstNameArray[randomFirstName] + " " + lastNameArray[randomLastName]);
 		}
-		
+
 		return firstLastName;
 	}
 }
