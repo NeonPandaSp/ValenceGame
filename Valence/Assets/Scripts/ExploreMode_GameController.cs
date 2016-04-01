@@ -105,6 +105,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 			Debug.Log ("Data Loaded");
 			Debug.Log ("Party Count: " + dataCopy.currentParty.Count);
 			foreach (serialAgent agent in dataCopy.currentParty) {
+
+				Debug.Log ("Agent ID: " + agent.agentId );
 				folk [partyIndex].agentId = agent.agentId;
 				folk [partyIndex].unitName = agent.agentName;
 				folk [partyIndex].health = Mathf.CeilToInt (agent.health / 10);
@@ -126,13 +128,16 @@ public class ExploreMode_GameController : MonoBehaviour {
 				modelObj.transform.position += new Vector3 (0.5f, 0.0f, 0.5f);
 
 				//folk[partyIndex].myFAnimCtrl = modelObj.GetComponent<Animator>();
-
+				Debug.Log ("AGENT WEAPON ID: " + agent.myWeapon.weaponId);
 				if ( agent.myWeapon.weaponType == "Shotgun" ){
 					folk[partyIndex].myWeapon = weaponDefaults[1];
+					Debug.Log ("FOLK WEAPON SET");
 				} else if ( agent.myWeapon.weaponType == "Rifle"){
 					folk[partyIndex].myWeapon = weaponDefaults[2];
+					Debug.Log ("FOLK WEAPON SET");
 				} else {
 					folk[partyIndex].myWeapon = weaponDefaults[0];
+					Debug.Log ("FOLK WEAPON SET TO DEFUALT");
 				}
 				folk[partyIndex].myWeapon.GetComponent<weaponScript>().name = agent.myWeapon.weaponType;
 				folk[partyIndex].myWeapon.GetComponent<weaponScript>().damageModifier = agent.myWeapon.damageModifier;

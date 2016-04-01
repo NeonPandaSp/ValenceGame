@@ -89,7 +89,11 @@ public class Unit : MonoBehaviour {
 	void Start () {
 
 		_GameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<ExploreMode_GameController> ();
-		agentId = "" + Random.Range (0, 9999);
+		//
+		if (!PlayerDataManager.playerDataManager.isLive) {
+			agentId = "" + Random.Range (0, 9999);
+
+		}
 		currentPosition = new Vector2( transform.position.x, transform.position.z );
 		startPosition = currentPosition;
 		moving = false;
@@ -118,8 +122,8 @@ public class Unit : MonoBehaviour {
 			myFAnimCtrl = transform.GetComponent<FolkAnimCtrl>();
 		}
 		_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 3;
-
 		myWeaponName = myWeapon.gameObject.name;
+		//
 //		myCam = gameObject.GetComponentInChildren<Camera> ().gameObject;
 //		if (myCam != null) {
 //			myCam.SetActive(false);

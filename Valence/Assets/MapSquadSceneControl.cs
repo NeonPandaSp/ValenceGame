@@ -65,11 +65,11 @@ public class MapSquadSceneControl : MonoBehaviour {
 
 		for (int i = 0; i < squadCan.GetComponent<SquadSelectionScript>().myParty.Length; i++){
 			if (squadCan.GetComponent<SquadSelectionScript>().myParty[i].myWeapon.weaponId.Equals ("-1") || squadCan.GetComponent<SquadSelectionScript>().myParty[i].myWeapon.weaponId != " ") {
+				Debug.Log ( "SerialWeapon Party ID: " + squadCan.GetComponent<SquadSelectionScript>().myParty[i].myWeapon.weaponId );
 				foreach (serialWeapon sW in squadCan.GetComponent<SquadSelectionScript>().weaponsPopulation ){
+					Debug.Log ("SerialWeapon Population ID: " + sW.weaponId );
 					if (sW.weaponId == squadCan.GetComponent<SquadSelectionScript>().myParty[i].myWeapon.weaponId) {
-						if (myParty[i].myWeapon != null) {
-							myParty[i].myWeapon = sW;
-						}
+						myParty[i].myWeapon = sW;
 						myWeaponListToSave.Add (sW);
 						Debug.Log ("Weapon at myParty [" + i + "] set to Weapon:" + myParty[i].myWeapon.weaponName);
 					}
