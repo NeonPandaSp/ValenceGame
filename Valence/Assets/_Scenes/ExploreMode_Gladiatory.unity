@@ -483,52 +483,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 20630451}
   m_Script: {fileID: 11500000, guid: 243e9cc2abd9aa149a53110ed0d8ea5c, type: 3}
---- !u!1001 &51731829
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1805639768}
-    m_Modifications:
-    - target: {fileID: 400000, guid: 2f114e5ff2da99e4a9a3efea0c965f75, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 19.5259991
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f114e5ff2da99e4a9a3efea0c965f75, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: .174999997
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f114e5ff2da99e4a9a3efea0c965f75, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 6.59299994
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f114e5ff2da99e4a9a3efea0c965f75, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -.646750391
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f114e5ff2da99e4a9a3efea0c965f75, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -.285856664
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f114e5ff2da99e4a9a3efea0c965f75, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -.285856724
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f114e5ff2da99e4a9a3efea0c965f75, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: .646750331
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 2f114e5ff2da99e4a9a3efea0c965f75, type: 3}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 2f114e5ff2da99e4a9a3efea0c965f75, type: 3}
-      propertyPath: m_Name
-      value: PRP_LightingGenerator (1)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 2f114e5ff2da99e4a9a3efea0c965f75, type: 3}
-  m_IsPrefabParent: 0
 --- !u!1001 &66867045
 Prefab:
   m_ObjectHideFlags: 0
@@ -1494,6 +1448,7 @@ MonoBehaviour:
   selectedUnitLastPos: {x: 0, y: 0}
   selectedUnitOldMovementRemaining: 0
   selectedUnitTransformPosition: {x: 0, y: 0, z: 0}
+  weaponDefaults: []
 --- !u!4 &435930104
 Transform:
   m_ObjectHideFlags: 0
@@ -1897,7 +1852,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1805639768}
-  m_RootOrder: 8
+  m_RootOrder: 7
 --- !u!4 &547910767
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 2f114e5ff2da99e4a9a3efea0c965f75, type: 3}
@@ -2291,10 +2246,6 @@ Transform:
   - {fileID: 1157572816}
   m_Father: {fileID: 0}
   m_RootOrder: 8
---- !u!4 &730831935
-Transform:
-  m_PrefabParentObject: {fileID: 400000, guid: 2f114e5ff2da99e4a9a3efea0c965f75, type: 3}
-  m_PrefabInternal: {fileID: 51731829}
 --- !u!1001 &750645493
 Prefab:
   m_ObjectHideFlags: 0
@@ -4826,6 +4777,7 @@ GameObject:
   - 114: {fileID: 1388959388}
   - 114: {fileID: 1388959387}
   - 114: {fileID: 1388959390}
+  - 114: {fileID: 1388959391}
   m_Layer: 5
   m_Name: WinScreen
   m_TagString: Untagged
@@ -4927,8 +4879,24 @@ MonoBehaviour:
   lossesText: {fileID: 1084579148}
   scrapRate: 200
   recruitRate: 3
-  weaponRate: 0
+  weaponRate: 3
   objectiveMarker: {fileID: 1011042106}
+  _nameGenerator: {fileID: 0}
+--- !u!114 &1388959391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1388959385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d28d328d44e44f4082f8cc33b14beaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  verbText: {fileID: 4900000, guid: cfc7ce897ea8e7f43b66a17bba709a4d, type: 3}
+  adjectiveText: {fileID: 4900000, guid: 0d5736c155fc2e4448e7b7b24fe23b51, type: 3}
+  verbs: []
+  adjectives: []
 --- !u!1 &1408777114
 GameObject:
   m_ObjectHideFlags: 0
@@ -6133,7 +6101,6 @@ Transform:
   - {fileID: 1913948896}
   - {fileID: 1356773930}
   - {fileID: 1408777116}
-  - {fileID: 730831935}
   - {fileID: 545978112}
   m_Father: {fileID: 0}
   m_RootOrder: 9

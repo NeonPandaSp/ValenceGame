@@ -23,6 +23,8 @@ public class WinStateScript : MonoBehaviour {
 	public int weaponRate;
 
 	public GameObject objectiveMarker;
+
+	public NameGenerator _nameGenerator;
 	// Use this for initialization
 	void Start () {
 		endScreen.gameObject.SetActive (false);
@@ -31,6 +33,8 @@ public class WinStateScript : MonoBehaviour {
 		lose = false;
 
 		folkInitialPartySize = _gameController.folk.Count;
+
+		_nameGenerator = GetComponent<NameGenerator> ();
 	}
 	
 	// Update is called once per frame
@@ -124,6 +128,43 @@ public class WinStateScript : MonoBehaviour {
 				myData.population.Add( newAgent );
 				myData.populationCount++;
 				Debug.Log("newAgent: " + newAgent.agentName + " was added");
+			}
+
+			for( int i = 0; i < weaponRate; i++){
+				serialWeapon newWeapon = new serialWeapon();
+
+				string gunName = _nameGenerator.GetAdjective() + " " + _nameGenerator.GetVerbs();
+				gunName = gunName.ToUpper();
+
+				newWeapon.weaponName = gunName;
+				newWeapon.weaponId = "" + ( (int) Random.Range (1000,9999) );
+				int dice = (int) rollDice (1,7);
+
+				if( dice <= 3 ){
+					newWeapon.weaponType = "Handgun";
+					newWeapon.range = 8 + (int) rollDice ( -2,2);
+					newWeapon.accuracy = 0.95f + rollDice (-0.3f,0.3f);
+					newWeapon.damageModifier = 6 + (int) rollDice ( -3,3);
+					newWeapon.rangeModifier = 0.1f;
+					newWeapon.soundRange = newWeapon.range - 3 + (newWeapon.damageModifier / 2);
+				} else if ( dice <= 5 ){
+					newWeapon.weaponType = "Shotgun";
+					newWeapon.range = 6 + (int) rollDice ( -2,2);
+					newWeapon.accuracy = 0.95f + rollDice (-0.2f,0.2f);
+					newWeapon.damageModifier = 6 + (int) rollDice ( -3,6);
+					newWeapon.rangeModifier = 0.2f;
+					newWeapon.soundRange = newWeapon.range - 3 + (newWeapon.damageModifier / 2);
+				} else {
+					newWeapon.weaponType = "Rifle";
+					newWeapon.range = 13 + (int) rollDice ( -3,3);
+					newWeapon.accuracy = 0.75f + rollDice (-0.2f,0.2f);
+					newWeapon.damageModifier = 6 + (int) rollDice ( -2,4);
+					newWeapon.rangeModifier = 0.05f;
+					newWeapon.soundRange = newWeapon.range - 3 + (newWeapon.damageModifier / 2);
+				}
+
+				myData.settlementWeapons.Add ( newWeapon );
+
 			}
 		}
 		
@@ -310,5 +351,11 @@ public class WinStateScript : MonoBehaviour {
 		}
 
 		return firstLastName;
+	}
+
+	public float rollDice(float min, float max){
+		float randVal = Random.Range (min, max);
+
+		return randVal;
 	}
 }

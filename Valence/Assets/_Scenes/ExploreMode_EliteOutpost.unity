@@ -9775,9 +9775,32 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       objectReference: {fileID: 0}
+    - target: {fileID: 11497424, guid: 8302cc867bfa6d34fb3edc46c282e89b, type: 2}
+      propertyPath: weaponRate
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8302cc867bfa6d34fb3edc46c282e89b, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &465250844
+GameObject:
+  m_PrefabParentObject: {fileID: 121560, guid: 8302cc867bfa6d34fb3edc46c282e89b, type: 2}
+  m_PrefabInternal: {fileID: 465250843}
+--- !u!114 &465250845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 465250844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d28d328d44e44f4082f8cc33b14beaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  verbText: {fileID: 4900000, guid: cfc7ce897ea8e7f43b66a17bba709a4d, type: 3}
+  adjectiveText: {fileID: 4900000, guid: 0d5736c155fc2e4448e7b7b24fe23b51, type: 3}
+  verbs: []
+  adjectives: []
 --- !u!1001 &466328762
 Prefab:
   m_ObjectHideFlags: 0

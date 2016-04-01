@@ -118,7 +118,7 @@ public class PlayerDataManager : MonoBehaviour {
 		data.settlementWeapons.Add (defaultWeapon1);
 		serialWeapon defaultWeapon2 = new serialWeapon();
 		defaultWeapon2.weaponId = ""+1002;
-		defaultWeapon2.weaponName = "Stiker";
+		defaultWeapon2.weaponName = "Striker";
 		defaultWeapon2.weaponType = "Shotgun";
 		defaultWeapon2.accuracy = 0.95f;
 		defaultWeapon2.damageModifier = 6;
@@ -128,7 +128,7 @@ public class PlayerDataManager : MonoBehaviour {
 		data.settlementWeapons.Add (defaultWeapon2);
 		serialWeapon defaultWeapon3 = new serialWeapon();
 		defaultWeapon3.weaponId = ""+1003;
-		defaultWeapon3.weaponName = "Hunting Rifle";
+		defaultWeapon3.weaponName = "Hunting";
 		defaultWeapon3.weaponType = "Rifle";
 		defaultWeapon3.accuracy = 0.75f;
 		defaultWeapon3.damageModifier = 6;
