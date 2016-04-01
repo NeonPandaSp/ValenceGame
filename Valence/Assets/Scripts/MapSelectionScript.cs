@@ -65,49 +65,42 @@ public class MapSelectionScript : MonoBehaviour {
 		default:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[0].GetComponent<RectTransform>().localPosition;
 			stationGraphic.sprite = stationGraphics[0];
-			stationName.text = stationNameTexts[0];
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[0];
 			proceedButton.GetComponentInChildren<Text> ().text = "Return Home";
 		break;
 		case 4:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[1].GetComponent<RectTransform>().localPosition;
 			stationGraphic.sprite = stationGraphics[1];
-			stationName.text = stationNameTexts[1];
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[1];
 			proceedButton.GetComponentInChildren<Text> ().text = "Travel";
 			break;
 		case 5:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[2].GetComponent<RectTransform>().localPosition;
 			stationGraphic.sprite = stationGraphics[2];
-			stationName.text = stationNameTexts[2];
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[2];
 			proceedButton.GetComponentInChildren<Text> ().text = "Travel";
 			break;
 		case 6:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[3].GetComponent<RectTransform>().localPosition;
 			stationGraphic.sprite = stationGraphics[3];
-			stationName.text = stationNameTexts[3];
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[3];
 			proceedButton.GetComponentInChildren<Text> ().text = "Travel";
 			break;
 		case 7:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[4].GetComponent<RectTransform>().localPosition;
 			stationGraphic.sprite = stationGraphics[4];
-			stationName.text = stationNameTexts[4];
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[4];
 			proceedButton.GetComponentInChildren<Text> ().text = "Travel";
 			break;
 		case 8:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[5].GetComponent<RectTransform>().localPosition;
 			stationGraphic.sprite = stationGraphics[5];
-			stationName.text = stationNameTexts[5];
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[5];
 			proceedButton.GetComponentInChildren<Text> ().text = "Travel";
 			break;
 		case 9:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[6].GetComponent<RectTransform>().localPosition;
 			stationGraphic.sprite = stationGraphics[6];
-			stationName.text = stationNameTexts[6];
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[6];
 			proceedButton.GetComponentInChildren<Text> ().text = "Travel";
 			break;

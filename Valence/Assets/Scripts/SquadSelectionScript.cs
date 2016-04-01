@@ -6,14 +6,21 @@ using System;
 using System.Runtime.Serialization.Formatters.Binary;
 
 public class SquadSelectionScript : MonoBehaviour {
+	public Button ventureBtn;
+
 	PlayerData dataCopy;
 
+	//=======================\\
+	//===Declaration Squad===\\
+	//=======================\\
 	public List<serialAgent> population = new List<serialAgent>();
 
 	//Settler Info
 	public GameObject settlerList;
 	public GameObject scrollableSettlerList;
 	public Text numberOfSettlersInPopulation;
+	public Text numberOfSettlersInSquad;
+
 	public GameObject prefabSettler;
 	public Image prefabSettlerPortrait;
 	public Text prefabSettlerName;
@@ -23,53 +30,59 @@ public class SquadSelectionScript : MonoBehaviour {
 	//Squad Info
 	public GameObject squadList;
 	public GameObject[] MemberList = new GameObject[4];
-	public Text numberOfSettlersInSquad;
 
 	//Photos
 	public Sprite[] malePortraitArray;
 	public Sprite[] femalePortraitArray;
 
 	public serialAgent [] myParty = new serialAgent [4];
-	public Image [] myPartyPortraits = new Image [5];
-	public Text [] myPartyNames = new Text [4];
-	//Stats
-	public Text [] myParty_STR_Stats = new Text [4];
-	public Text [] myParty_PER_Stats = new Text [4];
-	public Text [] myParty_AGL_Stats = new Text [4];
-	//Squad Weapon
-	public Image [] myPartyWeaponIcons = new Image [4];
 
-	/*
-	//Weapons Info
-	public serialWeapon [] myWeapons = new serialWeapon [4];
-	public Image [] myWeaponsIcons = new Image [4];
-	public Text [] myWeaponsNames = new Text [4];
-	//Stats
-	public Text [] weapon_DMG_Stats = new Text[4];
-	public Text[] weapon_RNG_Stats = new Text[4];
-	public Text[] weapon_ACC_Stats = new Text[4];
-	public Text[] weapon_SND_Stats = new Text[4];
-	*/
+	float NumOfPopSettlers;
+	int newSettlerListHeight;
 
-	//Comparison variables
-	public String[] AgentIDArray;
-	public String[] AgentNameArray;
+	//=========================\\
+	//===Declaration Weapons===\\
+	//=========================\\
+	public List<serialWeapon> weaponsPopulation = new List<serialWeapon>();
+
+	public GameObject weaponList;
+	public GameObject scrollableWeaponsList;
+	public Text numberOfWeaponsInWeaponsList;
+	public Text numberOfWeaponsInSelectedWeaponsList;
 
 	bool [] numSet = {false, false, false, false};
 	public int squadNumber = 0;
 	string currId;
 
-	public Button ventureBtn;
+	bool [] weaponNumSet = {false, false, false, false};
+	public int weaponNumber = 0;
+	string currWeaponId;
 
-	float NumOfPopSettlers;
-	int newSettlerListHeight;
+	public GameObject prefabWeapon;
+	public Image prefabWeaponIcon;
+	public Text prefabWeaponName;
+	public Text prefabWeaponType;
+	public Text prefabWeaponStats;
+	
+	public GameObject SelectedWeaponsList;
+	public GameObject[] WeaponList = new GameObject[4];
+	
+	public Image [] myPartyWeaponIcons = new Image [4];
 
-	// Use this for initialization
+	float NumOfInvWeapons;
+	int newWeaponsListHeight;
+
+	//===========\\
+	//===Start===\\
+	//===========\\
 	void Start () {
 		loadPopulation ();
+		loadWeaponsList ();
 	}
 
-	//Loading the settler list
+	//=====================\\
+	//===Load Population===\\
+	//=====================\\
 	public void loadPopulation () {
 		int index = 0;
 		PlayerData loadedData = PlayerDataManager.playerDataManager.loadSaveData ();
@@ -141,7 +154,84 @@ public class SquadSelectionScript : MonoBehaviour {
 		Destroy (prefabSettler);
 	}
 
+	//==================\\
+	//===Load Weapons===\\
+	//==================\\
+	public void loadWeaponsList () {
+		int index = 0;
+		PlayerData loadedData = PlayerDataManager.playerDataManager.loadSaveData ();
+		weaponsPopulation = loadedData.settlementWeapons;
+		
+		foreach (serialWeapon sA in weaponsPopulation) {
+			//Settler
+			GameObject weapon = (GameObject) Instantiate (prefabWeapon);
+			weapon.gameObject.transform.SetParent (scrollableWeaponsList.gameObject.transform);
+			weapon.transform.localScale = new Vector3 (1, 1, 1);
+			
+			weapon.name = sA.weaponName;
+			GameObject tempWeapon = weapon.GetComponent <GameObject>();
+			
+			//Portrait
+			Image weaponIcon = weapon.GetComponent<Image>();
+			weaponIcon.gameObject.transform.SetParent (weapon.gameObject.transform);
+			
+			weaponIcon.transform.localScale = new Vector3 (1, 1, 1);
+			
+			Image[] tempWeaponImgs = weapon.GetComponentsInChildren<Image>();
+			
+//			foreach (Image img in tempWeaponImgs) {
+//				if (img.gameObject.name == "Weapon Icon") {
+//					Image tempWeaponIcons = img;
+////					if (sA.weaponType == "Handgun") {
+////					}
+//				}
+//			}
+			
+			Text[] childWeaponTexts = weapon.GetComponentsInChildren<Text>();
+			
+			Text weaponName, weaponType, weaponStats;
+			//Name
+			foreach (Text cT in childWeaponTexts ){
+				if (cT.gameObject.name == "Weapon Name") {
+					weaponName = cT;
+					weaponName.gameObject.transform.SetParent (weapon.gameObject.transform);
+					
+					weaponName.transform.localScale = new Vector3 (1, 1, 1);
+					weaponName.text = sA.weaponName;
+					
+					Image tempSettlerName = weaponName.GetComponent <Image>();
+				} 
+				if (cT.gameObject.name == "Weapon Type") {
+					weaponType = cT;
+					weaponType.gameObject.transform.SetParent (weapon.gameObject.transform);
+					
+					weaponType.transform.localScale = new Vector3 (1, 1, 1);
+					weaponType.text = (sA.weaponType);
+					
+					Text tempSettlerHealth = weaponIcon.GetComponent <Text>();
+				} 
+				if (cT.gameObject.name == "Weapon Stats") {
+					weaponStats = cT;
+					weaponStats.gameObject.transform.SetParent (weapon.gameObject.transform);
+					
+					weaponStats.transform.localScale = new Vector3 (1, 1, 1);
+					weaponStats.text = sA.damageModifier + " " + sA.accuracy + " " + sA.range + " " + sA.soundRange;
+					
+					Text tempSettlerStats = weaponStats.GetComponent <Text>();
+				}
+			}
+		}
+		
+		Destroy (prefabWeapon);
+	}
+
+	//============\\
+	//===Update===\\
+	//============\\
 	void Update () {
+		//===========\\
+		//===Squad===\\
+		//===========\\
 		int partyIndex = 0;
 		foreach (serialAgent partyMember in myParty) {
 			if (partyMember.agentId != "" && partyMember.agentId != "-1") {
@@ -160,12 +250,42 @@ public class SquadSelectionScript : MonoBehaviour {
 		}
 
 		numberOfSettlersInPopulation.text = "Settler List (" + scrollableSettlerList.transform.childCount + ")";		
-		numberOfSettlersInSquad.text = ("Squad " + squadNumber) + "/4";
+		numberOfSettlersInSquad.text = ("Squad " + squadNumber) + "/4   |";
 
 		RectTransform thisBeMyTransform = scrollableSettlerList.transform.GetChild(0).GetComponent<RectTransform> ();
 		NumOfPopSettlers = scrollableSettlerList.transform.childCount * Math.Abs (thisBeMyTransform.sizeDelta.y) + (scrollableSettlerList.transform.childCount * scrollableSettlerList.GetComponent<GridLayoutGroup>().spacing.y);
 		float subtractThisAmount = (float)(Math.Abs (scrollableSettlerList.GetComponent<RectTransform> ().rect.y) / 1.85);
 		scrollableSettlerList.GetComponent<RectTransform> ().sizeDelta = new Vector2 (thisBeMyTransform.sizeDelta.x, NumOfPopSettlers - subtractThisAmount);
+
+		//=============\\
+		//===Weapons===\\
+		//=============\\
+		int weaponsPartyIndex = 0;
+		for (int i = 0; i < 4; i++) {
+//			foreach (serialWeapon weaponMember in myParty[i].myWeapon) {
+//				if (weaponMember.weaponId != "" && weaponMember.weaponId != "-1") {
+//					weaponNumSet [weaponsPartyIndex] = true;
+//				}
+//				if (weaponMember.weaponId == "-1") {
+//					weaponNumSet [weaponsPartyIndex] = false;
+//				}
+//				weaponsPartyIndex++;
+//			}
+		}
+		weaponNumber = 0;
+		foreach (bool i in weaponNumSet) {
+			if (i == true) {
+				weaponNumber++;
+			}
+		}
+
+		numberOfWeaponsInWeaponsList.text = "Weapons List (" + scrollableWeaponsList.transform.childCount + ")";		
+		numberOfWeaponsInSelectedWeaponsList.text = ("|    Weapons " + weaponNumber) + "/4";
+		
+		RectTransform thisBeMyTransform2 = scrollableWeaponsList.transform.GetChild(0).GetComponent<RectTransform> ();
+		NumOfInvWeapons = scrollableWeaponsList.transform.childCount * Math.Abs (thisBeMyTransform2.sizeDelta.y) + (scrollableWeaponsList.transform.childCount * scrollableWeaponsList.GetComponent<GridLayoutGroup>().spacing.y);
+		float subtractThisAmount2 = (float)(Math.Abs (scrollableWeaponsList.GetComponent<RectTransform> ().rect.y) / 1.85);
+		scrollableWeaponsList.GetComponent<RectTransform> ().sizeDelta = new Vector2 (thisBeMyTransform2.sizeDelta.x, NumOfInvWeapons - subtractThisAmount2);
 	}
 }
 

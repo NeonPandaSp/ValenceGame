@@ -12,11 +12,17 @@ public class SquadSelection_DropZone : MonoBehaviour, IDropHandler, IPointerEnte
 	public GameObject[] MemberListObjects = new GameObject[4];
 	public String[] parentNameArray = new String[4] {"Member 1", "Member 2", "Member 3", "Member 4"};
 	String scrollAbleListString = "Scrollable List";
-	public string tempAgentIDToPass;
-	int placeInIndex;
+
+	public GameObject[] SelectedWeaponsListObjects = new GameObject[4];
+	public String[] weaponsParentNameArray = new String[4] {"Weapon 1", "Weapon 2", "Weapon 3", "Weapon 4"};
+	String scrollAbleWeaponsListString = "Scrollable Weapons List";
+
+	int squadPlaceInIndex;
+	int weaponPlaceInIndex;
 
 	//Image change
 	public Sprite placeholderSquadIcon;
+	public Sprite placeholderSelectedWeaponIcon;
 	
 	public void OnPointerEnter (PointerEventData eventData) {
 	}
@@ -26,44 +32,40 @@ public class SquadSelection_DropZone : MonoBehaviour, IDropHandler, IPointerEnte
 
 	public void OnDrop (PointerEventData eventData) {
 		SquadSelection_Draggable d = eventData.pointerDrag.GetComponent <SquadSelection_Draggable> ();
+
 		if (d != null) {
 			d.newParent = this.transform;
 
 			if (d.newParent.name.ToString() != null) {
+				//===========\\
+				//===Squad===\\
+				//===========\\
 				for (int i = 0; i < MemberListObjects.Length; i++) {
-
 					//========================================\\
 					//FROM: Member List | TO: Scrollable  List\\
 					//========================================\\
-					if (d.newParent.name.ToString() == "Scrollable List") {
+					if (d.newParent.name.ToString() == scrollAbleListString) {
 						foreach (string listList in parentNameArray) {
 							//listList OUTPUTS Member 1, Member 2, Member 3, Member 4
 							if (d.oldParent.name == listList) {
 								//Finds the index for that particular parent name in the array of 4
-								placeInIndex =  Array.IndexOf (parentNameArray, d.oldParent.name);
-								this.transform.root.GetComponent<SquadSelectionScript>().myParty[placeInIndex].agentId = "-1";
+								squadPlaceInIndex =  Array.IndexOf (parentNameArray, d.oldParent.name);
+								this.transform.root.GetComponent<SquadSelectionScript>().myParty[squadPlaceInIndex].agentId = "-1";
 								//Debug.Log ("DURING IF:  " + _SquadSelectionScript.population.Count);
 							}
 						}
 					}
-
-//					if (d.newParent.name == parentNameArray[i] && d.oldParent.name == parentNameArray[i]) {
-//						Debug.Log ("YAAAY");
-//						placeInIndex =  Array.IndexOf (parentNameArray, d.oldParent.name);
-//					}
 						
-						
-					//===================================\\
-					//FROM: Member List | TO: Member List\\
-					//===================================\\
+					//================================\\
+					//FROM: Anywhere | TO: Member List\\
+					//================================\\
 					if (d.newParent.name.ToString() == parentNameArray[i]) {
 						//Debug.Log ("ERASING DATA for " + _SquadSelectionScript.population.Count );
 						foreach (serialAgent fs in _SquadSelectionScript.population) {
 							if (fs.agentName == d.name) {
-								//tempAgentIDToPass = fs.agentId;
 								//Debug.Log ("The current parent is: " + d.newParent.name.ToString());
-								placeInIndex =  Array.IndexOf (parentNameArray, d.newParent.name);
-								this.transform.root.GetComponent<SquadSelectionScript>().myParty[placeInIndex].agentId = fs.agentId;
+								squadPlaceInIndex =  Array.IndexOf (parentNameArray, d.newParent.name);
+								this.transform.root.GetComponent<SquadSelectionScript>().myParty[squadPlaceInIndex].agentId = fs.agentId;
 								//Debug.Log ("Parent: " + parentNameArray[i] + " has child " + fs.agentName);
 							}
 						}
@@ -73,8 +75,50 @@ public class SquadSelection_DropZone : MonoBehaviour, IDropHandler, IPointerEnte
 					//FROM: Member List | TO: Anywhere\\
 					//================================\\
 					if (d.oldParent.name == parentNameArray[i]) {
-						placeInIndex =  Array.IndexOf (parentNameArray, d.oldParent.name);
-						this.transform.root.GetComponent<SquadSelectionScript>().myParty[placeInIndex].agentId = "-1";
+						squadPlaceInIndex =  Array.IndexOf (parentNameArray, d.oldParent.name);
+						this.transform.root.GetComponent<SquadSelectionScript>().myParty[squadPlaceInIndex].agentId = "-1";
+					}
+				}
+				
+				//=============\\
+				//===Weapons===\\
+				//=============\\
+				for (int i = 0; i < scrollAbleWeaponsListString.Length; i++) {
+					//===============================================\\
+					//FROM: Weapon List | TO: Scrollable Weapons List\\
+					//===============================================\\
+					if (d.newParent.name.ToString() == scrollAbleWeaponsListString) {
+						Debug.Log ("NAME IS: " + d.name);
+						foreach (string weaponListList in weaponsParentNameArray) {
+							if (d.oldParent.name == weaponListList) {
+								weaponPlaceInIndex =  Array.IndexOf (weaponsParentNameArray, d.oldParent.name);
+								this.transform.root.GetComponent<SquadSelectionScript>().myParty[weaponPlaceInIndex].myWeapon.weaponId = "-1";
+							}
+						}
+					}
+				}
+
+				for (int i = 0; i < weaponsParentNameArray.Length; i++) {					
+					//================================\\
+					//FROM: Anywhere | TO: Weapon List\\
+					//================================\\
+					if (d.newParent.name.ToString() == weaponsParentNameArray[i]) {
+						foreach (serialWeapon wp in _SquadSelectionScript.weaponsPopulation) {
+							Debug.Log ("NAME is: " + wp.weaponName + " ID is: " + wp.weaponId);
+							if (wp.weaponName == d.name) {
+								weaponPlaceInIndex =  Array.IndexOf (weaponsParentNameArray, d.newParent.name);
+								this.transform.root.GetComponent<SquadSelectionScript>().myParty[weaponPlaceInIndex].myWeapon.weaponId = wp.weaponId;
+								Debug.Log ("THE ID IS SET TO " + this.transform.root.GetComponent<SquadSelectionScript>().myParty[weaponPlaceInIndex].myWeapon.weaponId);
+							}
+						}
+					}
+					
+					//================================\\
+					//FROM: Weapon List | TO: Anywhere\\
+					//================================\\
+					if (d.oldParent.name == weaponsParentNameArray[i]) {
+						weaponPlaceInIndex =  Array.IndexOf (weaponsParentNameArray, d.oldParent.name);
+						this.transform.root.GetComponent<SquadSelectionScript>().myParty[weaponPlaceInIndex].myWeapon.weaponId = "-1";
 					}
 				}
 			} else {
