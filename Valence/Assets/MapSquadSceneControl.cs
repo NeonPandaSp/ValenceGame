@@ -15,6 +15,7 @@ public class MapSquadSceneControl : MonoBehaviour {
 	public List<serialAgent> myParty;
 	public List<serialWeapon> myWeaponListToSave;
 
+	public loadScene _loadScene;
 	// Update is called once per frame
 	void Update () {
 		mapIndex = mapCan.GetComponent<MapSelectionScript> ().selectedMap;
@@ -29,7 +30,8 @@ public class MapSquadSceneControl : MonoBehaviour {
 		if (mapIndex == 2) {
 			mapCan.SetActive (false);
 			loadScreen.SetActive (true);
-			Application.LoadLevelAsync (mapIndex);
+			//Application.LoadLevelAsync (mapIndex);
+			_loadScene.initLoadScene(mapIndex);
 		}
 		if (mapCan.activeSelf) {
 			if (mapIndex == 2 )
@@ -82,6 +84,7 @@ public class MapSquadSceneControl : MonoBehaviour {
 		oldData.currentParty = myParty;
 		oldData.currentWeapons = myWeaponListToSave;
 		PlayerDataManager.playerDataManager.writePlayerData (oldData);
-		Application.LoadLevel (mapIndex);
+		//Application.LoadLevel (mapIndex);
+		_loadScene.initLoadScene(mapIndex);
 	}
 }

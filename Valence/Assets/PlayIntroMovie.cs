@@ -14,9 +14,4 @@ public class PlayIntroMovie : MonoBehaviour {
         movie.Play();
         movie.loop = true;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-        
-    }
 }

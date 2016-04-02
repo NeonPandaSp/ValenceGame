@@ -23,6 +23,8 @@ public class InputController : MonoBehaviour {
 
 	string currentColor;
 
+	public loadScene _loadScene;
+
 	bool generate;
 
 	public bool zoning;
@@ -155,7 +157,8 @@ public class InputController : MonoBehaviour {
 
 	public void loadLastSave(){
 		Time.timeScale = 1;
-		Application.LoadLevel (Application.loadedLevel);
+		//Application.LoadLevel (Application.loadedLevel);
+		_loadScene.initLoadScene (Application.loadedLevel);
 	}
 
 	public void quitGame(){
@@ -165,7 +168,8 @@ public class InputController : MonoBehaviour {
 
 	public void loadMainMenu(){
 		Time.timeScale = 1;
-		Application.LoadLevel (1);
+		//Application.LoadLevel (1);
+		_loadScene.initLoadScene (1);
 	}
 
 	void FixedUpdate () {

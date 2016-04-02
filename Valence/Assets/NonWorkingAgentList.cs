@@ -21,6 +21,12 @@ public class NonWorkingAgentList : MonoBehaviour {
 
     bool UnlockComplete = true;
     bool assigned = false;
+
+	int prevPopCount;
+	int prevJobCount;
+
+	public List<GameObject> myPopulationList;
+	public List<GameObject> myWorkerList;
     // Use this for initialization
     void Start () {
         GameObject gameControllerObject = GameObject.FindGameObjectWithTag("GameController");
@@ -32,19 +38,75 @@ public class NonWorkingAgentList : MonoBehaviour {
         //GameObject test = Instantiate(agentProfile, agentProfile.transform.position, agentProfile.transform.rotation) as GameObject;
         //test.transform.SetParent(this.transform, false);
 
-        foreach (GameObject agent in _myGameController.unAssignedPopulation) {
+
+		myPopulationList = new List<GameObject> ();
+
+        foreach (GameObject agent in _myGameController.population) {
             GameObject newobject = Instantiate(agentProfile, agentProfile.transform.position, agentProfile.transform.rotation) as GameObject;
             newobject.transform.SetParent(this.transform, false);
-            newobject.GetComponentInChildren<Text>().text = agent.GetComponent<AgentLogic_07>().firstLastName;
+			newobject.GetComponentInChildren<Text>().text = agent.GetComponent<AgentLogic_07>().firstLastName;
             newobject.name = agent.name;
-            unAssignedAgents.Add(newobject);
-            
+			myPopulationList.Add(newobject);
             //gameObject.transform;
         }
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+		// conditions to update
+		//IF The Population Increased
+		if (prevPopCount < _myGameController.population.Count) { // population grew were gonna have to add (atleast 1) agent
+			foreach (GameObject agent in _myGameController.population) {
+				bool contains = false;
+				foreach(GameObject workObject in myWorkerList ){
+					if( workObject.name == agent.name ){
+						contains = true;
+					}
+				}
+				if( !contains ){ // We already have this object skip this process. 
+					foreach(GameObject popObject in myPopulationList ){
+						if( popObject.name == agent.name ){
+							contains = true;
+						}
+					}
+				}
+				if ( !contains ){
+					GameObject newobject = Instantiate(agentProfile, agentProfile.transform.position, agentProfile.transform.rotation) as GameObject;
+					newobject.transform.SetParent(this.transform, false);
+					newobject.GetComponentInChildren<Text>().text = agent.GetComponent<AgentLogic_07>().firstLastName;
+					newobject.name = agent.name;
+					myPopulationList.Add(newobject);
+				}
+			}
+		} else if (prevPopCount > _myGameController.population.Count){ // population shrunk, we're gonna have to remove (atleast 1) agent.
+			foreach (GameObject agent in _myGameController.population) {
+				bool contains = false;
+				GameObject removeObject;
+				for( int i = myWorkerList.Count-1; i >= 0; i--){ // reverse order search to avoid enumeration issues from removing array elements
+					if( !contains ){ // We already have this object skip this process
+						if( myWorkerList[i].name == agent.name ){
+							contains = true;
+							removeObject = myWorkerList[i]; // set placeholder object so we have refernce to object that needs to be destroyed after removal
+							myWorkerList.Remove (removeObject); // remove from list
+							Destroy (removeObject); // destroy
+						}
+					}
+				}
+				if( !contains ){ // We already have this object skip this process. 
+					for(int i = myPopulationList.Count-1; i >= 0; i--){
+						if( !contains ){ // We already have this object skip this process. 
+							if( myPopulationList[i].name == agent.name ){
+								contains = true;
+								removeObject = myPopulationList[i]; // set placeholder object so we have refernce to object that needs to be destroyed after removal
+								myPopulationList.Remove (removeObject); // remove from list
+								Destroy (removeObject); // destroy
+							}
+						}
+					}
+				}
+			}
+		}
 
         //unAssignedAgents.Count = _myGameController.unAssignedPopulation.Count;
 
@@ -92,23 +154,23 @@ public class NonWorkingAgentList : MonoBehaviour {
                 //gameObject.transform;
             }*/
 
-        foreach (GameObject agent in unAssignedAgents) {
-            //Debug.Log("Root is: " + agent.transform.parent.tag);
-
-            if (agent.transform.parent.tag == "Assigned") {
-                ChangeAgentWorkState(unAssignedAgents.IndexOf(agent));
-                //_myGameController.unAssignedPopulation.Remove(_myGameController.unAssignedPopulation[unAssignedAgents.IndexOf(agent)]);
-                //unAssignedAgents.Remove(agent);
-                //Debug.Log("Current index " + unAssignedAgents.IndexOf(agent));
-            }
-            else if (agent.transform.parent.tag == "Unassigned")
-            {
-                workerIndexMemory.Remove(unAssignedAgents.IndexOf(agent));
-                ChangeAgentWanderState(unAssignedAgents.IndexOf(agent));
-                
-                //Debug.Log("Current index " + unAssignedAgents.IndexOf(agent));
-            }
-        }
+//        foreach (GameObject agent in unAssignedAgents) {
+//            //Debug.Log("Root is: " + agent.transform.parent.tag);
+//
+//            if (agent.transform.parent.tag == "Assigned") {
+//                ChangeAgentWorkState(unAssignedAgents.IndexOf(agent));
+//                //_myGameController.unAssignedPopulation.Remove(_myGameController.unAssignedPopulation[unAssignedAgents.IndexOf(agent)]);
+//                //unAssignedAgents.Remove(agent);
+//                //Debug.Log("Current index " + unAssignedAgents.IndexOf(agent));
+//            }
+//            else if (agent.transform.parent.tag == "Unassigned")
+//            {
+//                workerIndexMemory.Remove(unAssignedAgents.IndexOf(agent));
+//                ChangeAgentWanderState(unAssignedAgents.IndexOf(agent));
+//                
+//                //Debug.Log("Current index " + unAssignedAgents.IndexOf(agent));
+//            }
+//        }
     }
 
     void UpdateAgents(GameObject agent) {

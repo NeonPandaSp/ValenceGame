@@ -57,7 +57,7 @@ using System.Collections.Generic;
 	bool buildClicked;
 	bool structureBtnClicked;
 
-	public GameObject loadScreen;
+	public loadScene _loadScreen;
 
 	//=================\\
 	//===== Start =====\\
@@ -311,7 +311,8 @@ using System.Collections.Generic;
 		///
 		globalAttributes.saveCurrentSettlement ();
 		//loadScreen.SetActive (true);
-		Application.LoadLevelAsync (3);
+		//Application.LoadLevelAsync (3);
+		_loadScreen.initLoadScene (3);
 		//globalAttributes.scrap = scrap + UnityEngine.Random.Range (10, 101);
 	}
 	 
