@@ -44,9 +44,9 @@ public class MapSelectionScript : MonoBehaviour {
 
 		selectedMap = 2; 
 
-		scrapRate = 10;
-		recruitRate = 10;
-		weaponRate = 10;
+		scrapRate = 0;
+		recruitRate = 0;
+		weaponRate = 0;
 	}
 
 	//=================\\
@@ -60,50 +60,95 @@ public class MapSelectionScript : MonoBehaviour {
 	//===== Update =====\\
 	//==================\\
 	void Update () {
-		//Map Selection
+
+		selectIcon.transform.Rotate (0, 0, -2);
+
+		//Note: The scrap values have been set 2, 4, 6, which rougly translate to 100, 200, 300
+
 		switch (selectedMap){
+			//THE SETTLEMENT
 		default:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[0].GetComponent<RectTransform>().localPosition;
 			stationGraphic.sprite = stationGraphics[0];
+			selectIcon.rectTransform.sizeDelta = new Vector2 (140, 140);
+			selectIcon.color = new Color (184/ 255f, 253 / 255f, 106/255f, 255 / 255f);
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[0];
 			proceedButton.GetComponentInChildren<Text> ().text = "Return Home";
+			scrapRate = 0;
+			recruitRate = 0;
+			weaponRate = 0;
 		break;
+			//RAILS STAION
 		case 4:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[1].GetComponent<RectTransform>().localPosition;
 			stationGraphic.sprite = stationGraphics[1];
+			selectIcon.rectTransform.sizeDelta = new Vector2 (100, 100);
+			selectIcon.color = new Color (253/ 255f, 106 / 255f, 106/255f, 255 / 255f);
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[1];
 			proceedButton.GetComponentInChildren<Text> ().text = "Travel";
-			break;
+			scrapRate = 4;
+			recruitRate = 5;
+			weaponRate = 6;
+		break;
+			//CARGO STATION
 		case 5:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[2].GetComponent<RectTransform>().localPosition;
 			stationGraphic.sprite = stationGraphics[2];
+			selectIcon.rectTransform.sizeDelta = new Vector2 (100, 100);
+			selectIcon.color = new Color (253/ 255f, 106 / 255f, 106/255f, 255 / 255f);
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[2];
 			proceedButton.GetComponentInChildren<Text> ().text = "Travel";
-			break;
+			scrapRate = 2;
+			recruitRate = 3;
+			weaponRate = 5;
+		break;
+			//SHORE STATION
 		case 6:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[3].GetComponent<RectTransform>().localPosition;
 			stationGraphic.sprite = stationGraphics[3];
+			selectIcon.rectTransform.sizeDelta = new Vector2 (100, 100);
+			selectIcon.color = new Color (253/ 255f, 106 / 255f, 106/255f, 255 / 255f);
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[3];
 			proceedButton.GetComponentInChildren<Text> ().text = "Travel";
-			break;
+			scrapRate = 6;
+			recruitRate = 5;
+			weaponRate = 9;
+		break;
+			//RELAY STATION
 		case 7:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[4].GetComponent<RectTransform>().localPosition;
 			stationGraphic.sprite = stationGraphics[4];
+			selectIcon.rectTransform.sizeDelta = new Vector2 (100, 100);
+			selectIcon.color = new Color (253/ 255f, 106 / 255f, 106/255f, 255 / 255f);
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[4];
 			proceedButton.GetComponentInChildren<Text> ().text = "Travel";
-			break;
+			scrapRate = 6;
+			recruitRate = 5;
+			weaponRate = 4;
+		break;
+			//GLADIATOR STATION
 		case 8:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[5].GetComponent<RectTransform>().localPosition;
 			stationGraphic.sprite = stationGraphics[5];
+			selectIcon.color = new Color (253/ 255f, 106 / 255f, 106/255f, 255 / 255f);
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[5];
 			proceedButton.GetComponentInChildren<Text> ().text = "Travel";
-			break;
+			scrapRate = 4;
+			recruitRate = 3;
+			weaponRate = 3;
+		break;
+			//OUTPOST STATION
 		case 9:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[6].GetComponent<RectTransform>().localPosition;
 			stationGraphic.sprite = stationGraphics[6];
+			selectIcon.rectTransform.sizeDelta = new Vector2 (100, 100);
+			selectIcon.color = new Color (253/ 255f, 106 / 255f, 106/255f, 255 / 255f);
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[6];
 			proceedButton.GetComponentInChildren<Text> ().text = "Travel";
-			break;
+			scrapRate = 6;
+			recruitRate = 5;
+			weaponRate = 6;
+		break;
 		}
 		//stationIcons[0].GetComponent<RectTransform>().localPosition;
 		//new Vector2 (1900, 100);
