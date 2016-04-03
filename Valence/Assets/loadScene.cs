@@ -9,6 +9,11 @@ public class loadScene : MonoBehaviour {
 	AsyncOperation async;
 	public bool startCounting = false;
 	public float timer = 0.0f;
+
+	public AudioController _audioController;
+
+	public bool build;
+	public GameObject uiStuff;
 	// Use this for initialization
 	void Start () {
 	
@@ -18,6 +23,8 @@ public class loadScene : MonoBehaviour {
 	void Update () {
 		if (startCounting) {
 			timer += Time.deltaTime;
+			if( build )
+				uiStuff.SetActive(false);
 			if ( timer > 5 ){
 				ActivateScene();
 			}
@@ -25,6 +32,9 @@ public class loadScene : MonoBehaviour {
 	}
 
 	public void StartLoading() {
+		_audioController.targetSource = _audioController.backgroundMusic;
+		_audioController.fadingOut=true;
+
 		StartCoroutine("load");
 	}
 	

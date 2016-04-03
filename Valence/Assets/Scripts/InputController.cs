@@ -43,6 +43,8 @@ public class InputController : MonoBehaviour {
 
 	public List<AudioClip> myClips;
 
+	public AudioController _audioController; // Audio controller
+
 	void Start(){
 		_tileMap = GetComponent<TileMap> ();
 		_generateZone = GetComponent < generateZone >();
@@ -138,8 +140,6 @@ public class InputController : MonoBehaviour {
 	public void pause(){
 		isPause = !isPause;
 
-		GetComponent<AudioSource> ().clip = myClips [0];// whatever the clip is called
-		GetComponent<AudioSource> ().Play ();
 		if(isPause)
 			Time.timeScale = 0;
 		else
@@ -147,27 +147,37 @@ public class InputController : MonoBehaviour {
 		if (isPause) {
 			menuObj.SetActive (true);
 		} else {
+			_audioController.playAudioClipOnce (3, Vector3.zero, 500);
 			menuObj.SetActive (false);
 		}
 	}
 
 	public void saveGame(){
+		_audioController.playAudioClipOnce (1, Vector3.zero, 500);
+		pause ();
 		_gameController.saveCurrentSettlement ();
 	}
 
 	public void loadLastSave(){
+		_audioController.playAudioClipOnce (1, Vector3.zero, 500);
+		//pause ();
+
 		Time.timeScale = 1;
 		//Application.LoadLevel (Application.loadedLevel);
 		_loadScene.initLoadScene (Application.loadedLevel);
 	}
 
 	public void quitGame(){
+		_audioController.playAudioClipOnce (1, Vector3.zero, 500);
+		//pause ();
 		Time.timeScale = 1;
 		Application.Quit();
 	}
 
 	public void loadMainMenu(){
+		_audioController.playAudioClipOnce (1, Vector3.zero, 500);
 		Time.timeScale = 1;
+		pause ();
 		//Application.LoadLevel (1);
 		_loadScene.initLoadScene (1);
 	}
@@ -304,6 +314,7 @@ public class InputController : MonoBehaviour {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop")))
                         {
                             _gameController.scrap -= 25;
+							_audioController.playAudioClipOnce(4, Vector3.zero , 500);
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("Farm"), new Vector3(currentTile.x, currentTile.y, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
@@ -357,7 +368,8 @@ public class InputController : MonoBehaviour {
 				if (hoverState == "water"){
 					if (_gameController.scrap >= 25 && !MouseEdge()){
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))){
-                            _gameController.scrap -= 25;
+							_gameController.scrap -= 25;
+							_audioController.playAudioClipOnce(4, Vector3.zero , 500);
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("WaterStation"), new Vector3(currentTile.x, currentTile.y, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
@@ -408,7 +420,8 @@ public class InputController : MonoBehaviour {
 				if (hoverState == "power"){
 					if (_gameController.scrap >= 25 && !MouseEdge()){
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag ("prop"))){
-                            _gameController.scrap -= 25;
+							_gameController.scrap -= 25;
+							_audioController.playAudioClipOnce(4, Vector3.zero , 500);
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load ("PowerStation"), new Vector3(currentTile.x, currentTile.y - 1, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
@@ -458,7 +471,8 @@ public class InputController : MonoBehaviour {
 				if (hoverState == "shelter") {
 					if (_gameController.scrap >= 25 && !MouseEdge()) {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
-                            _gameController.scrap -= 25;
+							_gameController.scrap -= 25;
+							_audioController.playAudioClipOnce(4, Vector3.zero , 500);
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("Shelter"), new Vector3(currentTile.x, currentTile.y, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
@@ -503,7 +517,8 @@ public class InputController : MonoBehaviour {
 				if (hoverState == "tavern") {
 					if (_gameController.scrap >= 25 && !MouseEdge()) {
 						if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
-                            _gameController.scrap -= 25;
+							_gameController.scrap -= 25;
+							_audioController.playAudioClipOnce(4, Vector3.zero , 500);
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("Tavern"), currentTile, Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
@@ -552,7 +567,8 @@ public class InputController : MonoBehaviour {
                     {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop")))
                         {
-                            _gameController.scrap -= 25;
+							_gameController.scrap -= 25;
+							_audioController.playAudioClipOnce(4, Vector3.zero , 500);
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("Hospital"), new Vector3(currentTile.x, currentTile.y, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
@@ -605,7 +621,8 @@ public class InputController : MonoBehaviour {
                     {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop")))
                         {
-                            _gameController.scrap -= 200;
+							_gameController.scrap -= 200;
+							_audioController.playAudioClipOnce(4, Vector3.zero , 500);
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("TrainingArea"), new Vector3(currentTile.x, currentTile.y - 1, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();

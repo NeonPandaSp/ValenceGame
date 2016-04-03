@@ -59,6 +59,8 @@ using System.Collections.Generic;
 
 	public loadScene _loadScreen;
 
+	public AudioController _audioController; // Audio controller
+
 	//=================\\
 	//===== Start =====\\
 	//=================\\
@@ -258,6 +260,9 @@ using System.Collections.Generic;
 	//=== Functions ===\\
 	//=================\\
 	void buildBtnClicked () {
+
+		_audioController.playAudioClipOnce (1, Vector3.zero, 500); //play Sound
+
 		transform.Translate (Vector3.forward * Time.deltaTime);
 		//Debug.Log ("Build button clicked");
 		buildClicked = !buildClicked;

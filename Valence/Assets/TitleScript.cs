@@ -37,14 +37,13 @@ public class TitleScript : MonoBehaviour {
 	}
 
 	public void loadScene(bool newGame){
-		/**
-		 * JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE
-		 * ADD MAIN MENU BUTTON SOUND HERE
-		 * JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE
-		 **/
+		// play accept sound
+		_audioController.playAudioClipOnce (0, Vector3.zero, 500);
 
 		_audioController.targetSource = _audioController.backgroundMusic;
 		_audioController.fadingOut = true;
+
+
 		if (!newGame) {
 			
 			menuScreen.SetActive(false);
@@ -66,14 +65,30 @@ public class TitleScript : MonoBehaviour {
 		}
 	}
 
+	public void settings() { //Tyler this is the settings button! - j
+		_audioController.playAudioClipOnce (0, Vector3.zero, 500);
+	}
+
+
 	public void quit(){
+		_audioController.playAudioClipOnce (0, Vector3.zero, 500);
 		Application.Quit ();
 	}
 
 	public void StartLoading() {
 		StartCoroutine("load");
 	}
-	
+
+	public void hovering(int sndNum ){
+			if( sndNum == 0 )
+				_audioController.playAudioClipOnce (1, Vector3.zero, 500);
+			else if ( sndNum == 1)
+				_audioController.playAudioClipOnce (2, Vector3.zero, 500);
+			else if ( sndNum == 3 )
+				_audioController.playAudioClipOnce (3, Vector3.zero, 500);
+			
+	}	
+
 	IEnumerator load() {
 		Debug.LogWarning("ASYNC LOAD STARTED - " +
 		                 "DO NOT EXIT PLAY MODE UNTIL SCENE LOADS... UNITY WILL CRASH");
