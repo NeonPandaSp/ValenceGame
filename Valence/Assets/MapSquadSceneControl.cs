@@ -29,7 +29,7 @@ public class MapSquadSceneControl : MonoBehaviour {
 	public void toggleCanvas(){
 		if (mapIndex == 2) {
 			mapCan.SetActive (false);
-			loadScreen.SetActive (true);
+			//loadScreen.SetActive (true);
 			//Application.LoadLevelAsync (mapIndex);
 			_loadScene.initLoadScene(mapIndex);
 		}
