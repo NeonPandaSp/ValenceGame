@@ -40,6 +40,8 @@ public class InputController_Explore : MonoBehaviour {
 
 	public bool hovering;
 
+	public AudioController _audioController;
+
 	void Start(){
 		_tileMap = GetComponent<TileMap> ();
 		//myHoverObject = (GameObject) Instantiate (Resources.Load("Tile"), new Vector3 (0, 0, 0), Quaternion.identity);
@@ -343,6 +345,7 @@ public class InputController_Explore : MonoBehaviour {
 	}
 	public void attackConfirmed(){
 		Unit attackTarget = _GameController.selectedUnit.AttackTargets [_GameController.selectedUnit.currentAttackTarget];
+		_audioController.playAudioClipOnce (0, _GameController.selectedUnit.transform.position, 20);
 //		if (attackTarget.myCam != null) {
 //			recursiveLayerSet( attackTarget.gameObject, 16 );
 //			attackTarget.myCam.SetActive (true);

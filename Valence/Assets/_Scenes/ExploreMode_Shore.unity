@@ -2895,7 +2895,7 @@ RectTransform:
   m_RootOrder: 25
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 124.999992, y: 100}
+  m_AnchoredPosition: {x: 124.999992, y: 60}
   m_SizeDelta: {x: 160, y: 40}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &75703113
@@ -5932,7 +5932,7 @@ RectTransform:
   m_RootOrder: 24
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 125, y: 220}
+  m_AnchoredPosition: {x: 125, y: 180}
   m_SizeDelta: {x: 160, y: 40}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &134101934
@@ -12405,6 +12405,7 @@ MonoBehaviour:
   dropSprite: {fileID: 21300000, guid: 11110086085f5af45b0e14a85b1ea215, type: 3}
   pickupSprite: {fileID: 21300000, guid: 093b372e54b214840a58ebe86caabab8, type: 3}
   hovering: 0
+  _audioController: {fileID: 1154007443}
 --- !u!4 &186758064
 Transform:
   m_PrefabParentObject: {fileID: 477986, guid: 7acea836e4725384cb21542a091fbae5, type: 2}
@@ -80214,6 +80215,12 @@ Transform:
   - {fileID: 1267821067}
   m_Father: {fileID: 1582890672}
   m_RootOrder: 2
+--- !u!114 &1154007443
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11493198, guid: bbe96deda1103a941b319f7dbae9c04a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1852250914}
+  m_Script: {fileID: 11500000, guid: 1a8576254e9fdf64d81628c55e54adcf, type: 3}
 --- !u!1 &1156553768
 GameObject:
   m_ObjectHideFlags: 0
@@ -124203,6 +124210,68 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1850221057}
   m_Mesh: {fileID: 4300096, guid: 5df8e8a811a8d544dbefba0b43ae1b5a, type: 3}
+--- !u!1001 &1852250914
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 11493198, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: audioClips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 431754, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 431754, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 431754, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 431754, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 431754, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 431754, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 431754, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 431754, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: m_RootOrder
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8256166, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a022579bbd9f4d241a1ec2b92e302cfa, type: 3}
+    - target: {fileID: 8256166, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: spreadCustomCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11493198, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: audioClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: fc4d9eaffe143b444a500fd7a1997183, type: 3}
+    - target: {fileID: 8256166, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: m_Volume
+      value: .75
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1852600352
 GameObject:
   m_ObjectHideFlags: 0
@@ -136957,7 +137026,7 @@ RectTransform:
   m_RootOrder: 26
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 124.999992, y: 160}
+  m_AnchoredPosition: {x: 124.999992, y: 120}
   m_SizeDelta: {x: 160, y: 40}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &2066127872

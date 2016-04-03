@@ -2,6 +2,9 @@
 using System.Collections;
 
 public class TitleScript : MonoBehaviour {
+
+	public AudioController _audioController;
+
 	public GameObject menuScreen, titleScreen, loadScreen;
 	public int sceneNumber = 2;
 	bool hasBeenPressed = false;
@@ -40,7 +43,8 @@ public class TitleScript : MonoBehaviour {
 		 * JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE
 		 **/
 
-
+		_audioController.targetSource = _audioController.backgroundMusic;
+		_audioController.fadingOut = true;
 		if (!newGame) {
 			
 			menuScreen.SetActive(false);
