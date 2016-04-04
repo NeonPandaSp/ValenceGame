@@ -9,7 +9,7 @@ public class WinStateScript : MonoBehaviour {
 
 	public Vector2 rootPosition; 
 
-	public bool win, lose;
+	public bool win, lose, rewardTriggered;
 
 	public Image endScreen;
 	public Canvas mainUI;
@@ -94,12 +94,17 @@ public class WinStateScript : MonoBehaviour {
 	void results(){
 		PlayerData myData = PlayerDataManager.playerDataManager.loadSaveData ();
 		//updatescrap
-		if (win) {
+		if (win && !rewardTriggered) {
 			Debug.Log ("win was called");
 
 			winUI.sprite = winSprite;
 
 			myData.scrap += scrapRate;
+			GameObject newSObj = (GameObject) Instantiate ( scrapObj, Vector3.zero, Quaternion.identity );
+			newSObj.transform.SetParent ( rewardBucket.transform );
+			newSObj.transform.localScale = new Vector3( 1, 1, 1);
+			newSObj.GetComponent<Reward_Scrap>().scrapVal.text = ""+scrapRate;
+
 			for (int i = 0; i < recruitRate; i++) {
 				serialAgent newAgent = new serialAgent ();
 				//Gender
@@ -124,6 +129,15 @@ public class WinStateScript : MonoBehaviour {
 				
 				newAgent.state = AgentLogic_07.agentState.Wandering;
 				newAgent.job = AgentLogic_07.jobSubState.Default;
+
+				GameObject newWObj = (GameObject) Instantiate ( settlerObj, Vector3.zero, Quaternion.identity );
+				newWObj.transform.SetParent ( rewardBucket.transform );
+				newWObj.transform.localScale = new Vector3( 1, 1, 1);
+				newWObj.GetComponent<Reward_Person>().agentName.text = newAgent.agentName;
+				newWObj.GetComponent<Reward_Person>().strVal.text = ""+newAgent.strength;
+				newWObj.GetComponent<Reward_Person>().perVal.text = ""+ newAgent.perception;
+				newWObj.GetComponent<Reward_Person>().aglVal.text = ""+newAgent.agility;
+
 				myData.population.Add (newAgent);
 				myData.populationCount++;
 				Debug.Log ("newAgent: " + newAgent.agentName + " was added");
@@ -162,8 +176,11 @@ public class WinStateScript : MonoBehaviour {
 					newWeapon.soundRange = newWeapon.range - 3 + (newWeapon.damageModifier / 2);
 				}
 
+
+
 				GameObject newWObj = (GameObject) Instantiate ( weaponObj, Vector3.zero, Quaternion.identity );
 				newWObj.transform.SetParent ( rewardBucket.transform );
+				newWObj.transform.localScale = new Vector3( 1, 1, 1);
 				newWObj.GetComponent<Reward_Weapon>().weaponName.text = newWeapon.weaponName;
 				newWObj.GetComponent<Reward_Weapon>().weaponType.text = "["+newWeapon.weaponType+"]";
 				newWObj.GetComponent<Reward_Weapon>().dmgMod.text = "+"+newWeapon.damageModifier;
@@ -171,8 +188,10 @@ public class WinStateScript : MonoBehaviour {
 				newWObj.GetComponent<Reward_Weapon>().accMod.text = newWeapon.accuracy*10 + "%";
 				myData.settlementWeapons.Add (newWeapon);
 
+				rewardTriggered = true;
+
 			}
-		} else {
+		} else if(!rewardTriggered) {
 			winUI.sprite = loseSprite;
 		}
 		
@@ -201,10 +220,7 @@ public class WinStateScript : MonoBehaviour {
 			}
 		}
 		myData.currentParty.Clear ();
-		Debug.Log ("Current Population");
-		foreach (serialAgent sA in myData.population) {
-			Debug.Log ( sA.agentName );
-		}
+
 		PlayerDataManager.playerDataManager.writePlayerData (myData);
 		//loadBuild ();
 	}
