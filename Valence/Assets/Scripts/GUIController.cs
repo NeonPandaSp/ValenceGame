@@ -279,22 +279,28 @@ using System.Collections.Generic;
 		
 		switch (s) {
 			case "shelter":
-			setBuildingTypeName = "shelter";
+				setBuildingTypeName = "shelter";
+				_audioController.playAudioClipOnce (1, Vector3.zero, 500); //play Sound
 				break;
 			case "farm":
 				setBuildingTypeName = "farm";
+				_audioController.playAudioClipOnce (1, Vector3.zero, 500); //play Sound
 				break;
 			case "water":
 				setBuildingTypeName = "water";
+				_audioController.playAudioClipOnce (1, Vector3.zero, 500); //play Sound
 				break;
 			case "power":
 				setBuildingTypeName = "power";
+				_audioController.playAudioClipOnce (1, Vector3.zero, 500); //play Sound
 				break;
 			case "hospital":
 				setBuildingTypeName = "hospital";
+				_audioController.playAudioClipOnce (1, Vector3.zero, 500); //play Sound
 				break;
 			case "training":
 				setBuildingTypeName = "training";
+				_audioController.playAudioClipOnce (1, Vector3.zero, 500); //play Sound
 				break;
 			case "empty":
 				setBuildingTypeName = "Null";
@@ -311,6 +317,8 @@ using System.Collections.Generic;
 
 	void switchMode ()
 	{
+		_audioController.playAudioClipOnce (1, Vector3.zero, 500); //play Sound
+
 		Debug.Log ("Switch Mode button clicked");
 		/// create new save data
 		///

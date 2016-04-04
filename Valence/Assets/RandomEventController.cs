@@ -27,6 +27,8 @@ public class RandomEventController : MonoBehaviour {
 
 	public bool eventActive = false;
 
+	public AudioController _audioController; // Audio controller
+
 	public List<int> eventIdIndex = new List<int>();
 	// Use this for initialization
 	void Start () {
@@ -58,6 +60,7 @@ public class RandomEventController : MonoBehaviour {
 			eventDescription.text = "Two individuals have arrived at the front gate looking for refuge. Accept them into your settlement and they might become productive members of your community, or they may run off with your resources. Do you let them in?";
 			confirmButton.GetComponentInChildren<Text>().text = "Let Them In";
 			declineButton.GetComponentInChildren<Text>().text = "Keep The Gate Closed";
+			_audioController.playAudioClipOnce (8, Vector3.zero, 500); //play Sound
 			break;
 		case 2:
 			Debug.Log ("Event 002 Called");
@@ -66,6 +69,7 @@ public class RandomEventController : MonoBehaviour {
 			eventDescription.text = "A few settlers haven't been feeling well as of late. People suspect the water supply may be polluted. Will you waste your current water supply to prevent the spread of further illness?";
 			confirmButton.GetComponentInChildren<Text>().text = "Waste the Water Supply";
 			declineButton.GetComponentInChildren<Text>().text = "Keep the Water";
+			_audioController.playAudioClipOnce (8, Vector3.zero, 500); //play Sound
 			break;
 		case 3:
 			Debug.Log ("Event 002 Called");
@@ -74,6 +78,7 @@ public class RandomEventController : MonoBehaviour {
 			eventDescription.text = _gameController.population[rand].GetComponent<AgentLogic_07>().firstLastName + " thinks he found some building resources in a nearby collapsed tunnels. Its a dangerous area, but may result in more scrap. Send a group to investigate?";
 			confirmButton.GetComponentInChildren<Text>().text  = "Send Group";
 			declineButton.GetComponentInChildren<Text>().text = "Decline";
+			_audioController.playAudioClipOnce (8, Vector3.zero, 500); //play Sound
 			break;
 		default:
 			Debug.Log ("DefaultEventCalled");
@@ -92,14 +97,17 @@ public class RandomEventController : MonoBehaviour {
 				if( choice && _gameController.population.Count >= _gameController.popLimit - 2 ){
 					resultText.color = new Color( 1.0f, 1.0f,1.0f );
 					resultText.text = "You lack sufficient housing to accomodate new settlers. Build more houses if you want to welcome new members into your community";
+					_audioController.playAudioClipOnce (7, Vector3.zero, 500); //play Sound
 				} else if( choice && rand > 50 ){
 					resultText.color = new Color( 1.0f, 1.0f, 1.0f);
 					resultText.text = "You welcome two new members into your group! They seem nice.";
+					_audioController.playAudioClipOnce (11, Vector3.zero, 500); //play Sound
 					_spawner.SpawnAgent();
 					_spawner.SpawnAgent();
 				} else if( choice && rand <= 50 ){
 					resultText.color = new Color( 1, 0.1f, 0.1f );
 					resultText.text = "You welcome two new members into your group. In the middle of the night they make off with some of your scrap.";
+					_audioController.playAudioClipOnce (10, Vector3.zero, 500); //play Sound
 					if( _gameController.scrap > 50 ){
 						_gameController.scrap -= 50;
 					} else {
@@ -108,6 +116,7 @@ public class RandomEventController : MonoBehaviour {
 				} else {
 					resultText.color = new Color( 1, 0.1f, 0.1f );
 					resultText.text = "You keep the front gate shut. Eventually their cries for help fade.";
+					_audioController.playAudioClipOnce (9, Vector3.zero, 500); //play Sound
 				}
 
 				break;
@@ -118,6 +127,7 @@ public class RandomEventController : MonoBehaviour {
 					_gameController.water = 0;
 					resultText.color = new Color( 1, 1, 1 );
 					resultText.text = "You dump the water supply. Lets hope that wasn't for nothing.";
+					_audioController.playAudioClipOnce (9, Vector3.zero, 500); //play Sound
 				} else if (!choice && rand < 50 ){
 					int randAmoutEffected = Random.Range (1,_gameController.population.Count/3);
 					for( int i = 1; i <= randAmoutEffected; i++){
@@ -126,10 +136,11 @@ public class RandomEventController : MonoBehaviour {
 					}
 					resultText.color = new Color( 1, 0.1f, 0.1f );
 					resultText.text = "Water is a precious resource so you decide to keep it and risk spreading the illness. In the coming days " + randAmoutEffected + " settlers have come down with symptoms of the illness.";
-					
+					_audioController.playAudioClipOnce (10, Vector3.zero, 500); //play Sound
 				} else if (!choice && rand > 50 ){
 					resultText.color = new Color( 1, 1, 1 );
 					resultText.text = "Water is a precious resource so you decide to keep it and risk spreading the illness. In the coming days no new cases of the illness emerge";
+					_audioController.playAudioClipOnce (11, Vector3.zero, 500); //play Sound
 				}
 				break;
 			case 3:
@@ -139,6 +150,7 @@ public class RandomEventController : MonoBehaviour {
 					_gameController.scrap += amount;
 					resultText.color = new Color( 1, 1, 1 );
 					resultText.text = "You send a group into the tunnel. They find " + amount + " SCRAP!";
+					_audioController.playAudioClipOnce (11, Vector3.zero, 500); //play Sound
 				} else if (choice && rand < 50 ){
 					int randAmoutEffected = Random.Range (1,4);
 					if( _gameController.population.Count < 4 ){
@@ -149,10 +161,14 @@ public class RandomEventController : MonoBehaviour {
 						_gameController.population[randIndex].GetComponent<AgentLogic_07>().health -= 90;
 					}
 					resultText.color = new Color( 1, 0.1f, 0.1f );
-					if( randAmoutEffected > 1 )
+					if( randAmoutEffected > 1 ) {
 						resultText.text = "You send " + randAmoutEffected + " settlers out into the tunnel. The tunnel proves unstable and they group returns severely injured";
-					else
+						_audioController.playAudioClipOnce (9, Vector3.zero, 500); //play Sound
+					}
+					else {
 						resultText.text = "You send " + randAmoutEffected + " settler out into the tunnel. The tunnel proves unstable and they return severely injured";
+						_audioController.playAudioClipOnce (9, Vector3.zero, 500); //play Sound
+					}
 					
 				} else if (!choice ){
 					resultText.color = new Color( 1, 1, 1 );
@@ -192,5 +208,6 @@ public class RandomEventController : MonoBehaviour {
 		eventActive = false;
 		eventPanel.SetActive (false);
 		currentTime = 0;
+		_audioController.playAudioClipOnce (4, Vector3.zero, 500); //play Sound
 	}
 }

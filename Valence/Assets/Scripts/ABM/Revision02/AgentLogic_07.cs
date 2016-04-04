@@ -109,6 +109,8 @@ public class AgentLogic_07 : MonoBehaviour {
     //Agent animator component
     Animator agentAnim;
 
+	public AudioController _audioController; // Audio controller
+
 	bool canCallHungerNotification = false; // Used for Notification Calling - Tyler
 
     public enum agentState
@@ -140,6 +142,7 @@ public class AgentLogic_07 : MonoBehaviour {
     public agentState currentState;
 
     void Start(){
+		_audioController = FindObjectOfType<AudioController> ().gameObject.GetComponent<AudioController> ();
         //_GUIController_SettlerInfo = GameObject.Find ("Folk_Female_Agent").GetComponent<GUIController_SettlerInfo> ();
         if (newAgent) {
 
@@ -351,6 +354,7 @@ public class AgentLogic_07 : MonoBehaviour {
         //Check if the agent has run out of health
         if (health <= 0 && isDead == false)
         {
+			_audioController.playAudioClipOnce (10, Vector3.zero, 500); //play Sound
             //Stop the agent from moving
             aiFollow.Stop();
             aiFollow.Reset();

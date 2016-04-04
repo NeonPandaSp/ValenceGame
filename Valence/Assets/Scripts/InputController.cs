@@ -124,10 +124,14 @@ public class InputController : MonoBehaviour {
 	void Update(){
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			isPause = !isPause;
-			if(isPause)
+			if(isPause) {
 				Time.timeScale = 0;
-			else
+				_audioController.playAudioClipOnce (4, Vector3.zero, 500);
+			}
+			else {
 				Time.timeScale = 1;
+				_audioController.playAudioClipOnce (4, Vector3.zero, 500);
+			}
 		}
 
 		if (isPause) {
@@ -140,14 +144,14 @@ public class InputController : MonoBehaviour {
 	public void pause(){
 		isPause = !isPause;
 
-		if(isPause)
+		if (isPause) 
 			Time.timeScale = 0;
 		else
 			Time.timeScale = 1;
 		if (isPause) {
 			menuObj.SetActive (true);
 		} else {
-			_audioController.playAudioClipOnce (3, Vector3.zero, 500);
+			_audioController.playAudioClipOnce (4, Vector3.zero, 500);
 			menuObj.SetActive (false);
 		}
 	}
@@ -314,7 +318,7 @@ public class InputController : MonoBehaviour {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop")))
                         {
                             _gameController.scrap -= 25;
-							_audioController.playAudioClipOnce(4, Vector3.zero , 500);
+							_audioController.playAudioClipOnce(3, Vector3.zero , 500); // // play audio effect
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("Farm"), new Vector3(currentTile.x, currentTile.y, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
@@ -356,6 +360,8 @@ public class InputController : MonoBehaviour {
                         }
                     }
                     else if (!scrapAlerted){
+
+						_audioController.playAudioClipOnce (7, Vector3.zero, 500); // play audio effect
                                               
                         notificationController.CreateNewNotification("No Scrap! Explore the metro to discover more scrap!");
                         scrapAlerted = true;
@@ -369,7 +375,7 @@ public class InputController : MonoBehaviour {
 					if (_gameController.scrap >= 25 && !MouseEdge()){
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))){
 							_gameController.scrap -= 25;
-							_audioController.playAudioClipOnce(4, Vector3.zero , 500);
+							_audioController.playAudioClipOnce(3, Vector3.zero , 500);  // play audio effect
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("WaterStation"), new Vector3(currentTile.x, currentTile.y, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
@@ -407,6 +413,7 @@ public class InputController : MonoBehaviour {
                     }
                     else if (!scrapAlerted)
                     {
+						_audioController.playAudioClipOnce (7, Vector3.zero, 500); // play audio effect
 
                         notificationController.CreateNewNotification("No Scrap! Explore the metro to discover more scrap!");
                         scrapAlerted = true;
@@ -421,7 +428,7 @@ public class InputController : MonoBehaviour {
 					if (_gameController.scrap >= 25 && !MouseEdge()){
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag ("prop"))){
 							_gameController.scrap -= 25;
-							_audioController.playAudioClipOnce(4, Vector3.zero , 500);
+							_audioController.playAudioClipOnce(3, Vector3.zero , 500); // play audio effect
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load ("PowerStation"), new Vector3(currentTile.x, currentTile.y - 1, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
@@ -459,6 +466,7 @@ public class InputController : MonoBehaviour {
                     }
                     else if (!scrapAlerted)
                     {
+						_audioController.playAudioClipOnce (7, Vector3.zero, 500); // play audio effect
 
                         notificationController.CreateNewNotification("No Scrap! Explore the metro to discover more scrap!");
                         scrapAlerted = true;
@@ -472,7 +480,7 @@ public class InputController : MonoBehaviour {
 					if (_gameController.scrap >= 25 && !MouseEdge()) {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
 							_gameController.scrap -= 25;
-							_audioController.playAudioClipOnce(4, Vector3.zero , 500);
+							_audioController.playAudioClipOnce(3, Vector3.zero , 500); // play audio effect
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("Shelter"), new Vector3(currentTile.x, currentTile.y, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
@@ -505,6 +513,7 @@ public class InputController : MonoBehaviour {
                     }
                     else if (!scrapAlerted)
                     {
+						_audioController.playAudioClipOnce (7, Vector3.zero, 500); // play audio effect
 
                         notificationController.CreateNewNotification("No Scrap! Explore the metro to discover more scrap!");
                         scrapAlerted = true;
@@ -518,7 +527,7 @@ public class InputController : MonoBehaviour {
 					if (_gameController.scrap >= 25 && !MouseEdge()) {
 						if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop"))) {
 							_gameController.scrap -= 25;
-							_audioController.playAudioClipOnce(4, Vector3.zero , 500);
+							_audioController.playAudioClipOnce(3, Vector3.zero , 500); // play audio effect
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("Tavern"), currentTile, Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
@@ -552,6 +561,7 @@ public class InputController : MonoBehaviour {
                     }
                     else if (!scrapAlerted)
                     {
+						_audioController.playAudioClipOnce (7, Vector3.zero, 500); // play audio effect
 
                         notificationController.CreateNewNotification("No Scrap! Explore the metro to discover more scrap!");
                         scrapAlerted = true;
@@ -568,7 +578,7 @@ public class InputController : MonoBehaviour {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop")))
                         {
 							_gameController.scrap -= 25;
-							_audioController.playAudioClipOnce(4, Vector3.zero , 500);
+							_audioController.playAudioClipOnce(3, Vector3.zero , 500); // play audio effect
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("Hospital"), new Vector3(currentTile.x, currentTile.y, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
@@ -606,6 +616,7 @@ public class InputController : MonoBehaviour {
                     }
                     else if (!scrapAlerted)
                     {
+						_audioController.playAudioClipOnce (7, Vector3.zero, 500); // play audio effect
 
                         notificationController.CreateNewNotification("No Scrap! Explore the metro to discover more scrap!");
                         scrapAlerted = true;
@@ -622,7 +633,7 @@ public class InputController : MonoBehaviour {
                         if (!IsOverlapping(myHoverObject, GameObject.FindGameObjectsWithTag("prop")))
                         {
 							_gameController.scrap -= 200;
-							_audioController.playAudioClipOnce(4, Vector3.zero , 500);
+							_audioController.playAudioClipOnce(3, Vector3.zero , 500); // play audio effect
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("TrainingArea"), new Vector3(currentTile.x, currentTile.y - 1, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
@@ -660,6 +671,7 @@ public class InputController : MonoBehaviour {
                     }
                     else if (!scrapAlerted)
                     {
+						_audioController.playAudioClipOnce (7, Vector3.zero, 500); // play audio effect
 
                         notificationController.CreateNewNotification("No Scrap! Explore the metro to discover more scrap!");
                         scrapAlerted = true;

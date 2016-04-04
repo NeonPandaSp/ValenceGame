@@ -75,11 +75,14 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 
 	public GameObject myCamObj;
 
+	public AudioController _audioController; // Audio controller
+
 	//=================\\
 	//===== Start =====\\
 	//=================\\
 
     void Start() {
+		_audioController = FindObjectOfType<AudioController> ().gameObject.GetComponent<AudioController> ();
         showError = false;
         hospitalAvailable = false;
         farmAvailable = false;
@@ -479,7 +482,13 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 				resetJoblists (agentLogic.jobState);
 			//Define the working state as farming
 			agentLogic.jobState = AgentLogic_07.jobSubState.Farmer;
+
+			_audioController.playAudioClipOnce (5, Vector3.zero, 500); // play audio effect
 		}
+
+		else
+			_audioController.playAudioClipOnce (7, Vector3.zero, 500); // play audio effect
+
 	}
 
 	void waterPurifierRoleClicked () {
@@ -492,7 +501,12 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 				resetJoblists (agentLogic.jobState);
 			//Define the working state as farming
 			agentLogic.jobState = AgentLogic_07.jobSubState.Hydrologist;
+
+			_audioController.playAudioClipOnce (5, Vector3.zero, 500); // play audio effect
 		}
+
+		else 
+			_audioController.playAudioClipOnce (7, Vector3.zero, 500); // play audio effect
 	}
 
 	void powerEngineerRoleClicked () {
@@ -507,7 +521,12 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 			
 			//Define the working state as farming
 			agentLogic.jobState = AgentLogic_07.jobSubState.PowerWorker;
+
+			_audioController.playAudioClipOnce (5, Vector3.zero, 500); // play audio effect
 		}
+
+		else 
+			_audioController.playAudioClipOnce (7, Vector3.zero, 500); // play audio effect
 	}
 
 //	void medicRoleClicked () {
@@ -565,7 +584,12 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 
             //Define the working state as farming
             agentLogic.jobState = AgentLogic_07.jobSubState.Trainee;
+
+			_audioController.playAudioClipOnce (5, Vector3.zero, 500); // play audio effect
         }
+
+		else 
+			_audioController.playAudioClipOnce (7, Vector3.zero, 500); // play audio effect
     }
 
 	//When the close button is clicked
@@ -574,6 +598,9 @@ public class GUIController_SettlerInfo : MonoBehaviour {
 		_gameController.currentSettlerUI = null;
 		myCamObj.GetComponent<CameraTargetController>().moving = false;
 		myCamObj.GetComponent<CameraTargetController>().following = false;
+
+		_audioController.playAudioClipOnce (4, Vector3.zero, 500);
+
 	}
 
 	//==================\\
