@@ -998,10 +998,10 @@ Canvas:
   m_GameObject: {fileID: 639931301}
   m_Enabled: 1
   serializedVersion: 2
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1597536022}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -1420,7 +1420,7 @@ Canvas:
   m_GameObject: {fileID: 974635054}
   m_Enabled: 1
   serializedVersion: 2
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 1597536022}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
@@ -1663,7 +1663,7 @@ RectTransform:
   m_GameObject: {fileID: 1053728798}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 246}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 974635055}
   m_RootOrder: 0
@@ -2227,10 +2227,10 @@ Canvas:
   m_GameObject: {fileID: 1598640098}
   m_Enabled: 1
   serializedVersion: 2
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1597536022}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -2541,6 +2541,18 @@ Prefab:
     - target: {fileID: 22471582, guid: 8e7c69414413742449ec83ffb85a3f8c, type: 2}
       propertyPath: m_Pivot.y
       value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 22471582, guid: 8e7c69414413742449ec83ffb85a3f8c, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22471582, guid: 8e7c69414413742449ec83ffb85a3f8c, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22471582, guid: 8e7c69414413742449ec83ffb85a3f8c, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8e7c69414413742449ec83ffb85a3f8c, type: 2}

@@ -19,7 +19,7 @@ public class BuildingScript : MonoBehaviour {
 	public float resourceProgress;
 	public float consumptionProgress;
 
-    public Transform infoUI;
+    //public Transform infoUI;
     public Transform progressUI;
 
 
@@ -33,13 +33,10 @@ public class BuildingScript : MonoBehaviour {
 		_myGameController = gameControllerObject.GetComponent<GameController> ();
 
         //Find child UI gameobjects of this building
-        infoUI = transform.Find("BuildingInfo");
         progressUI = transform.Find("ProgressBar");
 
 
         assignedAgents = new GameObject[3];
-
-		infoUI.gameObject.SetActive (false);
 		progressUI.gameObject.SetActive (true);
 
         checkClick = true;
@@ -56,14 +53,10 @@ public class BuildingScript : MonoBehaviour {
     void OnMouseDown() {
 
         if (checkClick){
-
-            infoUI.gameObject.SetActive(true);
             progressUI.gameObject.SetActive(false);
 
             checkClick = false;
         } else {
-
-            infoUI.gameObject.SetActive(false);
             progressUI.gameObject.SetActive(true);
 
             checkClick = true;

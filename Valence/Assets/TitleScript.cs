@@ -57,6 +57,8 @@ public class TitleScript : MonoBehaviour {
 				PlayerDataManager.playerDataManager.deleteSaveData();
 
 			PlayerDataManager.playerDataManager.createNewData();
+
+			sceneNumber = 10;
 			menuScreen.SetActive(false);
 			loadScreen.SetActive(true);
 			//Application.LoadLevelAsync (sceneNumber);
