@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -14,9 +14,8 @@ public class WinStateScript : MonoBehaviour {
 	public Image endScreen;
 	public Canvas mainUI;
 
-	public Text winText;
-	public Text rewardsText;
-	public Text lossesText;
+	public Image winUI;
+	public Sprite winSprite, loseSprite;
 
 	public int scrapRate;
 	public int recruitRate;
@@ -25,6 +24,10 @@ public class WinStateScript : MonoBehaviour {
 	public GameObject objectiveMarker;
 
 	public NameGenerator _nameGenerator;
+	public loadScene _loadScene;
+
+	public GameObject settlerObj, weaponObj, scrapObj;
+	public GameObject rewardBucket;
 	// Use this for initialization
 	void Start () {
 		endScreen.gameObject.SetActive (false);
@@ -79,16 +82,9 @@ public class WinStateScript : MonoBehaviour {
 		endScreen.gameObject.SetActive (true);
 		mainUI.gameObject.SetActive (false);
 		if (win) {
-			winText.text = "Mission Complete";
-			rewardsText.text = "Rewards are generated here";
-
-
 		} else {
-			winText.text = "Mission Failed";
-			rewardsText.text = "---";
 		}
 		results();
-		lossesText.text = "" + ( folkInitialPartySize - _gameController.folk.Count) + " casualties.";
 	}
 
 	void loseScreen(){
@@ -99,19 +95,22 @@ public class WinStateScript : MonoBehaviour {
 		PlayerData myData = PlayerDataManager.playerDataManager.loadSaveData ();
 		//updatescrap
 		if (win) {
-			Debug.Log ( "win was called" );
+			Debug.Log ("win was called");
+
+			winUI.sprite = winSprite;
+
 			myData.scrap += scrapRate;
-			for( int i = 0; i < recruitRate; i++){
-				serialAgent newAgent = new serialAgent();
+			for (int i = 0; i < recruitRate; i++) {
+				serialAgent newAgent = new serialAgent ();
 				//Gender
 				string[] genderArray = new string[2] {
 					"Male",
 					"Female"
 				};
-				int randomGender = Random.Range(0, (genderArray.Length));
+				int randomGender = Random.Range (0, (genderArray.Length));
 				newAgent.agentId = "NEWAGENT";
-				newAgent.gender = genderArray[randomGender];
-				newAgent.agentName = generateNewAgentName(newAgent.gender);
+				newAgent.gender = genderArray [randomGender];
+				newAgent.agentName = generateNewAgentName (newAgent.gender);
 				newAgent.xPos = 0;
 				newAgent.yPos = 0;
 				newAgent.zPos = 0;
@@ -119,53 +118,62 @@ public class WinStateScript : MonoBehaviour {
 				newAgent.health = 60;
 				newAgent.hunger = 80;
 				
-				newAgent.strength = randomStat();
+				newAgent.strength = randomStat ();
 				newAgent.perception = randomStat ();
 				newAgent.agility = randomStat ();
 				
 				newAgent.state = AgentLogic_07.agentState.Wandering;
 				newAgent.job = AgentLogic_07.jobSubState.Default;
-				myData.population.Add( newAgent );
+				myData.population.Add (newAgent);
 				myData.populationCount++;
-				Debug.Log("newAgent: " + newAgent.agentName + " was added");
+				Debug.Log ("newAgent: " + newAgent.agentName + " was added");
 			}
 
-			for( int i = 0; i < weaponRate; i++){
-				serialWeapon newWeapon = new serialWeapon();
+			for (int i = 0; i < weaponRate; i++) {
+				serialWeapon newWeapon = new serialWeapon ();
 
-				string gunName = _nameGenerator.GetAdjective() + " " + _nameGenerator.GetVerbs();
-				gunName = gunName.ToUpper();
+				string gunName = _nameGenerator.GetAdjective () + " " + _nameGenerator.GetVerbs ();
+				gunName = gunName.ToUpper ();
 
 				newWeapon.weaponName = gunName;
-				newWeapon.weaponId = "" + ( (int) Random.Range (1000,9999) );
-				int dice = (int) rollDice (1,7);
+				newWeapon.weaponId = "" + ((int)Random.Range (1000, 9999));
+				int dice = (int)rollDice (1, 7);
 
-				if( dice <= 3 ){
+				if (dice <= 3) {
 					newWeapon.weaponType = "Handgun";
-					newWeapon.range = 8 + (int) rollDice ( -2,2);
-					newWeapon.accuracy = 0.95f + rollDice (-0.3f,0.3f);
-					newWeapon.damageModifier = 6 + (int) rollDice ( -3,3);
+					newWeapon.range = 8 + (int)rollDice (-2, 2);
+					newWeapon.accuracy = 0.95f + rollDice (-0.3f, 0.3f);
+					newWeapon.damageModifier = 6 + (int)rollDice (-3, 3);
 					newWeapon.rangeModifier = 0.1f;
 					newWeapon.soundRange = newWeapon.range - 3 + (newWeapon.damageModifier / 2);
-				} else if ( dice <= 5 ){
+				} else if (dice <= 5) {
 					newWeapon.weaponType = "Shotgun";
-					newWeapon.range = 6 + (int) rollDice ( -2,2);
-					newWeapon.accuracy = 0.95f + rollDice (-0.2f,0.2f);
-					newWeapon.damageModifier = 6 + (int) rollDice ( -3,6);
+					newWeapon.range = 6 + (int)rollDice (-2, 2);
+					newWeapon.accuracy = 0.95f + rollDice (-0.2f, 0.2f);
+					newWeapon.damageModifier = 6 + (int)rollDice (-3, 6);
 					newWeapon.rangeModifier = 0.2f;
 					newWeapon.soundRange = newWeapon.range - 3 + (newWeapon.damageModifier / 2);
 				} else {
 					newWeapon.weaponType = "Rifle";
-					newWeapon.range = 13 + (int) rollDice ( -3,3);
-					newWeapon.accuracy = 0.75f + rollDice (-0.2f,0.2f);
-					newWeapon.damageModifier = 6 + (int) rollDice ( -2,4);
+					newWeapon.range = 13 + (int)rollDice (-3, 3);
+					newWeapon.accuracy = 0.75f + rollDice (-0.2f, 0.2f);
+					newWeapon.damageModifier = 6 + (int)rollDice (-2, 4);
 					newWeapon.rangeModifier = 0.05f;
 					newWeapon.soundRange = newWeapon.range - 3 + (newWeapon.damageModifier / 2);
 				}
 
-				myData.settlementWeapons.Add ( newWeapon );
+				GameObject newWObj = (GameObject) Instantiate ( weaponObj, Vector3.zero, Quaternion.identity );
+				newWObj.transform.SetParent ( rewardBucket.transform );
+				newWObj.GetComponent<Reward_Weapon>().weaponName.text = newWeapon.weaponName;
+				newWObj.GetComponent<Reward_Weapon>().weaponType.text = "["+newWeapon.weaponType+"]";
+				newWObj.GetComponent<Reward_Weapon>().dmgMod.text = "+"+newWeapon.damageModifier;
+				newWObj.GetComponent<Reward_Weapon>().rngMod.text = ""+ newWeapon.range;
+				newWObj.GetComponent<Reward_Weapon>().accMod.text = newWeapon.accuracy*10 + "%";
+				myData.settlementWeapons.Add (newWeapon);
 
 			}
+		} else {
+			winUI.sprite = loseSprite;
 		}
 		
 		
@@ -198,7 +206,7 @@ public class WinStateScript : MonoBehaviour {
 			Debug.Log ( sA.agentName );
 		}
 		PlayerDataManager.playerDataManager.writePlayerData (myData);
-		loadBuild ();
+		//loadBuild ();
 	}
 
 	void loadBuild(){

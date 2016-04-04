@@ -19,6 +19,9 @@ public class IntroVideoSceneControl : MonoBehaviour {
 		if ( timer > loadNextSceneTime ){
 			ActivateScene();
 		}
+		if (Input.anyKey) {
+			timer = loadNextSceneTime;
+		}
 	}
 	public void StartLoading() {
 		StartCoroutine("load");
