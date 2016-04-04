@@ -252,16 +252,18 @@ public class SquadSelectionScript : MonoBehaviour {
 		numberOfSettlersInPopulation.text = "Settler List (" + scrollableSettlerList.transform.childCount + ")";		
 		numberOfSettlersInSquad.text = ("Squad " + squadNumber) + "/4   |";
 
-		RectTransform thisBeMyTransform = scrollableSettlerList.transform.GetChild(0).GetComponent<RectTransform> ();
-		NumOfPopSettlers = scrollableSettlerList.transform.childCount * Math.Abs (thisBeMyTransform.sizeDelta.y) + (scrollableSettlerList.transform.childCount * scrollableSettlerList.GetComponent<GridLayoutGroup>().spacing.y);
-		float subtractThisAmount = (float)(Math.Abs (scrollableSettlerList.GetComponent<RectTransform> ().rect.y) / 1.85);
-		scrollableSettlerList.GetComponent<RectTransform> ().sizeDelta = new Vector2 (thisBeMyTransform.sizeDelta.x, NumOfPopSettlers - subtractThisAmount);
+		if (scrollableSettlerList.transform.childCount > 0) {
+			RectTransform thisBeMyTransform = scrollableSettlerList.transform.GetChild (0).GetComponent<RectTransform> ();
+			NumOfPopSettlers = scrollableSettlerList.transform.childCount * Math.Abs (thisBeMyTransform.sizeDelta.y) + (scrollableSettlerList.transform.childCount * scrollableSettlerList.GetComponent<GridLayoutGroup> ().spacing.y);
+			float subtractThisAmount = (float)(Math.Abs (scrollableSettlerList.GetComponent<RectTransform> ().rect.y) / 1.85);
+			scrollableSettlerList.GetComponent<RectTransform> ().sizeDelta = new Vector2 (Math.Abs (settlerList.gameObject.transform.GetComponent<RectTransform> ().rect.x), NumOfPopSettlers - subtractThisAmount);
+		}
 
 		//=============\\
 		//===Weapons===\\
 		//=============\\
-		int weaponsPartyIndex = 0;
-		for (int i = 0; i < 4; i++) {
+//		int weaponsPartyIndex = 0;
+//		for (int i = 0; i < 4; i++) {
 //			foreach (serialWeapon weaponMember in myParty[i].myWeapon) {
 //				if (weaponMember.weaponId != "" && weaponMember.weaponId != "-1") {
 //					weaponNumSet [weaponsPartyIndex] = true;
@@ -271,7 +273,7 @@ public class SquadSelectionScript : MonoBehaviour {
 //				}
 //				weaponsPartyIndex++;
 //			}
-		}
+//		}
 		weaponNumber = 0;
 		foreach (bool i in weaponNumSet) {
 			if (i == true) {
@@ -282,10 +284,12 @@ public class SquadSelectionScript : MonoBehaviour {
 		numberOfWeaponsInWeaponsList.text = "Weapons List (" + scrollableWeaponsList.transform.childCount + ")";		
 		numberOfWeaponsInSelectedWeaponsList.text = ("|    Weapons " + weaponNumber) + "/4";
 		
-		RectTransform thisBeMyTransform2 = scrollableWeaponsList.transform.GetChild(0).GetComponent<RectTransform> ();
-		NumOfInvWeapons = scrollableWeaponsList.transform.childCount * Math.Abs (thisBeMyTransform2.sizeDelta.y) + (scrollableWeaponsList.transform.childCount * scrollableWeaponsList.GetComponent<GridLayoutGroup>().spacing.y);
-		float subtractThisAmount2 = (float)(Math.Abs (scrollableWeaponsList.GetComponent<RectTransform> ().rect.y) / 1.85);
-		scrollableWeaponsList.GetComponent<RectTransform> ().sizeDelta = new Vector2 (thisBeMyTransform2.sizeDelta.x, NumOfInvWeapons - subtractThisAmount2);
+		if (scrollableWeaponsList.transform.childCount > 0) {
+			RectTransform thisBeMyTransform2 = scrollableWeaponsList.transform.GetChild (0).GetComponent<RectTransform> ();
+			NumOfInvWeapons = scrollableWeaponsList.transform.childCount * Math.Abs (thisBeMyTransform2.sizeDelta.y) + (scrollableWeaponsList.transform.childCount * scrollableWeaponsList.GetComponent<GridLayoutGroup> ().spacing.y);
+			float subtractThisAmount2 = (float)(Math.Abs (scrollableWeaponsList.GetComponent<RectTransform> ().rect.y) / 1.85);
+			scrollableWeaponsList.GetComponent<RectTransform> ().sizeDelta = new Vector2 (Math.Abs (weaponList.gameObject.transform.GetComponent<RectTransform> ().rect.x), NumOfInvWeapons - subtractThisAmount2);
+		}
 	}
 }
 
