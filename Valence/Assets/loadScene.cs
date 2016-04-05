@@ -27,6 +27,7 @@ public class loadScene : MonoBehaviour {
 				uiStuff.SetActive(false);
 			if ( timer > 5 ){
 				ActivateScene();
+				timer = 3;
 			}
 		}
 	}

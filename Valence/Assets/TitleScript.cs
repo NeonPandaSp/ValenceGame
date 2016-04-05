@@ -56,9 +56,8 @@ public class TitleScript : MonoBehaviour {
 			if( PlayerDataManager.playerDataManager.saveDataExists() )
 				PlayerDataManager.playerDataManager.deleteSaveData();
 
+			sceneNumber = 11;
 			PlayerDataManager.playerDataManager.createNewData();
-
-			sceneNumber = 10;
 			menuScreen.SetActive(false);
 			loadScreen.SetActive(true);
 			//Application.LoadLevelAsync (sceneNumber);
@@ -75,6 +74,7 @@ public class TitleScript : MonoBehaviour {
 		
 		_audioController.targetSource = _audioController.backgroundMusic;
 		_audioController.fadingOut = true;
+		menuScreen.SetActive(false);
 		loadScreen.SetActive(true);
 		sceneNumber = 10;
 		Application.LoadLevelAsync (sceneNumber);
