@@ -14876,7 +14876,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 690787862}
-  m_LocalRotation: {x: .254652292, y: .659660757, z: -.315033615, w: .633051217}
+  m_LocalRotation: {x: .254652262, y: .659660697, z: -.315033585, w: .633051157}
   m_LocalPosition: {x: 3.12199998, y: 2.30900002, z: 13.974}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -25955,6 +25955,7 @@ MonoBehaviour:
   myAnimCtrl: {fileID: 0}
   myFAnimCtrl: {fileID: 0}
   movementRemaining: 0
+  _audioController: {fileID: 0}
   myCam: {fileID: 0}
 --- !u!1 &1268987172
 GameObject:
@@ -30659,6 +30660,39 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
   m_IsPrefabParent: 0
+--- !u!82 &1464925505
+AudioSource:
+  m_PrefabParentObject: {fileID: 8256166, guid: bbe96deda1103a941b319f7dbae9c04a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1464925504}
+--- !u!1 &1464925506
+GameObject:
+  m_PrefabParentObject: {fileID: 197704, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+  m_PrefabInternal: {fileID: 1464925504}
+--- !u!114 &1464925507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1464925506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a8576254e9fdf64d81628c55e54adcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClips:
+  - {fileID: 8300000, guid: fc4d9eaffe143b444a500fd7a1997183, type: 3}
+  - {fileID: 8300000, guid: 410e4d5887f64854ba70169b8fcec4b5, type: 3}
+  - {fileID: 8300000, guid: 1e059f59ec1d190419e117272a69e88a, type: 3}
+  - {fileID: 8300000, guid: 0e506b544de37c84c94df5b878c168c0, type: 3}
+  - {fileID: 8300000, guid: 9f5211def41573b46b4e48fff3d6ec14, type: 3}
+  - {fileID: 8300000, guid: 0ed26dea5c3ddc44e9198bc481342ac8, type: 3}
+  - {fileID: 8300000, guid: d258ef3099c0f274db053458fd54b856, type: 3}
+  - {fileID: 8300000, guid: d258ef3099c0f274db053458fd54b856, type: 3}
+  targetSource: {fileID: 0}
+  audioPrefab: {fileID: 189750, guid: 5a7b2489be0bfe54b979d23416ec21e3, type: 2}
+  fadingOut: 0
+  backgroundMusic: {fileID: 1464925505}
 --- !u!1001 &1472220696
 Prefab:
   m_ObjectHideFlags: 0
@@ -32551,6 +32585,7 @@ MonoBehaviour:
   myAnimCtrl: {fileID: 0}
   myFAnimCtrl: {fileID: 0}
   movementRemaining: 0
+  _audioController: {fileID: 0}
   myCam: {fileID: 0}
 --- !u!1 &1583677223
 GameObject:
@@ -36492,7 +36527,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1768392118}
-  m_LocalRotation: {x: .254652262, y: .659660697, z: -.315033585, w: .633051157}
+  m_LocalRotation: {x: .254652292, y: .659660757, z: -.315033615, w: .633051217}
   m_LocalPosition: {x: 3.12199998, y: 2.30900002, z: 7.96700001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -38652,6 +38687,7 @@ MonoBehaviour:
   myAnimCtrl: {fileID: 0}
   myFAnimCtrl: {fileID: 0}
   movementRemaining: 0
+  _audioController: {fileID: 0}
   myCam: {fileID: 0}
 --- !u!1001 &1897226096
 Prefab:
@@ -39188,6 +39224,7 @@ MonoBehaviour:
   myAnimCtrl: {fileID: 0}
   myFAnimCtrl: {fileID: 0}
   movementRemaining: 0
+  _audioController: {fileID: 0}
   myCam: {fileID: 0}
 --- !u!1 &1913948894
 GameObject:

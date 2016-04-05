@@ -8816,6 +8816,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11493198, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: audioClips.Array.size
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 431754, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -8848,9 +8852,50 @@ Prefab:
       propertyPath: m_RootOrder
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 11493198, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: audioClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: fc4d9eaffe143b444a500fd7a1997183, type: 3}
+    - target: {fileID: 11493198, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: audioClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 410e4d5887f64854ba70169b8fcec4b5, type: 3}
+    - target: {fileID: 11493198, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: audioClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 1e059f59ec1d190419e117272a69e88a, type: 3}
+    - target: {fileID: 11493198, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: audioClips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 0e506b544de37c84c94df5b878c168c0, type: 3}
+    - target: {fileID: 11493198, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: audioClips.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 9f5211def41573b46b4e48fff3d6ec14, type: 3}
+    - target: {fileID: 11493198, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: audioClips.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 0ed26dea5c3ddc44e9198bc481342ac8, type: 3}
+    - target: {fileID: 11493198, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: audioClips.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: d258ef3099c0f274db053458fd54b856, type: 3}
+    - target: {fileID: 11493198, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: audioClips.Array.data[7]
+      value: 
+      objectReference: {fileID: 8300000, guid: d258ef3099c0f274db053458fd54b856, type: 3}
+    - target: {fileID: 11493198, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
+      propertyPath: backgroundMusic
+      value: 
+      objectReference: {fileID: 619721002}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
   m_IsPrefabParent: 0
+--- !u!82 &619721002
+AudioSource:
+  m_PrefabParentObject: {fileID: 8256166, guid: bbe96deda1103a941b319f7dbae9c04a,
+    type: 2}
+  m_PrefabInternal: {fileID: 619721001}
 --- !u!1 &620955949
 GameObject:
   m_ObjectHideFlags: 0
@@ -14377,6 +14422,7 @@ MonoBehaviour:
   myAnimCtrl: {fileID: 0}
   myFAnimCtrl: {fileID: 0}
   movementRemaining: 0
+  _audioController: {fileID: 0}
   myCam: {fileID: 0}
 --- !u!1 &898686573
 GameObject:
@@ -20864,6 +20910,7 @@ MonoBehaviour:
   myAnimCtrl: {fileID: 0}
   myFAnimCtrl: {fileID: 0}
   movementRemaining: 0
+  _audioController: {fileID: 0}
   myCam: {fileID: 0}
 --- !u!1001 &1270825780
 Prefab:
@@ -29825,6 +29872,7 @@ MonoBehaviour:
   myAnimCtrl: {fileID: 0}
   myFAnimCtrl: {fileID: 0}
   movementRemaining: 0
+  _audioController: {fileID: 0}
   myCam: {fileID: 0}
 --- !u!43 &1893722978
 Mesh:
@@ -31343,6 +31391,7 @@ MonoBehaviour:
   myAnimCtrl: {fileID: 0}
   myFAnimCtrl: {fileID: 0}
   movementRemaining: 0
+  _audioController: {fileID: 0}
   myCam: {fileID: 0}
 --- !u!1001 &2010098554
 Prefab:

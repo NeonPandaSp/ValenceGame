@@ -44,6 +44,7 @@ public class InputController_Explore : MonoBehaviour {
 
 	void Start(){
 		_tileMap = GetComponent<TileMap> ();
+		_audioController = FindObjectOfType<AudioController> ().gameObject.GetComponent<AudioController> ();
 		//myHoverObject = (GameObject) Instantiate (Resources.Load("Tile"), new Vector3 (0, 0, 0), Quaternion.identity);
 		myLine.gameObject.SetActive (false);
 		moveTargetIcon.gameObject.SetActive (false);

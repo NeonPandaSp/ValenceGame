@@ -70,7 +70,17 @@ public class TitleScript : MonoBehaviour {
 	public void settings() { //Tyler this is the settings button! - j
 		_audioController.playAudioClipOnce (0, Vector3.zero, 500);
 	}
-
+	public void credits() { //Tyler this is the settings button! - j
+		_audioController.playAudioClipOnce (0, Vector3.zero, 500);
+		
+		_audioController.targetSource = _audioController.backgroundMusic;
+		_audioController.fadingOut = true;
+		loadScreen.SetActive(true);
+		sceneNumber = 10;
+		Application.LoadLevelAsync (sceneNumber);
+		StartLoading ();
+		startCounting = true;
+	}
 
 	public void quit(){
 		_audioController.playAudioClipOnce (0, Vector3.zero, 500);
