@@ -15,7 +15,7 @@ public class OnHoverLessOpaque : MonoBehaviour {
 		if (opaque) {
 			myText.color = new Color (myText.color.r, myText.color.g, myText.color.b, 1.0f);
 		} else {
-			myText.color = new Color (myText.color.r, myText.color.g, myText.color.b, 0.25f);
+			myText.color = new Color (myText.color.r, myText.color.g, myText.color.b, 1.0f);
 		}
 	}
 

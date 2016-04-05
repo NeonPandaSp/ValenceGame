@@ -261,6 +261,7 @@ public class InputController_Explore : MonoBehaviour {
 	}
 
 	public void EndTurn(){
+		Debug.Log ("End turn pressed");
 		_GameController.disableAttackBox();
 		moveTargetIcon.SetActive (false);
 		myLine.gameObject.SetActive (false);

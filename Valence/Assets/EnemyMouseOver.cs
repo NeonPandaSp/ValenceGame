@@ -36,7 +36,7 @@ public class EnemyMouseOver : MonoBehaviour {
 	}
 
 	void OnMouseOver(){
-		if (!myUnit != myUnit._GameController.selectedUnit) {
+		if (myUnit != myUnit._GameController.selectedUnit) {
 			myUnit._GameController._inputController.hovering = true;
 			myUnit._GameController._inputController.myLine.gameObject.SetActive(false);
 			myUnit._GameController._inputController.moveTargetIcon.SetActive(false);

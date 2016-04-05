@@ -13,7 +13,7 @@ public class Explore_Pause : MonoBehaviour {
 	
 	List<int> escapeScore = new List<int>();
 
-	bool isPause;
+	public bool isPause;
 
 	bool escaping; 
 
@@ -23,6 +23,7 @@ public class Explore_Pause : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		_gameController = FindObjectOfType<ExploreMode_GameController> ();
+		_winScript = FindObjectOfType<WinStateScript>();
 	}
 	
 	// Update is called once per frame
@@ -84,10 +85,10 @@ public class Explore_Pause : MonoBehaviour {
 	public void pauseGame(){
 		isPause = !isPause;
 		if (isPause) {
-			Time.timeScale = 0;
+			//Time.timeScale = 0;
 			pauseMenuObj.SetActive (true);
 		} else {
-			Time.timeScale = 1;
+			//Time.timeScale = 1;
 			pauseMenuObj.SetActive (false);
 		}
 	}
