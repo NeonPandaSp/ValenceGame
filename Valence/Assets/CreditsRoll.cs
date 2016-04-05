@@ -6,6 +6,7 @@ public class CreditsRoll : MonoBehaviour {
 	public float speed;
 	public TextAsset creditsText;
 	public loadScene _loadScene;
+	public bool pressed;
 	// Use this for initialization
 	void Start () {
 		this.transform.position = new Vector3 (this.transform.position.x, -Screen.height/8, this.transform.position.z);
@@ -16,8 +17,9 @@ public class CreditsRoll : MonoBehaviour {
 	void Update () {
 		this.transform.Translate( new Vector3( 0, Time.deltaTime*speed, 0) );
 
-		if (Input.anyKey) {
+		if (Input.anyKeyDown && !pressed ) {
 			_loadScene.initLoadScene(1);
+			pressed = true;
 		}
 	}
 }

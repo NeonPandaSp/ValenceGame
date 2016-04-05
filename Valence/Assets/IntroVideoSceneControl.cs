@@ -7,20 +7,30 @@ public class IntroVideoSceneControl : MonoBehaviour {
 	public float timer = 0.0f;
 	public float loadNextSceneTime;
 	public AudioSource videoClipAudio;
+	public bool pressed;
+	public bool firstLoad;
 	// Use this for initialization
 	void Start () {
-		loadNextSceneTime = videoClipAudio.clip.length;
-		StartLoading ();
+		firstLoad = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		timer += Time.deltaTime;
-		if ( timer > loadNextSceneTime ){
-			ActivateScene();
+
+		if (firstLoad && videoClipAudio != null) {
+			loadNextSceneTime = videoClipAudio.clip.length;
+			StartLoading ();
+			firstLoad = false;
 		}
-		if (Input.anyKey) {
-			timer = loadNextSceneTime;
+
+		timer += Time.deltaTime;
+		if ( timer > loadNextSceneTime && !firstLoad ){
+			ActivateScene();
+			pressed = true;
+		}
+		if (Input.anyKey && !pressed && !firstLoad ) {
+			ActivateScene();
+			pressed = true;
 		}
 	}
 	public void StartLoading() {
@@ -36,6 +46,7 @@ public class IntroVideoSceneControl : MonoBehaviour {
 	}
 	
 	public void ActivateScene() {
+		Debug.Log ("ACTIVATING");
 		async.allowSceneActivation = true;
 	}
 }

@@ -17,13 +17,21 @@ public class TitleScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
 		if (startCounting) {
+			if( async != null ){
+				Debug.Log ( "Loading Progres: " + async.progress + "%" );
+				if( async.isDone ){
+					Destroy ( this.gameObject );
+				}
+			}
+
 			timer += Time.deltaTime;
 			if ( timer > 5 ){
 				ActivateScene();
 			}
 		}
-		if (Input.anyKey && !hasBeenPressed) {
+		if (Input.anyKey && !hasBeenPressed && !startCounting) {
 			menuScreen.SetActive (true);
 			titleScreen.SetActive (false);
 			hasBeenPressed = false;

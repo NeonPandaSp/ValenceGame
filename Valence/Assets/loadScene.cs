@@ -22,12 +22,12 @@ public class loadScene : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (startCounting) {
+			Debug.Log ( "Loading Progres: " + async.progress + "%" );
 			timer += Time.deltaTime;
 			if( build )
 				uiStuff.SetActive(false);
 			if ( timer > 5 ){
 				ActivateScene();
-				timer = 3;
 			}
 		}
 	}
@@ -48,6 +48,7 @@ public class loadScene : MonoBehaviour {
 	}
 	
 	public void ActivateScene() {
+		Debug.Log ("Scene can now load");
 		async.allowSceneActivation = true;
 	}
 

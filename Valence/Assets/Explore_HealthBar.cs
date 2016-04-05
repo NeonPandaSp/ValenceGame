@@ -25,8 +25,9 @@ public class Explore_HealthBar : MonoBehaviour {
 			myUnit = transform.parent.transform.parent.GetComponent<Unit> ();
 		}
 
-		myMax = myUnit.health;
-
+		if(!myUnit.isElite)
+			myMax = 10;
+		
 		currentTime = 0;
 		currentValue = Remap (myMax, 0.0f, myMax, 0.0f, 1.0f);
 		lastHealth = Remap (myMax, 0.0f, myMax, 0.0f, 1.0f);
