@@ -84,10 +84,13 @@ public class Unit : MonoBehaviour {
 
 	public int movementRemaining;
 
+	public AudioController _audioController; // Audio controller
+
 	public GameObject myCam;
 	// Use this for initialization
 	void Start () {
 
+		_audioController = FindObjectOfType<AudioController> ().gameObject.GetComponent<AudioController> ();
 		_GameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<ExploreMode_GameController> ();
 		//
 		if (!PlayerDataManager.playerDataManager.isLive) {
@@ -339,6 +342,7 @@ public class Unit : MonoBehaviour {
 						 * ADD ALERT SOUND EFFECT HERE
 						 * JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE JAKE
 						 **/
+						_audioController.playAudioClipOnce (6, Vector3.zero, 500); // play audio effect
 					}
 					// Set the last global sighting is the players current position.
 					

@@ -275,6 +275,10 @@ public class InputController_Explore : MonoBehaviour {
 	}
 
 	public void PickupSelectedUnit(){
+		/** 
+		 * 
+		 * Pick up scrap or drop it
+		 * */
 		if (!_GameController.selectedUnit.hasScrap) {
 			_GameController.disableAttackBox ();
 			_GameController.selectedUnit.grabPressed = true;
@@ -298,6 +302,11 @@ public class InputController_Explore : MonoBehaviour {
 	}
 
 	public void selectUnit(int index){
+		/*
+		 * 
+		 * Selected by mouse
+		 * 
+		 */
 		_GameController.selectedUnit = _GameController.folk[index];
 		_GameController.selectedIndex = index;
 		_GameController.MoveIcon();
@@ -306,6 +315,11 @@ public class InputController_Explore : MonoBehaviour {
 	}
 
 	public void selectedNextUnit(){
+		/** 
+		 * 
+		 * Select next unit
+		 * 
+		 * */
 		moveTargetIcon.SetActive (false);
 		myLine.gameObject.SetActive (false);
 		_GameController.DestroyMovementRange ();
@@ -344,6 +358,11 @@ public class InputController_Explore : MonoBehaviour {
 		}
 	}
 	public void attackConfirmed(){
+		/** 
+		 * 
+		 * PLAYER ATTACK
+		 * 
+		 * */
 		Unit attackTarget = _GameController.selectedUnit.AttackTargets [_GameController.selectedUnit.currentAttackTarget];
 		_audioController.playAudioClipOnce (0, _GameController.selectedUnit.transform.position, 20);
 //		if (attackTarget.myCam != null) {
@@ -408,6 +427,13 @@ public class InputController_Explore : MonoBehaviour {
 	}
 	
 	public void selectAttackTarget(int x){
+
+		/** 
+		 * 
+		 * Selecting target
+		 * 
+		 * 
+		 * */
 		_GameController.selectedUnit.currentAttackTarget += x;
 
 		if (_GameController.selectedUnit.currentAttackTarget >= _GameController.selectedUnit.AttackTargets.Count) {
@@ -433,6 +459,12 @@ public class InputController_Explore : MonoBehaviour {
 	}
 
 	public void undoMove(){
+
+		/** 
+		 * 
+		 * undo last move
+		 * 
+		 * */
 		_GameController.undoLastMove ();
 	}
 
