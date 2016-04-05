@@ -92,7 +92,7 @@ public class AgentLogic_07 : MonoBehaviour {
     int amount = 0;
 
     //wait time checks if WanderOrIdle function is currently pending
-    float wait = Random.Range (1.0f, 3.0f);
+    float wait;
 
     //Wait time for the working animation
     public float workWait = 2.0f;
@@ -269,8 +269,10 @@ public class AgentLogic_07 : MonoBehaviour {
 			randomLastName = UnityEngine.Random.Range (0, 35);
             randomGender = Random.Range (0, (genderArray.Length));
 
+            wait = Random.Range(1.0f, 3.0f);
+
             //Assigns random names and photos according to gender
-			//Variable firstLastName outputs first and last name. variable settlerNameAndRole outputs name, what settler is currently doing, and their assigned role
+            //Variable firstLastName outputs first and last name. variable settlerNameAndRole outputs name, what settler is currently doing, and their assigned role
             if (gender == "Male"){
                 firstLastName = (maleFirstNameArray[randomFirstName] + " " + lastNameArray[randomLastName]);
 				portraitIndex = malePortraitIndex;
