@@ -221,8 +221,11 @@ public class ExploreMode_GameController : MonoBehaviour {
 		if (selectedUnit != null) {
 			if (canAttack (selectedUnit) && !selectedUnit.isMoving && !selectedUnit.hasScrap && !selectedUnit.hasAttacked && GameState == 1) {
 				attackButton.interactable = true;
-				if( selectedUnit.AttackTargets.Count <= 0 )
+				if( selectedUnit.AttackTargets.Count >= 0 ){
 					enableAttackBox (selectedUnit);
+				} else {
+					disableAttackBox(selectedUnit);
+				}
 				_inputController.attackConfirmedButton.gameObject.SetActive (true);
 				//_inputController.moveConfirmedButton.gameObject.SetActive (false);
 				//selectedUnit.AttackTargets [selectedUnit.currentAttackTarget].gameObject.GetComponent<EnemyMouseOver> ().enableUI ();
