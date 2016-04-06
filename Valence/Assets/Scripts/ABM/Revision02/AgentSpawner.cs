@@ -31,7 +31,7 @@ public class AgentSpawner : MonoBehaviour {
         if (Choose(50.0f)){
             //Spawn a new agent prefab at origin
 			int randVal = (int) Random.Range(0, MaleAgent.Count);
-            GameObject newAgent = (GameObject)Instantiate(MaleAgent[randVal], new Vector3(Random.Range(-5.0f, 5.0f), 0.51f, Random.Range(-35.0f, 5.0f)), Quaternion.identity);
+            GameObject newAgent = (GameObject)Instantiate(MaleAgent[randVal], new Vector3(Random.Range(-5.0f, 5.0f), 0.0f, Random.Range(-35.0f, 5.0f)), Quaternion.identity);
 			newAgent.GetComponent<AgentLogic_07>().modelIndex = randVal;
             //Add the agent to the population database
             _gameController.population.Add(newAgent);
@@ -49,7 +49,7 @@ public class AgentSpawner : MonoBehaviour {
         }
         else {
             //Spawn a new agent prefab at origin
-            GameObject newAgent = (GameObject)Instantiate(FemaleAgent[Random.Range(0,FemaleAgent.Count)], new Vector3(Random.Range(-5.0f, 5.0f), 0.51f, Random.Range(-35.0f, 5.0f)), Quaternion.identity);
+            GameObject newAgent = (GameObject)Instantiate(FemaleAgent[Random.Range(0,FemaleAgent.Count)], new Vector3(Random.Range(-5.0f, 5.0f), 0.0f, Random.Range(-35.0f, 5.0f)), Quaternion.identity);
 
             //Add the agent to the population database
             _gameController.population.Add(newAgent);

@@ -3668,6 +3668,7 @@ MonoBehaviour:
   traineeRoleButton: {fileID: 11474070, guid: c3ba80c3a6c17a14ebb6efd94ec7c635, type: 2}
   exBtn: {fileID: 11447618, guid: 3268867637d831b4c87648ee2f00a3f5, type: 2}
   myCamObj: {fileID: 0}
+  _audioController: {fileID: 0}
 --- !u!114 &11459916
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3713,6 +3714,7 @@ MonoBehaviour:
   currentlyWorking: 0
   workerPathCompleted: 0
   modelIndex: 0
+  _audioController: {fileID: 0}
   aState: 0
   jobState: 0
   currentState: 0
@@ -3871,8 +3873,8 @@ CharacterController:
   m_Height: 1.59000003
   m_Radius: .289999992
   m_SlopeLimit: 45
-  m_StepOffset: .300000012
-  m_SkinWidth: .0799999982
+  m_StepOffset: 0
+  m_SkinWidth: 9.99999975e-05
   m_MinMoveDistance: .00100000005
   m_Center: {x: 0, y: .800000012, z: 0}
 --- !u!212 &21221700
@@ -4006,6 +4008,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_audioClip
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_StepOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_SkinWidth
+      value: 9.99999975e-05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
