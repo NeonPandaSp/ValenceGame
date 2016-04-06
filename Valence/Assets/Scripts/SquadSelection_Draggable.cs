@@ -131,6 +131,10 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 				if (this.transform.root.GetComponent<SquadSelectionScript>().MemberList[i].gameObject.transform.childCount == 0) {
 					this.transform.SetParent (oldParent);
 					Debug.Log ("No Member Present");
+					this.transform.root.GetComponent<SquadSelectionScript>().GlowImage.GetComponent<Image>().canvasRenderer.SetAlpha (1.1f);
+					this.transform.root.GetComponent<SquadSelectionScript>().GlowImage.GetComponent<Image>().CrossFadeAlpha (0.0f, 1, false);
+					this.transform.root.GetComponent<SquadSelectionScript>().GlowImage.GetComponent<Image>().CrossFadeAlpha (0.9f, 3, false);
+					this.transform.root.GetComponent<SquadSelectionScript>().GlowImage.GetComponent<Image>().CrossFadeAlpha (0.0f, 2, false);
 				}
 			}
 		}

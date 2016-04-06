@@ -83,7 +83,7 @@ public class SquadSelectionScript : MonoBehaviour {
 
 		GlowImage.GetComponent<Image>().canvasRenderer.SetAlpha (1.1f);
 		GlowImage.GetComponent<Image>().CrossFadeAlpha (0.0f, 1, false);
-		GlowImage.GetComponent<Image>().CrossFadeAlpha (0.9f, 5, false);
+		GlowImage.GetComponent<Image>().CrossFadeAlpha (0.9f, 3, false);
 		GlowImage.GetComponent<Image>().CrossFadeAlpha (0.0f, 2, false);
 	}
 
