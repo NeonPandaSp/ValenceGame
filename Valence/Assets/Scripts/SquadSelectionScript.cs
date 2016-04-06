@@ -83,6 +83,7 @@ public class SquadSelectionScript : MonoBehaviour {
 	float NumOfInvWeapons;
 	int newWeaponsListHeight;
 
+	public Sprite handgunSprite, rifleSprite, shotgunSprite;
 	//===========\\
 	//===Start===\\
 	//===========\\
@@ -214,9 +215,16 @@ public class SquadSelectionScript : MonoBehaviour {
 			weaponIcon.gameObject.transform.SetParent (weapon.gameObject.transform);
 			
 			weaponIcon.transform.localScale = new Vector3 (1, 1, 1);
-			
+
 			Image[] tempWeaponImgs = weapon.GetComponentsInChildren<Image>();
-			
+
+			if( sA.weaponType == "Handgun"){
+				tempWeaponImgs[1].sprite = handgunSprite;
+			} else if ( sA.weaponType == "Shotgun" ){
+				tempWeaponImgs[1].sprite = shotgunSprite;
+			} else {
+				tempWeaponImgs[1].sprite = rifleSprite;
+			}
 //			foreach (Image img in tempWeaponImgs) {
 //				if (img.gameObject.name == "Weapon Icon") {
 //					Image tempWeaponIcons = img;

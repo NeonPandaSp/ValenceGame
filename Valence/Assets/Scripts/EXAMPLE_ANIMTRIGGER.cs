@@ -14,7 +14,7 @@ public class EXAMPLE_ANIMTRIGGER : MonoBehaviour {
 		myUnit = transform.parent.GetComponent<Unit> ();
 		if (myUnit == null)
 			myUnit = transform.parent.transform.parent.GetComponent<Unit> ();
-		Debug.Log ("My Weap Name: " + myUnit.myWeapon.name);
+		//Debug.Log ("My Weap Name: " + myUnit.myWeapon.name);
 		if (myUnit.myWeapon.name == "Weapon_Shotgun") {
 			Shotgun.SetActive(true);
 		} else if (myUnit.myWeapon.name== "Weapon_Handgun") {
