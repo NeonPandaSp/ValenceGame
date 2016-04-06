@@ -37,11 +37,19 @@ public class BuildingScript : MonoBehaviour {
 
 
         assignedAgents = new GameObject[3];
-		progressUI.gameObject.SetActive (true);
 
+        if (progressUI != null) {
+            progressUI.gameObject.SetActive(true);
+        }
         checkClick = true;
-		//beginProduction ();
-	}
+        //beginProduction ();
+
+        if (bType.typeName == "Shelter")
+        {
+            _myGameController.popLimit += bType.pRate;
+            //_myGameController.popLimit += 10;
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -51,15 +59,20 @@ public class BuildingScript : MonoBehaviour {
 	}
 
     void OnMouseDown() {
+        if (progressUI != null){
 
-        if (checkClick){
-            progressUI.gameObject.SetActive(false);
+            if (checkClick)
+            {
+                progressUI.gameObject.SetActive(false);
 
-            checkClick = false;
-        } else {
-            progressUI.gameObject.SetActive(true);
+                checkClick = false;
+            }
+            else
+            {
+                progressUI.gameObject.SetActive(true);
 
-            checkClick = true;
+                checkClick = true;
+            }
         }
     }
 
@@ -127,10 +140,7 @@ public class BuildingScript : MonoBehaviour {
 	void GenerateResource(){
         //	Debug.Log ("GENERATING!");
 
-        if (bType.typeName == "Shelter"){
-            _myGameController.popLimit += bType.pRate;
-            //_myGameController.popLimit += 10;
-        }
+
         if (bType.typeName == "TrainingArea"){
             //Maybe add a moral increase rate?
             //_myGameController.traineeList
