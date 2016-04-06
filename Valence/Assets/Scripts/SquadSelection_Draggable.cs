@@ -17,7 +17,7 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 
 	//Glow
 	Color oldValue = new Color (255 / 255f, 255 / 255f, 255 / 255f);
-	Color newValue = new Color (255 / 255f, 200 / 255f, 200 / 255f);
+	Color newValue = new Color (248 / 255f, 255 / 255f, 135 / 255f);
 
 	public void OnBeginDrag (PointerEventData eventData) {
 
@@ -35,6 +35,14 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 				this.transform.root.GetComponent<SquadSelectionScript>().MemberList[i].GetComponent<Image>().color = glowColour;
 			}
 		}
+
+		//YAY WEAPONS GLOW
+		if (oldParent.gameObject.transform.name.ToString () == "Scrollable Weapons List") {
+			for (int i = 0; i < this.transform.root.GetComponent<SquadSelectionScript>().WeaponList.Length; i++) {
+				Color glowColour2 = Color.Lerp (oldValue, newValue, Mathf.PingPong (Time.time, 8));
+				this.transform.root.GetComponent<SquadSelectionScript>().WeaponList[i].GetComponent<Image>().color = glowColour2;
+			}
+		}
 	}
 
 	public void OnDrag (PointerEventData eventData) {
@@ -46,12 +54,24 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 				this.transform.root.GetComponent<SquadSelectionScript> ().MemberList [i].GetComponent<Image> ().color = glowColour;
 			}
 		}
+
+		//YAY WEAPONS GLOW
+		if (oldParent.gameObject.transform.name.ToString () == "Scrollable Weapons List") {
+			for (int i = 0; i < this.transform.root.GetComponent<SquadSelectionScript>().WeaponList.Length; i++) {
+				Color glowColour2 = Color.Lerp (oldValue, newValue, Mathf.PingPong (Time.time, 8));
+				this.transform.root.GetComponent<SquadSelectionScript>().WeaponList[i].GetComponent<Image>().color = glowColour2;
+			}
+		}
 	}
 	
 	public void OnEndDrag (PointerEventData eventData)
 	{
 		for (int i = 0; i < this.transform.root.GetComponent<SquadSelectionScript>().MemberList.Length; i++) {
 			this.transform.root.GetComponent<SquadSelectionScript> ().MemberList [i].GetComponent<Image> ().color = oldValue;
+		}
+
+		for (int i = 0; i < this.transform.root.GetComponent<SquadSelectionScript>().WeaponList.Length; i++) {
+			this.transform.root.GetComponent<SquadSelectionScript> ().WeaponList [i].GetComponent<Image> ().color = oldValue;
 		}
 		
 		this.transform.SetParent (newParent);
