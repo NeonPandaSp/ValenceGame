@@ -146,6 +146,8 @@ public class AgentLogic_07 : MonoBehaviour {
         //_GUIController_SettlerInfo = GameObject.Find ("Folk_Female_Agent").GetComponent<GUIController_SettlerInfo> ();
         if (newAgent) {
 
+            Debug.Log("NEW AGENT AS BEEN Triggered");
+
 			malePortraitIndex = UnityEngine.Random.Range (0, 12);
 			femalePortraitIndex = UnityEngine.Random.Range (0, 6);
 
@@ -323,7 +325,7 @@ public class AgentLogic_07 : MonoBehaviour {
 
         if (aState == null){
             //When an agent spawns, he should start by wandering if there is no starting state
-            aState = agentState.Wandering;
+            //aState = agentState.Wandering;
 		}
 
 		if (jobState == jobSubState.Default) {
