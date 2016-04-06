@@ -694,7 +694,7 @@ MonoBehaviour:
     m_HighlightedSprite: {fileID: 21300000, guid: 554f2daf68bc16d4a89a5209046eedcf,
       type: 3}
     m_PressedSprite: {fileID: 21300000, guid: 554f2daf68bc16d4a89a5209046eedcf, type: 3}
-    m_DisabledSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 21300000, guid: 75d392ccc5ea6c047b3b47a327b21f90, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -1107,7 +1107,7 @@ RectTransform:
   m_RootOrder: 8
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 150, y: 75}
+  m_AnchoredPosition: {x: 125, y: 125}
   m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &671764487
@@ -1255,6 +1255,7 @@ MonoBehaviour:
   sceneNumber: 2
   startCounting: 0
   timer: 0
+  loadButton: {fileID: 460708717}
 --- !u!4 &743720049
 Transform:
   m_ObjectHideFlags: 0
@@ -1351,7 +1352,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &916414032
 RectTransform:
   m_ObjectHideFlags: 0

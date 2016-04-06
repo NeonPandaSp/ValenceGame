@@ -224,7 +224,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 				if( selectedUnit.AttackTargets.Count >= 0 ){
 					enableAttackBox (selectedUnit);
 				} else {
-					disableAttackBox(selectedUnit);
+					disableAttackBox();
 				}
 				_inputController.attackConfirmedButton.gameObject.SetActive (true);
 				//_inputController.moveConfirmedButton.gameObject.SetActive (false);

@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 public class TitleScript : MonoBehaviour {
 
 	public AudioController _audioController;
+
 
 	public GameObject menuScreen, titleScreen, loadScreen;
 	public int sceneNumber = 2;
@@ -11,6 +12,8 @@ public class TitleScript : MonoBehaviour {
 	AsyncOperation async;
 	public bool startCounting = false;
 	public float timer = 0.0f;
+
+	public Button loadButton;
 	// Use this for initialization
 	void Start () {
 	}
@@ -31,6 +34,7 @@ public class TitleScript : MonoBehaviour {
 				ActivateScene();
 			}
 		}
+
 		if (Input.anyKey && !hasBeenPressed && !startCounting) {
 			menuScreen.SetActive (true);
 			titleScreen.SetActive (false);
