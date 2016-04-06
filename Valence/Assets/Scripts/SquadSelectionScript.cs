@@ -25,7 +25,13 @@ public class SquadSelectionScript : MonoBehaviour {
 	public Image prefabSettlerPortrait;
 	public Text prefabSettlerName;
 	public Text prefabSettlerHealth;
-	public Text prefabSettlerStats;
+	public Text prefabSettlerStrength;
+	public Text prefabSettlerAgility;
+	public Text prefabSettlerPerception;
+	public Image prefabSettlerHealthIcon;
+	public Image prefabSettlerStrengthIcon;
+	public Image prefabSettlerAgilityIcon;
+	public Image prefabSettlerPerceptionIcon;
 
 	//Squad Info
 	public GameObject squadList;
@@ -63,6 +69,9 @@ public class SquadSelectionScript : MonoBehaviour {
 	public Text prefabWeaponName;
 	public Text prefabWeaponType;
 	public Text prefabWeaponStats;
+	public Image prefabWeaponStrengthIcon;
+	public Image prefabWeaponAccuracyIcon;
+	public Image prefabWeaponRangeIcon;
 	
 	public GameObject SelectedWeaponsList;
 	public GameObject[] WeaponList = new GameObject[4];
@@ -125,9 +134,9 @@ public class SquadSelectionScript : MonoBehaviour {
 
 			Text[] childTexts = settler.GetComponentsInChildren<Text>();
 
-			Text settlerName, settlerHealth, settlerStats;
+			Text settlerName, settlerHealth, settlerStrength, settlerAgility, settlerPerception;
 			//Name
-			foreach (Text cT in childTexts ){
+			foreach (Text cT in childTexts) {
 				if (cT.gameObject.name == "Settler Name") {
 					settlerName = cT;
 					settlerName.gameObject.transform.SetParent (settler.gameObject.transform);
@@ -136,7 +145,8 @@ public class SquadSelectionScript : MonoBehaviour {
 					settlerName.text = sA.agentName;
 					
 					Image tempSettlerName = settlerName.GetComponent <Image>();
-				} 
+				}
+
 				if (cT.gameObject.name == "Settler Health") {
 					settlerHealth = cT;
 					settlerHealth.gameObject.transform.SetParent (settler.gameObject.transform);
@@ -145,15 +155,36 @@ public class SquadSelectionScript : MonoBehaviour {
 					settlerHealth.text = (sA.health / 10).ToString () + "/10";
 					
 					Text tempSettlerHealth = settlerPortrait.GetComponent <Text>();
-				} 
-				if (cT.gameObject.name == "Settler Stats") {
-					settlerStats = cT;
-					settlerStats.gameObject.transform.SetParent (settler.gameObject.transform);
-					
-					settlerStats.transform.localScale = new Vector3 (1, 1, 1);
-					settlerStats.text = sA.strength + " " + sA.perception + " " + sA.agility;
+				}
 
-					Text tempSettlerStats = settlerStats.GetComponent <Text>();
+				if (cT.gameObject.name == "Settler Strength") {
+					settlerStrength = cT;
+					settlerStrength.gameObject.transform.SetParent (settler.gameObject.transform);
+					
+					settlerStrength.transform.localScale = new Vector3 (1, 1, 1);
+					settlerStrength.text = sA.strength.ToString();
+					
+					Text tempSettlerStrength = settlerStrength.GetComponent <Text>();
+				}
+
+				if (cT.gameObject.name == "Settler Agility") {
+					settlerAgility = cT;
+					settlerAgility.gameObject.transform.SetParent (settler.gameObject.transform);
+					
+					settlerAgility.transform.localScale = new Vector3 (1, 1, 1);
+					settlerAgility.text = sA.agility.ToString();
+					
+					Text tempSettlerAgility = settlerAgility.GetComponent <Text>();
+				}
+
+				if (cT.gameObject.name == "Settler Perception") {
+					settlerPerception = cT;
+					settlerPerception.gameObject.transform.SetParent (settler.gameObject.transform);
+					
+					settlerPerception.transform.localScale = new Vector3 (1, 1, 1);
+					settlerPerception.text = sA.perception.ToString();
+					
+					Text tempSettlerPerception = settlerPerception.GetComponent <Text>();
 				}
 			}
 		}
@@ -196,7 +227,7 @@ public class SquadSelectionScript : MonoBehaviour {
 			
 			Text[] childWeaponTexts = weapon.GetComponentsInChildren<Text>();
 			
-			Text weaponName, weaponType, weaponStats;
+			Text weaponName, weaponType, weaponStrength, weaponAccuracy, weaponRange;
 			//Name
 			foreach (Text cT in childWeaponTexts ){
 				if (cT.gameObject.name == "Weapon Name") {
@@ -213,18 +244,38 @@ public class SquadSelectionScript : MonoBehaviour {
 					weaponType.gameObject.transform.SetParent (weapon.gameObject.transform);
 					
 					weaponType.transform.localScale = new Vector3 (1, 1, 1);
-					weaponType.text = (sA.weaponType);
+					weaponType.text = sA.weaponType.ToString();
 					
 					Text tempSettlerHealth = weaponIcon.GetComponent <Text>();
 				} 
-				if (cT.gameObject.name == "Weapon Stats") {
-					weaponStats = cT;
-					weaponStats.gameObject.transform.SetParent (weapon.gameObject.transform);
+				if (cT.gameObject.name == "Weapon Strength") {
+					weaponStrength = cT;
+					weaponStrength.gameObject.transform.SetParent (weapon.gameObject.transform);
 					
-					weaponStats.transform.localScale = new Vector3 (1, 1, 1);
-					weaponStats.text = sA.damageModifier + " " + Mathf.Round (sA.accuracy * 100) + "% " + sA.range + " " + sA.soundRange;
+					weaponStrength.transform.localScale = new Vector3 (1, 1, 1);
+					weaponStrength.text = sA.damageModifier.ToString();
 					
-					Text tempSettlerStats = weaponStats.GetComponent <Text>();
+					Text tempSettlerStrength = weaponStrength.GetComponent <Text>();
+				}
+
+				if (cT.gameObject.name == "Weapon Accuracy") {
+					weaponAccuracy = cT;
+					weaponAccuracy.gameObject.transform.SetParent (weapon.gameObject.transform);
+					
+					weaponAccuracy.transform.localScale = new Vector3 (1, 1, 1);
+					weaponAccuracy.text = (Mathf.Round (sA.accuracy * 100)).ToString() + "% ";
+					
+					Text tempSettlerAccuracy = weaponAccuracy.GetComponent <Text>();
+				}
+
+				if (cT.gameObject.name == "Weapon Range") {
+					weaponRange = cT;
+					weaponRange.gameObject.transform.SetParent (weapon.gameObject.transform);
+					
+					weaponRange.transform.localScale = new Vector3 (1, 1, 1);
+					weaponRange.text = sA.range.ToString();
+					
+					Text tempSettlerRange = weaponRange.GetComponent <Text>();
 				}
 			}
 		}

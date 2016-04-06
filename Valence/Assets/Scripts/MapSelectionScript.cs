@@ -10,8 +10,6 @@ public class MapSelectionScript : MonoBehaviour {
 	
 	public Canvas MapSelectCanvas;
 
-	public Text stationName;
-	public Image stationGraphic;
 	public Image LeftPanelSwitch;
 
 	public int scrapRate;
@@ -26,7 +24,6 @@ public class MapSelectionScript : MonoBehaviour {
 
 	public Button[] stationIcons;
 
-	public string[] stationNameTexts;
 	public Sprite[] stationGraphics;
 	public Sprite[] leftPanelBackgrounds;
 
@@ -69,7 +66,6 @@ public class MapSelectionScript : MonoBehaviour {
 			//THE SETTLEMENT
 		default:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[0].GetComponent<RectTransform>().localPosition;
-			stationGraphic.sprite = stationGraphics[0];
 			selectIcon.rectTransform.sizeDelta = new Vector2 (140, 140);
 			selectIcon.color = new Color (184/ 255f, 253 / 255f, 106/255f, 255 / 255f);
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[0];
@@ -81,7 +77,6 @@ public class MapSelectionScript : MonoBehaviour {
 			//RAILS STAION
 		case 4:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[1].GetComponent<RectTransform>().localPosition;
-			stationGraphic.sprite = stationGraphics[1];
 			selectIcon.rectTransform.sizeDelta = new Vector2 (100, 100);
 			selectIcon.color = new Color (253/ 255f, 106 / 255f, 106/255f, 255 / 255f);
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[1];
@@ -93,7 +88,6 @@ public class MapSelectionScript : MonoBehaviour {
 			//CARGO STATION
 		case 5:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[2].GetComponent<RectTransform>().localPosition;
-			stationGraphic.sprite = stationGraphics[2];
 			selectIcon.rectTransform.sizeDelta = new Vector2 (100, 100);
 			selectIcon.color = new Color (253/ 255f, 106 / 255f, 106/255f, 255 / 255f);
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[2];
@@ -105,7 +99,6 @@ public class MapSelectionScript : MonoBehaviour {
 			//SHORE STATION
 		case 6:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[3].GetComponent<RectTransform>().localPosition;
-			stationGraphic.sprite = stationGraphics[3];
 			selectIcon.rectTransform.sizeDelta = new Vector2 (100, 100);
 			selectIcon.color = new Color (253/ 255f, 106 / 255f, 106/255f, 255 / 255f);
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[3];
@@ -117,7 +110,6 @@ public class MapSelectionScript : MonoBehaviour {
 			//RELAY STATION
 		case 7:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[4].GetComponent<RectTransform>().localPosition;
-			stationGraphic.sprite = stationGraphics[4];
 			selectIcon.rectTransform.sizeDelta = new Vector2 (100, 100);
 			selectIcon.color = new Color (253/ 255f, 106 / 255f, 106/255f, 255 / 255f);
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[4];
@@ -129,7 +121,6 @@ public class MapSelectionScript : MonoBehaviour {
 			//GLADIATOR STATION
 		case 8:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[5].GetComponent<RectTransform>().localPosition;
-			stationGraphic.sprite = stationGraphics[5];
 			selectIcon.color = new Color (253/ 255f, 106 / 255f, 106/255f, 255 / 255f);
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[5];
 			proceedButton.GetComponentInChildren<Text> ().text = "Travel";
@@ -140,7 +131,6 @@ public class MapSelectionScript : MonoBehaviour {
 			//OUTPOST STATION
 		case 9:
 			selectIcon.GetComponent<RectTransform>().localPosition = stationIcons[6].GetComponent<RectTransform>().localPosition;
-			stationGraphic.sprite = stationGraphics[6];
 			selectIcon.rectTransform.sizeDelta = new Vector2 (100, 100);
 			selectIcon.color = new Color (253/ 255f, 106 / 255f, 106/255f, 255 / 255f);
 			LeftPanelSwitch.sprite = leftPanelBackgrounds[6];
