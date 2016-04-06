@@ -1118,12 +1118,14 @@ public class ExploreMode_GameController : MonoBehaviour {
 				}
 			}
 		}
-		if( selectedUnit.currentAttackTarget > selectedUnit.AttackTargets.Count ){
-			selectedUnit.currentAttackTarget = 0;
+		if (selectedUnit.AttackTargets.Count > 0) {
+			if (selectedUnit.currentAttackTarget > selectedUnit.AttackTargets.Count-1) {
+				selectedUnit.currentAttackTarget = 0;
+			}
+			attackIcon.gameObject.SetActive (true);
+			attackIcon.selectUnit = selectedUnit.AttackTargets [selectedUnit.currentAttackTarget];
+			selectedUnit.AttackTargets [selectedUnit.currentAttackTarget].GetComponent<EnemyMouseOver> ().enableUI ();
 		}
-		attackIcon.gameObject.SetActive (true);
-		attackIcon.selectUnit = selectedUnit.AttackTargets [selectedUnit.currentAttackTarget];
-		selectedUnit.AttackTargets[selectedUnit.currentAttackTarget].GetComponent<EnemyMouseOver> ().enableUI ();
 	}
 	public void disableAttackBox(){
 		selectedUnit.AttackTargets.Clear();
