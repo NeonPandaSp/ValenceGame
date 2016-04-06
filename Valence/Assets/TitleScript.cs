@@ -60,7 +60,7 @@ public class TitleScript : MonoBehaviour {
 			
 			menuScreen.SetActive(false);
 			loadScreen.SetActive(true);
-			Application.LoadLevelAsync (sceneNumber);
+			//Application.LoadLevelAsync (sceneNumber);
 			StartLoading ();
 			startCounting = true;
 

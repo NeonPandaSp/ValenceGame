@@ -181,8 +181,6 @@ public class InputController : MonoBehaviour {
 	public void loadMainMenu(){
 		_audioController.playAudioClipOnce (1, Vector3.zero, 500);
 		Time.timeScale = 1;
-		pause ();
-		//Application.LoadLevel (1);
 		_loadScene.initLoadScene (1);
 	}
 

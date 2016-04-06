@@ -35,8 +35,11 @@ public class AudioController : MonoBehaviour {
 		if (clipVolume > 0) {
 			clipVolume -= (Time.deltaTime * volFactor / FADE_HOW_MANY_SECONDS);
 			
-			if (clipVolume <= 0.0f)
+			if (clipVolume <= 0.0f){
+				fadingOut = false;
 				clipVolume = 0.0f;
+
+			}
 			
 			clip.volume = clipVolume;
 
