@@ -2681,7 +2681,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 130722}
-  m_LocalRotation: {x: 9.92417245e-06, y: .0131836776, z: -.313280493, w: -.949569106}
+  m_LocalRotation: {x: 9.92417336e-06, y: .0131836785, z: -.313280523, w: -.949569166}
   m_LocalPosition: {x: .0166576263, y: 2.10711733e-08, z: 4.43833414e-08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2806,7 +2806,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126318}
-  m_LocalRotation: {x: -.00310772844, y: .0311237089, z: -.287984669, w: -.957124054}
+  m_LocalRotation: {x: -.00310772867, y: .0311237108, z: -.287984699, w: -.957124114}
   m_LocalPosition: {x: .0787389949, y: .00191997504, z: .00845109858}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2860,7 +2860,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 177594}
-  m_LocalRotation: {x: .00815125834, y: -.0402545892, z: -.313174456, w: -.948807061}
+  m_LocalRotation: {x: .00815125927, y: -.0402545929, z: -.313174486, w: -.94880712}
   m_LocalPosition: {x: .0156410206, y: 2.712477e-08, z: -1.13504939e-09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3501,7 +3501,7 @@ MonoBehaviour:
   pickNextWaypointDistance: 1
   targetReached: 1
   speed: .100000001
-  rotationSpeed: 1
+  rotationSpeed: 3
   drawGizmos: 0
   canSearch: 1
   canMove: 1
@@ -3651,6 +3651,7 @@ MonoBehaviour:
   storageWaypoints: []
   wanderListSize: 100
   newAgent: 1
+  hasFood: 0
   isDead: 0
   foodStored: 0
   hungerValue: 0
@@ -4004,6 +4005,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: rotationSpeed
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

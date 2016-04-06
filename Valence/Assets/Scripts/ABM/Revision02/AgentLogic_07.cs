@@ -325,10 +325,11 @@ public class AgentLogic_07 : MonoBehaviour {
 
         if (aState == null){
             //When an agent spawns, he should start by wandering if there is no starting state
-            //aState = agentState.Wandering;
+            aState = agentState.Wandering;
 		}
 
-		if (jobState == jobSubState.Default) {
+        if(aState != agentState.Working) { 
+		//if (jobState == jobSubState.Default) {
 			//When the agent spawns, there is a 50% chance to spawn idle or wander
 			WanderOrIdle(50.0f);
 		}
@@ -467,9 +468,9 @@ public class AgentLogic_07 : MonoBehaviour {
                     case jobSubState.Farmer:
 
                 //Set the agent to move towards the farm waypoints
-						aiFollow.Reset();
+						//aiFollow.Reset();
                         aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
-                        if (workerPathCompleted) { 
+                        if (workerPathCompleted ) { 
                             aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
                             agentAnim.SetBool("Walking", true);
                             agentAnim.SetBool("Idle", false);
@@ -519,7 +520,7 @@ public class AgentLogic_07 : MonoBehaviour {
                         break;
 
                     case jobSubState.PowerWorker:
-						aiFollow.Reset();
+						//aiFollow.Reset();
                         aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
                         if (workerPathCompleted)
                         {

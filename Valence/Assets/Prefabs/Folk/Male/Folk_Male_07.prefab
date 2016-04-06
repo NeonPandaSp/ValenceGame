@@ -3584,7 +3584,7 @@ MonoBehaviour:
   pickNextWaypointDistance: 1
   targetReached: 1
   speed: .100000001
-  rotationSpeed: 1
+  rotationSpeed: 3
   drawGizmos: 0
   canSearch: 1
   canMove: 1
@@ -3690,6 +3690,7 @@ MonoBehaviour:
   storageWaypoints: []
   wanderListSize: 100
   newAgent: 1
+  hasFood: 0
   isDead: 0
   foodStored: 0
   hungerValue: 0
@@ -4004,6 +4005,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: rotationSpeed
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
