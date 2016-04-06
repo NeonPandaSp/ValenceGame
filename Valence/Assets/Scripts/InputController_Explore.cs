@@ -393,6 +393,7 @@ public class InputController_Explore : MonoBehaviour {
 
 		if (_GameController.selectedUnit.calcChanceToHit (_GameController.selectedUnit.getDistance (_GameController.selectedUnit.currentPosition, attackTarget.currentPosition)) > rand) {
 			Debug.Log("HIT");
+			_GameController.selectedUnit.AttackTargets [_GameController.selectedUnit.currentAttackTarget].myAnimCtrl.InitHitAnim ();
 			//attackTarget.myCam.GetComponent<ScreenShake>().shake = 2;
 			//attackTarget.myCam.GetComponent<ScreenShake>().shakeAmount = _GameController.selectedUnit.attackRating/100;
 			GameObject tempObj = (GameObject) Instantiate ( dmgText, Camera.main.WorldToScreenPoint(attackTarget.gameObject.transform.position), Quaternion.identity );
@@ -410,7 +411,11 @@ public class InputController_Explore : MonoBehaviour {
 			if (attackTarget.health <= 0) {
 				_GameController.tiles [(int)attackTarget.currentPosition.x, (int)attackTarget.currentPosition.y] = 1;
 				_GameController.elite.Remove (attackTarget);
-				attackTarget.gameObject.SetActive (false);
+				attackTarget.myAnimCtrl.InitDeathAnim();
+				Destroy (attackTarget.GetComponentInChildren<UIFaceCamera>().gameObject );
+				Destroy (attackTarget);
+
+				//attackTarget.gameObject.SetActive (false);
 			}
 		} else {
 			GameObject tempObj = (GameObject) Instantiate ( dmgText, Vector3.zero, Quaternion.identity );

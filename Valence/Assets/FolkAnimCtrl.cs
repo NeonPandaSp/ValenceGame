@@ -21,7 +21,7 @@ public class FolkAnimCtrl : MonoBehaviour {
 			} else if (myUnit.isAttacking && currentAnimState != "attack") {
 				InitAttackAnim ();
 				myUnit.isAttacking = false;
-			} else if (!myUnit.isMoving && currentAnimState != "idle" && currentAnimState != "attack") {
+			} else if (!myUnit.isMoving && currentAnimState != "idle" && currentAnimState != "attack" & currentAnimState != "hit" && currentAnimState != "dead" ) {
 				InitIdleAnim ();
 			}
 		} else {
@@ -41,6 +41,14 @@ public class FolkAnimCtrl : MonoBehaviour {
 	void InitMoveAnim(){
 		currentAnimState = "walk";
 		myAnim.SetTrigger("walking");
+	}
+	public void InitHitAnim(){
+		currentAnimState = "hit";
+		myAnim.SetTrigger ("hitTrigger");
+	}
+	public void InitDeathAnim(){
+		currentAnimState = "dead";
+		myAnim.SetBool ("isDead", true);
 	}
 	public void InitAttackAnim(){
 		Debug.Log ("ATK");
