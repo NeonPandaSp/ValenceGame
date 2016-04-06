@@ -432,6 +432,7 @@ public class AgentLogic_07 : MonoBehaviour {
                 agentAnim.SetBool("Working", false);
                 if (!isDead)
                 {
+                    aiFollow.canMove = true;
                     aiFollow.target = storageWaypoints[storageWaypointIndex].transform.position;
                 }
                 else {
@@ -887,10 +888,17 @@ public class AgentLogic_07 : MonoBehaviour {
 
     void DelayNewWorkTarget(Transform waypoint) {
         //Wait for how ever long it takes to play the work animation
-        
+
+        //Vector3 targetPostition = new Vector3(workWaypoints[workWaypointIndex].transform.parent.gameObject.transform.position.x,
+        //this.transform.position.y,
+        //workWaypoints[workWaypointIndex].transform.parent.gameObject.transform.position.z);
+
         Vector3 targetPostition = new Vector3(workWaypoints[workWaypointIndex].transform.parent.gameObject.transform.position.x,
                                        this.transform.position.y,
                                        workWaypoints[workWaypointIndex].transform.parent.gameObject.transform.position.z);
+
+        
+
         this.transform.LookAt(targetPostition);
 
         //transform.LookAt(workWaypoints[workWaypointIndex].transform.parent.gameObject.transform);
@@ -964,10 +972,12 @@ public class AgentLogic_07 : MonoBehaviour {
                 agentAnim.SetBool("Walking", false);
                 agentAnim.SetBool("Working", true);
                 
-                Vector3 targetPostition = new Vector3(workWaypoints[workWaypointIndex].transform.parent.gameObject.transform.position.x,
+                Vector3 targetPostition = new Vector3(workWaypoints[workWaypointIndex].transform.parent.parent.gameObject.transform.position.x,
                                           this.transform.position.y,
-                                          workWaypoints[workWaypointIndex].transform.parent.gameObject.transform.position.z);
+                                          workWaypoints[workWaypointIndex].transform.parent.parent.gameObject.transform.position.z);
+
                 this.transform.LookAt(targetPostition);
+                aiFollow.canMove = false;
                 aiFollow.Reset();
                 workerPathCompleted = false;
                 //print("workWait: " + workWait);
@@ -975,6 +985,7 @@ public class AgentLogic_07 : MonoBehaviour {
             else {
                 workWaypointIndex = Random.Range(0, workWaypoints.Count);
                 aiFollow.target = workWaypoints[workWaypointIndex].transform.position;
+                aiFollow.canMove = true;
                 workWait = 2.0f;
                 workerPathCompleted = true;
             }

@@ -207,7 +207,7 @@ public class GameController : MonoBehaviour {
 			temp.GetComponent<AgentLogic_07>().aState = agent.state;
 			temp.GetComponent<AgentLogic_07>().jobState = agent.job;
 			temp.GetComponent<AgentLogic_07>().newAgent = false;
-
+    
 
             if ( temp.GetComponent<AgentLogic_07>().jobState == AgentLogic_07.jobSubState.Farmer){
 				temp.GetComponent<AgentLogic_07>().workWaypoints = new List<GameObject>(GameObject.FindGameObjectsWithTag ("FarmWaypoint"));
