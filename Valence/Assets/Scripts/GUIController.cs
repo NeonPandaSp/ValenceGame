@@ -174,7 +174,7 @@ using System.Collections.Generic;
 		switchModeDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		switchModeDelBtn.image.rectTransform.sizeDelta = new Vector2 (81.25f, 81.25f);
-		switchModeDelBtn.transform.position = new Vector2 (102.5, Screen.height - 82);
+		switchModeDelBtn.transform.position = new Vector2 (102.5f, Screen.height - 82);
 		switchModeDelBtn.GetComponentInChildren<Text> ().text = "";
 		switchModeDelBtn.onClick.AddListener (() => switchMode ());
 
@@ -189,8 +189,6 @@ using System.Collections.Generic;
 
 		buildClicked = false;
 
-
-		
 		//Destroy Button //HIDDEN FOR..WELL, FOREVER
 //		destroyBtnDel = (Button)Instantiate (destroyBtn);
 //		destroyBtnDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
