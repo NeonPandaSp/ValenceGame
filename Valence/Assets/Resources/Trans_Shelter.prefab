@@ -286,7 +286,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 467914}
   - 95: {fileID: 9565552}
-  - 114: {fileID: 11427466}
   - 65: {fileID: 6529630}
   m_Layer: 0
   m_Name: Trans_Shelter
@@ -3943,31 +3942,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &11427466
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 117808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3f902df69981bb4b93f0f5847001085, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _myGameController: {fileID: 0}
-  bType:
-    typeName: 
-    cost: 0
-    pRate: 0
-    pTime: 0
-    cRate: 0
-    area: 0
-    farmerVal: 0
-    farmVal: 0
-  myType: Shelter
-  myArea: 0
-  assignedAgents: []
-  initProduction: 0
 --- !u!114 &11473724
 MonoBehaviour:
   m_ObjectHideFlags: 1
