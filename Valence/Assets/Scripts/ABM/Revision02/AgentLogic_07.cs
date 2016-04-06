@@ -35,7 +35,7 @@ public class AgentLogic_07 : MonoBehaviour {
     bool populateList;
 
     //Check if the agent has food, if yes then consume the food, else start starving
-    bool hasFood;
+    public bool hasFood;
 
     //Check if the agent is hungry, if true the go to a known foodsource
     bool isHungry;
@@ -624,7 +624,7 @@ public class AgentLogic_07 : MonoBehaviour {
                     //if yes then decrease the amount of food stored on the agent and increase their health
                     foodStored--;
 
-                    if (health > 100)
+                    if (health < 100)
                     {
                         //Increase the missing health of the agent when eating food
                         health++;
