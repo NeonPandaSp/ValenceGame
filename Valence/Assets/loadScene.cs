@@ -58,4 +58,7 @@ public class loadScene : MonoBehaviour {
 		startCounting = true;
 		StartLoading ();
 	}
+	public void changeUIObject(GameObject newObj){
+		loadSceneObject = newObj;
+	}
 }

@@ -23,6 +23,12 @@ public class SquadSelection_DropZone : MonoBehaviour, IDropHandler, IPointerEnte
 	//Image change
 	public Sprite placeholderSquadIcon;
 	public Sprite placeholderSelectedWeaponIcon;
+
+	public GameObject UI_Container;
+
+	public void Start(){
+		UI_Container = GameObject.FindGameObjectWithTag ("UI Container");
+	}
 	
 	public void OnPointerEnter (PointerEventData eventData) {
 	}
@@ -50,7 +56,7 @@ public class SquadSelection_DropZone : MonoBehaviour, IDropHandler, IPointerEnte
 							if (d.oldParent.name == listList) {
 								//Finds the index for that particular parent name in the array of 4
 								squadPlaceInIndex =  Array.IndexOf (parentNameArray, d.oldParent.name);
-								this.transform.root.GetComponent<SquadSelectionScript>().myParty[squadPlaceInIndex].agentId = "-1";
+								UI_Container.GetComponentInChildren<SquadSelectionScript>().myParty[squadPlaceInIndex].agentId = "-1";
 								//Debug.Log ("DURING IF:  " + _SquadSelectionScript.population.Count);
 							}
 						}
@@ -65,7 +71,7 @@ public class SquadSelection_DropZone : MonoBehaviour, IDropHandler, IPointerEnte
 							if (fs.agentName == d.name) {
 								//Debug.Log ("The current parent is: " + d.newParent.name.ToString());
 								squadPlaceInIndex =  Array.IndexOf (parentNameArray, d.newParent.name);
-								this.transform.root.GetComponent<SquadSelectionScript>().myParty[squadPlaceInIndex].agentId = fs.agentId;
+								UI_Container.GetComponentInChildren<SquadSelectionScript>().myParty[squadPlaceInIndex].agentId = fs.agentId;
 								//Debug.Log ("Parent: " + parentNameArray[i] + " has child " + fs.agentName);
 							}
 						}
@@ -76,7 +82,7 @@ public class SquadSelection_DropZone : MonoBehaviour, IDropHandler, IPointerEnte
 					//================================\\
 					if (d.oldParent.name == parentNameArray[i]) {
 						squadPlaceInIndex =  Array.IndexOf (parentNameArray, d.oldParent.name);
-						this.transform.root.GetComponent<SquadSelectionScript>().myParty[squadPlaceInIndex].agentId = "-1";
+						UI_Container.GetComponentInChildren<SquadSelectionScript>().myParty[squadPlaceInIndex].agentId = "-1";
 					}
 				}
 				
@@ -92,7 +98,7 @@ public class SquadSelection_DropZone : MonoBehaviour, IDropHandler, IPointerEnte
 						foreach (string weaponListList in weaponsParentNameArray) {
 							if (d.oldParent.name == weaponListList) {
 								weaponPlaceInIndex =  Array.IndexOf (weaponsParentNameArray, d.oldParent.name);
-								this.transform.root.GetComponent<SquadSelectionScript>().myParty[weaponPlaceInIndex].myWeapon.weaponId = "-1";
+								UI_Container.GetComponentInChildren<SquadSelectionScript>().myParty[weaponPlaceInIndex].myWeapon.weaponId = "-1";
 							}
 						}
 					}
@@ -107,8 +113,8 @@ public class SquadSelection_DropZone : MonoBehaviour, IDropHandler, IPointerEnte
 							Debug.Log ("NAME is: " + wp.weaponName + " ID is: " + wp.weaponId);
 							if (wp.weaponName == d.name) {
 								weaponPlaceInIndex =  Array.IndexOf (weaponsParentNameArray, d.newParent.name);
-								this.transform.root.GetComponent<SquadSelectionScript>().myParty[weaponPlaceInIndex].myWeapon.weaponId = wp.weaponId;
-								Debug.Log ("THE ID IS SET TO " + this.transform.root.GetComponent<SquadSelectionScript>().myParty[weaponPlaceInIndex].myWeapon.weaponId);
+								UI_Container.GetComponentInChildren<SquadSelectionScript>().myParty[weaponPlaceInIndex].myWeapon.weaponId = wp.weaponId;
+								Debug.Log ("THE ID IS SET TO " + UI_Container.GetComponentInChildren<SquadSelectionScript>().myParty[weaponPlaceInIndex].myWeapon.weaponId);
 							}
 						}
 					}
@@ -118,7 +124,7 @@ public class SquadSelection_DropZone : MonoBehaviour, IDropHandler, IPointerEnte
 					//================================\\
 					if (d.oldParent.name == weaponsParentNameArray[i]) {
 						weaponPlaceInIndex =  Array.IndexOf (weaponsParentNameArray, d.oldParent.name);
-						this.transform.root.GetComponent<SquadSelectionScript>().myParty[weaponPlaceInIndex].myWeapon.weaponId = "-1";
+						UI_Container.GetComponentInChildren<SquadSelectionScript>().myParty[weaponPlaceInIndex].myWeapon.weaponId = "-1";
 					}
 				}
 			} else {

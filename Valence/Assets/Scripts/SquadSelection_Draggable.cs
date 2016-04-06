@@ -15,6 +15,7 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 
 	public int numberOfSettlersSelected;
 
+	public GameObject UI_Container;
 	//Glow
 	Color oldValue = new Color (255 / 255f, 255 / 255f, 255 / 255f);
 	Color newValue = new Color (248 / 255f, 255 / 255f, 135 / 255f);
@@ -28,19 +29,21 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 		
 		GetComponent<CanvasGroup>().blocksRaycasts = false;
 
+		UI_Container = GameObject.FindGameObjectWithTag ("UI Container");
+
 		//YAY GLOW
 		if (oldParent.gameObject.transform.name.ToString () == "Scrollable List") {
-			for (int i = 0; i < this.transform.root.GetComponent<SquadSelectionScript>().MemberList.Length; i++) {
+			for (int i = 0; i < UI_Container.GetComponentInChildren<SquadSelectionScript>().MemberList.Length; i++) {
 				Color glowColour = Color.Lerp (oldValue, newValue, Mathf.PingPong (Time.time, 8));
-				this.transform.root.GetComponent<SquadSelectionScript>().MemberList[i].GetComponent<Image>().color = glowColour;
+				UI_Container.GetComponentInChildren<SquadSelectionScript>().MemberList[i].GetComponent<Image>().color = glowColour;
 			}
 		}
 
 		//YAY WEAPONS GLOW
 		if (oldParent.gameObject.transform.name.ToString () == "Scrollable Weapons List") {
-			for (int i = 0; i < this.transform.root.GetComponent<SquadSelectionScript>().WeaponList.Length; i++) {
+			for (int i = 0; i < UI_Container.GetComponentInChildren<SquadSelectionScript>().WeaponList.Length; i++) {
 				Color glowColour2 = Color.Lerp (oldValue, newValue, Mathf.PingPong (Time.time, 8));
-				this.transform.root.GetComponent<SquadSelectionScript>().WeaponList[i].GetComponent<Image>().color = glowColour2;
+				UI_Container.GetComponentInChildren<SquadSelectionScript>().WeaponList[i].GetComponent<Image>().color = glowColour2;
 			}
 		}
 	}
@@ -49,29 +52,29 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 		this.transform.position = eventData.position;
 
 		if (oldParent.gameObject.transform.name.ToString () == "Scrollable List") {
-			for (int i = 0; i < this.transform.root.GetComponent<SquadSelectionScript>().MemberList.Length; i++) {
+			for (int i = 0; i < UI_Container.GetComponentInChildren<SquadSelectionScript>().MemberList.Length; i++) {
 				Color glowColour = Color.Lerp (oldValue, newValue, Mathf.PingPong (Time.time, 1));
-				this.transform.root.GetComponent<SquadSelectionScript> ().MemberList [i].GetComponent<Image> ().color = glowColour;
+				UI_Container.GetComponentInChildren<SquadSelectionScript> ().MemberList [i].GetComponent<Image> ().color = glowColour;
 			}
 		}
 
 		//YAY WEAPONS GLOW
 		if (oldParent.gameObject.transform.name.ToString () == "Scrollable Weapons List") {
-			for (int i = 0; i < this.transform.root.GetComponent<SquadSelectionScript>().WeaponList.Length; i++) {
+			for (int i = 0; i < UI_Container.GetComponentInChildren<SquadSelectionScript>().WeaponList.Length; i++) {
 				Color glowColour2 = Color.Lerp (oldValue, newValue, Mathf.PingPong (Time.time, 8));
-				this.transform.root.GetComponent<SquadSelectionScript>().WeaponList[i].GetComponent<Image>().color = glowColour2;
+				UI_Container.GetComponentInChildren<SquadSelectionScript>().WeaponList[i].GetComponent<Image>().color = glowColour2;
 			}
 		}
 	}
 	
 	public void OnEndDrag (PointerEventData eventData)
 	{
-		for (int i = 0; i < this.transform.root.GetComponent<SquadSelectionScript>().MemberList.Length; i++) {
-			this.transform.root.GetComponent<SquadSelectionScript> ().MemberList [i].GetComponent<Image> ().color = oldValue;
+		for (int i = 0; i < UI_Container.GetComponentInChildren<SquadSelectionScript>().MemberList.Length; i++) {
+			UI_Container.GetComponentInChildren<SquadSelectionScript> ().MemberList [i].GetComponent<Image> ().color = oldValue;
 		}
 
-		for (int i = 0; i < this.transform.root.GetComponent<SquadSelectionScript>().WeaponList.Length; i++) {
-			this.transform.root.GetComponent<SquadSelectionScript> ().WeaponList [i].GetComponent<Image> ().color = oldValue;
+		for (int i = 0; i < UI_Container.GetComponentInChildren<SquadSelectionScript>().WeaponList.Length; i++) {
+			UI_Container.GetComponentInChildren<SquadSelectionScript> ().WeaponList [i].GetComponent<Image> ().color = oldValue;
 		}
 		
 		this.transform.SetParent (newParent);
@@ -79,7 +82,7 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 		//=======================================\\
 		//FROM: Scrollable List | TO: Weapon List\\
 		//=======================================\\
-		for (int i = 0; i < this.transform.root.GetComponent<SquadSelectionScript>().MemberList.Length; i++) {
+		for (int i = 0; i < UI_Container.GetComponentInChildren<SquadSelectionScript>().MemberList.Length; i++) {
 			if (this.oldParent.name.ToString() == "Scrollable List" && this.newParent.name.ToString() == weaponsParentNameArray[i]) {
 				this.transform.SetParent (oldParent);
 				Debug.Log ("Snap that shit back");
@@ -100,7 +103,7 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 		//FROM: Scrollable Weapons List | TO: Squad\\
 		//=========================================\\
 		for (int i = 0; i < parentNameArray.Length; i++) {
-			foreach (GameObject weaponOBJ in this.transform.root.GetComponent<SquadSelectionScript>().WeaponList) {
+			foreach (GameObject weaponOBJ in UI_Container.GetComponentInChildren<SquadSelectionScript>().WeaponList) {
 				if ((this.oldParent.name.ToString () == weaponOBJ.name && this.newParent.name.ToString () == parentNameArray [i])) {
 					this.transform.SetParent (oldParent);
 					Debug.Log ("Lol you can't switch from a weapon to a member");
@@ -112,7 +115,7 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 		//FROM: Member List | TO: Weapons List\\
 		//====================================\\
 		for (int i = 0; i < weaponsParentNameArray.Length; i++) {
-			foreach (GameObject memberOBJ in this.transform.root.GetComponent<SquadSelectionScript>().MemberList) {
+			foreach (GameObject memberOBJ in UI_Container.GetComponentInChildren<SquadSelectionScript>().MemberList) {
 				if (this.oldParent.name.ToString() == memberOBJ.name && this.newParent.name.ToString() == weaponsParentNameArray[i]) {
 					this.transform.SetParent (oldParent);
 					Debug.Log ("Lol you can't switch from a member to a weapon");
@@ -148,13 +151,13 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 		//If there is no Member present in this slot, send weapon back
 		for (int i = 0; i < parentNameArray.Length; i++) {
 			if (this.newParent.name.ToString () == weaponsParentNameArray [i]) {
-				if (this.transform.root.GetComponent<SquadSelectionScript>().MemberList[i].gameObject.transform.childCount == 0) {
+				if (UI_Container.GetComponentInChildren<SquadSelectionScript>().MemberList[i].gameObject.transform.childCount == 0) {
 					this.transform.SetParent (oldParent);
 					Debug.Log ("No Member Present");
-					this.transform.root.GetComponent<SquadSelectionScript>().GlowImage.GetComponent<Image>().canvasRenderer.SetAlpha (1.1f);
-					this.transform.root.GetComponent<SquadSelectionScript>().GlowImage.GetComponent<Image>().CrossFadeAlpha (0.0f, 1, false);
-					this.transform.root.GetComponent<SquadSelectionScript>().GlowImage.GetComponent<Image>().CrossFadeAlpha (0.9f, 3, false);
-					this.transform.root.GetComponent<SquadSelectionScript>().GlowImage.GetComponent<Image>().CrossFadeAlpha (0.0f, 2, false);
+					UI_Container.GetComponentInChildren<SquadSelectionScript>().GlowImage.GetComponent<Image>().canvasRenderer.SetAlpha (1.1f);
+					UI_Container.GetComponentInChildren<SquadSelectionScript>().GlowImage.GetComponent<Image>().CrossFadeAlpha (0.0f, 1, false);
+					UI_Container.GetComponentInChildren<SquadSelectionScript>().GlowImage.GetComponent<Image>().CrossFadeAlpha (0.9f, 3, false);
+					UI_Container.GetComponentInChildren<SquadSelectionScript>().GlowImage.GetComponent<Image>().CrossFadeAlpha (0.0f, 2, false);
 				}
 			}
 		}
@@ -171,15 +174,15 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 
 		//If Settler switches slot position, reparent the associated weapon to Scrollable Weapons List
 		for (int i = 0; i < parentNameArray.Length; i++) {
-			foreach (GameObject CanYouSmellWhatTheRockIsCooking in this.transform.root.GetComponent<SquadSelectionScript>().MemberList) {
+			foreach (GameObject CanYouSmellWhatTheRockIsCooking in UI_Container.GetComponentInChildren<SquadSelectionScript>().MemberList) {
 				if (this.oldParent.gameObject.transform.name.ToString () == parentNameArray[i] &&
 				    this.newParent.gameObject.transform.name.ToString () != this.oldParent.gameObject.transform.name.ToString () &&
 					this.newParent.gameObject.transform.name.ToString () == CanYouSmellWhatTheRockIsCooking.gameObject.name) {
 
-					if (this.transform.root.GetComponent<SquadSelectionScript>().WeaponList[i].gameObject.transform.childCount > 0) {
-						this.transform.root.GetComponent<SquadSelectionScript>().WeaponList[i].gameObject.transform.GetChild(0).gameObject.transform.SetParent
-						(this.transform.root.GetComponent<SquadSelectionScript>().scrollableWeaponsList.gameObject.transform);
-						Debug.Log ("Weapon " + this.transform.root.GetComponent<SquadSelectionScript>().WeaponList[i].gameObject.name + " moved to Weapons List");
+					if (UI_Container.GetComponentInChildren<SquadSelectionScript>().WeaponList[i].gameObject.transform.childCount > 0) {
+						UI_Container.GetComponentInChildren<SquadSelectionScript>().WeaponList[i].gameObject.transform.GetChild(0).gameObject.transform.SetParent
+							(UI_Container.GetComponentInChildren<SquadSelectionScript>().scrollableWeaponsList.gameObject.transform);
+						Debug.Log ("Weapon " + UI_Container.GetComponentInChildren<SquadSelectionScript>().WeaponList[i].gameObject.name + " moved to Weapons List");
 					}
 				}
 			}
