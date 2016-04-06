@@ -12389,6 +12389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _GameController: {fileID: 435930103}
   _myFolkUnit: {fileID: 0}
+  currentTile: {x: 0, y: 0}
   redMat: {fileID: 0}
   blueMat: {fileID: 0}
   yellowMat: {fileID: 0}
@@ -56286,6 +56287,14 @@ Prefab:
     - target: {fileID: 22405238, guid: 356e38d8c55199d40a4ea88f2f2b451d, type: 2}
       propertyPath: m_SizeDelta.y
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11461172, guid: 356e38d8c55199d40a4ea88f2f2b451d, type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 627900315}
+    - target: {fileID: 11461172, guid: 356e38d8c55199d40a4ea88f2f2b451d, type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: initLoadScene
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 356e38d8c55199d40a4ea88f2f2b451d, type: 2}

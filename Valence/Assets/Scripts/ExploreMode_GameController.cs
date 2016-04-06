@@ -1179,7 +1179,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 		selectedUnit.gameObject.GetComponent<EnemyMouseOver> ().infoObject.SetActive (false);
 		if( GameState == 1 ){
 			selectedUnit = newUnit;
-
+			_inputController.currentTile = selectedUnit.currentPosition;
 			if( selectedUnit.canMove ){
 				selectedUnit.movePressed = false;
 			}

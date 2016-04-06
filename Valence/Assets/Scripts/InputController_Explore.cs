@@ -9,7 +9,7 @@ public class InputController_Explore : MonoBehaviour {
 	public ExploreMode_GameController _GameController;
 	public FolkUnit _myFolkUnit;
 	
-	Vector2 currentTile;
+	public Vector2 currentTile;
 	
 	Vector2 rootMousePos;
 
@@ -41,6 +41,8 @@ public class InputController_Explore : MonoBehaviour {
 	public bool hovering;
 
 	public AudioController _audioController;
+
+	int prevId;
 
 	void Start(){
 		_tileMap = GetComponent<TileMap> ();
@@ -78,8 +80,12 @@ public class InputController_Explore : MonoBehaviour {
 
 			int x = Mathf.FloorToInt( hitInfo.point.x  / _tileMap.tileSize );
 			int z = Mathf.FloorToInt( hitInfo.point.z / _tileMap.tileSize );
-			currentTile.x = x;
-			currentTile.y = z;
+			if( _GameController.selectedIndex == prevId ){
+				currentTile.x = x;
+				currentTile.y = z;
+			} else {
+				currentTile = _GameController.selectedUnit.currentPosition;
+			}
 			
 			if( currentTile.x <= _tileMap.worldSizeX && currentTile.y <= _tileMap.worldSizeZ && currentTile.x >= 0 && currentTile.y >= 0 ){
 				//myHoverObject.transform.position = new Vector3( currentTile.x, 0, currentTile.y );
@@ -216,6 +222,7 @@ public class InputController_Explore : MonoBehaviour {
 		}
 
 		hovering = false;
+		prevId = _GameController.selectedIndex;
 	}
 	
 	public void ToggleWallVisibilty (){

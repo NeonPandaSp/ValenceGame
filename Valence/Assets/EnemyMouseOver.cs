@@ -73,6 +73,7 @@ public class EnemyMouseOver : MonoBehaviour {
 			}
 		} else if( !myUnit.isElite && !myUnit._GameController.selectedUnit.isMoving ) {
 			myUnit._GameController.selectSelectedUnit(myUnit);
+			myUnit._GameController._inputController.currentTile = myUnit._GameController.selectedUnit.currentPosition;
 			Debug.Log ( "clicked");
 		}
 	}
