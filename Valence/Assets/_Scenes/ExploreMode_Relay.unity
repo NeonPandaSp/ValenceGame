@@ -14445,12 +14445,6 @@ Mesh:
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshOptimized: 0
---- !u!114 &654761792
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 11493198, guid: bbe96deda1103a941b319f7dbae9c04a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1464925504}
-  m_Script: {fileID: 11500000, guid: 1a8576254e9fdf64d81628c55e54adcf, type: 3}
 --- !u!1 &667537340
 GameObject:
   m_ObjectHideFlags: 0
@@ -30613,14 +30607,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 12
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11493198, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
   m_IsPrefabParent: 0
---- !u!82 &1464925505
-AudioSource:
-  m_PrefabParentObject: {fileID: 8256166, guid: bbe96deda1103a941b319f7dbae9c04a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1464925504}
 --- !u!1 &1464925506
 GameObject:
   m_PrefabParentObject: {fileID: 197704, guid: bbe96deda1103a941b319f7dbae9c04a, type: 2}
@@ -30637,18 +30627,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioClips:
-  - {fileID: 8300000, guid: fc4d9eaffe143b444a500fd7a1997183, type: 3}
-  - {fileID: 8300000, guid: 410e4d5887f64854ba70169b8fcec4b5, type: 3}
-  - {fileID: 8300000, guid: 1e059f59ec1d190419e117272a69e88a, type: 3}
-  - {fileID: 8300000, guid: 0e506b544de37c84c94df5b878c168c0, type: 3}
-  - {fileID: 8300000, guid: 9f5211def41573b46b4e48fff3d6ec14, type: 3}
-  - {fileID: 8300000, guid: 0ed26dea5c3ddc44e9198bc481342ac8, type: 3}
+  - {fileID: 8300000, guid: fa52ce5196b020043845d8da48c85485, type: 3}
+  - {fileID: 8300000, guid: ea9968f67f57768489213e7eea3e5b4e, type: 3}
+  - {fileID: 8300000, guid: 629d7bdfabd7680469f81a5fe48d9491, type: 3}
+  - {fileID: 8300000, guid: 8712ee0b9ab35a046b59db68895930b8, type: 3}
+  - {fileID: 8300000, guid: dd21eb33876d2204eb565e885fb5e06d, type: 3}
+  - {fileID: 8300000, guid: b9a007d44b78c86489bf5c5076892318, type: 3}
   - {fileID: 8300000, guid: d258ef3099c0f274db053458fd54b856, type: 3}
-  - {fileID: 8300000, guid: d258ef3099c0f274db053458fd54b856, type: 3}
+  - {fileID: 8300000, guid: dc67cf2666da446449cef7a4c6c3cfe0, type: 3}
+  - {fileID: 8300000, guid: 01b64de1c390d5a4db5b323a9e1280e1, type: 3}
+  - {fileID: 8300000, guid: f80d747c83d225d43a67b0805ff0ab59, type: 3}
+  - {fileID: 8300000, guid: 1713551123ee80a40b9f5ab18f23be13, type: 3}
+  - {fileID: 8300000, guid: 4a9729bc8f1d4064e8a7385c6787ac93, type: 3}
+  - {fileID: 8300000, guid: 74a750c8cdce3594f939baff55e8c7c7, type: 3}
   targetSource: {fileID: 0}
   audioPrefab: {fileID: 189750, guid: 5a7b2489be0bfe54b979d23416ec21e3, type: 2}
   fadingOut: 0
-  backgroundMusic: {fileID: 1464925505}
+  backgroundMusic: {fileID: 8204742, guid: 80e4eb061460d1947add3ee56ff9c282, type: 2}
 --- !u!1001 &1472220696
 Prefab:
   m_ObjectHideFlags: 0
@@ -37455,6 +37450,7 @@ MonoBehaviour:
   _winScript: {fileID: 0}
   extraInfo: {fileID: 1656907226}
   isPause: 0
+  _audioController: {fileID: 0}
 --- !u!114 &1811883940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42359,7 +42355,7 @@ Prefab:
     - target: {fileID: 11453874, guid: 6837e6e08e37cbb4aa4cbb98c4c8e86a, type: 2}
       propertyPath: _audioController
       value: 
-      objectReference: {fileID: 654761792}
+      objectReference: {fileID: 0}
     - target: {fileID: 11453874, guid: 6837e6e08e37cbb4aa4cbb98c4c8e86a, type: 2}
       propertyPath: build
       value: 1
