@@ -261,6 +261,7 @@ public class InputController_Explore : MonoBehaviour {
 	}
 
 	public void EndTurn(){
+		_audioController.playAudioClipOnce (9, _GameController.selectedUnit.transform.position, 20); // play audio effect
 		_GameController.disableAttackBox();
 		moveTargetIcon.SetActive (false);
 		myLine.gameObject.SetActive (false);
@@ -280,6 +281,7 @@ public class InputController_Explore : MonoBehaviour {
 		 * 
 		 * Pick up scrap or drop it
 		 * */
+		_audioController.playAudioClipOnce (8, _GameController.selectedUnit.transform.position, 20); // play audio effect
 		if (!_GameController.selectedUnit.hasScrap) {
 			_GameController.disableAttackBox ();
 			_GameController.selectedUnit.grabPressed = true;
@@ -365,7 +367,14 @@ public class InputController_Explore : MonoBehaviour {
 		 * 
 		 * */
 		Unit attackTarget = _GameController.selectedUnit.AttackTargets [_GameController.selectedUnit.currentAttackTarget];
-		_audioController.playAudioClipOnce (0, _GameController.selectedUnit.transform.position, 20);
+		if(  _GameController.selectedUnit.myWeapon.name == "Weapon_Handgun" )
+			_audioController.playAudioClipOnce (0, _GameController.selectedUnit.transform.position, 20);
+		if(  _GameController.selectedUnit.myWeapon.name == "Weapon_Rifle" )
+			_audioController.playAudioClipOnce (1, _GameController.selectedUnit.transform.position, 20);
+		if(  _GameController.selectedUnit.myWeapon.name == "Weapon_Shotgun" )
+			_audioController.playAudioClipOnce (2, _GameController.selectedUnit.transform.position, 20);
+
+
 //		if (attackTarget.myCam != null) {
 //			recursiveLayerSet( attackTarget.gameObject, 16 );
 //			attackTarget.myCam.SetActive (true);
@@ -423,7 +432,7 @@ public class InputController_Explore : MonoBehaviour {
 		myLine.gameObject.SetActive (false);
 		moveTargetIcon.gameObject.SetActive (false);
 		_GameController.selectedUnit.Move(targetMovementPos);
-
+		_audioController.playAudioClipOnce (7, _GameController.selectedUnit.transform.position, 20); // play audio effect
 		//moveConfirmedButton.gameObject.SetActive (false);
 	}
 	
@@ -466,6 +475,7 @@ public class InputController_Explore : MonoBehaviour {
 		 * undo last move
 		 * 
 		 * */
+		_audioController.playAudioClipOnce (5, _GameController.selectedUnit.transform.position, 20);
 		_GameController.undoLastMove ();
 	}
 

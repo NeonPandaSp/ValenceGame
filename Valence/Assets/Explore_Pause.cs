@@ -19,6 +19,8 @@ public class Explore_Pause : MonoBehaviour {
 
 	List<bool> escapeSuccess = new List<bool>();
 
+	public AudioController _audioController; // Audio controller
+
 	float timer;
 	// Use this for initialization
 	void Start () {
@@ -86,13 +88,17 @@ public class Explore_Pause : MonoBehaviour {
 		if (isPause) {
 			Time.timeScale = 0;
 			pauseMenuObj.SetActive (true);
+			_audioController.playAudioClipOnce (10, Vector3.zero, 500);
 		} else {
 			Time.timeScale = 1;
 			pauseMenuObj.SetActive (false);
+			_audioController.playAudioClipOnce (10, Vector3.zero, 500);
 		}
 	}
 
 	public void retreat(){
+
+		_audioController.playAudioClipOnce (3, Vector3.zero, 500); //audio 
 		escaping = true;
 		timer = 0;
 		Time.timeScale = 1;

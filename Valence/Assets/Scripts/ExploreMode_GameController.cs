@@ -71,9 +71,13 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 	public Dictionary<Unit, Vector2> newKnownPositions;
 
+	public AudioController _audioController;
+
 	public List<GameObject> weaponDefaults;
 	// Use this for initialization
 	void Start () {
+
+		_audioController = FindObjectOfType<AudioController> ().gameObject.GetComponent<AudioController> ();
 		tiles = new int[mapSize,mapSize];
 		tileVisuals = new GameObject[mapSize, mapSize];
 		
@@ -975,6 +979,13 @@ public class ExploreMode_GameController : MonoBehaviour {
 					tempPosition.z = tempPosition.z+0.5f;
 					tempObj.transform.position = Camera.main.WorldToScreenPoint(tempPosition);
 					elite[currentElite].Attack (elite[currentElite].FolkUnitsWithinView[0]);
+					if(  elite[currentElite].myWeapon.name == "Weapon_Handgun" )
+						_audioController.playAudioClipOnce (0, elite[currentElite].transform.position, 20);
+					if(  elite[currentElite].myWeapon.name == "Weapon_Rifle" )
+						_audioController.playAudioClipOnce (1, elite[currentElite].transform.position, 20);
+					if(  elite[currentElite].myWeapon.name == "Weapon_Shotgun" )
+						_audioController.playAudioClipOnce (2, elite[currentElite].transform.position, 20);
+					// HIT
 				} else{
 					GameObject tempObj = (GameObject) Instantiate ( _inputController.dmgText, Vector3.zero, Quaternion.identity );
 					tempObj.gameObject.transform.SetParent(_inputController.myCanvas.gameObject.transform);
@@ -985,6 +996,8 @@ public class ExploreMode_GameController : MonoBehaviour {
 					tempPosition.y = 1.0f;
 					tempPosition.z = tempPosition.z+0.5f;
 					tempObj.transform.position = Camera.main.WorldToScreenPoint(tempPosition);
+					_audioController.playAudioClipOnce (2, elite[currentElite].transform.position, 20);
+					// MISS 
 				}
 				if( currentElite < elite.Count-1 && ( elite[currentElite+1].EliteBehaviour == "Guard" && elite[currentElite+1].EliteState == 1 ) ){
 					startBuffer(0);

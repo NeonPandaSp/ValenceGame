@@ -26,6 +26,8 @@ public class WinStateScript : MonoBehaviour {
 	public NameGenerator _nameGenerator;
 	public loadScene _loadScene;
 
+	public AudioController _audioController; // Audio controller
+
 	public GameObject settlerObj, weaponObj, scrapObj;
 	public GameObject rewardBucket;
 	// Use this for initialization
@@ -62,9 +64,11 @@ public class WinStateScript : MonoBehaviour {
 		if (!win && !lose) {
 			if (_gameController.folk.Count <= 0) {
 				lose = true;
+				_audioController.playAudioClipOnce (11, Vector3.zero, 500);
 			}
 			if(_gameController.elite.Count <= 0){
 				win = true;
+				_audioController.playAudioClipOnce (12, Vector3.zero, 500);
 			}
 			foreach (Unit fU in _gameController.folk) {
 				if (fU.hasScrap) {
