@@ -160,16 +160,20 @@ public class Unit : MonoBehaviour {
 			_GameController.tiles[(int)currentPosition.x, (int)currentPosition.y ] = 1;
 			//int index = _GameController.folk.IndexOf(this);
 			//Destroy ( _GameController.PartyButtons[_GameController.PartyButtons.Count-1].gameObject ) ;
-			_GameController.PartyButtons.Remove(_GameController.PartyButtons[_GameController.PartyButtons.Count-1]);
+			//_GameController.PartyButtons.Remove(_GameController.PartyButtons[_GameController.PartyButtons.Count-1]);
 			_GameController.folk.Remove (this.gameObject.GetComponent<Unit>());
 			myFAnimCtrl.InitDeathAnim();
-			gameObject.SetActive (false);
+
+			//gameObject.SetActive (false);
 			PlayerData updateData = PlayerDataManager.playerDataManager.loadSaveData();
 			foreach( serialAgent sA in updateData.currentParty ){
 				if( sA.agentId == agentId )
 					sA.health = 0;
 			}
 			PlayerDataManager.playerDataManager.writePlayerData(updateData);
+
+			GetComponentInChildren<UIFaceCamera>().gameObject.SetActive(false);
+			this.enabled = false;
 		}
 
 		if (isElite && FolkUnitsWithinView.Count > 0) {
