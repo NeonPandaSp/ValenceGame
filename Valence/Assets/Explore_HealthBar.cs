@@ -25,9 +25,11 @@ public class Explore_HealthBar : MonoBehaviour {
 			myUnit = transform.parent.transform.parent.GetComponent<Unit> ();
 		}
 
-		if(!myUnit.isElite)
+		if (!myUnit.isElite) {
 			myMax = 10;
-		
+		} else {
+			myMax = myUnit.health;
+		}
 		currentTime = 0;
 		currentValue = Remap (myMax, 0.0f, myMax, 0.0f, 1.0f);
 		lastHealth = Remap (myMax, 0.0f, myMax, 0.0f, 1.0f);
@@ -70,8 +72,6 @@ public class Explore_HealthBar : MonoBehaviour {
 		} else if (currentHealth > currentValue) {
 			currentValue = currentHealth;
 		}
-
-
 		this.gameObject.transform.localScale = new Vector3( currentValue, this.gameObject.transform.localScale.y, this.gameObject.transform.localScale.z);
 	}
 

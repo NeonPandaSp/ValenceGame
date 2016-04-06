@@ -197,6 +197,7 @@ public class WinStateScript : MonoBehaviour {
 			}
 		} else if(!rewardTriggered) {
 			winUI.sprite = loseSprite;
+			winUI.gameObject.GetComponentInChildren<ScrollRect>().gameObject.SetActive(false);
 		}
 		
 		

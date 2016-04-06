@@ -69,6 +69,8 @@ public class SquadSelectionScript : MonoBehaviour {
 	
 	public Image [] myPartyWeaponIcons = new Image [4];
 
+	public Image GlowImage;
+
 	float NumOfInvWeapons;
 	int newWeaponsListHeight;
 
@@ -78,6 +80,11 @@ public class SquadSelectionScript : MonoBehaviour {
 	void Start () {
 		loadPopulation ();
 		loadWeaponsList ();
+
+		GlowImage.GetComponent<Image>().canvasRenderer.SetAlpha (1.1f);
+		GlowImage.GetComponent<Image>().CrossFadeAlpha (0.0f, 1, false);
+		GlowImage.GetComponent<Image>().CrossFadeAlpha (0.9f, 3, false);
+		GlowImage.GetComponent<Image>().CrossFadeAlpha (0.0f, 2, false);
 	}
 
 	//=====================\\
@@ -145,7 +152,7 @@ public class SquadSelectionScript : MonoBehaviour {
 					
 					settlerStats.transform.localScale = new Vector3 (1, 1, 1);
 					settlerStats.text = sA.strength + " " + sA.perception + " " + sA.agility;
-					
+
 					Text tempSettlerStats = settlerStats.GetComponent <Text>();
 				}
 			}
@@ -215,7 +222,7 @@ public class SquadSelectionScript : MonoBehaviour {
 					weaponStats.gameObject.transform.SetParent (weapon.gameObject.transform);
 					
 					weaponStats.transform.localScale = new Vector3 (1, 1, 1);
-					weaponStats.text = sA.damageModifier + " " + sA.accuracy + " " + sA.range + " " + sA.soundRange;
+					weaponStats.text = sA.damageModifier + " " + Mathf.Round (sA.accuracy * 100) + "% " + sA.range + " " + sA.soundRange;
 					
 					Text tempSettlerStats = weaponStats.GetComponent <Text>();
 				}
@@ -255,7 +262,7 @@ public class SquadSelectionScript : MonoBehaviour {
 		if (scrollableSettlerList.transform.childCount > 0) {
 			RectTransform thisBeMyTransform = scrollableSettlerList.transform.GetChild (0).GetComponent<RectTransform> ();
 			NumOfPopSettlers = scrollableSettlerList.transform.childCount * Math.Abs (thisBeMyTransform.sizeDelta.y) + (scrollableSettlerList.transform.childCount * scrollableSettlerList.GetComponent<GridLayoutGroup> ().spacing.y);
-			float subtractThisAmount = (float)(Math.Abs (scrollableSettlerList.GetComponent<RectTransform> ().rect.y) / 1.85);
+			float subtractThisAmount = (float)(Math.Abs (scrollableSettlerList.GetComponent<RectTransform> ().rect.y) / 2.5);
 			scrollableSettlerList.GetComponent<RectTransform> ().sizeDelta = new Vector2 (Math.Abs (settlerList.gameObject.transform.GetComponent<RectTransform> ().rect.x), NumOfPopSettlers - subtractThisAmount);
 		}
 
@@ -281,13 +288,18 @@ public class SquadSelectionScript : MonoBehaviour {
 			}
 		}
 
-		numberOfWeaponsInWeaponsList.text = "Weapons List (" + scrollableWeaponsList.transform.childCount + ")";		
-		numberOfWeaponsInSelectedWeaponsList.text = ("|    Weapons " + weaponNumber) + "/4";
+		numberOfWeaponsInWeaponsList.text = "Weapons List (" + scrollableWeaponsList.transform.childCount + ")";
+		int weaponCOUNT = WeaponList[0].gameObject.GetComponent<RectTransform>().childCount +
+					WeaponList[1].gameObject.GetComponent<RectTransform>().childCount +
+					WeaponList[2].gameObject.GetComponent<RectTransform>().childCount +
+					WeaponList[3].gameObject.GetComponent<RectTransform>().childCount;
+		numberOfWeaponsInSelectedWeaponsList.text = ("|    Weapons " + weaponCOUNT) + "/4";
+		Debug.Log ("Number of weapons is: " + weaponNumber);
 		
 		if (scrollableWeaponsList.transform.childCount > 0) {
 			RectTransform thisBeMyTransform2 = scrollableWeaponsList.transform.GetChild (0).GetComponent<RectTransform> ();
 			NumOfInvWeapons = scrollableWeaponsList.transform.childCount * Math.Abs (thisBeMyTransform2.sizeDelta.y) + (scrollableWeaponsList.transform.childCount * scrollableWeaponsList.GetComponent<GridLayoutGroup> ().spacing.y);
-			float subtractThisAmount2 = (float)(Math.Abs (scrollableWeaponsList.GetComponent<RectTransform> ().rect.y) / 1.85);
+			float subtractThisAmount2 = (float)(Math.Abs (scrollableWeaponsList.GetComponent<RectTransform> ().rect.y) / 2);
 			scrollableWeaponsList.GetComponent<RectTransform> ().sizeDelta = new Vector2 (Math.Abs (weaponList.gameObject.transform.GetComponent<RectTransform> ().rect.x), NumOfInvWeapons - subtractThisAmount2);
 		}
 	}

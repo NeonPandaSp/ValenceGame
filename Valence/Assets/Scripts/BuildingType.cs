@@ -54,7 +54,7 @@ public class BuildingType  {
 		if (typeName == "Shelter") {
 			return 10.0f;
 		} else if (typeName == "Farm") {
-            return 5.0f;
+            return 10.0f;
         } else if (typeName == "PowerStation") {
             //Each power station should produce 100 power
             return 2.0f;
