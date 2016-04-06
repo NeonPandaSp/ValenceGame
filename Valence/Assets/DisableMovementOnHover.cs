@@ -18,4 +18,9 @@ public class DisableMovementOnHover : MonoBehaviour {
 		_gameController._inputController.myLine.gameObject.SetActive(false);
 		_gameController._inputController.moveTargetIcon.SetActive(false);
 	}
+	void OnMousePressed(){
+		_gameController._inputController.hovering = true;
+		_gameController._inputController.myLine.gameObject.SetActive(false);
+		_gameController._inputController.moveTargetIcon.SetActive(false);
+	}
 }

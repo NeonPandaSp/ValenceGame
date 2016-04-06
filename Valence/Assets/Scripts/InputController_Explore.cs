@@ -104,7 +104,7 @@ public class InputController_Explore : MonoBehaviour {
 			if (_GameController.selectedUnit.movementRemaining > 0 && !_GameController.selectedUnit.movePressed && !_GameController.selectedUnit.isMoving) {
 				_GameController.GenerateMovementRange ((int)_GameController.selectedUnit.currentPosition.x, (int)_GameController.selectedUnit.currentPosition.y);
 				_GameController.selectedUnit.movePressed = true;
-			} else if( ( !_GameController.selectedUnit.movePressed && _GameController.moveTiles.Count > 0 ) || _GameController.selectedUnit.isMoving ) {
+			} else if( ( !_GameController.selectedUnit.movePressed && _GameController.moveTiles.Count <= 0 ) || _GameController.selectedUnit.isMoving ) {
 				foreach( GameObject n in _GameController.moveTiles){
 					Destroy (n);
 				}
@@ -353,7 +353,7 @@ public class InputController_Explore : MonoBehaviour {
 				}
 			}
 			_GameController.selectedUnit = _GameController.folk[i];
-			if( _GameController.selectedUnit.canMove ){
+			if( _GameController.selectedUnit.movementRemaining > 0 ){
 				_GameController.selectedUnit.movePressed = false;
 			}
 			_GameController.selectedIndex = i;
