@@ -1107,7 +1107,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 			if( fU.isWithinAttackRange(eU) ){
 				if( eU.health > 0 ){
 					selectedUnit.AttackTargets.Add(eU);
-					selectedUnit.currentAttackTarget = 0;
+
 					/**
 					Transform[] eUChildren = eU.GetComponentsInChildren<Transform>(true);
 					foreach( Transform ob in eUChildren ){
@@ -1118,9 +1118,12 @@ public class ExploreMode_GameController : MonoBehaviour {
 				}
 			}
 		}
+		if( selectedUnit.currentAttackTarget > selectedUnit.AttackTargets.Count ){
+			selectedUnit.currentAttackTarget = 0;
+		}
 		attackIcon.gameObject.SetActive (true);
-		attackIcon.selectUnit = selectedUnit.AttackTargets [0];
-		selectedUnit.AttackTargets[0].GetComponent<EnemyMouseOver> ().enableUI ();
+		attackIcon.selectUnit = selectedUnit.AttackTargets [selectedUnit.currentAttackTarget];
+		selectedUnit.AttackTargets[selectedUnit.currentAttackTarget].GetComponent<EnemyMouseOver> ().enableUI ();
 	}
 	public void disableAttackBox(){
 		selectedUnit.AttackTargets.Clear();

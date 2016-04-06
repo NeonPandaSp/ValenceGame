@@ -418,6 +418,8 @@ public class InputController_Explore : MonoBehaviour {
 			if (attackTarget.health <= 0) {
 				_GameController.tiles [(int)attackTarget.currentPosition.x, (int)attackTarget.currentPosition.y] = 1;
 				_GameController.elite.Remove (attackTarget);
+				attackTarget.gameObject.GetComponent<BoxCollider>().enabled = false;
+				attackTarget.gameObject.GetComponent<EnemyMouseOver>().enabled = false;
 				attackTarget.myAnimCtrl.InitDeathAnim();
 				Destroy (attackTarget.GetComponentInChildren<UIFaceCamera>().gameObject );
 				Destroy (attackTarget);

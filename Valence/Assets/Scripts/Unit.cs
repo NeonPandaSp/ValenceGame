@@ -162,6 +162,8 @@ public class Unit : MonoBehaviour {
 			//Destroy ( _GameController.PartyButtons[_GameController.PartyButtons.Count-1].gameObject ) ;
 			//_GameController.PartyButtons.Remove(_GameController.PartyButtons[_GameController.PartyButtons.Count-1]);
 			_GameController.folk.Remove (this.gameObject.GetComponent<Unit>());
+			this.gameObject.GetComponent<BoxCollider>().enabled = false;
+			this.gameObject.GetComponent<EnemyMouseOver>().enabled = false;
 			myFAnimCtrl.InitDeathAnim();
 
 			//gameObject.SetActive (false);
