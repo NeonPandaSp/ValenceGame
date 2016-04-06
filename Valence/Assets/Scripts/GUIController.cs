@@ -173,8 +173,8 @@ using System.Collections.Generic;
 		switchModeDelBtn = (Button)Instantiate (switchModeBtn);
 		switchModeDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
-		switchModeDelBtn.image.rectTransform.sizeDelta = new Vector2 (75, 75);
-		switchModeDelBtn.transform.position = new Vector2 (57.5f, Screen.height - 57.5f);
+		switchModeDelBtn.image.rectTransform.sizeDelta = new Vector2 (81.25f, 81.25f);
+		switchModeDelBtn.transform.position = new Vector2 (81.25f, Screen.height - 60.625f);
 		switchModeDelBtn.GetComponentInChildren<Text> ().text = "";
 		switchModeDelBtn.onClick.AddListener (() => switchMode ());
 
@@ -183,14 +183,16 @@ using System.Collections.Generic;
 		buildBtnDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 
 		buildBtnDel.GetComponentInChildren<Text> ().text = "";
-		buildBtnDel.transform.position = new Vector2 (switchModeDelBtn.transform.position.x, switchModeDelBtn.transform.position.y - 95);
-		buildBtnDel.image.rectTransform.sizeDelta = new Vector2 (75, 75);
+		buildBtnDel.transform.position = new Vector2 (switchModeDelBtn.transform.position.x + 85.25f, Screen.height - 60.625f);
+		buildBtnDel.image.rectTransform.sizeDelta = new Vector2 (81.25f, 81.25f);
 		buildBtnDel.onClick.AddListener (() => buildBtnClicked ());
 		buildBtnDel.gameObject.SetActive (true);
 
 		buildClicked = false;
+
+
 		
-		//Destroy Button //HIDDEN FOR BETA PRESENTATION
+		//Destroy Button //HIDDEN FOR..WELL, FOREVER
 //		destroyBtnDel = (Button)Instantiate (destroyBtn);
 //		destroyBtnDel.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 //		
@@ -200,23 +202,12 @@ using System.Collections.Generic;
 //		destroyBtnDel.onClick.AddListener (() => buildBtnClicked ());
 
 		// === STRUCTURE BUTTONS === \\
-		//Shelter Button				
-		shelterDelBtn = (Button)Instantiate (shelterBtn);
-		shelterDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
-		
-		shelterDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		shelterDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x + 72.5f, buildBtnDel.transform.position.y);
-		shelterDelBtn.GetComponentInChildren<Text> ().text = "Shelter";
-		shelterDelBtn.onClick.AddListener (() => switchStructure ("shelter"));
-		shelterDelBtn.gameObject.SetActive (false);
-		
 		//Farm Button
 		farmDelBtn = (Button)Instantiate (farmBtn);
 		farmDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		farmDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		farmDelBtn.transform.position = new Vector2 (shelterDelBtn.transform.position.x + 67.5f, buildBtnDel.transform.position.y);
-		farmDelBtn.GetComponentInChildren<Text> ().text = "Farm";
+		farmDelBtn.transform.position = new Vector2 (buildBtnDel.transform.position.x - 67.5f, buildBtnDel.transform.position.y - 75.625f);
 		farmDelBtn.onClick.AddListener (() => switchStructure ("farm"));
 		farmDelBtn.gameObject.SetActive (false);
 		
@@ -225,8 +216,7 @@ using System.Collections.Generic;
 		waterStationDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		waterStationDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		waterStationDelBtn.transform.position = new Vector2 (shelterDelBtn.transform.position.x, buildBtnDel.transform.position.y - 67.5f);
-		waterStationDelBtn.GetComponentInChildren<Text> ().text = "Water Station";
+		waterStationDelBtn.transform.position = new Vector2 (farmDelBtn.transform.position.x + 70, farmDelBtn.transform.position.y);
 		waterStationDelBtn.onClick.AddListener (() => switchStructure ("water"));
 		waterStationDelBtn.gameObject.SetActive (false);
 		
@@ -235,18 +225,25 @@ using System.Collections.Generic;
 		powerStationDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		powerStationDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		powerStationDelBtn.transform.position = new Vector2 (waterStationDelBtn.transform.position.x + 67.5f, buildBtnDel.transform.position.y - 67.5f);
-		powerStationDelBtn.GetComponentInChildren<Text> ().text = "Power Station";
+		powerStationDelBtn.transform.position = new Vector2 (waterStationDelBtn.transform.position.x + 70, farmDelBtn.transform.position.y);
 		powerStationDelBtn.onClick.AddListener (() => switchStructure ("power"));
 		powerStationDelBtn.gameObject.SetActive (false);
+
+		//Shelter Button				
+		shelterDelBtn = (Button)Instantiate (shelterBtn);
+		shelterDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
+		
+		shelterDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
+		shelterDelBtn.transform.position = new Vector2 (farmDelBtn.transform.position.x + 32.5f, farmDelBtn.transform.position.y - 70);
+		shelterDelBtn.onClick.AddListener (() => switchStructure ("shelter"));
+		shelterDelBtn.gameObject.SetActive (false);
 
 		//Training Ground Button
 		trainingGroundDelBtn = (Button)Instantiate (trainingGroundBtn);
 		trainingGroundDelBtn.gameObject.transform.SetParent (myCanvas.gameObject.transform);
 		
 		trainingGroundDelBtn.image.rectTransform.sizeDelta = new Vector2 (65, 65);
-		trainingGroundDelBtn.transform.position = new Vector2 (powerStationDelBtn.transform.position.x + 67.5f, buildBtnDel.transform.position.y);
-		trainingGroundDelBtn.GetComponentInChildren<Text> ().text = "Training Ground";
+		trainingGroundDelBtn.transform.position = new Vector2 (shelterDelBtn.transform.position.x + 70, shelterDelBtn.transform.position.y);
 		trainingGroundDelBtn.onClick.AddListener (() => switchStructure ("training"));
 		trainingGroundDelBtn.gameObject.SetActive (false);
 
