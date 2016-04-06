@@ -62,7 +62,7 @@ public class AgentLogic_07 : MonoBehaviour {
     public float perception;
 
     //Food consumption rate per agent, modified by Strength
-    public float consumeRate = 1.0f;
+    public float consumeRate = 7.0f;
 
 	public AgentLogic_07 agentLogic;
 
@@ -606,52 +606,79 @@ public class AgentLogic_07 : MonoBehaviour {
         //Debug.Log("Agent has begun consuming resources...");
         //Repeat the function ConsumeResource, for 1 second, every 1 second
         InvokeRepeating("ConsumeResource", 1.0f, consumeRate);
-        InvokeRepeating("CheckIfInjured", 1.0f, consumeRate); 
+        InvokeRepeating("CheckIfInjured", 1.0f, consumeRate);
+        InvokeRepeating("ReduceFoodInventory", 1.0f, 10.0f);
     }
-            
+
+    void ReduceFoodInventory() {
+        if (foodStored > 0){
+            //if yes then decrease the amount of food stored on the agent and increase their health
+
+            if (health != 100) {
+                foodStored--;
+            }
+        }
+        else {
+            //if there is no more food stored on the agent, then start starving the agent
+            foodStored = 0;
+            hasFood = false;
+        }
+    }
+     
+    
+
     //When the agent's hunger % reaches a critial amount, then switch the current state of the agent to hunger state (search for food)
     void ConsumeResource() {
 
         //Todo: need to update this function to take into account the current food the agent has collected...
         //ie. once they collect 100 food ONLY start increasing the hungerValue once he has finished feeding on that 100 food
-        if (hungerValue >= 100 && health >= 0)
-        {
+        if (hungerValue >= 100 && health >= 0) {
+
             health--;
         }
-        switch (hasFood)
-        {
-            case true:
 
-                //Check that there still is food stored
-                if (foodStored > 0)
-                {
-                    //if yes then decrease the amount of food stored on the agent and increase their health
-                    foodStored--;
+        if (health < 100) {
+            //Increase the missing health of the agent when eating food
+            //Now based on double what ever the agent's consumption rate
+            health += (5 * (int)consumeRate);
+        }
+            /*switch (hasFood)
+            {
+                case true:
 
-                    if (health < 100)
+                    //Check that there still is food stored
+                    if (foodStored > 0)
                     {
-                        //Increase the missing health of the agent when eating food
-                        health++;
+                        //if yes then decrease the amount of food stored on the agent and increase their health
+                        foodStored--;
+
+                        //InvokeRepeating("ReduceFoodInventory", 1, 10);
+
+                        if (health < 100)
+                        {
+                            //Increase the missing health of the agent when eating food
+                            //Now based on double what ever the agent's consumption rate
+                            health += (2 * (int)consumeRate);
+                        }
+                        else
+                        {
+                            //Do nothing
+                        }
+
+
                     }
                     else
                     {
-                        //Do nothing
+                        //if there is no more food stored on the agent, then start starving the agent
+                        foodStored = 0;
+                        hasFood = false;
                     }
 
-
-                }
-                else
-                {
-                    //if there is no more food stored on the agent, then start starving the agent
-                    foodStored = 0;
-                    hasFood = false;
-                }
-
-                break;
-            case false:
-                //check if the agent's hunger% has reached 25%, otherwise keep increasing the hungerValue
-                //Todo update this if statement to check boolean, boolean set based on probability
-
+                    break;
+                case false:*/
+            //check if the agent's hunger% has reached 25%, otherwise keep increasing the hungerValue
+            //Todo update this if statement to check boolean, boolean set based on probability
+            if (!hasFood) { 
                 if (hungerValue >= 100)
                 {
                     hungerValue = 100;
@@ -731,10 +758,10 @@ public class AgentLogic_07 : MonoBehaviour {
 
                     //Choose(hungerValue);
                 }
-                break;
+                /*break;
             default:
                 Debug.Log("Default reached in AgentLogic_07 - ConsumeResource function");
-                break;
+                break;*/
         }
 
     }
