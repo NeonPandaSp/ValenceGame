@@ -290,6 +290,9 @@ public class Unit : MonoBehaviour {
 				_GameController.tiles [(int)currentPosition.x,(int)currentPosition.y] = 3;
 				currentPath = null;
 				canMove = false;
+				
+				_GameController.disableAttackBox();
+				_GameController.enableAttackBox(this);
 			}
 		}
 
