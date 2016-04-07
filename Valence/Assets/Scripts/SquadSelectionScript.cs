@@ -353,7 +353,7 @@ public class SquadSelectionScript : MonoBehaviour {
 					WeaponList[2].gameObject.GetComponent<RectTransform>().childCount +
 					WeaponList[3].gameObject.GetComponent<RectTransform>().childCount;
 		numberOfWeaponsInSelectedWeaponsList.text = ("|    Weapons " + weaponCOUNT) + "/4";
-		Debug.Log ("Number of weapons is: " + weaponNumber);
+//		Debug.Log ("Number of weapons is: " + weaponNumber);
 		
 		if (scrollableWeaponsList.transform.childCount > 0) {
 			RectTransform thisBeMyTransform2 = scrollableWeaponsList.transform.GetChild (0).GetComponent<RectTransform> ();
