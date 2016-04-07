@@ -312,6 +312,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 
 
 			if( EnemyTurnComplete && eMovementRemaing <= 0){
+				_audioController.playAudioClipOnce (9, Vector3.zero, 20); // play audio effect
 				GameState = 1;
 				playerTurnObject.ReStart();
 				selectedUnit = folk[0];
