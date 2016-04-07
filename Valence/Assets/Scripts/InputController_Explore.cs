@@ -38,7 +38,7 @@ public class InputController_Explore : MonoBehaviour {
 
 	public Sprite dropSprite, pickupSprite;
 
-	public bool hovering;
+	public bool hovering, atkHovering;
 
 	public AudioController _audioController;
 
@@ -133,7 +133,7 @@ public class InputController_Explore : MonoBehaviour {
 
 		if( Input.GetMouseButton(0) && !Input.GetKey (KeyCode.LeftAlt) ){
 
-			if( _GameController.selectedUnit.movementRemaining > 0 && _GameController.GameState == 1 && _GameController.selectedUnit.movePressed ){
+			if( _GameController.selectedUnit.movementRemaining > 0 && _GameController.GameState == 1 && _GameController.selectedUnit.movePressed && !hovering && !atkHovering ){
 				if( _GameController.selectedUnit.withinMoveRange( currentTile ) && _GameController.GeneratePathTo((int)currentTile.x,(int)currentTile.y, 0 ) ){
 					//_GameController.selectedUnit.Move(currentTile);
 					//Instantiate( moveTargetIcon, new Vector3( currentTile.x, 0.1f, currentTile.y), Quaternion.identity );
@@ -246,6 +246,7 @@ public class InputController_Explore : MonoBehaviour {
 		if (!_GameController.selectedUnit.attackPressed) {
 			_GameController.enableAttackBox (_GameController.selectedUnit);
 			attackConfirmedButton.gameObject.SetActive (true);
+
 			moveConfirmedButton.gameObject.SetActive (false);
 			_GameController.selectedUnit.AttackTargets [_GameController.selectedUnit.currentAttackTarget].gameObject.GetComponent<EnemyMouseOver> ().enableUI ();
 			_GameController.selectedUnit.attackPressed = true;
@@ -373,6 +374,7 @@ public class InputController_Explore : MonoBehaviour {
 		 * PLAYER ATTACK
 		 * 
 		 * */
+
 		Unit attackTarget = _GameController.selectedUnit.AttackTargets [_GameController.selectedUnit.currentAttackTarget];
 		if(  _GameController.selectedUnit.myWeapon.name == "Weapon_Handgun" )
 			_audioController.playAudioClipOnce (0, _GameController.selectedUnit.transform.position, 20);

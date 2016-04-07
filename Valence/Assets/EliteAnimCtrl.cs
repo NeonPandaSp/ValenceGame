@@ -15,11 +15,11 @@ public class EliteAnimCtrl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		ResetTriggers ();
-		Debug.Log (myUnit.health + " " + currentAnimState);
+		//Debug.Log (myUnit.health + " " + currentAnimState);
 		if (myUnit.isMoving && currentAnimState != "walk") {
 			InitMoveAnim();
 		} else if (!myUnit.isMoving && currentAnimState != "idle" && currentAnimState != "alert" && currentAnimState != "attack" && currentAnimState != "hit" && !myAnim.GetBool("isDead") ) {
-			Debug.Log("Anim Reset to Idle");
+
 			InitIdleAnim();
 		}
 	}
@@ -45,18 +45,18 @@ public class EliteAnimCtrl : MonoBehaviour {
 		myAnim.SetTrigger ("alert");
 	}
 	public void InitAttackAnim(){
-		Debug.Log ("ATK");
+		//Debug.Log ("ATK");
 		currentAnimState = "attack";
 		myAnim.SetTrigger ("attack");
 		//myAnim.SetBool ("attacking", true);
 	}
 	public void InitHitAnim(){
-		Debug.Log ("Elite HIT!");
+		//Debug.Log ("Elite HIT!");
 		currentAnimState = "hit";
 		myAnim.SetTrigger ("hitTrigger");
 	}
 	public void InitDeathAnim(){
-		Debug.Log ("Dead");
+		//Debug.Log ("Dead");
 		currentAnimState = "dead";
 		myAnim.SetBool ("isDead", true);
 	}

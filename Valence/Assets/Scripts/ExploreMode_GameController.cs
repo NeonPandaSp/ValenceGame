@@ -1135,6 +1135,7 @@ public class ExploreMode_GameController : MonoBehaviour {
 		attackIcon.gameObject.SetActive (false);
 		chanceToHitText.text = "X";
 		_inputController.attackConfirmedButton.gameObject.SetActive (false);
+		_inputController.atkHovering = false;
 //		foreach (Unit eU in elite) {
 //			if( Vector3.Distance ( eU.transform.position, selectedUnit.transform.position ) <= 5 ){
 //				Transform[] eUChildren = eU.GetComponentsInChildren<Transform>(true);

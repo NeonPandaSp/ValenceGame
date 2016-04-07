@@ -25,7 +25,7 @@ public class FolkAnimCtrl : MonoBehaviour {
 				InitIdleAnim ();
 			}
 		} else {
-			Debug.Log ("Anim Not Set");
+			//Debug.Log ("Anim Not Set");
 			lookForAnim();
 		}
 	}
@@ -51,7 +51,7 @@ public class FolkAnimCtrl : MonoBehaviour {
 		myAnim.SetBool ("isDead", true);
 	}
 	public void InitAttackAnim(){
-		Debug.Log ("ATK");
+		//Debug.Log ("ATK");
 		currentAnimState = "attack";
 		myAnim.SetTrigger ("attack");
 	}
