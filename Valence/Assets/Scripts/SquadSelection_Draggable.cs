@@ -23,8 +23,8 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 	public void OnBeginDrag (PointerEventData eventData) {
 
 		newParent = this.transform.parent;
-		//this.transform.SetParent (this.transform.parent);
 		oldParent = this.transform.parent;
+		this.transform.SetParent (this.transform.parent.parent.parent.parent.parent);
 		Debug.Log ("OLD PARENT IS: " + oldParent);
 		
 		GetComponent<CanvasGroup>().blocksRaycasts = false;
@@ -48,6 +48,9 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 		}
 	}
 
+	//=============\\
+	//===ON DRAG===\\
+	//=============\\
 	public void OnDrag (PointerEventData eventData) {
 		this.transform.position = eventData.position;
 
@@ -165,9 +168,10 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 		//If either Weapons List or Members List has a child object
 		for (int i = 0; i < parentNameArray.Length; i++) {
 			if (this.newParent.name.ToString () == parentNameArray [i] || this.newParent.name.ToString () == weaponsParentNameArray [i]) {
+				Debug.Log ("OLD PARENT IS THIS THING: " + oldParent);
 				if (this.newParent.gameObject.transform.childCount > 1) {
 					this.transform.SetParent (oldParent);
-					Debug.Log ("It already has another" + this.transform);
+					Debug.Log ("It already has " + this.transform);
 				}
 			}
 		}
@@ -178,6 +182,17 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 				if (this.oldParent.gameObject.transform.name.ToString () == parentNameArray[i] &&
 				    this.newParent.gameObject.transform.name.ToString () != this.oldParent.gameObject.transform.name.ToString () &&
 					this.newParent.gameObject.transform.name.ToString () == CanYouSmellWhatTheRockIsCooking.gameObject.name) {
+
+					if (UI_Container.GetComponentInChildren<SquadSelectionScript>().WeaponList[i].gameObject.transform.childCount > 0) {
+						UI_Container.GetComponentInChildren<SquadSelectionScript>().WeaponList[i].gameObject.transform.GetChild(0).gameObject.transform.SetParent
+							(UI_Container.GetComponentInChildren<SquadSelectionScript>().scrollableWeaponsList.gameObject.transform);
+						Debug.Log ("Weapon " + UI_Container.GetComponentInChildren<SquadSelectionScript>().WeaponList[i].gameObject.name + " moved to Weapons List");
+					}
+				}
+
+				if (this.oldParent.gameObject.transform.name.ToString () == parentNameArray[i] &&
+				    this.newParent.gameObject.transform.name.ToString () != this.oldParent.gameObject.transform.name.ToString () &&
+				    this.newParent.gameObject.transform.name.ToString () == "Scrollable List") {
 
 					if (UI_Container.GetComponentInChildren<SquadSelectionScript>().WeaponList[i].gameObject.transform.childCount > 0) {
 						UI_Container.GetComponentInChildren<SquadSelectionScript>().WeaponList[i].gameObject.transform.GetChild(0).gameObject.transform.SetParent
