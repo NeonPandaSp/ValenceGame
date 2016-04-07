@@ -382,8 +382,7 @@ public class InputController_Explore : MonoBehaviour {
 			_audioController.playAudioClipOnce (1, _GameController.selectedUnit.transform.position, 20);
 		if(  _GameController.selectedUnit.myWeapon.name == "Weapon_Shotgun" )
 			_audioController.playAudioClipOnce (2, _GameController.selectedUnit.transform.position, 20);
-
-
+		
 //		if (attackTarget.myCam != null) {
 //			recursiveLayerSet( attackTarget.gameObject, 16 );
 //			attackTarget.myCam.SetActive (true);
