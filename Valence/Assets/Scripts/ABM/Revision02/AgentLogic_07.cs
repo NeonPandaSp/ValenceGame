@@ -302,7 +302,7 @@ public class AgentLogic_07 : MonoBehaviour {
 
 		//Populate the following waypoints when an agent is spawned
 		while (wanderWaypoints.Count < wanderListSize) {
-			wanderWaypoints.Add (new Vector3 (Random.Range (-25, 50), 0, Random.Range (-16, 25)));
+			wanderWaypoints.Add (new Vector3 (Random.Range (-30, 35), 0, Random.Range (-40, 10)));
 		}
 
 		//Get all storage waypoints when the agent is spawned, agent should know a known food source at spawn

@@ -81,7 +81,7 @@ public class BuildingType  {
 		} else if (typeName == "WaterStation") {
 			return 1.0f;
 		} else if (typeName == "TrainingArea") {
-			return 1.0f;
+			return 0.0f;
 		}
         else {
             Debug.Log("Consumption Type Error");
@@ -99,7 +99,7 @@ public class BuildingType  {
 		} else if (typeName == "WaterStation") {
 			return 3.0f;
 		} else if (typeName == "TrainingArea") {
-			return 3.0f;
+			return 0.0f;
 		}
 		else {
 			Debug.Log("Consumption Time Error");

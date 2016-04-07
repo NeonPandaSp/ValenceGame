@@ -23,7 +23,7 @@ public class ProgressBar : MonoBehaviour {
 		if (productionCompleteTime == 0) {
 			productionCompleteTime = myBuildingScript.bType.pTime;
 		}
-		if (myBuildingScript.bType.typeName != "PowerStation") {
+		if (myBuildingScript.bType.typeName != "PowerStation" && myBuildingScript.bType.typeName != "TrainingArea") {
 			if (myBuildingScript.powered) {
 				powerImg.color = new Color (0, 181, 255, 75);
 			} else {

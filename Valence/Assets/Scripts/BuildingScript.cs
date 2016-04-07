@@ -101,7 +101,7 @@ public class BuildingScript : MonoBehaviour {
 				//Debug.Log ("POWER CONSUMED");
 			} else {
 				//Debug.Log ("NOT ENOUGH POWER");
-				if( bType.typeName == "PowerStation" )
+				if( bType.typeName == "PowerStation" || bType.typeName == "TrainingArea")
 					powered = true;
 				else
 					powered = false;
