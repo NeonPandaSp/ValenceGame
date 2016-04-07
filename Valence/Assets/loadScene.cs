@@ -9,7 +9,7 @@ public class loadScene : MonoBehaviour {
 	AsyncOperation async;
 	public bool startCounting = false;
 	public float timer = 0.0f;
-
+	public float timeTillLoad = 5.0f;
 	public AudioController _audioController;
 
 	public bool build;
@@ -36,7 +36,7 @@ public class loadScene : MonoBehaviour {
 			timer += Time.deltaTime;
 			if (build)
 				uiStuff.SetActive (false);
-			if (timer > 5) {
+			if (timer > timeTillLoad) {
 				ActivateScene ();
 			}
 		} else {

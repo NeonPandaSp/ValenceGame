@@ -55,6 +55,17 @@ public class MapSquadSceneControl : MonoBehaviour {
 				foreach (serialAgent sA in squadCan.GetComponent<SquadSelectionScript>().population) {
 					if (sA.agentId == squadCan.GetComponent<SquadSelectionScript>().myParty[i].agentId) {
 						myParty.Add (sA);
+						foreach (serialWeapon sW in squadCan.GetComponent<SquadSelectionScript>().weaponsPopulation ){
+							Debug.Log ("SerialWeapon Population ID: " + sW.weaponId );
+							if (sW.weaponId == squadCan.GetComponent<SquadSelectionScript>().myParty[i].myWeapon.weaponId) {
+								myParty[myParty.Count-1].myWeapon = sW;
+								myWeaponListToSave.Add (sW);
+								//partyWeaponDex++;
+								//weaponSet = true;
+								//Debug.Log ("Weapon at myParty [" + i + "] set to Weapon:" + myParty[i].myWeapon.weaponName);
+							}
+						}
+
 						Debug.Log ("Agent at myParty[ " + i + " ] set to GameSave Party @ " + myParty.Count);
 					}
 				}
@@ -64,22 +75,42 @@ public class MapSquadSceneControl : MonoBehaviour {
 
 			//myParty.Add (squadCan.GetComponent<SquadSelectionScript>().myParty[i] );
 		}
-
-		for (int i = 0; i < squadCan.GetComponent<SquadSelectionScript>().myParty.Length; i++){
-			if (squadCan.GetComponent<SquadSelectionScript>().myParty[i].myWeapon.weaponId.Equals ("-1") || squadCan.GetComponent<SquadSelectionScript>().myParty[i].myWeapon.weaponId != " ") {
-				Debug.Log ( "SerialWeapon Party ID: " + squadCan.GetComponent<SquadSelectionScript>().myParty[i].myWeapon.weaponId );
-				foreach (serialWeapon sW in squadCan.GetComponent<SquadSelectionScript>().weaponsPopulation ){
-					Debug.Log ("SerialWeapon Population ID: " + sW.weaponId );
-					if (sW.weaponId == squadCan.GetComponent<SquadSelectionScript>().myParty[i].myWeapon.weaponId) {
-						myParty[i].myWeapon = sW;
-						myWeaponListToSave.Add (sW);
-						Debug.Log ("Weapon at myParty [" + i + "] set to Weapon:" + myParty[i].myWeapon.weaponName);
-					}
-				}
-			} else {
-				Debug.Log ("Weapon at myParty [" + i + "] not set.");
-			}
-		}
+//		int partyWeaponDex = 0;
+//		for (int i = 0; i < squadCan.GetComponent<SquadSelectionScript>().myParty.Length; i++){
+//			if (squadCan.GetComponent<SquadSelectionScript>().myParty[i].myWeapon.weaponId.Equals ("-1") || squadCan.GetComponent<SquadSelectionScript>().myParty[i].myWeapon.weaponId != " ") {
+//				Debug.Log ( "SerialWeapon Party ID: " + squadCan.GetComponent<SquadSelectionScript>().myParty[i].myWeapon.weaponId );
+//				bool weaponSet = false; // check if the weapon is ever set
+//				foreach (serialWeapon sW in squadCan.GetComponent<SquadSelectionScript>().weaponsPopulation ){
+//					Debug.Log ("SerialWeapon Population ID: " + sW.weaponId );
+//					if (sW.weaponId == squadCan.GetComponent<SquadSelectionScript>().myParty[i].myWeapon.weaponId) {
+//						myParty[partyWeaponDex].myWeapon = sW;
+//						myWeaponListToSave.Add (sW);
+//						partyWeaponDex++;
+//						weaponSet = true;
+//						Debug.Log ("Weapon at myParty [" + i + "] set to Weapon:" + myParty[i].myWeapon.weaponName);
+//					} else {
+//
+//					}
+//				}
+//				if( !weaponSet ){
+//					Debug.Log ("Weapon at myParty [" + i + "] not set. ~ Weird Error Edition");
+//					if (squadCan.GetComponent<SquadSelectionScript>().myParty[i].agentId.Equals("-1") || squadCan.GetComponent<SquadSelectionScript>().myParty[i].agentId != " " ) {
+//						Debug.Log ("Squad Member Set, but not weapon, default weapon set");
+//						partyWeaponDex++;
+//					} else {
+//						Debug.Log ("Squad Member Not Set and Weapon not set");
+//					}
+//				}
+//			} else {
+//				Debug.Log ("Weapon at myParty [" + i + "] not set.");
+//				if (squadCan.GetComponent<SquadSelectionScript>().myParty[i].agentId.Equals("-1") || squadCan.GetComponent<SquadSelectionScript>().myParty[i].agentId != " " ) {
+//					Debug.Log ("Squad Member Set, but not weapon, default weapon set");
+//					partyWeaponDex++;
+//				} else {
+//					Debug.Log ("Squad Member Not Set and Weapon not set");
+//				}
+//			}
+//		}
 
 		oldData.currentParty = myParty;
 		oldData.currentWeapons = myWeaponListToSave;

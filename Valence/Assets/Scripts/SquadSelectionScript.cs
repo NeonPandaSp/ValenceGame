@@ -8,6 +8,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class SquadSelectionScript : MonoBehaviour {
 	public Button ventureBtn;
 
+	public Text helpText;
+
 	PlayerData dataCopy;
 
 	//=======================\\
@@ -91,10 +93,13 @@ public class SquadSelectionScript : MonoBehaviour {
 		loadPopulation ();
 		loadWeaponsList ();
 
+		//GlowImage.GetComponent<Image>().canvasRenderer.SetAlpha (0);
 		GlowImage.GetComponent<Image>().canvasRenderer.SetAlpha (1.1f);
-		GlowImage.GetComponent<Image>().CrossFadeAlpha (0.0f, 1, false);
-		GlowImage.GetComponent<Image>().CrossFadeAlpha (0.9f, 3, false);
-		GlowImage.GetComponent<Image>().CrossFadeAlpha (0.0f, 2, false);
+		//GlowImage.GetComponent<Image>().CrossFadeAlpha (0.0f, 1, false);
+		//GlowImage.GetComponent<Image>().CrossFadeAlpha (0.9f, 2, true);
+		GlowImage.GetComponent<Image>().CrossFadeAlpha (0.0f, 4, true);
+
+		defaultHelpText ();
 	}
 
 	//=====================\\
@@ -291,6 +296,10 @@ public class SquadSelectionScript : MonoBehaviour {
 		Destroy (prefabWeapon);
 	}
 
+	public void defaultHelpText () {
+		helpText.text = "Drag Settlers and Weapons into slots below";
+	}
+	
 	//============\\
 	//===Update===\\
 	//============\\

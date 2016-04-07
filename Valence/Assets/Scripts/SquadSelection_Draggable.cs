@@ -18,7 +18,11 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 	public GameObject UI_Container;
 	//Glow
 	Color oldValue = new Color (255 / 255f, 255 / 255f, 255 / 255f);
-	Color newValue = new Color (248 / 255f, 255 / 255f, 135 / 255f);
+	Color newValue = new Color (248 / 255f, 255 / 255f, 30 / 255f);
+
+	void callDefaultHelpTextFunc (){
+		UI_Container.GetComponentInChildren<SquadSelectionScript>().defaultHelpText();
+	}
 
 	public void OnBeginDrag (PointerEventData eventData) {
 
@@ -42,8 +46,8 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 		//YAY WEAPONS GLOW
 		if (oldParent.gameObject.transform.name.ToString () == "Scrollable Weapons List") {
 			for (int i = 0; i < UI_Container.GetComponentInChildren<SquadSelectionScript>().WeaponList.Length; i++) {
-				Color glowColour2 = Color.Lerp (oldValue, newValue, Mathf.PingPong (Time.time, 8));
-				UI_Container.GetComponentInChildren<SquadSelectionScript>().WeaponList[i].GetComponent<Image>().color = glowColour2;
+				Color glowColour = Color.Lerp (oldValue, newValue, Mathf.PingPong (Time.time, 8));
+				UI_Container.GetComponentInChildren<SquadSelectionScript>().WeaponList[i].GetComponent<Image>().color = glowColour;
 			}
 		}
 	}
@@ -81,6 +85,19 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 		}
 		
 		this.transform.SetParent (newParent);
+
+		//===================================================\\
+		//FROM: Scrollable List | TO: Scrollable Weapons List\\
+		//===================================================\\
+		if (this.oldParent.name.ToString() == "Scrollable List" && this.newParent.name.ToString() == "Scrollable Weapons List") {
+			this.transform.SetParent (oldParent);
+			Debug.Log ("Get back to Scrollable List");
+		}
+
+		if (this.oldParent.name.ToString() == "Scrollable Weapons List" && this.newParent.name.ToString() == "Scrollable List") {
+			this.transform.SetParent (oldParent);
+			Debug.Log ("Get back to Scrollable Weapons List");
+		}
 
 		//=======================================\\
 		//FROM: Scrollable List | TO: Weapon List\\
@@ -161,6 +178,8 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 					UI_Container.GetComponentInChildren<SquadSelectionScript>().GlowImage.GetComponent<Image>().CrossFadeAlpha (0.0f, 1, false);
 					UI_Container.GetComponentInChildren<SquadSelectionScript>().GlowImage.GetComponent<Image>().CrossFadeAlpha (0.9f, 3, false);
 					UI_Container.GetComponentInChildren<SquadSelectionScript>().GlowImage.GetComponent<Image>().CrossFadeAlpha (0.0f, 2, false);
+					UI_Container.GetComponentInChildren<SquadSelectionScript>().helpText.text = "No Settler set in that slot.";
+					Invoke ("callDefaultHelpTextFunc", 4);
 				}
 			}
 		}
@@ -168,7 +187,6 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 		//If either Weapons List or Members List has a child object
 		for (int i = 0; i < parentNameArray.Length; i++) {
 			if (this.newParent.name.ToString () == parentNameArray [i] || this.newParent.name.ToString () == weaponsParentNameArray [i]) {
-				Debug.Log ("OLD PARENT IS THIS THING: " + oldParent);
 				if (this.newParent.gameObject.transform.childCount > 1) {
 					this.transform.SetParent (oldParent);
 					Debug.Log ("It already has " + this.transform);
