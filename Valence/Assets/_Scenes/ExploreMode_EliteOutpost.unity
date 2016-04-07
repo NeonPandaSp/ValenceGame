@@ -6532,19 +6532,19 @@ Prefab:
       objectReference: {fileID: 1345785806}
     - target: {fileID: 22445530, guid: 8302cc867bfa6d34fb3edc46c282e89b, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 22459296, guid: 8302cc867bfa6d34fb3edc46c282e89b, type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22459296, guid: 8302cc867bfa6d34fb3edc46c282e89b, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22445530, guid: 8302cc867bfa6d34fb3edc46c282e89b, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 225.000031
+      value: -1.52587891e-05
       objectReference: {fileID: 0}
     - target: {fileID: 11408186, guid: 8302cc867bfa6d34fb3edc46c282e89b, type: 2}
       propertyPath: m_Value
@@ -6554,6 +6554,10 @@ Prefab:
       propertyPath: m_Size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11485030, guid: 8302cc867bfa6d34fb3edc46c282e89b, type: 2}
+      propertyPath: _audioController
+      value: 
+      objectReference: {fileID: 1735239309}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8302cc867bfa6d34fb3edc46c282e89b, type: 2}
   m_IsPrefabParent: 0
@@ -10916,6 +10920,14 @@ Prefab:
       propertyPath: _audioController
       value: 
       objectReference: {fileID: 1735239309}
+    - target: {fileID: 11453874, guid: 6837e6e08e37cbb4aa4cbb98c4c8e86a, type: 2}
+      propertyPath: uiStuff
+      value: 
+      objectReference: {fileID: 1630552392}
+    - target: {fileID: 11453874, guid: 6837e6e08e37cbb4aa4cbb98c4c8e86a, type: 2}
+      propertyPath: build
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6837e6e08e37cbb4aa4cbb98c4c8e86a, type: 2}
   m_IsPrefabParent: 0
@@ -30500,6 +30512,10 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1629391663}
   m_Mesh: {fileID: 4300400, guid: a2495bf5e03790741884fb004a52e6bc, type: 3}
+--- !u!1 &1630552392
+GameObject:
+  m_PrefabParentObject: {fileID: 161826, guid: 8302cc867bfa6d34fb3edc46c282e89b, type: 2}
+  m_PrefabInternal: {fileID: 305957037}
 --- !u!4 &1631001420
 Transform:
   m_PrefabParentObject: {fileID: 497258, guid: a916a978b537f3c4ab9b8388202173cf, type: 2}

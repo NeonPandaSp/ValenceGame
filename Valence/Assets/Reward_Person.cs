@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class Reward_Person : MonoBehaviour {
 
@@ -10,4 +11,6 @@ public class Reward_Person : MonoBehaviour {
 	public Text perVal;
 	public Text aglVal;
 
+	public List<Sprite> maleSprites;
+	public List<Sprite> femaleSprites;
 }
