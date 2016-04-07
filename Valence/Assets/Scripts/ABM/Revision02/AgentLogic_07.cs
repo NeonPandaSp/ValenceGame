@@ -636,16 +636,18 @@ public class AgentLogic_07 : MonoBehaviour {
 
             health--;
         }
+		if (hasFood) {
+			//
+			if (health < ( 100 - ( 5 * (int)consumeRate)) ) {
+				//Increase the missing health of the agent when eating food
+				//Now based on double what ever the agent's consumption rate
 
-        if (health < 100) {
-            //Increase the missing health of the agent when eating food
-            //Now based on double what ever the agent's consumption rate
-            health += (5 * (int)consumeRate);
-        }
-
-        if (health > 100) {
+				health += (5 * (int)consumeRate);
+			}
+		}
+        /*if (health > 100) {
             health = 100;
-        }
+        }*/
             /*switch (hasFood)
             {
                 case true:
