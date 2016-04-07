@@ -162,8 +162,10 @@ public class GameController : MonoBehaviour {
 
 		foreach (serialBuilding bld in loadedData.buildingDatabase) {
 			GameObject tempBld = (GameObject) Instantiate( Resources.Load(bld.bType), new Vector3( bld.xPos, bld.yPos, bld.zPos), Quaternion.identity);
-			
-			if( tempBld.GetComponent<BuildingScript>().myType == "Farm" ){
+
+            tempBld.GetComponent<BuildingScript>().newBuilding = false;
+
+            if ( tempBld.GetComponent<BuildingScript>().myType == "Farm" ){
 				farmBuildingList.Add ( tempBld );
 				Debug.Log ("Added to FarmBuilding List");
 			} else if ( tempBld.GetComponent<BuildingScript>().myType == "PowerStation" ){

@@ -19,6 +19,8 @@ public class BuildingScript : MonoBehaviour {
 	public float resourceProgress;
 	public float consumptionProgress;
 
+    public bool newBuilding;
+
     //public Transform infoUI;
     public Transform progressUI;
 
@@ -43,11 +45,13 @@ public class BuildingScript : MonoBehaviour {
         }
         checkClick = true;
         //beginProduction ();
-
-        if (bType.typeName == "Shelter")
+        if (newBuilding)
         {
-            _myGameController.popLimit += bType.pRate;
-            //_myGameController.popLimit += 10;
+            if (bType.typeName == "Shelter")
+            {
+                _myGameController.popLimit += bType.pRate;
+                //_myGameController.popLimit += 10;
+            }
         }
     }
 	

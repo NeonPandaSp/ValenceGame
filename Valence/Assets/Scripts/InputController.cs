@@ -320,7 +320,7 @@ public class InputController : MonoBehaviour {
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("Farm"), new Vector3(currentTile.x, currentTile.y, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
-
+                            tempObject.GetComponent<BuildingScript>().newBuilding = true;
                             //Increase the list of current farms placed
                             _gameController.farmBuildingList.Add(tempObject);
 
@@ -378,7 +378,9 @@ public class InputController : MonoBehaviour {
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
-							_gameController.waterBuildingList.Add(tempObject);
+                            tempObject.GetComponent<BuildingScript>().newBuilding = true;
+
+                            _gameController.waterBuildingList.Add(tempObject);
                             //Add the newly placed building to building database
 							_gameController.buildingDatabase.Add(tempObject);
 
@@ -431,7 +433,9 @@ public class InputController : MonoBehaviour {
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
-							_gameController.powerBuildingList.Add(tempObject);
+                            tempObject.GetComponent<BuildingScript>().newBuilding = true;
+
+                            _gameController.powerBuildingList.Add(tempObject);
                             //Add the newly placed building to building database
 							_gameController.buildingDatabase.Add(tempObject);
 
@@ -483,8 +487,10 @@ public class InputController : MonoBehaviour {
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
+                            tempObject.GetComponent<BuildingScript>().newBuilding = true;
+
                             //Add the newly placed building to building database
-							_gameController.buildingDatabase.Add(tempObject);
+                            _gameController.buildingDatabase.Add(tempObject);
 
                             Destroy(myHoverObject);
 							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
@@ -530,8 +536,10 @@ public class InputController : MonoBehaviour {
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
 
+                            tempObject.GetComponent<BuildingScript>().newBuilding = true;
+
                             //Add the newly placed building to building database
-							_gameController.buildingDatabase.Add(tempObject);
+                            _gameController.buildingDatabase.Add(tempObject);
 
                             Destroy(myHoverObject);
 							myHoverObject = (GameObject)Instantiate(Resources.Load("Tile"), new Vector3(0, 0, 0), Quaternion.identity);
@@ -580,6 +588,8 @@ public class InputController : MonoBehaviour {
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("Hospital"), new Vector3(currentTile.x, currentTile.y, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
+
+                            tempObject.GetComponent<BuildingScript>().newBuilding = true;
 
                             //Add the newly placed building to building database
                             _gameController.buildingDatabase.Add(tempObject);
@@ -635,6 +645,8 @@ public class InputController : MonoBehaviour {
                             GameObject tempObject = (GameObject)Instantiate(Resources.Load("TrainingArea"), new Vector3(currentTile.x, currentTile.y - 1, currentTile.z), Quaternion.identity);
                             tempObject.GetComponent<BuildingScript>().initBuildingType();
                             tempObject.GetComponent<BuildingScript>().beginProduction();
+
+                            tempObject.GetComponent<BuildingScript>().newBuilding = true;
 
                             //Add the newly placed building to building database
                             _gameController.buildingDatabase.Add(tempObject);

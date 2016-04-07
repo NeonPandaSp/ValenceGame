@@ -642,6 +642,10 @@ public class AgentLogic_07 : MonoBehaviour {
             //Now based on double what ever the agent's consumption rate
             health += (5 * (int)consumeRate);
         }
+
+        if (health > 100) {
+            health = 100;
+        }
             /*switch (hasFood)
             {
                 case true:
