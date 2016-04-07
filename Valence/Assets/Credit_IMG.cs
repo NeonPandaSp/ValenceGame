@@ -13,7 +13,7 @@ public class Credit_IMG : MonoBehaviour {
 	void Start () {
 		fadeIn = true;
 		myImg = GetComponent<Image> ();
-
+		myImg.color = new Color (myImg.color.r, myImg.color.g, myImg.color.b, 0.0f);
 		int randIndex;
 
 		randIndex = Random.Range (0, transform.parent.GetComponent<SpriteContainer> ().spriteArray.Count - 1);
@@ -52,11 +52,12 @@ public class Credit_IMG : MonoBehaviour {
 				fadeOut = true;
 			}
 		} else if (fadeOut) {
-			currentAlpha = -0.01f;
-			if( myImg.color.a <= 0.0f ){
+			//currentAlpha = -0.01f;
+			if( myImg.color.a >= 0.9f ){
 				GameObject temp = (GameObject) Instantiate ( creditIMG, Vector3.zero, Quaternion.identity );
 				temp.transform.SetParent(this.transform.parent);
-				Destroy (this.gameObject);
+				//Destroy (this.gameObject);
+				fadeOut = false;
 			}
 		}
 
