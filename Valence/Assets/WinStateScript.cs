@@ -134,9 +134,9 @@ public class WinStateScript : MonoBehaviour {
 				newAgent.state = AgentLogic_07.agentState.Wandering;
 				newAgent.job = AgentLogic_07.jobSubState.Default;
 				if( newAgent.gender == "Male" )
-					newAgent.myModelIndex = Random.Range (0,settlerObj.GetComponent<Reward_Person>().maleSprites.Count-1);
+					newAgent.photo = Random.Range (0,settlerObj.GetComponent<Reward_Person>().maleSprites.Count-1);
 				else
-					newAgent.myModelIndex = Random.Range (0,settlerObj.GetComponent<Reward_Person>().femaleSprites.Count-1);
+					newAgent.photo = Random.Range (0,settlerObj.GetComponent<Reward_Person>().femaleSprites.Count-1);
 
 
 				GameObject newWObj = (GameObject) Instantiate ( settlerObj, Vector3.zero, Quaternion.identity );
@@ -147,9 +147,9 @@ public class WinStateScript : MonoBehaviour {
 				newWObj.GetComponent<Reward_Person>().perVal.text = ""+ newAgent.perception;
 				newWObj.GetComponent<Reward_Person>().aglVal.text = ""+newAgent.agility;
 				if( newAgent.gender == "Male"){
-					newWObj.GetComponent<Reward_Person>().agentImg.sprite = newWObj.GetComponent<Reward_Person>().maleSprites[newAgent.myModelIndex];
+					newWObj.GetComponent<Reward_Person>().agentImg.sprite = newWObj.GetComponent<Reward_Person>().maleSprites[newAgent.photo];
 				} else {
-					newWObj.GetComponent<Reward_Person>().agentImg.sprite = newWObj.GetComponent<Reward_Person>().femaleSprites[newAgent.myModelIndex];
+					newWObj.GetComponent<Reward_Person>().agentImg.sprite = newWObj.GetComponent<Reward_Person>().femaleSprites[newAgent.photo];
 				}
 
 				myData.population.Add (newAgent);
