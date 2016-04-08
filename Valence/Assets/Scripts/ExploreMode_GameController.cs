@@ -109,7 +109,6 @@ public class ExploreMode_GameController : MonoBehaviour {
 			Debug.Log ("Data Loaded");
 			Debug.Log ("Party Count: " + dataCopy.currentParty.Count);
 			foreach (serialAgent agent in dataCopy.currentParty) {
-
 				Debug.Log ("Agent ID: " + agent.agentId );
 				folk [partyIndex].agentId = agent.agentId;
 				folk [partyIndex].unitName = agent.agentName;

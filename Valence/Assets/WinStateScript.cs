@@ -133,11 +133,13 @@ public class WinStateScript : MonoBehaviour {
 				
 				newAgent.state = AgentLogic_07.agentState.Wandering;
 				newAgent.job = AgentLogic_07.jobSubState.Default;
-				if( newAgent.gender == "Male" )
-					newAgent.photo = Random.Range (0,settlerObj.GetComponent<Reward_Person>().maleSprites.Count-1);
-				else
-					newAgent.photo = Random.Range (0,settlerObj.GetComponent<Reward_Person>().femaleSprites.Count-1);
-
+				if( newAgent.gender == "Male" ){
+					newAgent.photo = (int) Random.Range (0,settlerObj.GetComponent<Reward_Person>().maleSprites.Count-1);
+					newAgent.myModelIndex = (int) Random.Range (0,6);
+				} else {
+					newAgent.photo = (int) Random.Range (0,settlerObj.GetComponent<Reward_Person>().femaleSprites.Count-1);
+					newAgent.myModelIndex = (int) Random.Range (0,11);
+				}
 
 				GameObject newWObj = (GameObject) Instantiate ( settlerObj, Vector3.zero, Quaternion.identity );
 				newWObj.transform.SetParent ( rewardBucket.transform );

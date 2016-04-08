@@ -643,6 +643,8 @@ public class AgentLogic_07 : MonoBehaviour {
 				//Now based on double what ever the agent's consumption rate
 
 				health += (5 * (int)consumeRate);
+			} else {
+				health = 100;
 			}
 		}
         /*if (health > 100) {

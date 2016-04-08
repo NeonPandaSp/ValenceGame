@@ -15,10 +15,10 @@ public class DestroySource : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		currentTime += Time.deltaTime;
-		if (currentTime >= autoSequence) {
-			if( nextTip != null )
-				Sequencer(true);
-		}
+//		if (currentTime >= autoSequence) {
+//			if( nextTip != null )
+//				Sequencer(true);
+//		}
 	}
 
 	public void ObjToDestroy( GameObject myObj ){

@@ -187,8 +187,10 @@ public class GameController : MonoBehaviour {
 			GameObject temp;
 			if( agent.gender == "Male" ){
 				temp = (GameObject) Instantiate( myAgentSpawner.MaleAgent[agent.myModelIndex], new Vector3( agent.xPos, agent.yPos, agent.zPos), Quaternion.identity);
+				temp.GetComponent<AgentLogic_07>().malePortraitIndex = agent.photo;
 			} else {
 				temp = (GameObject) Instantiate( myAgentSpawner.FemaleAgent[agent.myModelIndex], new Vector3( agent.xPos, agent.yPos, agent.zPos), Quaternion.identity);
+				temp.GetComponent<AgentLogic_07>().femalePortraitIndex = agent.photo;
 			}
 
 			if( agent.agentId != "NEWAGENT" )
