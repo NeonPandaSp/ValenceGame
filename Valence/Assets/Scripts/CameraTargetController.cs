@@ -59,7 +59,7 @@ public class CameraTargetController : MonoBehaviour {
 
 			
 		}
-		if (Input.GetMouseButton (0) && Input.GetKey (KeyCode.LeftAlt)) {
+		if (Input.GetMouseButton (0) && Input.GetKey (KeyCode.LeftAlt) || ( Input.GetMouseButton(1) ) ) {
 
 			if( Input.mousePosition.x > lastMousePositionX + 2 ){
 				transform.Rotate(transform.up * rotateDelta * Time.deltaTime);

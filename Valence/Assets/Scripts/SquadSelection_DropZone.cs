@@ -80,9 +80,12 @@ public class SquadSelection_DropZone : MonoBehaviour, IDropHandler, IPointerEnte
 					//================================\\
 					//FROM: Member List | TO: Anywhere\\
 					//================================\\
-					if (d.oldParent.name == parentNameArray[i]) {
+					if (d.oldParent.name == parentNameArray[i] && d.oldParent.name != d.newParent.name ) { // don't reset me if I was sent back to where I came from ~ Tyler
 						squadPlaceInIndex =  Array.IndexOf (parentNameArray, d.oldParent.name);
 						UI_Container.GetComponentInChildren<SquadSelectionScript>().myParty[squadPlaceInIndex].agentId = "-1";
+						Debug.Log( "CLEARING MEMBER SPOT");
+					} else if ( d.oldParent.name == parentNameArray[i] && d.oldParent.name == d.newParent.name ){
+						Debug.Log( "Tried to clear member slot, but object was returned to this position");
 					}
 				}
 				
@@ -125,6 +128,7 @@ public class SquadSelection_DropZone : MonoBehaviour, IDropHandler, IPointerEnte
 					if (d.oldParent.name == weaponsParentNameArray[i]) {
 						weaponPlaceInIndex =  Array.IndexOf (weaponsParentNameArray, d.oldParent.name);
 						UI_Container.GetComponentInChildren<SquadSelectionScript>().myParty[weaponPlaceInIndex].myWeapon.weaponId = "-1";
+						Debug.Log ( "Parent Reset by Weapon List Object " );
 					}
 				}
 			} else {

@@ -16,6 +16,8 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 	public int numberOfSettlersSelected;
 
 	public GameObject UI_Container;
+
+
 	//Glow
 	Color oldValue = new Color (255 / 255f, 255 / 255f, 255 / 255f);
 	Color newValue = new Color (248 / 255f, 255 / 255f, 30 / 255f);
@@ -138,6 +140,17 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 			foreach (GameObject memberOBJ in UI_Container.GetComponentInChildren<SquadSelectionScript>().MemberList) {
 				if (this.oldParent.name.ToString() == memberOBJ.name && this.newParent.name.ToString() == weaponsParentNameArray[i]) {
 					this.transform.SetParent (oldParent);
+					newParent = oldParent;
+					//UI_Container.GetComponentInChildren<SquadSelectionScript>().myParty[squadPlaceInIndex].agentId = "-1";
+					foreach (serialAgent fs in UI_Container.GetComponentInChildren<SquadSelectionScript>().population) {
+						if (fs.agentName == this.name) {
+							//Debug.Log ("The current parent is: " + d.newParent.name.ToString());
+							int squadPlaceInIndex =  Array.IndexOf (parentNameArray, this.newParent.name);
+							UI_Container.GetComponentInChildren<SquadSelectionScript>().myParty[squadPlaceInIndex].agentId = fs.agentId;
+							//Debug.Log ("Parent: " + parentNameArray[i] + " has child " + fs.agentName);
+						}
+					}
+					Debug.Log ( this.oldParent.name.ToString() );
 					Debug.Log ("Lol you can't switch from a member to a weapon");
 				}
 			}
@@ -169,7 +182,7 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 		}
 
 		//If there is no Member present in this slot, send weapon back
-		for (int i = 0; i < parentNameArray.Length; i++) {
+		for (int i = 0; i < weaponsParentNameArray.Length; i++) { // Changed from parentNameArray to weaponsParentNameArray ~ Tyler
 			if (this.newParent.name.ToString () == weaponsParentNameArray [i]) {
 				if (UI_Container.GetComponentInChildren<SquadSelectionScript>().MemberList[i].gameObject.transform.childCount == 0) {
 					this.transform.SetParent (oldParent);

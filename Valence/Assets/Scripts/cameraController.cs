@@ -169,7 +169,7 @@ public class cameraController : MonoBehaviour {
 		{
 			translation.z = 0;
 		}
-		if (Input.GetMouseButton (0) && Input.GetKey ( KeyCode.LeftAlt ) ) {
+		if (Input.GetMouseButton (0) && Input.GetKey ( KeyCode.LeftAlt ) || ( Input.GetMouseButton(1) ) ) {
 			//float rotateDelta = ((Input.mousePosition.x - lastMousePosition.x))*1.5f*Time.deltaTime;
 			//float rotatePan = GetComponent<Camera>().transform.eulerAngles.y - rotateDelta * 2;
 			//GetComponent<Camera>().transform.eulerAngles = new Vector3(GetComponent<Camera>().transform.eulerAngles.x, rotatePan, 0);
