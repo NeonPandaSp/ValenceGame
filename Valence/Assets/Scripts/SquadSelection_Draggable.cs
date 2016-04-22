@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -107,6 +107,7 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 		for (int i = 0; i < UI_Container.GetComponentInChildren<SquadSelectionScript>().MemberList.Length; i++) {
 			if (this.oldParent.name.ToString() == "Scrollable List" && this.newParent.name.ToString() == weaponsParentNameArray[i]) {
 				this.transform.SetParent (oldParent);
+				newParent = oldParent;
 				Debug.Log ("Snap that shit back");
 			}		
 		}
@@ -117,6 +118,7 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 		for (int i = 0; i < parentNameArray.Length; i++) {
 			if (this.oldParent.name.ToString() == "Scrollable Weapons List" && this.newParent.name.ToString() == parentNameArray[i]) {
 				this.transform.SetParent (oldParent);
+				newParent = oldParent;
 				Debug.Log ("Get back to your parent, SON");
 			}
 		}
@@ -128,6 +130,20 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 			foreach (GameObject weaponOBJ in UI_Container.GetComponentInChildren<SquadSelectionScript>().WeaponList) {
 				if ((this.oldParent.name.ToString () == weaponOBJ.name && this.newParent.name.ToString () == parentNameArray [i])) {
 					this.transform.SetParent (oldParent);
+					newParent = oldParent;
+					for (int j = 0; j < weaponsParentNameArray.Length; j++) {	
+						if (newParent.name.ToString() == weaponsParentNameArray[j]) {
+							foreach (serialWeapon wp in UI_Container.GetComponentInChildren<SquadSelectionScript>().weaponsPopulation) {
+								Debug.Log ("NAME is: " + wp.weaponName + " ID is: " + wp.weaponId);
+								if (wp.weaponName == this.name) {
+									int weaponPlaceInIndex =  Array.IndexOf (weaponsParentNameArray, this.newParent.name);
+									UI_Container.GetComponentInChildren<SquadSelectionScript>().myParty[weaponPlaceInIndex].myWeapon.weaponId = wp.weaponId;
+									Debug.Log ("THE ID IS SET TO " + UI_Container.GetComponentInChildren<SquadSelectionScript>().myParty[weaponPlaceInIndex].myWeapon.weaponId);
+								}
+							}
+						}
+					}
+
 					Debug.Log ("Lol you can't switch from a weapon to a member");
 				}
 			}
@@ -186,6 +202,7 @@ public class SquadSelection_Draggable : MonoBehaviour, IBeginDragHandler, IDragH
 			if (this.newParent.name.ToString () == weaponsParentNameArray [i]) {
 				if (UI_Container.GetComponentInChildren<SquadSelectionScript>().MemberList[i].gameObject.transform.childCount == 0) {
 					this.transform.SetParent (oldParent);
+					newParent = oldParent;
 					Debug.Log ("No Member Present");
 					UI_Container.GetComponentInChildren<SquadSelectionScript>().GlowImage.GetComponent<Image>().canvasRenderer.SetAlpha (1.1f);
 					UI_Container.GetComponentInChildren<SquadSelectionScript>().GlowImage.GetComponent<Image>().CrossFadeAlpha (0.0f, 1, false);
